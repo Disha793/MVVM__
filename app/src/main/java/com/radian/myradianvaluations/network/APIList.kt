@@ -18,7 +18,7 @@ interface APIList {
     ): Response<LoginResponse>
 
     @FormUrlEncoded
-    @POST("mobile/Login/GetUserStatus")
+    @POST("mobile/Login/GetUserStatu")
     suspend fun getUserStatus(
         @Field("deviceID") deviceId: String,
         @Field("PhoneNumber") phoneNumber: String,

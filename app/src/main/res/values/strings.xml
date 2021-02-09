@@ -1,3 +1,37 @@
 <resources>
     <string name="app_name">MyRadian Valuations</string>
+    <!--Sign In text-->
+    <string name="sign_in">Sign into your Radian Valuation Services account</string>
+    <string name="enter_sign_in">Enter the same username and password you use to access the RVS vendor portal.</string>
+    <!--Error messages-->
+    <string name="error_login_empty">Please Enter Mobile Number</string>
+    <string name="error_login_invalid_number">Please Enter Valid Mobile Number</string>
+    <string name="error_login_empty_username">Please Enter Username</string>
+    <string name="error_login_empty_password">Please Enter Password</string>
+    <string name="error_login_invalid_password">Please Enter Valid Password</string>
+    <string name="error_login_invalid">Invalid Phone number. Please Enter Valid 10 digit Mobile Number.</string>
+    <!--Organiztion Info text-->
+    <string name="lbl_info_title">Make sure you have the right login information</string>
+    <string name="lbl_info_text1">No need to create a new account!</string>
+    <string name="lbl_info_text2">myradian appraisals uses the login information for your Radian Valuation Services account.</string>
+    <string name="lbl_info_text3">You can check to make sure you have the right information by logging into the RVS vendor portal.</string>
+    <string name="lbl_info_text4">Our vendor support team is available to help.</string>
+    <string name="lbl_info_text5">Not a Radian vendor?</string>
+    <string name="lbl_info_text6">Join us! You can apply to be a Radian vendor</string>
+    <string name="lbl_info_byphone">By phone</string>
+    <string name="lbl_info_byemail">By email</string>
+    <string name="contactUs">Contact Us</string>
+    <string name="lbl_here">here.</string>
+    <!--Toolbar titles-->
+    <string name="support">Support</string>
+    <string name="gethelpTitle">Get Help</string>
+    <!--Passcode labels-->
+    <string name="enter_access_code">Please enter your passcode</string>
+    <string name="enter_current_access_code">Please enter your current passcode</string>
+    <string name="enter_new_access_code">Please enter your new passcode</string>
+    <string name="create_new_access_code">Please create a passcode</string>
+    <string name="confirm_new_access_code">Please confirm your new passcode</string>
+    <string name="forgot_access_code">Forgot Passcode?</string>
+    <!--Forgot accesscode-->
+    <string name="forgot_text">Enter the verification code sent to</string>
 </resources>

@@ -1,10 +1,12 @@
 package com.radian.myradianvaluations.utils
 
 import android.content.Context
+import android.os.Bundle
 import android.provider.Settings
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.analytics.FirebaseAnalytics
 
 object CommonUtils {
 
@@ -20,5 +22,12 @@ object CommonUtils {
     }
     fun displayMessage(mView: View, msg: String) {
         Snackbar.make(mView, msg, Snackbar.LENGTH_SHORT).show()
+    }
+    fun addParamstoFirebaseEvent(
+        firebaseAnalytics: FirebaseAnalytics,
+        key: String,
+        params: Bundle
+    ) {
+        firebaseAnalytics.logEvent(key, params)
     }
 }
