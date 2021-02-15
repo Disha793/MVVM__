@@ -16,7 +16,6 @@ import javax.net.ssl.SSLEngineResult
 
 class LoginRepository(val context: Context) {
 
-    lateinit var loginResponse: StatusResponse
 
     companion object {
         fun getInstance(context: Context): LoginRepository {
@@ -29,18 +28,13 @@ class LoginRepository(val context: Context) {
         userName: String,
         phoneNumber: String,
         password: String
-    ): MutableLiveData<StatusResponse> {
+    ): MutableLiveData<StatusResponse>? {
         val loginResponseData = MutableLiveData<StatusResponse>()
 
         CoroutineScope(Dispatchers.IO).launch {
             val call = RetrofitBase.getClient().create(APIList::class.java)
                 .getUserStatus(CommonUtils.getDeviceUUID(context), phoneNumber, userName, password)
-            if (call.code() == 200 && call.body() != null) {
-
-                loginResponseData.postValue(call.body() as StatusResponse)
-
-            }
-
+            loginResponseData.postValue(call.body() as StatusResponse?)
         }
         return loginResponseData
     }

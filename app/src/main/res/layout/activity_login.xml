@@ -1,182 +1,191 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
 
-        <variable
-            name="loginViewModel"
-            type="com.radian.myradianvaluations.viewmodel.LoginViewModel" />
-    </data>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/relativeMain"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <RelativeLayout
-        android:id="@+id/relativeMain"
+    <FrameLayout
+        android:id="@+id/layoutToolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:paddingTop="@dimen/_10sdp"
+        android:paddingBottom="@dimen/_10sdp">
 
-        <FrameLayout
-            android:id="@+id/layoutToolbar"
-            android:layout_width="match_parent"
+        <include layout="@layout/layout_toolbar" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:paddingTop="@dimen/_10sdp"
-            android:paddingBottom="@dimen/_10sdp">
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/ic_header_myradian_logo" />
+    </FrameLayout>
 
-            <include layout="@layout/layout_toolbar" />
 
-            <androidx.appcompat.widget.AppCompatImageView
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layoutToolbar"
+        android:layout_marginBottom="@dimen/_20sdp"
+        android:layout_weight="1"
+        android:fillViewport="true"
+        android:padding="@dimen/_10sdp"
+        android:scrollbars="none">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:descendantFocusability="beforeDescendants"
+            android:orientation="vertical"
+            android:padding="@dimen/_5sdp">
+
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                app:srcCompat="@drawable/ic_header_myradian_logo" />
-        </FrameLayout>
+                android:layout_marginTop="@dimen/_20sdp"
+                android:fontFamily="@font/messinasans_regular"
+                android:text="@string/sign_in"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/_12sdp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:fontFamily="@font/messinasans_regular"
+                android:text="@string/enter_sign_in"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/_12sdp" />
 
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/layoutToolbar"
-            android:layout_marginBottom="@dimen/_20sdp"
-            android:layout_weight="1"
-            android:fillViewport="true"
-            android:padding="@dimen/_10sdp"
-            android:scrollbars="none">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_2sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:layout_marginRight="@dimen/_20sdp"
+                android:background="@color/colorPrimary"
+                android:visibility="gone"></View>
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:descendantFocusability="beforeDescendants"
-                android:orientation="vertical"
-                android:padding="@dimen/_5sdp">
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_20sdp"
-                    android:fontFamily="@font/messinasans_regular"
-                    android:text="@string/sign_in"
-                    android:textColor="@android:color/black"
-                    android:textSize="@dimen/_12sdp" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:fontFamily="@font/messinasans_regular"
-                    android:text="@string/enter_sign_in"
-                    android:textColor="@android:color/black"
-                    android:textSize="@dimen/_12sdp" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_30sdp"
+                android:background="@drawable/back_product_detail"
+                android:orientation="horizontal"
+                android:visibility="gone">
 
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_2sdp"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:layout_marginEnd="@dimen/_20sdp"
-                    android:layout_marginRight="@dimen/_20sdp"
-                    android:background="@color/colorPrimary"
-                    android:visibility="gone"></View>
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_30sdp"
-                    android:background="@drawable/back_product_detail"
-                    android:orientation="horizontal"
-                    android:visibility="gone">
-
-
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/edtPhoneNumber"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_30sdp"
-                    android:background="@drawable/back_product_detail"
-                    android:digits="0123456789-()"
-                    android:fontFamily="@font/messinasans_regular"
-                    android:hint="Mobile Number"
-                    android:imeOptions="actionNext"
-                    android:inputType="number"
-                    android:maxLength="10"
-                    android:maxLines="1"
-                    android:padding="@dimen/_8sdp"
-                    />
-
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/edtUsername"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_15sdp"
-                    android:background="@drawable/back_product_detail"
-                    android:fontFamily="@font/messinasans_regular"
-                    android:hint="Username"
-                    android:imeOptions="actionNext"
-                    android:inputType="text"
-                    android:maxLines="1"
-                    android:padding="@dimen/_8sdp"
-                    />
-
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/edtPassword"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_15sdp"
-                    android:background="@drawable/back_product_detail"
-                    android:fontFamily="@font/messinasans_regular"
-                    android:hint="Password"
-                    android:imeOptions="actionGo"
-                    android:inputType="textPassword"
-                    android:maxLines="1"
-                    android:padding="@dimen/_8sdp"
-                     />
-
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnNxt"
-                    android:layout_width="@dimen/_120sdp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_30sdp"
-                    android:background="@drawable/back_square_btn"
-                    android:fontFamily="@font/messinasans_regular"
-
-                    android:padding="@dimen/_10sdp"
-                    android:text="Sign In"
-                    android:textAllCaps="false"
-                    android:textColor="@android:color/white"
-                    android:textSize="@dimen/_14sdp" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/txtForgotPwd"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:layout_marginBottom="@dimen/_50sdp"
-                    android:fontFamily="@font/messinasans_regular"
-                    android:text="Forgot your password?"
-                    android:textColor="@color/color_green"
-                    android:textSize="@dimen/_13sdp" />
             </androidx.appcompat.widget.LinearLayoutCompat>
-        </ScrollView>
+
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edtPhoneNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_30sdp"
+                android:background="@drawable/back_product_detail"
+                android:digits="0123456789-()"
+                android:fontFamily="@font/messinasans_regular"
+                android:hint="Mobile Number"
+                android:imeOptions="actionNext"
+                android:inputType="number"
+                android:maxLength="10"
+                android:maxLines="1"
+                android:padding="@dimen/_8sdp" />
+
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edtUsername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:background="@drawable/back_product_detail"
+                android:fontFamily="@font/messinasans_regular"
+                android:hint="Username"
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                android:maxLines="1"
+                android:padding="@dimen/_8sdp" />
+
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edtPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:background="@drawable/back_product_detail"
+                android:fontFamily="@font/messinasans_regular"
+                android:hint="Password"
+                android:imeOptions="actionGo"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:padding="@dimen/_8sdp" />
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnNxt"
+                android:layout_width="@dimen/_120sdp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_30sdp"
+                android:background="@drawable/back_square_btn"
+                android:fontFamily="@font/messinasans_regular"
+
+                android:padding="@dimen/_10sdp"
+                android:text="Sign In"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/_14sdp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txtForgotPwd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_50sdp"
+                android:fontFamily="@font/messinasans_regular"
+                android:text="@string/forgot_pwd"
+                android:textColor="@color/color_green"
+                android:textSize="@dimen/_13sdp" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </ScrollView>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="bottom|center"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txtSignup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:fontFamily="@font/messinasans_regular"
+            android:gravity="end"
+            android:text="@string/signup"
+            android:textColor="@color/color_green"
+            android:textSize="@dimen/_13sdp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txtHavingTrouble"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="bottom|center"
-            android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginBottom="@dimen/_5sdp"
             android:fontFamily="@font/messinasans_regular"
             android:gravity="end"
-            android:text="Having trouble signing in?"
+            android:text="@string/having_trouble"
             android:textColor="@color/color_green"
             android:textSize="@dimen/_13sdp" />
-    </RelativeLayout>
-</layout>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</RelativeLayout>
