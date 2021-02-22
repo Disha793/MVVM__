@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/action_home"
+        android:icon="@drawable/bottom_home_selector"
+        android:title="@string/text_home" />
+
+    <item
+        android:id="@+id/action_orders"
+        android:icon="@drawable/bottom_orders_selector"
+        android:title="@string/text_orders" />
+
+    <item
+        android:id="@+id/action_new"
+        android:icon="@drawable/bottom_new_selector"
+        android:title="@string/text_new" />
+    <item
+        android:id="@+id/action_rewards"
+        android:icon="@drawable/bottom_rewards_selector"
+        android:title="@string/text_rewards" />
+
+</menu>

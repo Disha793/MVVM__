@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardOpenOrder"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="@dimen/_7sdp"
+    app:cardUseCompatPadding="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_8sdp">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/lblorderAdd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/messinasans_semibold"
+            android:text="1234 Address"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/_14sdp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/lblorderProduct"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblorderAdd"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:fontFamily="@font/messinasans_regular"
+            android:text="NA"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/_12sdp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/lblorderTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblorderProduct"
+            android:fontFamily="@font/messinasans_regular"
+            android:text=""
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/_12sdp" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/linearAtten"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblorderTime"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imgDot"
+                android:layout_width="@dimen/_10sdp"
+                android:layout_height="@dimen/_10sdp"
+                app:srcCompat="@drawable/ic_notfication_circle_enabled" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblorderTime"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_toRightOf="@+id/imgDot"
+                android:fontFamily="@font/messinasans_semibold"
+                android:text="Attention Required"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/_12sdp" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="@dimen/_15sdp"
+            android:layout_height="@dimen/_15sdp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            app:srcCompat="@drawable/ic_navigate_forward" />
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>
