@@ -1,12 +1,22 @@
 package com.radian.myradianvaluations.utils
 
+import android.Manifest
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.os.Bundle
 import android.provider.Settings
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
+import okhttp3.MediaType
+import okhttp3.RequestBody
 
 object CommonUtils {
 
@@ -14,14 +24,51 @@ object CommonUtils {
         return Settings.Secure.getString(mContext.getContentResolver(), Settings.Secure.ANDROID_ID)
 
     }
+
     fun hideKeybord(view: View, context: Context) {
 
         val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view.windowToken, 0)
 
     }
+
     fun displayMessage(mView: View, msg: String) {
         Snackbar.make(mView, msg, Snackbar.LENGTH_SHORT).show()
+    }
+    fun getAppVersion(context: Context): String? {
+        try {
+            var pInfo: PackageInfo =
+                context.getPackageManager().getPackageInfo(context.getPackageName(), 0)
+            val version = pInfo.versionName
+            return version
+        } catch (e: PackageManager.NameNotFoundException) {
+            LogUtils.logE("PackageInfo", e)
+        }
+        return null
+    }
+    fun requestBody(name: String): RequestBody {
+        return RequestBody.create(MediaType.parse("text/plain"), name)
+    }
+    internal fun formatNumber(phone: String): String {
+        return String.format(
+            "(%s)%s-%s",
+            phone.substring(0, 3),
+            phone.substring(3, 6),
+            phone.substring(6, 10)
+        )
+    }
+    internal fun checkPermission(context: Context): Boolean {
+        val result = ContextCompat.checkSelfPermission(
+            context,
+            Manifest.permission.READ_EXTERNAL_STORAGE
+        )
+        val result1 = ContextCompat.checkSelfPermission(
+            context,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+        )
+        val result2 = ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA)
+
+        return result == PackageManager.PERMISSION_GRANTED && result1 == PackageManager.PERMISSION_GRANTED && result2 == PackageManager.PERMISSION_GRANTED
     }
     fun addParamstoFirebaseEvent(
         firebaseAnalytics: FirebaseAnalytics,
@@ -29,5 +76,63 @@ object CommonUtils {
         params: Bundle
     ) {
         firebaseAnalytics.logEvent(key, params)
+    }
+
+    fun showOkDialog(
+        context: Context,
+        message: String,
+        onClickListener: DialogInterface.OnClickListener,
+        okText: String
+
+    ) {
+        AlertDialog.Builder(context).setMessage(message).setCancelable(false)
+            .setPositiveButton(
+                okText
+            ) { p0, p1 -> onClickListener.onClick(p0, p1) }
+
+            .show()
+
+
+    }
+
+    fun getPhoneNumber(phoneNumber: String): String {
+        var formattedPhoneNumber = phoneNumber
+        for (i in 0..phoneNumber.length - 1) {
+            if (phoneNumber.get(i).equals('(') || phoneNumber.get(i).equals(')') || phoneNumber.get(
+                    i
+                ).equals('-')
+            ) {
+                formattedPhoneNumber = formattedPhoneNumber.replace(phoneNumber.get(i), ' ', false)
+            }
+        }
+        return formattedPhoneNumber.replace(" ", "")
+    }
+
+    fun isNetworkAvailable(context: Context): Boolean {
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetwork: NetworkInfo? = connectivityManager.activeNetworkInfo
+        val isConnected: Boolean = activeNetwork?.isConnectedOrConnecting == true
+        return isConnected
+    }
+    fun showDialog(
+        context: Context,
+        message: String,
+        onClickListener: DialogInterface.OnClickListener,
+        onCancelListener: DialogInterface.OnCancelListener,
+        okText: String,
+        cancelText: String
+    ) {
+        AlertDialog.Builder(context).setMessage(message).setCancelable(false)
+
+            .setNegativeButton(
+                okText
+            ) { p0, p1 -> onClickListener.onClick(p0, p1) }
+            .setPositiveButton(
+                cancelText
+            ) { p0, p1 -> onCancelListener.onCancel(p0) }
+            .show()
+
+
     }
 }
