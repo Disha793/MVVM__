@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/common_back_grey"
+    android:padding="@dimen/_5sdp">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/msgRecycle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_40sdp"></androidx.recyclerview.widget.RecyclerView>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        >
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/editChat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:layout_marginRight="@dimen/_5sdp"
+            android:layout_weight="1"
+            android:background="@drawable/back_send_message"
+            android:hint="Type your message here"
+            android:inputType=""
+            android:minLines="2"
+            android:paddingStart="@dimen/_8sdp"
+            android:paddingLeft="@dimen/_8sdp"
+
+            />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgSend"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="match_parent"
+            android:tint="@color/colorPrimary"
+            app:srcCompat="@drawable/img_send" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</RelativeLayout>

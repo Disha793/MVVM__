@@ -4,17 +4,22 @@ import android.Manifest
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
+import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.radian.myradianvaluations.R
 import okhttp3.MediaType
 import okhttp3.RequestBody
 
@@ -35,6 +40,42 @@ object CommonUtils {
     fun displayMessage(mView: View, msg: String) {
         Snackbar.make(mView, msg, Snackbar.LENGTH_SHORT).show()
     }
+
+    fun getMapIntent(lat: String, long: String): Intent {
+        val gmmIntentUri = Uri.parse(
+            "geo:$lat,$long?q=$lat,$long"
+        )
+        val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+        mapIntent.setPackage("com.google.android.apps.maps")
+        return mapIntent
+    }
+
+    internal fun checkCallPermission(context: Context): Boolean {
+        val result = ContextCompat.checkSelfPermission(
+            context,
+            Manifest.permission.CALL_PHONE
+        )
+        return result == PackageManager.PERMISSION_GRANTED
+
+    }
+
+    fun displayMessageAction(
+
+        mView: View,
+        msg: String,
+        actionText: String,
+        onClickListener: View.OnClickListener
+    ) {
+        val snackbar = Snackbar.make(mView, msg, Snackbar.LENGTH_INDEFINITE)
+        val snackView = snackbar.view
+        snackView.setBackgroundColor(Color.BLACK)
+        snackbar.setActionTextColor(Color.WHITE)
+        var textView: TextView = snackView.findViewById<TextView>(R.id.snackbar_text)
+        textView.setTextColor(Color.WHITE)
+        snackbar.setAction(actionText, onClickListener)
+        snackbar.show()
+    }
+
     fun getAppVersion(context: Context): String? {
         try {
             var pInfo: PackageInfo =
@@ -46,9 +87,11 @@ object CommonUtils {
         }
         return null
     }
+
     fun requestBody(name: String): RequestBody {
         return RequestBody.create(MediaType.parse("text/plain"), name)
     }
+
     internal fun formatNumber(phone: String): String {
         return String.format(
             "(%s)%s-%s",
@@ -57,6 +100,7 @@ object CommonUtils {
             phone.substring(6, 10)
         )
     }
+
     internal fun checkPermission(context: Context): Boolean {
         val result = ContextCompat.checkSelfPermission(
             context,
@@ -70,6 +114,7 @@ object CommonUtils {
 
         return result == PackageManager.PERMISSION_GRANTED && result1 == PackageManager.PERMISSION_GRANTED && result2 == PackageManager.PERMISSION_GRANTED
     }
+
     fun addParamstoFirebaseEvent(
         firebaseAnalytics: FirebaseAnalytics,
         key: String,
@@ -115,6 +160,7 @@ object CommonUtils {
         val isConnected: Boolean = activeNetwork?.isConnectedOrConnecting == true
         return isConnected
     }
+
     fun showDialog(
         context: Context,
         message: String,
