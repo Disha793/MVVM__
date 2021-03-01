@@ -244,4 +244,3 @@ class MessageChatFragment() : Fragment(), View.OnClickListener {
             val receiveBubble = view.imgReceveBubble as ImageView
         }
     }
-}
