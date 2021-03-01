@@ -88,13 +88,14 @@ class ProfileFragment() : Fragment(), DialogInterface.OnClickListener, View.OnCl
             2 -> p0!!.dismiss()
         }
     }
+
     private var fileUriToUpload: String? = null
     internal lateinit var context: Context
     private val REQUEST_FOR_CAMERA = 101
     private val REQUEST_FOR_GALLERY = 102
     private val REQUEST_PERMISSION_ACESS = 103
     private val REQ_FACE_DETECTION = 104
-    private lateinit var  profileViewModel:ProfileViewModel
+    private lateinit var profileViewModel: ProfileViewModel
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -111,9 +112,13 @@ class ProfileFragment() : Fragment(), DialogInterface.OnClickListener, View.OnCl
 
         })
         view.imgBack.setOnClickListener(this)
-        profileViewModel=ViewModelProvider(context as BottomNavigationActivity).get(ProfileViewModel::class.java)
+        profileViewModel =
+            ViewModelProvider(context as BottomNavigationActivity).get(ProfileViewModel::class.java)
         getMyProfile()
-        CommonUtils.hideKeybord((context as BottomNavigationActivity).window.decorView.rootView, context)
+        CommonUtils.hideKeybord(
+            (context as BottomNavigationActivity).window.decorView.rootView,
+            context
+        )
         return view
     }
 
@@ -134,12 +139,12 @@ class ProfileFragment() : Fragment(), DialogInterface.OnClickListener, View.OnCl
         infodialogView.txt_date.visibility = View.GONE
 
         infodialogView.txt_address.visibility = View.GONE
-        infodialogView.btnAddEvent.setText("Next Step")
+        infodialogView.btnAddEvent.setText(getString(R.string.lbl_next_step))
         infodialogView.txtDialogSubTitle.visibility = View.VISIBLE
-        infodialogView.txtDialogSubTitle.setText("We'll send this photo to your inspection contacts before your inspections. Make sure to use an image you'd want them to see!")
-        infodialogView.txtDialogTitle.setText("Add a professional photo")
+        infodialogView.txtDialogSubTitle.setText(getString(R.string.lbl_dilg_header))
+        infodialogView.txtDialogTitle.setText(getString(R.string.lbl_add_photo))
         infodialogView.txtDialogTitle.setTypeface(null, Typeface.BOLD)
-        infodialogView.txt_product.setText("If multiple appraisers use this account, please do not add a photo.")
+        infodialogView.txt_product.setText(getString(R.string.lbl_photo_info))
         val params = LinearLayoutCompat.LayoutParams(
             LinearLayoutCompat.LayoutParams.WRAP_CONTENT,
             LinearLayoutCompat.LayoutParams.WRAP_CONTENT
@@ -153,17 +158,11 @@ class ProfileFragment() : Fragment(), DialogInterface.OnClickListener, View.OnCl
             }
 
         })
-        infodialogView.btnAddEvent.setOnClickListener(object : View.OnClickListener {
+        infodialogView.btnAddEvent.setOnClickListener {
+            dialog.dismiss()
 
-            override fun onClick(v: View?) {
-                dialog.dismiss()
-
-                openDialog()
-
-
-            }
-
-        })
+            openDialog()
+        }
 
 
     }
@@ -446,7 +445,10 @@ class ProfileFragment() : Fragment(), DialogInterface.OnClickListener, View.OnCl
 
                 }
                 if (it.isEmpty()) {
-                    CommonUtils.displayMessage(dialogView, "Face is not detected in selected picture")
+                    CommonUtils.displayMessage(
+                        dialogView,
+                        "Face is not detected in selected picture"
+                    )
                 }
 
 
@@ -456,7 +458,6 @@ class ProfileFragment() : Fragment(), DialogInterface.OnClickListener, View.OnCl
                 faceDetectionCameraImageView.setImageBitmap(null)
             }
     }
-
 
 
     private fun requestPermission() {
@@ -567,7 +568,11 @@ class ProfileFragment() : Fragment(), DialogInterface.OnClickListener, View.OnCl
         firebaseAnalytics = FirebaseAnalytics.getInstance(context!!)
         firebaseParams.clear()
         firebaseParams.putString(Const.screenLaunched, "Profile")
-        CommonUtils.addParamstoFirebaseEvent(firebaseAnalytics, Const.screenLaunched, firebaseParams)
+        CommonUtils.addParamstoFirebaseEvent(
+            firebaseAnalytics,
+            Const.screenLaunched,
+            firebaseParams
+        )
         view.btnSave.setOnClickListener(this)
     }
 
@@ -729,7 +734,7 @@ class ProfileFragment() : Fragment(), DialogInterface.OnClickListener, View.OnCl
                 CommonUtils.getDeviceUUID(context),
                 Pref.getValue(context, Pref.MOBILE_USER_ID, 0)!!
 
-        ).subscribeOn(Schedulers.io())
+            ).subscribeOn(Schedulers.io())
 
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object : Observer<ProfileResponse> {
