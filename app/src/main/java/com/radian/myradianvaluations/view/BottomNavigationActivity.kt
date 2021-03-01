@@ -243,7 +243,7 @@ class BottomNavigationActivity : AppCompatActivity(), View.OnClickListener {
         val responseData = MutableLiveData<NotiStatusResponse>()
         LoadingDialog.show(this)
         CoroutineScope(Dispatchers.IO).launch {
-          val call= RetrofitBase.getClient().create(APIList::class.java)
+            val call = RetrofitBase.getClient().create(APIList::class.java)
                 .updateReadFlag(
                     Pref.getValue(this@BottomNavigationActivity, Pref.AUTH_TOKEN, "")!!,
                     Pref.getValue(this@BottomNavigationActivity, Pref.PHONE_NUMBER, "")!!,
@@ -254,26 +254,26 @@ class BottomNavigationActivity : AppCompatActivity(), View.OnClickListener {
                 )
             responseData.postValue(call.body())
         }
-     responseData.let{
-        it?.observe(this, Observer {
-            LoadingDialog.dismissDialog()
-            if (it.status.equals(Const.statusOk, true)) {
-                //Notification read badge updated successfully
-            } else if (it.status.equals(Const.statusUnauth, true)) {
-                Toast.makeText(
-                    this@BottomNavigationActivity,
-                    it.errorInfo.get(0).errorMessage,
-                    Toast.LENGTH_SHORT
-                ).show()
-                var intent =
-                    Intent(this@BottomNavigationActivity, PasscodeActivity::class.java)
-                intent.flags =
-                    Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                startActivity(intent)
-            }
+        responseData.let {
+            it?.observe(this, Observer {
+                LoadingDialog.dismissDialog()
+                if (it.status.equals(Const.statusOk, true)) {
+                    //Notification read badge updated successfully
+                } else if (it.status.equals(Const.statusUnauth, true)) {
+                    Toast.makeText(
+                        this@BottomNavigationActivity,
+                        it.errorInfo.get(0).errorMessage,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    var intent =
+                        Intent(this@BottomNavigationActivity, PasscodeActivity::class.java)
+                    intent.flags =
+                        Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(intent)
+                }
 
-        })
-     }
+            })
+        }
 
 
     }
