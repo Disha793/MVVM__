@@ -47,15 +47,13 @@ class WebviewActivity : AppCompatActivity() {
                 txtTitle.text = "Radian’s response to COVID 19"
                 webUrl = "https://www.radian.com/covid-19/"
                 loadWebUrl()
-            }
-            else if(it==Const.scrSignUp){
+            } else if (it == Const.scrSignUp) {
                 toolbar.visibility = View.VISIBLE
                 txtTitle.visibility = View.VISIBLE
                 txtTitle.text = "Sign up"
                 webUrl = "https://falcon.radianvaluations.com/NewVendorProfile"
                 loadWebUrl()
-            }
-            else {
+            } else {
                 toolbar.visibility = View.VISIBLE
                 txtTitle.visibility = View.VISIBLE
                 txtTitle.text = getString(R.string.forgotPassword)
@@ -121,7 +119,6 @@ class WebviewActivity : AppCompatActivity() {
             loadWebUrl()
 
         })
-
 
 
     }
