@@ -1,559 +1,624 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/common_back_grey"
-    android:orientation="vertical">
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/_10sdp"
-        android:layout_weight="1">
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_5sdp"
-            android:background="@android:color/white"
-            app:cardCornerRadius="@dimen/_10sdp">
-
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:id="@+id/linearLayoutCompat"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="@dimen/_8sdp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:id="@+id/linearAddress"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="@dimen/_5sdp"
-                    android:paddingBottom="@dimen/_5sdp">
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/txtAdd"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/messinasans_semibold"
-                        android:text="NA"
-                        android:textColor="@android:color/black"
-                        android:textSize="@dimen/_14sdp"
-                        android:textStyle="bold" />
-
-                    <androidx.appcompat.widget.LinearLayoutCompat
-                        android:id="@+id/linearAdd"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_gravity="end"
-                        android:layout_marginEnd="@dimen/_5sdp"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="@dimen/_5sdp">
-
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/imgDirection"
-                            android:layout_width="@dimen/_20sdp"
-                            android:layout_height="@dimen/_20sdp"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignParentRight="true"
-                            android:layout_marginTop="@dimen/_4sdp"
-                            app:srcCompat="@drawable/img_gps" />
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/imgDirection"
-                            android:layout_alignParentEnd="true"
-                            android:fontFamily="@font/messinasans_regular"
-                            android:text="Directions"
-                            android:textColor="@android:color/black"
-                            android:textSize="@dimen/_11sdp"
-                            android:layout_alignParentRight="true" />
-                    </androidx.appcompat.widget.LinearLayoutCompat>
-
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/txtLockBox"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:layout_marginBottom="@dimen/_8sdp"
-                    android:fontFamily="@font/messinasans_regular"
-                    android:text=""
-                    android:textColor="@android:color/black"
-                    android:textSize="@dimen/_12sdp"
-                    android:textStyle="italic" />
-
-                <View
-                    android:id="@+id/viewAdd"
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:layout_below="@+id/linearAdd"
-                    android:layout_marginTop="@dimen/_3sdp"
-                    android:background="@color/divider_light_grey" />
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    style="@style/paddingStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/txtContact"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/viewAdd"
-                        android:layout_marginTop="@dimen/_3sdp"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/messinasans_regular"
-                        android:text="@string/lbl_contact_name"
-                        android:textColor="@android:color/black"
-                        android:textSize="@dimen/_14sdp" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/txtValContact"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/viewAdd"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginTop="@dimen/_3sdp"
-                        android:layout_marginEnd="@dimen/_5sdp"
-                        android:fontFamily="@font/messinasans_regular"
-                        android:text="NA"
-                        android:textColor="@android:color/black"
-                        android:textSize="@dimen/_14sdp"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="@dimen/_5sdp" />
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-                <View
-                    android:id="@+id/viewContact"
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:layout_below="@+id/txtValContact"
-                    android:layout_marginTop="@dimen/_8sdp"
-                    android:background="@color/divider_light_grey" />
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:id="@+id/linearCall"
-                    style="@style/paddingStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/txtCall"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/viewAdd"
-                        android:layout_marginTop="@dimen/_3sdp"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/messinasans_regular"
-                        android:text="@string/lbl_call"
-                        android:textColor="@android:color/black"
-                        android:textSize="@dimen/_14sdp" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/txtValCall"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/viewAdd"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginTop="@dimen/_3sdp"
-                        android:layout_marginEnd="@dimen/_5sdp"
-                        android:fontFamily="@font/messinasans_regular"
-                        android:text="NA"
-                        android:textColor="@color/color_green"
-                        android:textSize="@dimen/_14sdp"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="@dimen/_5sdp" />
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-                <View
-                    android:id="@+id/viewCall"
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:layout_below="@+id/txtValContact"
-                    android:layout_marginTop="@dimen/_8sdp"
-                    android:background="@color/divider_light_grey" />
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:id="@+id/linearEmail"
-                    style="@style/paddingStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/txtEmail"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/viewAdd"
-                        android:layout_marginTop="@dimen/_3sdp"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/messinasans_regular"
-                        android:text="@string/lbl_email"
-                        android:textColor="@android:color/black"
-                        android:textSize="@dimen/_14sdp" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/txtValEmail"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/viewAdd"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginTop="@dimen/_3sdp"
-                        android:layout_marginEnd="@dimen/_5sdp"
-                        android:fontFamily="@font/messinasans_regular"
-                        android:text="NA"
-                        android:textColor="@color/color_green"
-                        android:textSize="@dimen/_14sdp"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="@dimen/_5sdp" />
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-                <View
-                    android:id="@+id/viewEmail"
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:layout_below="@+id/txtValContact"
-                    android:layout_marginTop="@dimen/_8sdp"
-                    android:background="@color/divider_light_grey" />
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:id="@+id/linearAppt"
-                    style="@style/paddingStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/txtAppt"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/viewAdd"
-                        android:layout_marginTop="@dimen/_3sdp"
-                        android:layout_weight="0.8"
-                        android:fontFamily="@font/messinasans_regular"
-                        android:text="@string/lbl_appointment"
-                        android:textColor="@android:color/black"
-                        android:textSize="@dimen/_14sdp" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/txtValAppt"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/viewAdd"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginTop="@dimen/_3sdp"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/messinasans_regular"
-                        android:gravity="end"
-                        android:text=""
-                        android:textColor="@android:color/black"
-                        android:textSize="@dimen/_14sdp"
-
-                        android:layout_alignParentRight="true" />
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="0dp"
-                        android:layout_height="@dimen/_15sdp"
-                        android:layout_gravity="center"
-                        android:layout_weight="0.3"
-                        app:srcCompat="@drawable/ic_navigate_forward" />
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-                <View
-                    android:id="@+id/viewAppt"
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:layout_below="@+id/txtValContact"
-                    android:layout_marginTop="@dimen/_8sdp"
-                    android:background="@color/divider_light_grey" />
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:id="@+id/linearLOE"
-                    style="@style/paddingStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/txtLoe"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/viewAdd"
-                        android:layout_marginTop="@dimen/_3sdp"
-                        android:layout_weight="1.8"
-                        android:fontFamily="@font/messinasans_regular"
-                        android:text="@string/lbl_loe"
-                        android:textColor="@android:color/black"
-                        android:textSize="@dimen/_14sdp" />
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="0dp"
-                        android:layout_height="@dimen/_15sdp"
-                        android:layout_gravity="center"
-                        android:layout_weight="0.3"
-                        app:srcCompat="@drawable/ic_navigate_forward" />
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-                <View
-                    android:id="@+id/viewLoe"
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:layout_below="@+id/txtValContact"
-                    android:layout_marginTop="@dimen/_8sdp"
-                    android:background="@color/divider_light_grey" />
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:id="@+id/linearDocument"
-                    style="@style/paddingStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="4">
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/txtdoc"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/viewAdd"
-                        android:layout_marginTop="@dimen/_3sdp"
-                        android:layout_weight="1.8"
-                        android:fontFamily="@font/messinasans_regular"
-                        android:text="@string/lbl_documents"
-                        android:textColor="@android:color/black"
-                        android:textSize="@dimen/_14sdp" />
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/imgDotDoc"
-                        android:layout_width="0dp"
-                        android:layout_height="@dimen/_10sdp"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="@dimen/_2sdp"
-                        android:layout_weight="0.4"
-                        android:visibility="invisible"
-                        app:srcCompat="@drawable/ic_notfication_circle_enabled" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/txtnewdoc"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/viewAdd"
-                        android:layout_gravity="top"
-                        android:layout_marginTop="@dimen/_3sdp"
-                        android:layout_weight="1.55"
-                        android:fontFamily="@font/messinasans_regular"
-                        android:text="@string/lbl_new_documents"
-                        android:textColor="@android:color/black"
-                        android:textSize="@dimen/_14sdp"
-                        android:visibility="invisible" />
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="0dp"
-                        android:layout_height="@dimen/_15sdp"
-                        android:layout_gravity="center"
-                        android:layout_weight="0.3"
-                        app:srcCompat="@drawable/ic_navigate_forward" />
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-                <View
-                    android:id="@+id/viewDoc"
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:layout_below="@+id/txtValContact"
-                    android:layout_marginTop="@dimen/_8sdp"
-                    android:background="@color/divider_light_grey" />
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:id="@+id/linearMessages"
-                    style="@style/paddingStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="4">
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/txtmessage"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/viewAdd"
-                        android:layout_marginTop="@dimen/_3sdp"
-                        android:layout_weight="1.8"
-                        android:fontFamily="@font/messinasans_regular"
-                        android:text="@string/lbl_messages"
-                        android:textColor="@android:color/black"
-                        android:textSize="@dimen/_14sdp" />
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/imgDotMsg"
-                        android:layout_width="0dp"
-                        android:layout_height="@dimen/_10sdp"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="@dimen/_2sdp"
-                        android:layout_weight="0.4"
-                        android:visibility="invisible"
-                        app:srcCompat="@drawable/ic_notfication_circle_enabled" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/txtnewmsg"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/viewAdd"
-                        android:layout_marginTop="@dimen/_3sdp"
-                        android:layout_weight="1.55"
-                        android:fontFamily="@font/messinasans_regular"
-                        android:text="@string/lbl_new_message"
-                        android:textColor="@android:color/black"
-                        android:textSize="@dimen/_14sdp"
-                        android:visibility="invisible" />
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="0dp"
-                        android:layout_height="@dimen/_15sdp"
-                        android:layout_gravity="center"
-                        android:layout_weight="0.3"
-                        app:srcCompat="@drawable/ic_navigate_forward" />
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-                <View
-                    android:id="@+id/viewMsg"
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:layout_below="@+id/txtValContact"
-                    android:layout_marginTop="@dimen/_8sdp"
-                    android:background="@color/divider_light_grey" />
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:id="@+id/linearRevisions"
-                    style="@style/paddingStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="4">
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/txtRevision"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/viewAdd"
-                        android:layout_marginTop="@dimen/_3sdp"
-                        android:layout_weight="1.8"
-                        android:fontFamily="@font/messinasans_regular"
-                        android:text="@string/lbl_revision"
-                        android:textColor="@android:color/black"
-                        android:textSize="@dimen/_14sdp" />
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/imgDotRevision"
-                        android:layout_width="0dp"
-                        android:layout_height="@dimen/_10sdp"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="@dimen/_2sdp"
-                        android:layout_weight="0.4"
-                        android:visibility="invisible"
-                        app:srcCompat="@drawable/ic_notfication_circle_enabled" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/txtnewreq"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/viewAdd"
-                        android:layout_marginTop="@dimen/_3sdp"
-                        android:layout_weight="1.55"
-                        android:fontFamily="@font/messinasans_regular"
-                        android:text="@string/lbl_new_req"
-                        android:textColor="@android:color/black"
-                        android:textSize="@dimen/_14sdp"
-                        android:visibility="invisible" />
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="0dp"
-                        android:layout_height="@dimen/_15sdp"
-                        android:layout_gravity="center"
-                        android:layout_weight="0.3"
-                        app:srcCompat="@drawable/ic_navigate_forward" />
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-                <View
-                    android:id="@+id/viewRevision"
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:layout_below="@+id/txtValContact"
-                    android:layout_marginTop="@dimen/_8sdp"
-                    android:background="@color/divider_light_grey" />
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:id="@+id/linearMore"
-                    style="@style/paddingStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/txtmore"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/viewAdd"
-                        android:layout_marginTop="@dimen/_3sdp"
-                        android:layout_weight="1.8"
-                        android:fontFamily="@font/messinasans_regular"
-                        android:text="@string/lbl_more"
-                        android:textColor="@android:color/black"
-                        android:textSize="@dimen/_14sdp" />
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="0dp"
-                        android:layout_height="@dimen/_15sdp"
-                        android:layout_gravity="center"
-                        android:layout_weight="0.3"
-                        app:srcCompat="@drawable/ic_navigate_forward" />
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-            </androidx.appcompat.widget.LinearLayoutCompat>
-        </androidx.cardview.widget.CardView>
-
-
-    </ScrollView>
+    android:layout_height="match_parent">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/back_card_btn"
-        android:gravity="center"
-        android:padding="@dimen/_10sdp">
+        android:layout_height="match_parent"
+        android:background="@color/common_back_grey"
+        android:orientation="vertical">
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnMark"
-            android:layout_width="wrap_content"
+        <ScrollView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@drawable/back_button_new"
-            android:fontFamily="@font/messinasans_semibold"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:layout_weight="1">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_5sdp"
+                android:background="@android:color/white"
+                app:cardCornerRadius="@dimen/_10sdp">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/linearLayoutCompat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_8sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/linearAddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:paddingBottom="@dimen/_5sdp">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/txtAdd"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/messinasans_semibold"
+                            android:text="NA"
+                            android:textColor="@android:color/black"
+                            android:textSize="@dimen/_14sdp"
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:id="@+id/linearAdd"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_gravity="end"
+                            android:layout_marginEnd="@dimen/_5sdp"
+                            android:layout_marginRight="@dimen/_5sdp"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/imgDirection"
+                                android:layout_width="@dimen/_20sdp"
+                                android:layout_height="@dimen/_20sdp"
+                                android:layout_alignParentEnd="true"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginTop="@dimen/_4sdp"
+                                app:srcCompat="@drawable/img_gps" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/imgDirection"
+                                android:layout_alignParentEnd="true"
+                                android:layout_alignParentRight="true"
+                                android:fontFamily="@font/messinasans_regular"
+                                android:text="Directions"
+                                android:textColor="@android:color/black"
+                                android:textSize="@dimen/_11sdp" />
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/txtLockBox"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginBottom="@dimen/_8sdp"
+                        android:fontFamily="@font/messinasans_regular"
+                        android:text=""
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/_12sdp"
+                        android:textStyle="italic" />
+
+                    <View
+                        android:id="@+id/viewAdd"
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:layout_below="@+id/linearAdd"
+                        android:layout_marginTop="@dimen/_3sdp"
+                        android:background="@color/divider_light_grey" />
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        style="@style/paddingStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/txtContact"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/viewAdd"
+                            android:layout_marginTop="@dimen/_3sdp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/messinasans_regular"
+                            android:text="@string/lbl_contact_name"
+                            android:textColor="@android:color/black"
+                            android:textSize="@dimen/_14sdp" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/txtValContact"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/viewAdd"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginTop="@dimen/_3sdp"
+                            android:layout_marginEnd="@dimen/_5sdp"
+                            android:layout_marginRight="@dimen/_5sdp"
+                            android:fontFamily="@font/messinasans_regular"
+                            android:text="NA"
+                            android:textColor="@android:color/black"
+                            android:textSize="@dimen/_14sdp" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <View
+                        android:id="@+id/viewContact"
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:layout_below="@+id/txtValContact"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:background="@color/divider_light_grey" />
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/linearCall"
+                        style="@style/paddingStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/txtCall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/viewAdd"
+                            android:layout_marginTop="@dimen/_3sdp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/messinasans_regular"
+                            android:text="@string/lbl_call"
+                            android:textColor="@android:color/black"
+                            android:textSize="@dimen/_14sdp" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/txtValCall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/viewAdd"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginTop="@dimen/_3sdp"
+                            android:layout_marginEnd="@dimen/_5sdp"
+                            android:layout_marginRight="@dimen/_5sdp"
+                            android:fontFamily="@font/messinasans_regular"
+                            android:text="NA"
+                            android:textColor="@color/color_green"
+                            android:textSize="@dimen/_14sdp" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <View
+                        android:id="@+id/viewCall"
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:layout_below="@+id/txtValContact"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:background="@color/divider_light_grey" />
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/linearEmail"
+                        style="@style/paddingStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/txtEmail"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/viewAdd"
+                            android:layout_marginTop="@dimen/_3sdp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/messinasans_regular"
+                            android:text="@string/lbl_email"
+                            android:textColor="@android:color/black"
+                            android:textSize="@dimen/_14sdp" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/txtValEmail"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/viewAdd"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginTop="@dimen/_3sdp"
+                            android:layout_marginEnd="@dimen/_5sdp"
+                            android:layout_marginRight="@dimen/_5sdp"
+                            android:fontFamily="@font/messinasans_regular"
+                            android:text="NA"
+                            android:textColor="@color/color_green"
+                            android:textSize="@dimen/_14sdp" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <View
+                        android:id="@+id/viewEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:layout_below="@+id/txtValContact"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:background="@color/divider_light_grey" />
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/linearAppt"
+                        style="@style/paddingStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/txtAppt"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/viewAdd"
+                            android:layout_marginTop="@dimen/_3sdp"
+                            android:layout_weight="0.8"
+                            android:fontFamily="@font/messinasans_regular"
+                            android:text="@string/lbl_appointment"
+                            android:textColor="@android:color/black"
+                            android:textSize="@dimen/_14sdp" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/txtValAppt"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/viewAdd"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginTop="@dimen/_3sdp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/messinasans_regular"
+                            android:gravity="end"
+                            android:text=""
+                            android:textColor="@android:color/black"
+
+                            android:textSize="@dimen/_14sdp" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/_15sdp"
+                            android:layout_gravity="center"
+                            android:layout_weight="0.3"
+                            app:srcCompat="@drawable/ic_navigate_forward" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <View
+                        android:id="@+id/viewAppt"
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:layout_below="@+id/txtValContact"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:background="@color/divider_light_grey" />
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/linearLOE"
+                        style="@style/paddingStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/txtLoe"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/viewAdd"
+                            android:layout_marginTop="@dimen/_3sdp"
+                            android:layout_weight="1.8"
+                            android:fontFamily="@font/messinasans_regular"
+                            android:text="@string/lbl_loe"
+                            android:textColor="@android:color/black"
+                            android:textSize="@dimen/_14sdp" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/_15sdp"
+                            android:layout_gravity="center"
+                            android:layout_weight="0.3"
+                            app:srcCompat="@drawable/ic_navigate_forward" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <View
+                        android:id="@+id/viewLoe"
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:layout_below="@+id/txtValContact"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:background="@color/divider_light_grey" />
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/linearDocument"
+                        style="@style/paddingStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="4">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/txtdoc"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/viewAdd"
+                            android:layout_marginTop="@dimen/_3sdp"
+                            android:layout_weight="1.8"
+                            android:fontFamily="@font/messinasans_regular"
+                            android:text="@string/lbl_documents"
+                            android:textColor="@android:color/black"
+                            android:textSize="@dimen/_14sdp" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/imgDotDoc"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/_10sdp"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/_2sdp"
+                            android:layout_weight="0.4"
+                            android:visibility="invisible"
+                            app:srcCompat="@drawable/ic_notfication_circle_enabled" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/txtnewdoc"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/viewAdd"
+                            android:layout_gravity="top"
+                            android:layout_marginTop="@dimen/_3sdp"
+                            android:layout_weight="1.55"
+                            android:fontFamily="@font/messinasans_regular"
+                            android:text="@string/lbl_new_documents"
+                            android:textColor="@android:color/black"
+                            android:textSize="@dimen/_14sdp"
+                            android:visibility="invisible" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/_15sdp"
+                            android:layout_gravity="center"
+                            android:layout_weight="0.3"
+                            app:srcCompat="@drawable/ic_navigate_forward" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <View
+                        android:id="@+id/viewDoc"
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:layout_below="@+id/txtValContact"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:background="@color/divider_light_grey" />
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/linearMessages"
+                        style="@style/paddingStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="4">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/txtmessage"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/viewAdd"
+                            android:layout_marginTop="@dimen/_3sdp"
+                            android:layout_weight="1.8"
+                            android:fontFamily="@font/messinasans_regular"
+                            android:text="@string/lbl_messages"
+                            android:textColor="@android:color/black"
+                            android:textSize="@dimen/_14sdp" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/imgDotMsg"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/_10sdp"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/_2sdp"
+                            android:layout_weight="0.4"
+                            android:visibility="invisible"
+                            app:srcCompat="@drawable/ic_notfication_circle_enabled" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/txtnewmsg"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/viewAdd"
+                            android:layout_marginTop="@dimen/_3sdp"
+                            android:layout_weight="1.55"
+                            android:fontFamily="@font/messinasans_regular"
+                            android:text="@string/lbl_new_message"
+                            android:textColor="@android:color/black"
+                            android:textSize="@dimen/_14sdp"
+                            android:visibility="invisible" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/_15sdp"
+                            android:layout_gravity="center"
+                            android:layout_weight="0.3"
+                            app:srcCompat="@drawable/ic_navigate_forward" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <View
+                        android:id="@+id/viewMsg"
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:layout_below="@+id/txtValContact"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:background="@color/divider_light_grey" />
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/linearRevisions"
+                        style="@style/paddingStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="4">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/txtRevision"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/viewAdd"
+                            android:layout_marginTop="@dimen/_3sdp"
+                            android:layout_weight="1.8"
+                            android:fontFamily="@font/messinasans_regular"
+                            android:text="@string/lbl_revision"
+                            android:textColor="@android:color/black"
+                            android:textSize="@dimen/_14sdp" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/imgDotRevision"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/_10sdp"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/_2sdp"
+                            android:layout_weight="0.4"
+                            android:visibility="invisible"
+                            app:srcCompat="@drawable/ic_notfication_circle_enabled" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/txtnewreq"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/viewAdd"
+                            android:layout_marginTop="@dimen/_3sdp"
+                            android:layout_weight="1.55"
+                            android:fontFamily="@font/messinasans_regular"
+                            android:text="@string/lbl_new_req"
+                            android:textColor="@android:color/black"
+                            android:textSize="@dimen/_14sdp"
+                            android:visibility="invisible" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/_15sdp"
+                            android:layout_gravity="center"
+                            android:layout_weight="0.3"
+                            app:srcCompat="@drawable/ic_navigate_forward" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <View
+                        android:id="@+id/viewRevision"
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:layout_below="@+id/txtValContact"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:background="@color/divider_light_grey" />
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/linear"
+                        style="@style/paddingStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="4">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/txtPhoto"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/viewAdd"
+                            android:layout_marginTop="@dimen/_3sdp"
+                            android:layout_weight="1.8"
+                            android:fontFamily="@font/messinasans_regular"
+                            android:text="Photo Upload "
+                            android:textColor="@android:color/black"
+                            android:textSize="@dimen/_14sdp" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/imgPhotoUpload"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/_10sdp"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/_2sdp"
+                            android:layout_weight="0.4"
+                            android:visibility="invisible"
+                            app:srcCompat="@drawable/ic_notfication_circle_enabled" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/txt"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/viewAdd"
+                            android:layout_marginTop="@dimen/_3sdp"
+                            android:layout_weight="1.55"
+                            android:fontFamily="@font/messinasans_regular"
+                            android:text="@string/lbl_new_req"
+                            android:textColor="@android:color/black"
+                            android:textSize="@dimen/_14sdp"
+                            android:visibility="invisible" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/_15sdp"
+                            android:layout_gravity="center"
+                            android:layout_weight="0.3"
+                            app:srcCompat="@drawable/ic_navigate_forward" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+                    <View
+                        android:id="@+id/view"
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:layout_below="@+id/txtValContact"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:background="@color/divider_light_grey" />
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/linearMore"
+                        style="@style/paddingStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/txtmore"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/viewAdd"
+                            android:layout_marginTop="@dimen/_3sdp"
+                            android:layout_weight="1.8"
+                            android:fontFamily="@font/messinasans_regular"
+                            android:text="@string/lbl_more"
+                            android:textColor="@android:color/black"
+                            android:textSize="@dimen/_14sdp" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/_15sdp"
+                            android:layout_gravity="center"
+                            android:layout_weight="0.3"
+                            app:srcCompat="@drawable/ic_navigate_forward" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+            </androidx.cardview.widget.CardView>
+
+
+        </ScrollView>
+
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/back_card_btn"
             android:gravity="center"
-            android:paddingStart="@dimen/_25sdp"
-            android:paddingLeft="@dimen/_25sdp"
-            android:paddingEnd="@dimen/_25sdp"
-            android:paddingRight="@dimen/_25sdp"
-            android:text="Mark this inspection complete"
-            android:textAllCaps="false"
-            android:textColor="@android:color/white"
-            android:visibility="gone" />
+            android:padding="@dimen/_10sdp">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnMark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/back_button_new"
+                android:fontFamily="@font/messinasans_semibold"
+                android:gravity="center"
+                android:paddingStart="@dimen/_25sdp"
+                android:paddingLeft="@dimen/_25sdp"
+                android:paddingEnd="@dimen/_25sdp"
+                android:paddingRight="@dimen/_25sdp"
+                android:text="Mark this inspection complete"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:visibility="gone" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-</androidx.appcompat.widget.LinearLayoutCompat>
+</RelativeLayout>
+

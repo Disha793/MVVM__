@@ -56,16 +56,16 @@ class ManageOrderFragment : Fragment(), View.OnClickListener {
         savedInstanceState: Bundle?
     ): View? {
         view = inflater.inflate(R.layout.fragment_manage_order, container, false)
-       // view.linearAppt.setOnClickListener(this)
-       // view.linearMore.setOnClickListener(this)
-      //  view.linearAddress.setOnClickListener(this)
+        view.linearAppt.setOnClickListener(this)
+        view.linearMore.setOnClickListener(this)
+        view.linearAddress.setOnClickListener(this)
         view.linearCall.setOnClickListener(this)
         view.linearEmail.setOnClickListener(this)
-        //view.linearDocument.setOnClickListener(this)
-        //view.linearMessages.setOnClickListener(this)
-        //view.linearRevisions.setOnClickListener(this)
-        //view.linearLOE.setOnClickListener(this)
-        //view.btnMark.setOnClickListener(this)
+        view.linearDocument.setOnClickListener(this)
+        view.linearMessages.setOnClickListener(this)
+        view.linearRevisions.setOnClickListener(this)
+        view.linearLOE.setOnClickListener(this)
+        view.btnMark.setOnClickListener(this)
         manageOrderViewModel =
             ViewModelProvider(context as BottomNavigationActivity).get(ManageOrderViewModel::class.java)
         manageOrderViewModel.init(context as BottomNavigationActivity)
@@ -87,7 +87,7 @@ class ManageOrderFragment : Fragment(), View.OnClickListener {
         arguments?.let {
             itemId = it.getInt(Const.itemIdTag)
         }
-        //getManageOrder()
+        getManageOrder()
     }
 
     private fun setToolbar() {
@@ -95,6 +95,8 @@ class ManageOrderFragment : Fragment(), View.OnClickListener {
         (context as BottomNavigationActivity).imgBack.visibility = View.VISIBLE
         (context as BottomNavigationActivity).txtTitle.text = getString(R.string.title_manage_order)
         (context as BottomNavigationActivity).txtClear.visibility = View.GONE
+
+
     }
 
     private fun getManageOrder() {
