@@ -45,12 +45,12 @@ class HomeFragment : Fragment(), View.OnClickListener {
         view.imgUser.setOnClickListener(this)
         view.imgMessage.setOnClickListener(this)
         view.imgDrawer.setOnClickListener(this)
-//        view.linearOut.setOnClickListener(this)
-//        view.linearDocument.setOnClickListener(this)
-//        view.linearAbout.setOnClickListener(this)
-//        view.linearGetHelp.setOnClickListener(this)
-//        view.linearSetting.setOnClickListener(this)
-//        view.linearSignout.setOnClickListener(this)
+        view.linearOut.setOnClickListener(this)
+        view.linearDocument.setOnClickListener(this)
+        view.linearAbout.setOnClickListener(this)
+        view.linearGetHelp.setOnClickListener(this)
+        view.linearSetting.setOnClickListener(this)
+        view.linearSignout.setOnClickListener(this)
         return view
     }
 
@@ -76,10 +76,10 @@ class HomeFragment : Fragment(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.imgUser -> {
-//                view.toolbarDashboard.visibility = View.GONE
-//                (context as BottomNavigationActivity).layout_toolbar.visibility = View.GONE
-//                (context as BottomNavigationActivity).pushFragment(ProfileFragment(), true)
-//                (context as BottomNavigationActivity).bottomNavigationView.visibility = View.GONE
+                view.toolbarDashboard.visibility = View.GONE
+                (context as BottomNavigationActivity).layout_toolbar.visibility = View.GONE
+                (context as BottomNavigationActivity).pushFragment(ProfileFragment(), true)
+                (context as BottomNavigationActivity).bottomNavigationView.visibility = View.GONE
             }
             R.id.imgMessage -> {
                 (context as BottomNavigationActivity).pushFragment(MessageListFragment(), true)
