@@ -3,6 +3,9 @@
     <!--Sign In text-->
     <string name="sign_in">Sign into your Radian Valuation Services account</string>
     <string name="enter_sign_in">Enter the same username and password you use to access the RVS vendor portal.</string>
+    <string name="signup">Sign up</string>
+    <string name="having_trouble">Having trouble signing in?</string>
+    <string name="forgot_pwd">Forgot your password?</string>
     <!--Error messages-->
     <string name="error_login_empty">Please Enter Mobile Number</string>
     <string name="error_login_invalid_number">Please Enter Valid Mobile Number</string>
@@ -10,6 +13,16 @@
     <string name="error_login_empty_password">Please Enter Password</string>
     <string name="error_login_invalid_password">Please Enter Valid Password</string>
     <string name="error_login_invalid">Invalid Phone number. Please Enter Valid 10 digit Mobile Number.</string>
+    <string name="error_choose_time">You must choose an appointment time to aceept this order.</string>
+    <string name="error_enter_note">Please enter Note.</string>
+    <string name="error_enter_strt_dte">Please Enter Start Date.</string>
+    <string name="error_enter_end_dte">Please Enter End Date.</string>
+    <string name="error_enter_appoinmnt">Please Enter Appointment Date and Time.</string>
+    <!--EO Error Messages-->
+    <string name="enter_coverage_amount">Please enter your coverage amount.</string>
+    <string name="enter_policy_number">Please enter policy number.</string>
+    <string name="enter_provider_name">Please enter provider name.</string>
+    <string name="enter_expiry_date">Please select expiry date.</string>
     <!--Organiztion Info text-->
     <string name="lbl_info_title">Make sure you have the right login information</string>
     <string name="lbl_info_text1">No need to create a new account!</string>
@@ -22,9 +35,50 @@
     <string name="lbl_info_byemail">By email</string>
     <string name="contactUs">Contact Us</string>
     <string name="lbl_here">here.</string>
+    <!--Document tab-->
+    <string name="eo">E&amp;O Document</string>
+    <string name="w9">W9 Document</string>
+    <string name="licence">License Update</string>
+    <string name="delete">Delete</string>
+    <!--Profile dialog labels-->
+    <string name="lbl_next_step">Next Step</string>
+    <string name="lbl_dilg_header">We\'ll send this photo to your inspection contacts before your inspections. Make sure to use an image you\'d want them to see!</string>
+    <string name="lbl_add_photo">Add a professional photo</string>
+    <string name="lbl_photo_info">If multiple appraisers use this account, please do not add a photo.</string>
+    <!--Document List labeles-->
+    <string name="loe">LOE</string>
+    <!--About us-->
+
+    <string name="aboutus">The myradian appraisals App mobile app allows members of Radian\'s vendor network to easily manage their Radian valuation orders.
+The app streamlines every step of the process, including accepting orders, scheduling inspections and messaging directly with customers.\n
+-        Highly secure web application hosted at a SSAE 16 data center that is ISO 9000and 27001 certified.
+\n-        Advanced industry-specific compliance tools.
+\n-        Automated workflows increase productivity.
+    </string>
+    <string name="contactAdd">1000 GSK Drive, Suite 210 </string>
+    <string name="contactPhone">Coraopolis PA, 15108 Phone: (412)368-2288</string>
+    <string name="website">https://amc.radianvaluations.com/</string>
     <!--Toolbar titles-->
     <string name="support">Support</string>
     <string name="gethelpTitle">Get Help</string>
+    <string name="joinUs">Join us</string>
+    <string name="forgotPassword">Forgot Password</string>
+    <string name="new_orders">New Orders</string>
+    <string name="open_orders">Orders</string>
+    <string name="title_manage_order">Manage Order</string>
+    <string name="moreDetailsTitle">More Details</string>
+    <string name="messagesTitle">Messages</string>
+    <string name="title_new_order_detail">New Order</string>
+    <string name="rejectOrders">Reject Orders</string>
+    <string name="conditnlAccept">CONDITIONAL ACCEPT</string>
+    <string name="outOfOfiice">Out of Office</string>
+    <string name="docTitle">Document</string>
+    <string name="settingsTitle">Settings</string>
+    <string name="coc">Code of Conduct</string>
+    <!--Out of office-->
+    <string name="aboutUs">About us</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
     <!--Passcode labels-->
     <string name="enter_access_code">Please enter your passcode</string>
     <string name="enter_current_access_code">Please enter your current passcode</string>
@@ -34,4 +88,91 @@
     <string name="forgot_access_code">Forgot Passcode?</string>
     <!--Forgot accesscode-->
     <string name="forgot_text">Enter the verification code sent to</string>
+    <!--Error in API Message -->
+    <string name="please_try_again">Please try again</string>
+    <string name="ok">Ok</string>
+    <!--W9 validation messages-->
+    <string name="enter_addressline_1">Please enter your address line 1.</string>
+    <string name="enter_city">Please enter your city.</string>
+    <string name="enter_zip">Please enter your zip.</string>
+    <string name="enter_state">Please enter your state.</string>
+    <!--Sign out message-->
+    <string name="signOut">Do you want to Sign out?</string>
+    <string name="btnSignOut">Sign Out</string>
+    <string name="btncancel">Cancel</string>
+    <!--Bottom tab -->
+    <string name="text_home">Home</string>
+    <string name="text_orders">Orders</string>
+    <string name="text_new">New</string>
+    <string name="text_rewards">Rewards</string>
+
+    <string name="empty_new_order">You don\'t have any new orders right now.</string>
+    <string name="empty_new_order_detail">We\'ll notify you when there\'s a new order in your area!</string>
+    <string name="empty_open_order">You don\'t have any orders right now. your area!</string>
+    <string name="empty_dashboard">You\'re all caught up!</string>
+    <string name="empty_dashboard_detail">We\'ll notify you when there\'s something new to do.</string>
+    <string name="clear_message">Are you sure you want to clear?</string>
+    <string name="delete_message">Are you sure you want to delete?</string>
+    <!--Decline restriction message-->
+    <string name="decline_restrictn_msg">You cannot Decline broadcast order.</string>
+    <!--Dashboard labels and button names-->
+    <string name="lbl_dash_upcoming">Upcoming inspection</string>
+    <string name="lbl_dash_nwordr">New Order Available</string>
+    <string name="lbl_dash_revision">Revision request</string>
+    <string name="lbl_dash_inspectn">Mark your inspection complete</string>
+    <string name="lbl_dash_document">New Document</string>
+    <string name="lbl_btn_view">View</string>
+    <string name="lbl_btn_read">Mark as Read</string>
+    <string name="lbl_btn_update">Update Appointment</string>
+    <string name="lbl_btn_complete">Mark Complete</string>
+    <string name="lbl_btn_decline">Decline</string>
+    <!--menu_item-->
+    <string name="out_of_office">Out Of Office</string>
+    <string name="about">About</string>
+    <string name="gethelp">Get Help</string>
+    <string name="settings">Settings</string>
+    <string name="sign_out">Sign out</string>
+    <!--Profile hints-->
+    <string name="address">Address</string>
+    <string name="country">Country</string>
+    <string name="eoCoverage">EO coverage</string>
+    <string name="serviceType">Service Type</string>
+    <string name="eoAmount">EO Amount</string>
+    <string name="expiryDate">Expiry Date</string>
+    <string name="vendorName">Vendor Name</string>
+    <string name="licenceno">License Plate</string>
+    <string name="make">Car Make</string>
+    <!--manage order labels-->
+    <string name="lbl_contact_name">Contact Name</string>
+    <string name="lbl_call">Call</string>
+    <string name="lbl_email">Email</string>
+    <string name="lbl_appointment">Appointment</string>
+    <string name="lbl_loe">LOE</string>
+    <string name="lbl_documents">Documents</string>
+    <string name="lbl_new_documents">New Document</string>
+    <string name="lbl_new_message">New Message</string>
+    <string name="lbl_new_req">New Request</string>
+    <string name="lbl_messages">Messages</string>
+    <string name="lbl_revision">Revision Requests</string>
+    <string name="lbl_more">More Details</string>
+    <!--Permision messages-->
+    <string name="permission_profile">Please allow myradian appraisals app to access camera and storage.</string>
+    <string name="permission_call">Please allow myradian appraisals app to make phone call.</string>
+    <string name="permission_calendar">Please allow myradian appraisals app to access calendar.</string>
+    <!--Alert message titles-->
+    <string name="call_dialog_title">"Do you want to call?"</string>
+    <!--More details labels-->
+    <string name="product_info">Product Information</string>
+    <string name="type">Type</string>
+    <string name="order_id">Order ID</string>
+    <string name="loan_id">Loan ID</string>
+    <string name="client">Client</string>
+    <string name="borrower_info">Borrower Information</string>
+    <string name="name">Name</string>
+    <string name="phone">Phone</string>
+    <string name="email">Email</string>
+    <!--Message labels-->
+    <string name="orderId">Order Id :</string>
+    <!--Others-->
+    <string name="messages">Messages</string>
 </resources>

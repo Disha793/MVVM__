@@ -2,6 +2,7 @@ package com.radian.myradianvaluations.network
 
 
 import com.radian.vendorbridge.Response.*
+import io.reactivex.Observable
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
@@ -18,7 +19,7 @@ interface APIList {
     ): Response<LoginResponse>
 
     @FormUrlEncoded
-    @POST("mobile/Login/GetUserStatu")
+    @POST("mobile/Login/GetUserStatus")
     suspend fun getUserStatus(
         @Field("deviceID") deviceId: String,
         @Field("PhoneNumber") phoneNumber: String,
@@ -34,7 +35,7 @@ interface APIList {
 
     @FormUrlEncoded
     @POST("mobile/Login/GenerateOTPCode")
-    fun generateOtp(
+    suspend fun generateOtp(
         @Field("deviceID") deviceId: String,
         @Field("PhoneNumber") phoneNumber: String
     ): Response<OtpResponse>
@@ -86,12 +87,12 @@ interface APIList {
 
     @FormUrlEncoded
     @POST("mobile/Dashboard/GetMyProfile")
-    suspend fun getMyProfile(
+    fun getMyProfile(
         @Header("Authorization") authToken: String,
         @Field("PhoneNumber") phoneNumber: String,
         @Field("DeviceID") deviceId: String,
         @Field("MobileUserId") mobileUserId: Int
-    ): Response<ProfileResponse>
+    ): Observable<ProfileResponse>
 
     @FormUrlEncoded
     @POST("mobile/Dashboard/SaveVendorVacationInfo")
@@ -171,10 +172,10 @@ interface APIList {
 
     @FormUrlEncoded
     @POST("mobile/Dashboard/SaveMessageMarkAsRead")
-    suspend fun deleteMessage(
+    fun deleteMessage(
         @Header("Authorization") authToken: String,
         @FieldMap field: HashMap<String, Any?>
-    ): Response<StatusResponse>
+    ): Observable<StatusResponse>
 
     @FormUrlEncoded
     @POST("mobile/Dashboard/SaveDocumentMarkAsRead")
@@ -232,13 +233,13 @@ interface APIList {
 
     @Multipart
     @POST("mobile/Dashboard/UploadDocument")
-    suspend fun uploadImage(
+    fun uploadImage(
         @Header("Authorization") authToken: String,
         @Part file: @JvmSuppressWildcards MultipartBody.Part,
         @Part("filename") filename: @JvmSuppressWildcards RequestBody,
         @PartMap values: HashMap<String, RequestBody>
     )
-            : Response<ProfileImageResponse>
+            : Observable<ProfileImageResponse>
 
     @FormUrlEncoded
     @POST("Mobile/Notification/NotificationList")
@@ -291,14 +292,14 @@ interface APIList {
 
     @FormUrlEncoded
     @POST("Mobile/Dashboard/SaveMyProfile")
-    suspend fun saveProfile(
+    fun saveProfile(
         @Header("Authorization") authToken: String,
         @Field("PhoneNumber") phoneNumber: String,
         @Field("DeviceID") deviceId: String,
         @Field("MobileUserId") mobileUserId: Int,
         @Field("LicensePlate") licencePlate: String,
         @Field("CarMake") carMake: String
-    ): Response<StatusResponse>
+    ): Observable<StatusResponse>
 
     @FormUrlEncoded
     @POST("mobile/Dashboard/GetLicenseDropdownList")
@@ -324,7 +325,7 @@ interface APIList {
 
     @FormUrlEncoded
     @POST("/mobile/vendorprofile/UpdateVendorLI")
-    suspend fun saveLicenceDetails(
+     fun saveLicenceDetails(
         @Header("Authorization") authToken: String,
         @Field("PhoneNumber") phoneNumber: String,
         @Field("DeviceID") deviceId: String,
@@ -340,11 +341,11 @@ interface APIList {
         @Field("LICENSE") licence: String?,
         @Field("LICENSETYPEID") licenceType: String?,
         @Field("EXPIRYDATE") expiryDte: String?
-    ): Response<StatusResponse>
+    ): Observable<StatusResponse>
 
     @FormUrlEncoded
     @POST("/mobile/vendorprofile/UpdateVendorEO")
-    suspend fun saveEoDetails(
+     fun saveEoDetails(
         @Header("Authorization") authToken: String,
         @Field("PhoneNumber") phoneNumber: String,
         @Field("DeviceID") deviceId: String,
@@ -360,19 +361,19 @@ interface APIList {
         @Field("EOPOLICYNO") eoPolicy: String?,
         @Field("EXPIRYDATE") expiry: String?
 
-    ): Response<StatusResponse>
+    ): Observable<StatusResponse>
 
 
     @FormUrlEncoded
     @POST("/Mobile/VendorProfile/UpdateVendorW9")
-    suspend fun saveW9Details(
+     fun saveW9Details(
         @Header("Authorization") authToken: String,
         @Field("PhoneNumber") phoneNumber: String,
         @Field("DeviceID") deviceId: String,
         @Field("MobileUserId") mobileUserId: Int,
         @Field("VENDORID") vendorId: String?,
         @FieldMap map: HashMap<String, Any?>
-    ): Response<StatusResponse>
+    ): Observable<StatusResponse>
 
     @FormUrlEncoded
     @POST("/Mobile/Dashboard/whatsnew")
