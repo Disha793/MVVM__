@@ -7,11 +7,13 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
+import android.database.Cursor
 import android.graphics.Color
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.provider.Settings
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -22,6 +24,8 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.radian.myradianvaluations.R
 import okhttp3.MediaType
 import okhttp3.RequestBody
+import java.text.SimpleDateFormat
+import java.util.*
 
 object CommonUtils {
 
@@ -36,7 +40,35 @@ object CommonUtils {
         imm.hideSoftInputFromWindow(view.windowToken, 0)
 
     }
+    internal fun getRealPathFromURI(context: Context, contentUri: Uri): String? {
+        var cursor: Cursor? = null
+        var path: String?
+        try {
 
+
+            var proj: Array<out String?> = arrayOf<String>(MediaStore.Images.Media.DATA)
+            cursor = context.getContentResolver().query(contentUri, proj, null, null, null)
+            if (cursor == null) { // Source is Dropbox or other similar local file path
+                path = contentUri.getPath()
+            } else {
+                var columnIndex = cursor?.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+                cursor?.moveToFirst()
+                path = cursor?.getString(columnIndex!!)
+            }
+
+            return path
+        } finally {
+            if (cursor != null) {
+                cursor.close()
+            }
+        }
+    }
+    fun convertDatetoString(date: Date, sdf: SimpleDateFormat): String {
+        return sdf.format(date)
+    }
+    fun convertStringtoDate(date: String, sdf: SimpleDateFormat): Date {
+        return sdf.parse(date)
+    }
     fun displayMessage(mView: View, msg: String) {
         Snackbar.make(mView, msg, Snackbar.LENGTH_SHORT).show()
     }
@@ -74,6 +106,21 @@ object CommonUtils {
         textView.setTextColor(Color.WHITE)
         snackbar.setAction(actionText, onClickListener)
         snackbar.show()
+    }
+
+    fun allPermissionsGranted(context: Context): Boolean {
+        val requiredPermissions =
+            arrayOf("android.permission.WRITE_CALENDAR", "android.permission.READ_CALENDAR")
+        for (permission in requiredPermissions) {
+            if (ContextCompat.checkSelfPermission(
+                    context,
+                    permission
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                return false
+            }
+        }
+        return true
     }
 
     fun getAppVersion(context: Context): String? {
