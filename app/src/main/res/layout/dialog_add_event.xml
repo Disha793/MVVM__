@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    android:padding="@dimen/_10sdp">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/img_close"
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:visibility="visible"
+        app:srcCompat="@drawable/img_close"></androidx.appcompat.widget.AppCompatImageView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:padding="@dimen/_10sdp"
+        app:cardCornerRadius="@dimen/_3sdp"
+        app:elevation="@dimen/_3sdp">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_10sdp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="@dimen/_10sdp">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txtDialogTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/messinasans_regular"
+                android:text="Your Inspection is scheduled"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/_14sdp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txtDialogSubTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:fontFamily="@font/messinasans_regular"
+                android:text="Your Inspection is scheduled"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/_12sdp"
+                android:visibility="gone" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txt_date"
+                style="@style/txtAddtoEventDialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:fontFamily="@font/messinasans_regular"
+                android:text="19/06/2020"
+                android:textStyle="bold"></androidx.appcompat.widget.AppCompatTextView>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txt_product"
+                style="@style/txtAddtoEventDialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/messinasans_regular"
+                android:text="Single Family Appraisal"></androidx.appcompat.widget.AppCompatTextView>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txt_address"
+                style="@style/txtAddtoEventDialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/messinasans_regular"
+                android:text="1234 Apple street"></androidx.appcompat.widget.AppCompatTextView>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnAddEvent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:background="@color/colorPrimary"
+                android:fontFamily="@font/messinasans_semibold"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingRight="@dimen/_8sdp"
+                android:text="Add to Calendar"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:visibility="visible" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imgEventAdded"
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="@dimen/_25sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:tint="@color/colorPrimary"
+                android:visibility="gone"
+                app:srcCompat="@drawable/img_bulk_approve" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txtEventAdded"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:fontFamily="@font/messinasans_regular"
+                android:text="Added to Calendar"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/_14sdp"
+                android:visibility="gone" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnOk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:background="@color/colorPrimary"
+                android:fontFamily="@font/messinasans_semibold"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingRight="@dimen/_8sdp"
+                android:text="Ok"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:visibility="gone" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>
