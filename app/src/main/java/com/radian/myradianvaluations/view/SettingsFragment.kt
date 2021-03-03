@@ -71,7 +71,10 @@ class SettingsFragment : Fragment(), View.OnClickListener {
         savedInstanceState: Bundle?
     ): View? {
         view = inflater.inflate(R.layout.fragment_settings, container, false)
-        view.cardChangeAccessCde.setOnClickListener(View.OnClickListener {
+        settingsViewModel =
+            ViewModelProvider(context as BottomNavigationActivity).get(SettingsViewModel::class.java)
+        settingsViewModel.init(context as BottomNavigationActivity)
+        view.cardChangeAccessCde.setOnClickListener {
             firebaseParams.clear()
             firebaseParams.putString(Const.methodInvoked, "ChangeAccessCodeTapped")
             CommonUtils.addParamstoFirebaseEvent(
@@ -85,12 +88,10 @@ class SettingsFragment : Fragment(), View.OnClickListener {
                     Const.scrSettingsTag
                 )
             )
-            settingsViewModel =
-                ViewModelProvider(context as BottomNavigationActivity).get(SettingsViewModel::class.java)
-            settingsViewModel.init(context as BottomNavigationActivity)
+
             activity?.overridePendingTransition(R.anim.slide_up, R.anim.no_change)
 
-        })
+        }
         setToolbar()
         getNotificatnStatus()
         view.switchNoti.setOnClickListener(this)
@@ -110,7 +111,7 @@ class SettingsFragment : Fragment(), View.OnClickListener {
         )
     }
 
-    fun setToolbar() {
+    private fun setToolbar() {
         (context as BottomNavigationActivity).layout_toolbar.visibility = View.VISIBLE
         (context as BottomNavigationActivity).txtTitle.text =
             resources.getString(R.string.settingsTitle)
@@ -120,7 +121,7 @@ class SettingsFragment : Fragment(), View.OnClickListener {
 
     }
 
-    fun getNotificatnStatus() {
+  private  fun getNotificatnStatus() {
         LoadingDialog.show(context as BottomNavigationActivity)
         settingsViewModel.getNotiStatus().let {
             it?.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
@@ -159,7 +160,7 @@ class SettingsFragment : Fragment(), View.OnClickListener {
 
     }
 
-    fun saveNotiStatus() {
+  private  fun saveNotiStatus() {
         LoadingDialog.show(context as BottomNavigationActivity)
         settingsViewModel.saveNotiStatus().let {
             it?.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
