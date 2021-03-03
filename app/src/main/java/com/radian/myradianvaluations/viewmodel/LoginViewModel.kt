@@ -7,8 +7,8 @@ import androidx.lifecycle.MutableLiveData
 import com.radian.myradianvaluations.repository.LoginRepository
 import com.radian.vendorbridge.Response.StatusResponse
 
-class LoginViewModel(val applicationContext: Application) : AndroidViewModel(applicationContext) {
-    internal lateinit var loginRepository: LoginRepository
+class LoginViewModel(private val applicationContext: Application) : AndroidViewModel(applicationContext) {
+    private lateinit var loginRepository: LoginRepository
 
     private var mlLoginResponse: MutableLiveData<StatusResponse>? = null
     fun init(context: Context) {
