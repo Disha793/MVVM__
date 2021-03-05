@@ -15,7 +15,7 @@ class DashboardViewModel : ViewModel() {
         dashboardRepository = DashboardRepository.getInstance(context)
     }
 
-    fun getDashboardData(): MutableLiveData<DashboardResponseNew> {
+    fun getDashboardData(): MutableLiveData<DashboardResponseNew>? {
         return dashboardRepository.getDashboardData()
     }
 

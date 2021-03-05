@@ -42,7 +42,12 @@ object Const {
     val btnCount="BtnCount"
     val actionView="View"
     val actionRead="Read"
-
+    const val INTENT_CAMERA_KEY: String = "FROM_CAMERA"
+    const val INTENT_POSITION_KEY: String = "POSITION"
+    const val ASSET_SHARED_PREF_KEY = "ASSETS"
+    const val CATEGORIES_SHARED_PREF_KEY = "CATEGORIES"
+    const val UPLOADED_PHOTOS_SHARED_PREF_KEY = "UPLOADED_PHOTOS"
+    const val IS_FIRST_TIME = "TRUE"
 
 
 }

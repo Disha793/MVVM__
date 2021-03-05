@@ -2,7 +2,12 @@ package com.radian.myradianvaluations.utils
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.radian.myradianvaluations.BuildConfig
+import com.radian.myradianvaluations.Response.Assets
+import com.radian.myradianvaluations.Response.Categories
+import java.lang.reflect.Type
 
 object Pref {
     val PREF_FILE = BuildConfig.APPLICATION_ID.replace(".", "_")
@@ -70,6 +75,71 @@ object Pref {
         Pref.sharedPreferences = null
         return result
     }
+    fun setCategoriesArrayList(
+        context: Context,
+        key: String,
+        listCategories: ArrayList<Categories>
+    ) {
+
+        try {
+            openPref(context)
+            val prefPrivateEditor: SharedPreferences.Editor = Pref.sharedPreferences!!.edit()
+            val gson: Gson = Gson()
+            val json = gson.toJson(listCategories)
+            prefPrivateEditor.putString(key, json)
+            prefPrivateEditor.apply()
+            Pref.sharedPreferences = null
+        } catch (e: Exception) {
+
+        }
+    }
+    fun getCategoriesArrayList(
+        context: Context,
+        key: String,
+        defaultValue: Any
+    ): ArrayList<Categories> {
+
+        openPref(context)
+        val gson = Gson()
+        val json: String? = sharedPreferences?.getString(key, "")
+        val type: Type = object : TypeToken<List<Categories?>?>() {}.type
+        val listCategories: ArrayList<Categories> = gson.fromJson(json, type)
+        Pref.sharedPreferences = null
+        return listCategories
+    }
+    fun setAssetsArrayList(
+        context: Context,
+        key: String,
+        listAssets: ArrayList<Assets>
+    ) {
+
+        try {
+            openPref(context)
+            val prefPrivateEditor: SharedPreferences.Editor = Pref.sharedPreferences!!.edit()
+            val gson: Gson = Gson()
+            val json = gson.toJson(listAssets)
+            prefPrivateEditor.putString(key, json)
+            prefPrivateEditor.apply()
+            Pref.sharedPreferences = null
+        } catch (e: Exception) {
+
+        }
+    }
+    fun getAssetsArrayList(
+        context: Context,
+        key: String,
+        defaultValue: Any
+    ): ArrayList<Assets> {
+
+        openPref(context)
+        val gson = Gson()
+        val json: String? = sharedPreferences?.getString(key, "")
+        val type: Type = object : TypeToken<List<Assets?>?>() {}.type
+        val listAssets: ArrayList<Assets> = gson.fromJson(json, type)
+        Pref.sharedPreferences = null
+        return listAssets
+    }
+
 
 
 

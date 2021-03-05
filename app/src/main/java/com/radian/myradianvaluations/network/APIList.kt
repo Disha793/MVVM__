@@ -5,6 +5,8 @@ import com.radian.vendorbridge.Response.*
 import io.reactivex.Observable
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -325,7 +327,7 @@ interface APIList {
 
     @FormUrlEncoded
     @POST("/mobile/vendorprofile/UpdateVendorLI")
-     fun saveLicenceDetails(
+    fun saveLicenceDetails(
         @Header("Authorization") authToken: String,
         @Field("PhoneNumber") phoneNumber: String,
         @Field("DeviceID") deviceId: String,
@@ -345,7 +347,7 @@ interface APIList {
 
     @FormUrlEncoded
     @POST("/mobile/vendorprofile/UpdateVendorEO")
-     fun saveEoDetails(
+    fun saveEoDetails(
         @Header("Authorization") authToken: String,
         @Field("PhoneNumber") phoneNumber: String,
         @Field("DeviceID") deviceId: String,
@@ -366,7 +368,7 @@ interface APIList {
 
     @FormUrlEncoded
     @POST("/Mobile/VendorProfile/UpdateVendorW9")
-     fun saveW9Details(
+    fun saveW9Details(
         @Header("Authorization") authToken: String,
         @Field("PhoneNumber") phoneNumber: String,
         @Field("DeviceID") deviceId: String,
@@ -439,7 +441,7 @@ interface APIList {
 
     @FormUrlEncoded
     @POST("/Mobile/Dashboard/GetNewDashboardRefereshDetails")
-    suspend fun getDashboardData(
+     fun getDashboardData(
         @Header("Authorization") authToken: String,
         @Field("PhoneNumber") phoneNumber: String,
         @Field("DeviceID") deviceId: String,
@@ -448,7 +450,7 @@ interface APIList {
         @Field("OrganizationIds") organizatnId: Int,
         @Field("AndroidAppversion") androidAppVersion: String?,
         @Field("iOSAppversion") iosappVersion: String?
-    ): Response<DashboardResponseNew>
+    ): Observable<DashboardResponseNew>
 
     @FormUrlEncoded
     @POST("/Mobile/Dashboard/DismissRequest")

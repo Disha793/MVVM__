@@ -26,20 +26,20 @@ class DashboardRepository(var context: Context) {
         }
     }
 
-    fun getDashboardData(): MutableLiveData<DashboardResponseNew> {
+    fun getDashboardData(): MutableLiveData<DashboardResponseNew>? {
         CoroutineScope(Dispatchers.IO).launch {
-            val call = RetrofitBase.getClient().create(APIList::class.java)
-                .getDashboardData(
-                    Pref.getValue(context!!, Pref.AUTH_TOKEN, "")!!,
-                    Pref.getValue(context!!, Pref.PHONE_NUMBER, "")!!,
-                    CommonUtils.getDeviceUUID(context!!),
-                    Pref.getValue(context!!, Pref.MOBILE_USER_ID, 0)!!,
-                    "",
-                    Pref.getValue(context!!, Pref.ORGANIZATN_ID, 0)!!,
-                    CommonUtils.getAppVersion(context!!),
-                    null
-                )
-            dashboardResponse.postValue(call.body() as DashboardResponseNew)
+//            val call = RetrofitBase.getClient().create(APIList::class.java)
+//                .getDashboardData(
+//                    Pref.getValue(context!!, Pref.AUTH_TOKEN, "")!!,
+//                    Pref.getValue(context!!, Pref.PHONE_NUMBER, "")!!,
+//                    CommonUtils.getDeviceUUID(context!!),
+//                    Pref.getValue(context!!, Pref.MOBILE_USER_ID, 0)!!,
+//                    "",
+//                    Pref.getValue(context!!, Pref.ORGANIZATN_ID, 0)!!,
+//                    CommonUtils.getAppVersion(context!!),
+//                    null
+//                )
+//            dashboardResponse.postValue(call.body() as DashboardResponseNew)
 
         }
         return dashboardResponse
