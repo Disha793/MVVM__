@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "86022761410",
+    "project_id": "myradian-valuations",
+    "storage_bucket": "myradian-valuations.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:86022761410:android:c883aaddedf1313a84845b",
+        "android_client_info": {
+          "package_name": "com.radian.myradianvaluations"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "86022761410-0o417sq3mnhg4g66djisju1cttsr081n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.radian.myradianvaluations",
+            "certificate_hash": "a4348b53efc8dba98abef2a136ebbc97a9c9da86"
+          }
+        },
+        {
+          "client_id": "86022761410-htq3k55mkepo7rv38fvkv3fmv6gdgrjh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZvObn9LgymDc0qk09deawsNQD5peec0g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "86022761410-htq3k55mkepo7rv38fvkv3fmv6gdgrjh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

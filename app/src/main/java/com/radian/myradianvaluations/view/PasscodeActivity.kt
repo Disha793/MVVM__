@@ -329,9 +329,10 @@ class PasscodeActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun callSignIn() {
-        passcodeModel.callSignIn(accessCode, fcmToken).let {
+        passcodeModel.callSignIn(accessCode, fcmToken).let {mutable->
             LoadingDialog.show(context)
-            it?.observe(this, Observer {
+
+            mutable?.observe(this, Observer {
                 LoadingDialog.dismissDialog()
                 if (it.status.equals(APIStatus.ok)) {
                     Pref.setValue(
@@ -370,10 +371,10 @@ class PasscodeActivity : AppCompatActivity(), View.OnClickListener {
                     var intent: Intent
 
                     if (it.data.userDetailJson.cocFlag) {
-//                        intent = Intent(this, CodeofConduct::class.java)
-//                        intent.putExtra(Const.btnCount, it.data.userDetailJson.btnCount)
-//                        intent.putExtra(Const.basicLoginDetail, it)
-//                        startActivity(intent)
+                        intent = Intent(this, CodeofConduct::class.java)
+                        intent.putExtra(Const.btnCount, it.data.userDetailJson.btnCount)
+                        intent.putExtra(Const.basicLoginDetail, it)
+                        startActivity(intent)
                     } else {
                         intent = Intent(
                             this,
@@ -394,15 +395,17 @@ class PasscodeActivity : AppCompatActivity(), View.OnClickListener {
 
                     }
                 }
-
+                if (mutable?.value == null) {
+                    LoadingDialog.dismissDialog()
+                    CommonUtils.displayMessage(
+                        window.decorView.rootView,
+                        getString(R.string.please_try_again)
+                    )
+                }
             })
-            if (it == null) {
-                LoadingDialog.dismissDialog()
-                CommonUtils.displayMessage(
-                    window.decorView.rootView,
-                    getString(R.string.please_try_again)
-                )
-            }
+
+
+
         }
 
     }

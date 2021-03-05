@@ -63,7 +63,7 @@ class DashboardFragment : Fragment(), View.OnClickListener {
     ): View? {
         view = inflater.inflate(R.layout.fragment_dashboard_new, container, false)
         dashboardViewModel = ViewModelProvider(this).get(DashboardViewModel::class.java)
-       dashboardViewModel.init(context)
+        dashboardViewModel.init(context)
         view.recyclerview.adapter =
             HomeAdapter(context!!, dashboardList, object : HomeItemClickListener {
                 override fun homeItemClicked(position: Int, abbr: String, actionType: String) {
@@ -157,30 +157,113 @@ class DashboardFragment : Fragment(), View.OnClickListener {
         }
     }
 
-    private fun getDashboardData() {
-        LoadingDialog.show(context)
-        dashboardViewModel.getDashboardData().let {
-            it?.observe(viewLifecycleOwner, androidx.lifecycle.Observer { it ->
+//    private fun getDashboardData() {
+//        LoadingDialog.show(context)
+//        dashboardViewModel.getDashboardData().let { mutable ->
+//            mutable?.observe(viewLifecycleOwner, androidx.lifecycle.Observer { it ->
+//
+//                if (it != null) {
+//                    LoadingDialog.dismissDialog()
+//                    if (it.status.equals(Const.statusOk, true)) {
+//                        if (it.data.isUpdateAndroid) {
+//                            callWhatsNewAPI()
+//
+//                        } else {
+//                            dashboardList.clear()
+//                            EventBus.getDefault().post(EventBusMessage(it.data.notificatnCount!!))
+//                            if (context != null)
+//                                Pref.setValue(context!!, Pref.REWARDS_POINTS, it.data.rewardsPonits)
+//                            it.data.name?.let {
+//                                view.txtUser.text = "Hello " + it
+//                            }
+//                            it.data.profilePicStatus?.let { it1 ->
+//                                if (it1.equals("Y", true)) {
+//                                    Picasso.with(view.imgUser.context)
+//                                        .load(it.data.profileImageUrl?.let { it })
+//                                        .into(view.imgUser)
+//                                }
+//                            }
+//                            it.data?.dashboardTileList?.let {
+//                                if (it.isEmpty()) {
+//                                    view.txtNoData.visibility = View.VISIBLE
+//                                    view.txtNoDataDetail.visibility = View.VISIBLE
+//                                } else {
+//                                    view.txtNoData.visibility = View.GONE
+//                                    view.txtNoDataDetail.visibility = View.GONE
+//                                    dashboardList.addAll(it)
+//                                }
+//                            }
+//                            setUnreadDot(it.data)
+//                            view.recyclerview.adapter?.notifyDataSetChanged()
+//                        }
+//
+//                    } else if (it.status.equals(Const.statusUnauth, true)) {
+//                        Toast.makeText(
+//                            context!!,
+//                            it.errorInfo.get(0).errorMessage,
+//                            Toast.LENGTH_SHORT
+//                        ).show()
+//                        var intent = Intent(context!!, PasscodeActivity::class.java)
+//                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+//                        startActivity(intent)
+//                    }
+//                }
+//
+//                if (mutable.value == null) {
+//                    LoadingDialog.dismissDialog()
+//                    CommonUtils.displayMessage(view, getString(R.string.please_try_again))
+//                }
+//            }
+//            )
+//
+//        }
+//
+//    }
+private fun getDashboardData(){
+    RetrofitBase.getClient().create(APIList::class.java)
+        .getDashboardData(
+            Pref.getValue(context!!, Pref.AUTH_TOKEN, "")!!,
+            Pref.getValue(context!!, Pref.PHONE_NUMBER, "")!!,
+            CommonUtils.getDeviceUUID(context!!),
+            Pref.getValue(context!!, Pref.MOBILE_USER_ID, 0)!!,
+            "",
+            Pref.getValue(context!!, Pref.ORGANIZATN_ID, 0)!!,
+            CommonUtils.getAppVersion(context!!),
+            null
+        )
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(object : Observer<DashboardResponseNew> {
+            override fun onComplete() {
                 LoadingDialog.dismissDialog()
-                if (it.status.equals(Const.statusOk, true)) {
-                    if (it.data.isUpdateAndroid) {
+            }
+
+            override fun onNext(t: DashboardResponseNew) {
+                if (t.status.equals(Const.statusOk, true)) {
+                    if (t.data.isUpdateAndroid) {
                         callWhatsNewAPI()
 
                     } else {
                         dashboardList.clear()
-                        EventBus.getDefault().post(EventBusMessage(it.data.notificatnCount!!))
-                        if (context != null)
-                            Pref.setValue(context!!, Pref.REWARDS_POINTS, it.data.rewardsPonits)
-                        it.data.name?.let {
+                        EventBus.getDefault().post(EventBusMessage(t.data.notificatnCount!!))
+                        if(context!=null)
+                            Pref.setValue(context!!,Pref.REWARDS_POINTS,t.data.rewardsPonits)
+                        t.data.name?.let {
                             view.txtUser.text = "Hello " + it
                         }
-                        it.data.profilePicStatus?.let { it1 ->
-                            if (it1.equals("Y", true)) {
+                        t.data.profilePicStatus?.let {
+                            if (it.equals("Y", true)) {
                                 Picasso.with(view.imgUser.context)
-                                    .load(it.data.profileImageUrl?.let { it }).into(view.imgUser)
+                                    .load(t.data.profileImageUrl?.let { it }).into(view.imgUser)
                             }
                         }
-                        it.data?.dashboardTileList?.let {
+                        t.data.upcomingAppointment?.let {
+                            upcomingItemId =
+                                t.data.upcomingAppointment.itemId?.let { it.toInt() }!!
+                            setUpcomingInfo(t.data.upcomingAppointment)
+                        }
+
+                        t.data?.dashboardTileList?.let {
                             if (it.isEmpty()) {
                                 view.txtNoData.visibility = View.VISIBLE
                                 view.txtNoDataDetail.visibility = View.VISIBLE
@@ -190,31 +273,45 @@ class DashboardFragment : Fragment(), View.OnClickListener {
                                 dashboardList.addAll(it)
                             }
                         }
-                        setUnreadDot(it.data)
+                        setUnreadDot(t.data)
                         view.recyclerview.adapter?.notifyDataSetChanged()
                     }
 
-                } else if (it.status.equals(Const.statusUnauth, true)) {
+                } else if (t.status.equals(Const.statusUnauth, true)) {
                     Toast.makeText(
                         context!!,
-                        it.errorInfo.get(0).errorMessage,
+                        t.errorInfo.get(0).errorMessage,
                         Toast.LENGTH_SHORT
                     ).show()
                     var intent = Intent(context!!, PasscodeActivity::class.java)
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                     startActivity(intent)
                 }
-                if (it == null) {
-                    LoadingDialog.dismissDialog()
-                    CommonUtils.displayMessage(view, getString(R.string.please_try_again))
-                }
             }
-            )
 
-        }
 
-    }
+            override fun onSubscribe(d: Disposable) {
+                Log.e("Subscribe", "")
+                LoadingDialog.show(context!!)
+            }
 
+            override fun onError(e: Throwable) {
+                Log.e("Error", e.message!!)
+                LoadingDialog.dismissDialog()
+                CommonUtils.showOkDialog(
+                    context!!,
+                    getString(R.string.please_try_again),
+                    DialogInterface.OnClickListener { _, _ ->
+                        getDashboardData()
+
+                    },
+                    getString(R.string.ok)
+                )
+
+            }
+
+        })
+}
     private fun setUpcomingInfo(upcomingAppointment: DashboardResponseNew.Data.UpcomingAppointmnt) {
     }
 
