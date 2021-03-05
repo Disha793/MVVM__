@@ -173,19 +173,20 @@ class ManageOrderFragment : Fragment(), View.OnClickListener {
             view.imgDotRevision.visibility = View.INVISIBLE
             view.txtnewreq.visibility = View.INVISIBLE
         }
-        if (orderDetail.isNotify!!) {
-            view.btnMark.visibility = View.VISIBLE
-            orderDetail.borrowerName?.let {
-                view.btnMark.text = "Let " + it + " know I'm on the way"
-            }
-        } else {
-            view.btnMark.visibility = View.GONE
-        }
-        if (orderDetail.isComplete!!) {
-            view.btnMark.visibility = View.VISIBLE
-            view.btnMark.text = "Mark this inspection complete"
-        }
-
+//        if (orderDetail.isNotify!!) {
+//            view.btnMark.visibility = View.VISIBLE
+//            orderDetail.borrowerName?.let {
+//                view.btnMark.text = "Let " + it + " know I'm on the way"
+//            }
+//        } else {
+//            view.btnMark.visibility = View.GONE
+//        }
+//        if (orderDetail.isComplete!!) {
+//            view.btnMark.visibility = View.VISIBLE
+//            view.btnMark.text = "Mark this inspection complete"
+//        }
+        view.btnMark.visibility = View.VISIBLE
+        view.btnMark.text = "Photo Upload"
     }
 
     private fun setValue(value: String?): String {
@@ -251,9 +252,7 @@ class ManageOrderFragment : Fragment(), View.OnClickListener {
                             getString(R.string.call_dialog_title),
                             DialogInterface.OnClickListener { _, _ ->
                                 makePhoneCall()
-                            }
-
-                            ,
+                            },
                             DialogInterface.OnCancelListener { _ -> },
                             "Yes",
                             "No"
@@ -305,11 +304,13 @@ class ManageOrderFragment : Fragment(), View.OnClickListener {
                 )
             }
             R.id.btnMark -> {
-                if (orderDetail.isComplete!!) {
-                    completeInspection()
-                } else if (orderDetail.isNotify!!) {
-                    notifyBorrower()
-                }
+//                if (orderDetail.isComplete!!) {
+//                    completeInspection()
+//                } else if (orderDetail.isNotify!!) {
+//                    notifyBorrower()
+//                }
+                val intent = Intent(context, ActivitySteps::class.java)
+                startActivity(intent)
             }
         }
     }
