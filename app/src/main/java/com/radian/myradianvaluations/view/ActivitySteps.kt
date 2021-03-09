@@ -238,7 +238,8 @@ class ActivitySteps : AppCompatActivity(), View.OnClickListener, SearchView.OnQu
 
             }
             R.id.imgBack -> {
-                finish()
+                finishAndRemoveTask()
+
             }
         }
     }

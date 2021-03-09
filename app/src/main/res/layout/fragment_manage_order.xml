@@ -500,63 +500,7 @@
                         android:layout_below="@+id/txtValContact"
                         android:layout_marginTop="@dimen/_8sdp"
                         android:background="@color/divider_light_grey" />
-                    <androidx.appcompat.widget.LinearLayoutCompat
-                        android:id="@+id/linear"
-                        style="@style/paddingStyle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:weightSum="4">
 
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/txtPhoto"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/viewAdd"
-                            android:layout_marginTop="@dimen/_3sdp"
-                            android:layout_weight="1.8"
-                            android:fontFamily="@font/messinasans_regular"
-                            android:text="Photo Upload "
-                            android:textColor="@android:color/black"
-                            android:textSize="@dimen/_14sdp" />
-
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/imgPhotoUpload"
-                            android:layout_width="0dp"
-                            android:layout_height="@dimen/_10sdp"
-                            android:layout_gravity="center"
-                            android:layout_marginTop="@dimen/_2sdp"
-                            android:layout_weight="0.4"
-                            android:visibility="invisible"
-                            app:srcCompat="@drawable/ic_notfication_circle_enabled" />
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/txt"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/viewAdd"
-                            android:layout_marginTop="@dimen/_3sdp"
-                            android:layout_weight="1.55"
-                            android:fontFamily="@font/messinasans_regular"
-                            android:text="@string/lbl_new_req"
-                            android:textColor="@android:color/black"
-                            android:textSize="@dimen/_14sdp"
-                            android:visibility="invisible" />
-
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:layout_width="0dp"
-                            android:layout_height="@dimen/_15sdp"
-                            android:layout_gravity="center"
-                            android:layout_weight="0.3"
-                            app:srcCompat="@drawable/ic_navigate_forward" />
-                    </androidx.appcompat.widget.LinearLayoutCompat>
-                    <View
-                        android:id="@+id/view"
-                        android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
-                        android:layout_below="@+id/txtValContact"
-                        android:layout_marginTop="@dimen/_8sdp"
-                        android:background="@color/divider_light_grey" />
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:id="@+id/linearMore"
                         style="@style/paddingStyle"

@@ -13,8 +13,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class NewOrdrDetailRepository(val context: Context) {
-    private  var orderResponse= MutableLiveData<NewOrderDetailResponse>()
-    private  var statusResponse= MutableLiveData<StatusResponse>()
+    private var orderResponse = MutableLiveData<NewOrderDetailResponse>()
+    private var statusResponse = MutableLiveData<StatusResponse>()
     fun getOrderDetail(itemId: Int): MutableLiveData<NewOrderDetailResponse>? {
         CoroutineScope(Dispatchers.IO).launch {
             val call = RetrofitBase.getClient().create(APIList::class.java).newOrderDetail(
@@ -70,7 +70,7 @@ class NewOrdrDetailRepository(val context: Context) {
 
     companion object {
         fun getInstance(context: Context): NewOrdrDetailRepository {
-            return getInstance(context)
+            return NewOrdrDetailRepository(context)
         }
     }
 }

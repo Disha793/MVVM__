@@ -56,8 +56,8 @@ android {
         }
         Dev {
             versionName "1.0.11"
-            buildConfigField 'String', 'HOST', '"https://trainingamcapi.radianvaluations.com/"'
-           // buildConfigField 'String', 'HOST', '"https://trainingbeta.radianvaluations.com/"'
+          //  buildConfigField 'String', 'HOST', '"https://trainingamcapi.radianvaluations.com/"'
+            buildConfigField 'String', 'HOST', '"https://trainingbeta.radianvaluations.com/"'
             buildConfigField 'String', 'BASE_URL', '"https://training.exatechpgh.com/content/images/"'
             buildConfigField 'String', 'COC_URL', '"https://training.exatechpgh.com/Content/Docs/CodeOfConduct.pdf"'
             isDefault.set(true)

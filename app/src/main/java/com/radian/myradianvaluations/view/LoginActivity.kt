@@ -8,6 +8,8 @@ import android.view.inputmethod.EditorInfo
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.google.gson.Gson
+import com.google.gson.JsonObject
 import com.radian.myradianvaluations.R
 import com.radian.myradianvaluations.constants.APIStatus
 import com.radian.myradianvaluations.constants.Const
@@ -40,13 +42,14 @@ class LoginActivity : AppCompatActivity() {
         imgBack.visibility = View.GONE
         loginViewModel.init(this)
         btnNxt.setOnClickListener {
-            signIN()
+            //signIN()
+            getUserStatus()
 
         }
         edtPassword.setOnEditorActionListener { p0, p1, p2 ->
             if (p1 == EditorInfo.IME_ACTION_GO) {
                 // do your stuff here
-                signIN()
+                getUserStatus()
             }
             false
         }
@@ -62,6 +65,36 @@ class LoginActivity : AppCompatActivity() {
             intent.putExtra(Const.scrTag, Const.scrSignUp)
             startActivity(intent)
         }
+        loginViewModel.userStatus.observe(this, Observer {
+            if (it?.status.equals(APIStatus.ok, true)) {
+                Pref.setValue(
+                    this,
+                    Pref.PHONE_NUMBER,
+                    CommonUtils.getPhoneNumber(edtPhoneNumber.text.toString())
+                )
+
+                if (it.data.deviceStatusResponse.deviceStaus == DeviceStatus.notAuthorized) {
+                    CommonUtils.displayMessage(
+                        relativeMain,
+                        it.data.deviceStatusResponse.message
+                    )
+                } else {
+                    Pref.setValue(
+                        this@LoginActivity,
+                        Pref.DEVICE_STATUS,
+                        it.data.deviceStatusResponse.deviceStaus
+                    )
+                    Pref.setValue(this@LoginActivity, Pref.IS_FIRST_TIME, true)
+                    var intent = Intent(this@LoginActivity, PasscodeActivity::class.java)
+                    startActivity(intent)
+                }
+            } else if (it?.status.equals(APIStatus.error, true)) {
+                CommonUtils.displayMessage(
+                    relativeMain,
+                    it?.errorInfo!!.get(0).errorMessage
+                )
+            }
+        })
     }
 
     fun isValid(): Boolean {
@@ -113,6 +146,16 @@ class LoginActivity : AppCompatActivity() {
     override fun onBackPressed() {
         super.onBackPressed()
         finishAffinity()
+    }
+
+    fun getUserStatus() {
+        val postParam = HashMap<String, String>()
+        postParam.put("deviceID", CommonUtils.getDeviceUUID(this))
+        postParam.put("PhoneNumber", edtPhoneNumber.text.toString())
+        postParam.put("UserName", edtUsername.text.toString())
+        postParam.put("Password", edtPassword.text.toString())
+        val gson = Gson()
+        loginViewModel.getUserStatus(gson.fromJson(gson.toJson(postParam), JsonObject::class.java))
     }
 
     fun signIN() {

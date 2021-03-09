@@ -14,8 +14,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class MessageChatRepository(val context: Context) {
-    private lateinit var messageResponse: MutableLiveData<MessageChatResponse>
-    private lateinit var statusResponse: MutableLiveData<StatusResponse>
+    private  var messageResponse= MutableLiveData<MessageChatResponse>()
+    private  var statusResponse= MutableLiveData<StatusResponse>()
     private var postParam = HashMap<String, String?>()
 
     companion object {

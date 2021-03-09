@@ -22,10 +22,10 @@ object Const {
     val statusUnauth="UNAUTHORIZED"
     val notificationidTag = "mobileNotificationId"
     val loeUrlTag = "loeurl"
-
     val scrDrawerTag = "Drawer"
     val formatYYYY = "yyyy/MM/dd"
     val formatMM = "MM/dd/yyyy"
+    const val CONNECTION_TIMEOUT: Long = 3
     val formatMMM = "dd MMM, yyyy"
     val formatHH = "hh:mm:ss a"
     val formatDateTime = formatMMM + " " + formatHH
