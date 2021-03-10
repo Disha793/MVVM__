@@ -30,6 +30,7 @@ import com.radian.myradianvaluations.Response.Categories
 import com.radian.myradianvaluations.Response.UploadedPhotos
 import com.radian.myradianvaluations.constants.Const
 import com.radian.myradianvaluations.databinding.ActivityCameraBinding
+import com.radian.myradianvaluations.utils.LogUtils
 import com.radian.myradianvaluations.utils.Pref
 import java.io.File
 import java.text.SimpleDateFormat
@@ -121,7 +122,7 @@ class ActivityCamera : AppCompatActivity(), View.OnClickListener {
             ContextCompat.getMainExecutor(this),
             object : ImageCapture.OnImageSavedCallback {
                 override fun onError(exc: ImageCaptureException) {
-                    Log.e("TAG", "Photo capture failed: ${exc.message}", exc)
+                   LogUtils.logE("TAG", "Photo capture failed: ${exc.message}", exc)
                     Toast.makeText(baseContext, "Photo capture failed", Toast.LENGTH_SHORT).show()
                 }
 
@@ -138,7 +139,7 @@ class ActivityCamera : AppCompatActivity(), View.OnClickListener {
                     var intent = Intent(this@ActivityCamera, ActivitySteps::class.java)
                     intent.putExtra(Const.INTENT_CAMERA_KEY, true)
                     startActivity(intent)
-                    Log.d("TAG", msg)
+                    LogUtils.logD("TAG", msg)
                 }
             })
     }
@@ -167,7 +168,7 @@ class ActivityCamera : AppCompatActivity(), View.OnClickListener {
                 )
 
             } catch (exc: Exception) {
-                Log.e("TAG", "Use case binding failed", exc)
+                LogUtils.logE("TAG", "Use case binding failed", exc)
             }
 
         }, ContextCompat.getMainExecutor(this))

@@ -55,19 +55,7 @@ interface APIList {
         @Field("FcmToken") fcmToken: String
     ): Response<OtpResponse>
 
-    @FormUrlEncoded
-    @POST("mobile/Dashboard/GetDashboardRefereshDetails")
-    suspend fun getDashboardDataOld(
-        @Header("Authorization") authToken: String,
-        @Field("PhoneNumber") phoneNumber: String,
-        @Field("DeviceID") deviceId: String,
-        @Field("MobileUserId") mobileUserId: Int,
-        @Field("LoginId") loginId: String,
-        @Field("OrganizationIds") organizatnId: Int,
-        @Field("AndroidAppversion") androidAppVersion: String?,
-        @Field("iOSAppversion") iosappVersion: String?
 
-    ): Response<DashboadResponse>
 
     @FormUrlEncoded
     @POST("mobile/Dashboard/GetDashboardTileDetails")

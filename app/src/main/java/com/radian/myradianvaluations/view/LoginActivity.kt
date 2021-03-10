@@ -26,13 +26,7 @@ import java.util.regex.Pattern
 class LoginActivity : AppCompatActivity() {
     internal lateinit var loginViewModel: LoginViewModel
     private val PASSWORD_PATTERN = Pattern.compile(
-        "^" +
-                "(?=.*[0-9])" +         //at least 1 digit
-                "(?=.*[A-Z])" +         //at least 1 upper case letter
-                "(?=.*[@#$%^&+=!()-_])" +    //at least 1 special character
-                "(?=\\S+$)" +           //no white spaces
-                ".{8,}" +               //at least 8 characters
-                "$"
+        Const.PASSWORD_PATTERN
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,12 +37,13 @@ class LoginActivity : AppCompatActivity() {
         loginViewModel.init(this)
         btnNxt.setOnClickListener {
             //signIN()
+            if(isValid())
             getUserStatus()
 
         }
-        edtPassword.setOnEditorActionListener { p0, p1, p2 ->
+        edtPassword.setOnEditorActionListener { _, p1, _ ->
             if (p1 == EditorInfo.IME_ACTION_GO) {
-                // do your stuff here
+                if(isValid())
                 getUserStatus()
             }
             false
@@ -158,55 +153,5 @@ class LoginActivity : AppCompatActivity() {
         loginViewModel.getUserStatus(gson.fromJson(gson.toJson(postParam), JsonObject::class.java))
     }
 
-    fun signIN() {
-        if (isValid()) {
-            Pref.setValue(
-                this,
-                Pref.PHONE_NUMBER,
-                CommonUtils.getPhoneNumber(edtPhoneNumber.text.toString())
-            )
 
-            LoadingDialog.show(this)
-            loginViewModel.signIn(
-                edtUsername.text.toString(),
-                edtPhoneNumber.text.toString(),
-                edtPassword.text.toString()
-            ).let {
-                it?.observe(this, Observer {
-                    LoadingDialog.dismissDialog()
-                    if (it?.status.equals(APIStatus.ok, true)) {
-                        if (it.data.deviceStatusResponse.deviceStaus == DeviceStatus.notAuthorized) {
-                            CommonUtils.displayMessage(
-                                relativeMain,
-                                it.data.deviceStatusResponse.message
-                            )
-                        } else {
-                            Pref.setValue(
-                                this@LoginActivity,
-                                Pref.DEVICE_STATUS,
-                                it.data.deviceStatusResponse.deviceStaus
-                            )
-                            Pref.setValue(this@LoginActivity, Pref.IS_FIRST_TIME, true)
-                            var intent = Intent(this@LoginActivity, PasscodeActivity::class.java)
-                            startActivity(intent)
-                        }
-                    } else if (it?.status.equals(APIStatus.error, true)) {
-                        CommonUtils.displayMessage(
-                            relativeMain,
-                            it?.errorInfo!!.get(0).errorMessage
-                        )
-                    }
-                })
-                if (it == null) {
-                    LoadingDialog.dismissDialog()
-                    CommonUtils.displayMessage(
-                        relativeMain,
-                        getString(R.string.please_try_again)
-                    )
-                }
-            }
-
-
-        }
-    }
 }

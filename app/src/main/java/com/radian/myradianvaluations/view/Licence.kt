@@ -184,7 +184,7 @@ class Licence : Fragment(), View.OnClickListener, DialogInterface.OnClickListene
         view.txtAddDoc.visibility = View.VISIBLE
         getLicenceMaster()
 
-        dateListener = DatePickerDialog.OnDateSetListener { p0, year, month, day ->
+        dateListener = DatePickerDialog.OnDateSetListener { _, year, month, day ->
             calendar.set(Calendar.YEAR, year)
             calendar.set(Calendar.MONTH, month)
             calendar.set(Calendar.DAY_OF_MONTH, day)
@@ -389,7 +389,7 @@ class Licence : Fragment(), View.OnClickListener, DialogInterface.OnClickListene
                 }
 
                 override fun onNext(t: ProfileImageResponse) {
-                    Log.e("Getting On Rsposne", "" + t)
+                    LogUtils.logD("Getting On Rsposne", "" + t)
                     t.data?.let {
 
 
@@ -398,7 +398,7 @@ class Licence : Fragment(), View.OnClickListener, DialogInterface.OnClickListene
                 }
 
                 override fun onError(e: Throwable) {
-                    Log.e("Getting On Error", "" + e.message)
+                    LogUtils.logD("Getting On Error", "" + e.message)
                     LoadingDialog.dismissDialog()
                 }
             })
@@ -409,7 +409,7 @@ class Licence : Fragment(), View.OnClickListener, DialogInterface.OnClickListene
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         photoFile = createImageFile()
         photoURI =
-            FileProvider.getUriForFile(context!!, context!!.packageName + ".provider", photoFile!!)
+            FileProvider.getUriForFile(context!!, context!!.packageName + ".provider", photoFile)
         intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
         startActivityForResult(intent, REQUEST_FOR_CAMERA)
     }
@@ -425,7 +425,7 @@ class Licence : Fragment(), View.OnClickListener, DialogInterface.OnClickListene
 
     private fun createImageFile(): File {
         val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-        val imageFileName = "ExaTech_Img" + timeStamp + "_"
+        val imageFileName = Const.imgnName + timeStamp + "_"
         val storageDir = context!!.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
 
         // Save a file: path for use with ACTION_VIEW intents

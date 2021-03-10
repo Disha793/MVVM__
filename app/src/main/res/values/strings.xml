@@ -181,4 +181,5 @@ The app streamlines every step of the process, including accepting orders, sched
     <string name="str_ready_to_submit">Ready to submit</string>
     <string name="str_asset">Assets</string>
     <string name="str_categories">Categories</string>
+    <string name="inspection_scheduled">Inspection is Scheduled</string>
 </resources>

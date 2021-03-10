@@ -299,7 +299,7 @@ class NewOrderDetailFragment : Fragment(), View.OnClickListener {
                 override fun onClick(v: View?) {
                     if (allPermissionsGranted(context!!)) {
                         setReminder(
-                            "Inspection is Scheduled",
+                            getString(R.string.inspection_scheduled),
                             "",
                             orderDetail.appointmentDate,
                             orderDetail.displayAddressInfo
@@ -352,8 +352,8 @@ class NewOrderDetailFragment : Fragment(), View.OnClickListener {
             val endDate = formatter.parse(reminderDayEnd)
             startTimeInMilliseconds = startDate.time
             endTimeInMilliseconds = endDate.time
-            Log.e("startDate", reminderDayStart)
-            Log.e("endDate", reminderDayEnd)
+            LogUtils.logD("startDate", reminderDayStart)
+            LogUtils.logD("endDate", reminderDayEnd)
             val cr = context!!.contentResolver
             val values = ContentValues()
             values.put(CalendarContract.Events.CALENDAR_ID, 3)
@@ -464,10 +464,10 @@ class NewOrderDetailFragment : Fragment(), View.OnClickListener {
         } else if (requestCode == REQUEST_CODE_PERMISSIONS && allPermissionsGranted(context!!)) {
 
             setReminder(
-                "Inspection is Scheduled",
+                getString(R.string.inspection_scheduled),
                 "",
                 orderDetail.appointmentDate + "" + selectedTimeSlot,
-                orderDetail.displayAddressInfo!!
+                orderDetail.displayAddressInfo
             )
         }
 
@@ -505,7 +505,7 @@ class NewOrderDetailFragment : Fragment(), View.OnClickListener {
                 holder.linearLayoutCompat.setBackgroundResource(R.drawable.back_btn_home)
                 holder.txtTiming.setTextColor(
                     ContextCompat.getColor(
-                        context!!,
+                        context,
                         R.color.colorPrimary
                     )
                 )

@@ -24,13 +24,15 @@ class PasscodeViewModel : ViewModel(), ApiResponseCallBack {
     lateinit var passcodeRepository: PasscodeRepository
     private var otpResponse = MutableLiveData<OtpResponse>()
     private var verifyotpResponse = MutableLiveData<OtpResponse>()
-    private var loginResponse: MutableLiveData<LoginResponse>? = null
+    private var loginResponse= MutableLiveData<LoginResponse>()
     private val apiServiceProviderGeneric = ApiServiceProviderGeneric(this)
     private lateinit var context: Context
     val generateOtpResponse: LiveData<OtpResponse>
         get() = otpResponse
     val verifyOtpResponseData: LiveData<OtpResponse>
         get() = verifyotpResponse
+    val loginResponseData: LiveData<LoginResponse>
+        get() = loginResponse
 
     fun init(context: Context) {
         this.context = context
@@ -38,7 +40,6 @@ class PasscodeViewModel : ViewModel(), ApiResponseCallBack {
     }
 
     fun generateOtp(jsonObject: JsonObject): MutableLiveData<OtpResponse>? {
-        // otpResponse = passcodeRepository.generateOtpAPI()
         apiServiceProviderGeneric.postCallWithoutHeader(
             context, ReturnType.POST_GenerateOtp.endPoint,
             jsonObject,
@@ -48,7 +49,6 @@ class PasscodeViewModel : ViewModel(), ApiResponseCallBack {
     }
 
     fun verifyOtp(jsonObject: JsonObject): MutableLiveData<OtpResponse>? {
-        //otpResponse = passcodeRepository.verifyOtpAPI(accesscode, fcmToken)
         apiServiceProviderGeneric.postCallWithoutHeader(
             context, ReturnType.POST_VerifyOtp.endPoint,
             jsonObject,
@@ -57,9 +57,14 @@ class PasscodeViewModel : ViewModel(), ApiResponseCallBack {
         return otpResponse
     }
 
-    fun callSignIn(accessCode: String, fcmToken: String): MutableLiveData<LoginResponse>? {
-        loginResponse = passcodeRepository.callSignIn(accessCode, fcmToken)
-        return loginResponse
+    fun callSignIn(jsonObject: JsonObject) {
+        //  loginResponse = passcodeRepository.callSignIn(accessCode, fcmToken)
+        apiServiceProviderGeneric.postCallWithoutHeader(
+            context, ReturnType.POST_SignIn.endPoint,
+            jsonObject,
+            ReturnType.POST_SignIn
+        )
+
     }
 
     override fun onPreExecute(returnType: ReturnType) {
@@ -68,7 +73,7 @@ class PasscodeViewModel : ViewModel(), ApiResponseCallBack {
     }
 
     override fun onSuccess(returnType: ReturnType, response: String) {
-       LoadingDialog.dismissDialog()
+        LoadingDialog.dismissDialog()
         when (returnType) {
             ReturnType.POST_GenerateOtp -> {
                 try {
@@ -77,7 +82,7 @@ class PasscodeViewModel : ViewModel(), ApiResponseCallBack {
                         object : TypeToken<StatusResponse>() {}.type
                     )
                     LogUtils.logD("", "" + responseUsers.status)
-                    otpResponse?.value = responseUsers
+                    otpResponse.value = responseUsers
 
                 } catch (e: Exception) {
                     LogUtils.logE("", e)
@@ -90,7 +95,20 @@ class PasscodeViewModel : ViewModel(), ApiResponseCallBack {
                         object : TypeToken<OtpResponse>() {}.type
                     )
                     LogUtils.logD("", "" + responseUsers.status)
-                    verifyotpResponse?.value = responseUsers
+                    verifyotpResponse.value = responseUsers
+
+                } catch (e: Exception) {
+                    LogUtils.logE("", e)
+                }
+            }
+            ReturnType.POST_SignIn -> {
+                try {
+                    val responseUsers = Gson().fromJson<LoginResponse>(
+                        response,
+                        object : TypeToken<LoginResponse>() {}.type
+                    )
+                    LogUtils.logD("", "" + responseUsers.status)
+                    loginResponse.value = responseUsers
 
                 } catch (e: Exception) {
                     LogUtils.logE("", e)
