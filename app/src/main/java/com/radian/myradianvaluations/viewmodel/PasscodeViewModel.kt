@@ -1,36 +1,105 @@
 package com.radian.myradianvaluations.viewmodel
 
 import android.content.Context
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.gson.Gson
+import com.google.gson.JsonObject
+import com.google.gson.reflect.TypeToken
+import com.radian.myradianvaluations.networking.ApiServiceProviderGeneric
+import com.radian.myradianvaluations.networking.ReturnType
 import com.radian.myradianvaluations.repository.LoginRepository
 import com.radian.myradianvaluations.repository.OrgInfoRepository
 import com.radian.myradianvaluations.repository.PasscodeRepository
+import com.radian.myradianvaluations.utils.LoadingDialog
+import com.radian.myradianvaluations.utils.LogUtils
 import com.radian.vendorbridge.Response.LoginResponse
 import com.radian.vendorbridge.Response.OrgInfoResponse
 import com.radian.vendorbridge.Response.OtpResponse
 import com.radian.vendorbridge.Response.StatusResponse
+import com.sunteckindia.networking.ApiResponseCallBack
 
-class PasscodeViewModel : ViewModel() {
+class PasscodeViewModel : ViewModel(), ApiResponseCallBack {
     lateinit var passcodeRepository: PasscodeRepository
-    private var otpResponse: MutableLiveData<OtpResponse>? = null
+    private var otpResponse = MutableLiveData<OtpResponse>()
+    private var verifyotpResponse = MutableLiveData<OtpResponse>()
     private var loginResponse: MutableLiveData<LoginResponse>? = null
+    private val apiServiceProviderGeneric = ApiServiceProviderGeneric(this)
+    private lateinit var context: Context
+    val generateOtpResponse: LiveData<OtpResponse>
+        get() = otpResponse
+    val verifyOtpResponseData: LiveData<OtpResponse>
+        get() = verifyotpResponse
+
     fun init(context: Context) {
+        this.context = context
         passcodeRepository = PasscodeRepository.getInstance(context)
     }
 
-    fun generateOtp(): MutableLiveData<OtpResponse>? {
-        otpResponse = passcodeRepository.generateOtpAPI()
+    fun generateOtp(jsonObject: JsonObject): MutableLiveData<OtpResponse>? {
+        // otpResponse = passcodeRepository.generateOtpAPI()
+        apiServiceProviderGeneric.postCallWithoutHeader(
+            context, ReturnType.POST_GenerateOtp.endPoint,
+            jsonObject,
+            ReturnType.POST_GenerateOtp
+        )
         return otpResponse
     }
 
-    fun verifyOtp(accesscode: String, fcmToken: String): MutableLiveData<OtpResponse>? {
-        otpResponse = passcodeRepository.verifyOtpAPI(accesscode, fcmToken)
+    fun verifyOtp(jsonObject: JsonObject): MutableLiveData<OtpResponse>? {
+        //otpResponse = passcodeRepository.verifyOtpAPI(accesscode, fcmToken)
+        apiServiceProviderGeneric.postCallWithoutHeader(
+            context, ReturnType.POST_VerifyOtp.endPoint,
+            jsonObject,
+            ReturnType.POST_VerifyOtp
+        )
         return otpResponse
     }
 
     fun callSignIn(accessCode: String, fcmToken: String): MutableLiveData<LoginResponse>? {
         loginResponse = passcodeRepository.callSignIn(accessCode, fcmToken)
         return loginResponse
+    }
+
+    override fun onPreExecute(returnType: ReturnType) {
+        LoadingDialog.show(context)
+
+    }
+
+    override fun onSuccess(returnType: ReturnType, response: String) {
+       LoadingDialog.dismissDialog()
+        when (returnType) {
+            ReturnType.POST_GenerateOtp -> {
+                try {
+                    val responseUsers = Gson().fromJson<OtpResponse>(
+                        response,
+                        object : TypeToken<StatusResponse>() {}.type
+                    )
+                    LogUtils.logD("", "" + responseUsers.status)
+                    otpResponse?.value = responseUsers
+
+                } catch (e: Exception) {
+                    LogUtils.logE("", e)
+                }
+            }
+            ReturnType.POST_VerifyOtp -> {
+                try {
+                    val responseUsers = Gson().fromJson<OtpResponse>(
+                        response,
+                        object : TypeToken<OtpResponse>() {}.type
+                    )
+                    LogUtils.logD("", "" + responseUsers.status)
+                    verifyotpResponse?.value = responseUsers
+
+                } catch (e: Exception) {
+                    LogUtils.logE("", e)
+                }
+            }
+        }
+    }
+
+    override fun onError(returnType: ReturnType, error: String) {
+        LoadingDialog.dismissDialog()
     }
 }

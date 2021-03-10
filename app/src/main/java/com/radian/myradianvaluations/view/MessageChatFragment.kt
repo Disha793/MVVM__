@@ -119,12 +119,12 @@ class MessageChatFragment() : Fragment(), View.OnClickListener {
         messageViewModel.getMessageChat(itemId).let {
             it?.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
                 LoadingDialog.dismissDialog()
-                if (it.status.equals(Const.statusOk, true)) {
+                if (it.status.equals(APIStatus.ok, true)) {
                     chatList.clear()
                     chatList.addAll(it.data?.tileOrderNotes!!)
                     view.msgRecycle.adapter?.notifyDataSetChanged()
                     view.msgRecycle.scrollToPosition(chatList.size - 1)
-                } else if (it.status.equals(Const.statusUnauth, true)) {
+                } else if (it.status.equals(APIStatus.unauth, true)) {
                     Toast.makeText(
                         context!!,
                         it.errorInfo.get(0).errorMessage,

@@ -24,6 +24,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.radian.myradianvaluations.BuildConfig
 import com.radian.myradianvaluations.R
+import com.radian.myradianvaluations.constants.APIStatus
 import com.radian.myradianvaluations.constants.Const
 import com.radian.myradianvaluations.utils.CommonUtils
 import com.radian.myradianvaluations.utils.CommonUtils.allPermissionsGranted
@@ -119,12 +120,12 @@ class NewOrderDetailFragment : Fragment(), View.OnClickListener {
         newOrdrDetailViewModel.getOrderDetail(itemId).let {
             it?.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
                 LoadingDialog.dismissDialog()
-                if (it.status == Const.statusOk) {
+                if (it.status == APIStatus.ok) {
                     it.data?.orderDetail?.let {
                         orderDetail = it
                     }
                     setOrderDetail(orderDetail)
-                } else if (it.status.equals(Const.statusUnauth, true)) {
+                } else if (it.status.equals(APIStatus.unauth, true)) {
                     Toast.makeText(
                         context!!,
                         it.errorInfo.get(0).errorMessage,
@@ -232,14 +233,14 @@ class NewOrderDetailFragment : Fragment(), View.OnClickListener {
         newOrdrDetailViewModel.confirmOrder(postParam, itemIdList, unassignedItemId).let {
             it?.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
                 LoadingDialog.dismissDialog()
-                if (it.status.equals(Const.statusOk, true)) {
+                if (it.status.equals(APIStatus.ok, true)) {
                     if (orderDetail.isAssigned == 0) {
 
                         showAddToCalenderDialog()
                     } else {
                         (context as BottomNavigationActivity).onBackPressed()
                     }
-                } else if (it.status.equals(Const.statusUnauth, true)) {
+                } else if (it.status.equals(APIStatus.unauth, true)) {
                     Toast.makeText(
                         context!!,
                         it.errorInfo.get(0).errorMessage,

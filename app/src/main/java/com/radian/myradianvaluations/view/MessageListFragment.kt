@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.radian.myradianvaluations.R
 import com.radian.myradianvaluations.adapter.MessageListAdapter
+import com.radian.myradianvaluations.constants.APIStatus
 import com.radian.myradianvaluations.constants.Const
 import com.radian.myradianvaluations.utils.CommonUtils
 import com.radian.myradianvaluations.utils.LoadingDialog
@@ -108,13 +109,13 @@ class MessageListFragment : Fragment(), View.OnClickListener {
         messageListViewModel.getMessageList().let {
             it?.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
                 LoadingDialog.dismissDialog()
-                if (it.status.equals(Const.statusOk, true)) {
+                if (it.status.equals(APIStatus.ok, true)) {
                     messageList.clear()
                     messageList.addAll(it.data.orderList.messageList)
                     view.recyclerview.adapter?.notifyDataSetChanged()
                     setMessageCount(messageList.size.toString())
                     showNoMsg()
-                } else if (it.status.equals(Const.statusUnauth, true)) {
+                } else if (it.status.equals(APIStatus.unauth, true)) {
                     Toast.makeText(
                         context!!,
                         it.errorInfo.get(0).errorMessage,

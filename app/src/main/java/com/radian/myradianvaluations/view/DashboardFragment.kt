@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.radian.myradianvaluations.BuildConfig
 import com.radian.myradianvaluations.R
 import com.radian.myradianvaluations.adapter.HomeAdapter
+import com.radian.myradianvaluations.constants.APIStatus
 import com.radian.myradianvaluations.constants.Const
 import com.radian.myradianvaluations.interfaces.HomeItemClickListener
 import com.radian.myradianvaluations.network.APIList
@@ -239,7 +240,7 @@ class DashboardFragment : Fragment(), View.OnClickListener {
                 }
 
                 override fun onNext(t: DashboardResponseNew) {
-                    if (t.status.equals(Const.statusOk, true)) {
+                    if (t.status.equals(APIStatus.ok, true)) {
                         if (t.data != null && t.data.isUpdateAndroid) {
                             callWhatsNewAPI()
 
@@ -286,7 +287,7 @@ class DashboardFragment : Fragment(), View.OnClickListener {
 
                         }
 
-                    } else if (t.status.equals(Const.statusUnauth, true)) {
+                    } else if (t.status.equals(APIStatus.unauth, true)) {
                         Toast.makeText(
                             context!!,
                             t.errorInfo.get(0).errorMessage,

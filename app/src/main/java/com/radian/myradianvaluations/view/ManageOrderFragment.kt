@@ -19,6 +19,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.radian.myradianvaluations.BuildConfig
 import com.radian.myradianvaluations.R
+import com.radian.myradianvaluations.constants.APIStatus
 import com.radian.myradianvaluations.constants.Const
 import com.radian.myradianvaluations.network.APIList
 import com.radian.myradianvaluations.network.RetrofitBase
@@ -104,10 +105,10 @@ class ManageOrderFragment : Fragment(), View.OnClickListener {
         manageOrderViewModel.getOrderDetail(itemId).let {
             it?.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
                 LoadingDialog.dismissDialog()
-                if (it.status == Const.statusOk) {
+                if (it.status ==APIStatus.ok) {
                     orderDetail = it.data.orderDetail
                     setOrderDetail(orderDetail)
-                } else if (it.status.equals(Const.statusUnauth, true)) {
+                } else if (it.status.equals(APIStatus.unauth, true)) {
                     Toast.makeText(
                         context!!,
                         it.errorInfo.get(0).errorMessage,
@@ -338,9 +339,9 @@ class ManageOrderFragment : Fragment(), View.OnClickListener {
         manageOrderViewModel.markAsReadRevision(itemId, orderDetail.orderGenId!!).let {
             it?.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
                 LoadingDialog.dismissDialog()
-                if (it.status == Const.statusOk) {
+                if (it.status ==APIStatus.ok) {
 //on success
-                } else if (it.status.equals(Const.statusUnauth, true)) {
+                } else if (it.status.equals(APIStatus.unauth, true)) {
                     Toast.makeText(
                         context!!,
                         it.errorInfo.get(0).errorMessage,

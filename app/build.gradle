@@ -41,24 +41,24 @@ android {
     flavorDimensions "default"
     productFlavors {
         Production {
-            versionName "1.0.4"
+            versionName "1.0.0"
             buildConfigField 'String', 'HOST', '"https://vibeamcapi.radianvaluations.com/"'
-            buildConfigField 'String', 'BASE_URL', '"https://orders.radianvaluations.com/content/images/"'
+
             buildConfigField 'String', 'COC_URL', '"https://amc.radianvaluations.com/content/docs/codeofconduct.pdf"'
 
         }
         QA {
             versionName "1.0.0"
             buildConfigField 'String', 'HOST', '"https://training.exatechpgh.com/"'
-            buildConfigField 'String', 'BASE_URL', '"https://training.exatechpgh.com/content/images/"'
+
             buildConfigField 'String', 'COC_URL', '"https://training.exatechpgh.com/Content/Docs/CodeOfConduct.pdf"'
 
         }
         Dev {
-            versionName "1.0.11"
+            versionName "1.0.5"
           //  buildConfigField 'String', 'HOST', '"https://trainingamcapi.radianvaluations.com/"'
             buildConfigField 'String', 'HOST', '"https://trainingbeta.radianvaluations.com/"'
-            buildConfigField 'String', 'BASE_URL', '"https://training.exatechpgh.com/content/images/"'
+
             buildConfigField 'String', 'COC_URL', '"https://training.exatechpgh.com/Content/Docs/CodeOfConduct.pdf"'
             isDefault.set(true)
         }

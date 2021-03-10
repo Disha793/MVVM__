@@ -21,6 +21,8 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.FirebaseApp
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.iid.FirebaseInstanceId
+import com.google.gson.Gson
+import com.google.gson.JsonObject
 import com.radian.myradianvaluations.BuildConfig
 import com.radian.myradianvaluations.R
 import com.radian.myradianvaluations.constants.APIStatus
@@ -33,9 +35,13 @@ import com.radian.myradianvaluations.utils.Pref
 import com.radian.myradianvaluations.viewmodel.PasscodeViewModel
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.access_code_keyboard.*
+import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_passcode.*
+import kotlinx.android.synthetic.main.activity_passcode.relativeMain
 import kotlinx.android.synthetic.main.layout_toolbar.*
 import java.io.IOException
+import java.util.*
+import kotlin.collections.HashMap
 
 
 class PasscodeActivity : AppCompatActivity(), View.OnClickListener {
@@ -176,6 +182,74 @@ class PasscodeActivity : AppCompatActivity(), View.OnClickListener {
         getToken()
         passcodeModel = ViewModelProvider(this).get(PasscodeViewModel::class.java)
         passcodeModel.init(this)
+        passcodeModel.generateOtpResponse.observe(this, Observer {
+            if (it.data.deviceStatus == DeviceStatus.verifyOTP) {
+                Pref.setValue(
+                    this,
+                    Pref.DEVICE_STATUS,
+                    it.data.deviceStatus
+                )
+                firebaseParams.clear()
+                firebaseParams.putString(Const.methodInvoked, "OTPGenerated")
+                CommonUtils.addParamstoFirebaseEvent(
+                    firebaseAnalytics,
+                    Const.methodInvoked,
+                    firebaseParams
+                )
+            }
+        })
+        passcodeModel.verifyOtpResponseData.observe(this, Observer {
+            firebaseParams.clear()
+            firebaseParams.putString("Phonenumber", Pref.getValue(this, Pref.PHONE_NUMBER, "")!!)
+            firebaseParams.putString("DeviceID", CommonUtils.getDeviceUUID(this))
+            firebaseParams.putString("OS", android.os.Build.VERSION.SDK_INT.toString())
+            firebaseParams.putString("DeviceType", "Android")
+            firebaseParams.putString("Manufacture", "Build.MANUFACTURER")
+            firebaseParams.putString("FCM Token", fcmToken)
+            CommonUtils.addParamstoFirebaseEvent(
+                firebaseAnalytics,
+                "DeviceConfiguration",
+                firebaseParams
+            )
+            isForgot = false
+            if (it.status.equals(APIStatus.ok, true)) {
+                if (it.data.deviceStatus == DeviceStatus.createAccessCode) {
+                    Pref.setValue(
+                        this@PasscodeActivity,
+                        Pref.DEVICE_STATUS,
+                        it.data.deviceStatus
+                    )
+                    txtEnter.setText(getString(R.string.create_new_access_code))
+                    txtForgot.visibility = View.INVISIBLE
+                    isFirstSetup = false
+                    isNew = true
+                    clearData()
+                    Pref.setValue(this@PasscodeActivity, Pref.IS_FIRST_TIME, true)
+                    firebaseParams.clear()
+                    firebaseParams.putString(Const.methodInvoked, "OTPVerified")
+                    CommonUtils.addParamstoFirebaseEvent(
+                        firebaseAnalytics,
+                        Const.methodInvoked,
+                        firebaseParams
+                    )
+
+                }
+            } else if (it.status.equals(APIStatus.unauth, true)) {
+                //
+            } else if (it.status.equals(APIStatus.error, true)) {
+                clearData()
+                CommonUtils.showOkDialog(
+                    this@PasscodeActivity,
+                    getString(R.string.please_try_again),
+                    DialogInterface.OnClickListener { _, _ ->
+
+                        generateOtp()
+                    },
+                    getString(R.string.ok)
+                )
+            }
+        })
+
         if (Pref.getValue(this, Pref.DEVICE_STATUS, 0) == DeviceStatus.firstTimeSetUP) {
             txtForgot.visibility = View.INVISIBLE
             txtEnter.setText(
@@ -186,7 +260,7 @@ class PasscodeActivity : AppCompatActivity(), View.OnClickListener {
                 )
             )
             isFirstSetup = true
-
+            generateOtp()
         } else if (Pref.getValue(this, Pref.DEVICE_STATUS, 0) == DeviceStatus.verifyOTP) {
             txtForgot.visibility = View.INVISIBLE
             txtEnter.setText(
@@ -206,6 +280,7 @@ class PasscodeActivity : AppCompatActivity(), View.OnClickListener {
             txtEnter.setText(getString(R.string.enter_access_code))
             txtForgot.visibility = View.VISIBLE
         }
+
 
         if (intent != null)
             scrTag = intent.getIntExtra(Const.scrTag, 0)
@@ -236,100 +311,31 @@ class PasscodeActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun generateOtp() {
-        LoadingDialog.show(context)
-        passcodeModel.generateOtp().let {
-            it?.observe(this, androidx.lifecycle.Observer {
-                LoadingDialog.dismissDialog()
-                if (it.data.deviceStatus == DeviceStatus.verifyOTP) {
-                    Pref.setValue(
-                        this,
-                        Pref.DEVICE_STATUS,
-                        it.data.deviceStatus
-                    )
-                    firebaseParams.clear()
-                    firebaseParams.putString(Const.methodInvoked, "OTPGenerated")
-                    CommonUtils.addParamstoFirebaseEvent(
-                        firebaseAnalytics,
-                        Const.methodInvoked,
-                        firebaseParams
-                    )
-                }
-            })
-            if (it == null) {
-                LoadingDialog.dismissDialog()
-            }
-        }
+
+        val postParam = HashMap<String, String>()
+        postParam.put("deviceID", CommonUtils.getDeviceUUID(this))
+        postParam.put("PhoneNumber", Pref.getValue(context, Pref.PHONE_NUMBER, "")!!)
+        val gson = Gson()
+        passcodeModel.generateOtp(gson.fromJson(gson.toJson(postParam), JsonObject::class.java))
     }
 
     private fun verifyOtp() {
-        firebaseParams.clear()
-        firebaseParams.putString("Phonenumber", Pref.getValue(this, Pref.PHONE_NUMBER, "")!!)
-        firebaseParams.putString("DeviceID", CommonUtils.getDeviceUUID(this))
-        firebaseParams.putString("OS", android.os.Build.VERSION.SDK_INT.toString())
-        firebaseParams.putString("DeviceType", "Android")
-        firebaseParams.putString("Manufacture", "Build.MANUFACTURER")
-        firebaseParams.putString("FCM Token", fcmToken)
-        CommonUtils.addParamstoFirebaseEvent(
-            firebaseAnalytics,
-            "DeviceConfiguration",
-            firebaseParams
-        )
-        LoadingDialog.show(context)
-        passcodeModel.verifyOtp(accessCode, fcmToken).let {
-            it?.observe(this, Observer {
-                LoadingDialog.dismissDialog()
-                isForgot = false
-                if (it.status.equals(APIStatus.ok, true)) {
-                    if (it.data.deviceStatus == DeviceStatus.createAccessCode) {
-                        Pref.setValue(
-                            this,
-                            Pref.DEVICE_STATUS,
-                            it.data.deviceStatus
-                        )
-                        txtEnter.setText(getString(R.string.create_new_access_code))
-                        txtForgot.visibility = View.INVISIBLE
-                        isFirstSetup = false
-                        isNew = true
-                        clearData()
-                        Pref.setValue(this, Pref.IS_FIRST_TIME, true)
-                        firebaseParams.clear()
-                        firebaseParams.putString(Const.methodInvoked, "OTPVerified")
-                        CommonUtils.addParamstoFirebaseEvent(
-                            firebaseAnalytics,
-                            Const.methodInvoked,
-                            firebaseParams
-                        )
 
-                    }
-                } else if (it.status.equals(APIStatus.unauth, true)) {
-                    //
-                } else if (it.status.equals(APIStatus.error, true)) {
-                    clearData()
-                    CommonUtils.showOkDialog(
-                        this,
-                        getString(R.string.please_try_again),
-                        DialogInterface.OnClickListener { _, _ ->
-
-                            //generateOtp()
-                        },
-                        getString(R.string.ok)
-                    )
-                }
-
-
-            })
-            if (it == null) {
-                LoadingDialog.dismissDialog()
-                CommonUtils.displayMessage(
-                    window.decorView.rootView,
-                    getString(R.string.please_try_again)
-                )
-            }
-        }
+        val postParam = HashMap<String, String>()
+        postParam.put("deviceID", CommonUtils.getDeviceUUID(this))
+        postParam.put("PhoneNumber", Pref.getValue(context, Pref.PHONE_NUMBER, "")!!)
+        postParam.put("VerificationCode", accessCode)
+        postParam.put("DeviceName", android.os.Build.MODEL)
+        postParam.put("DeviceType", "Android")
+        postParam.put("Manufacturer", Build.MANUFACTURER)
+        postParam.put("OsVersion", android.os.Build.VERSION.SDK_INT.toString())
+        postParam.put("FcmToken", fcmToken)
+        val gson = Gson()
+        passcodeModel.verifyOtp(gson.fromJson(gson.toJson(postParam), JsonObject::class.java))
     }
 
     private fun callSignIn() {
-        passcodeModel.callSignIn(accessCode, fcmToken).let {mutable->
+        passcodeModel.callSignIn(accessCode, fcmToken).let { mutable ->
             LoadingDialog.show(context)
 
             mutable?.observe(this, Observer {
@@ -403,7 +409,6 @@ class PasscodeActivity : AppCompatActivity(), View.OnClickListener {
                     )
                 }
             })
-
 
 
         }

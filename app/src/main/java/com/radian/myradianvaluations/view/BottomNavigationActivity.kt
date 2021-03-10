@@ -17,6 +17,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.radian.myradianvaluations.R
+import com.radian.myradianvaluations.constants.APIStatus
 import com.radian.myradianvaluations.constants.Const
 import com.radian.myradianvaluations.constants.NotificationConstants
 import com.radian.myradianvaluations.network.APIList
@@ -257,9 +258,9 @@ class BottomNavigationActivity : AppCompatActivity(), View.OnClickListener {
         responseData.let {
             it?.observe(this, Observer {
                 LoadingDialog.dismissDialog()
-                if (it.status.equals(Const.statusOk, true)) {
+                if (it.status.equals(APIStatus.ok, true)) {
                     //Notification read badge updated successfully
-                } else if (it.status.equals(Const.statusUnauth, true)) {
+                } else if (it.status.equals(APIStatus.unauth, true)) {
                     Toast.makeText(
                         this@BottomNavigationActivity,
                         it.errorInfo.get(0).errorMessage,

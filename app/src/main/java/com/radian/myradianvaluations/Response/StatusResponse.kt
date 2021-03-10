@@ -15,7 +15,6 @@ class StatusResponse {
         var deviceStatusResponse = DeviceStatusResponse()
         @SerializedName("Message")
         var message = ""
-
         class DeviceStatusResponse {
             @SerializedName("DeviceStatus")
             var deviceStaus: Int = 0

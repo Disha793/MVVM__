@@ -43,7 +43,7 @@ class LoginViewModel(private val applicationContext: Application) :
 
     fun getUserStatus(jsonObject: JsonObject) {
         apiServiceProviderGeneric.postCallWithoutHeader(
-            applicationContext, ReturnType.POST_GetUserStatus.endPoint,
+            context, ReturnType.POST_GetUserStatus.endPoint,
             jsonObject,
             ReturnType.POST_GetUserStatus
         )
