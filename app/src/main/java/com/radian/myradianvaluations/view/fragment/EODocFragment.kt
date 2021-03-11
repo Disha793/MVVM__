@@ -221,14 +221,14 @@ class EODocFragment : Fragment(), View.OnClickListener, DialogInterface.OnClickL
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         photoFile = createImageFile()
         photoURI =
-            FileProvider.getUriForFile(context!!, context!!.packageName + ".provider", photoFile!!)
+            FileProvider.getUriForFile(context!!, context!!.packageName + ".provider", photoFile)
         intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
         startActivityForResult(intent, REQUEST_FOR_CAMERA)
     }
 
     private fun createImageFile(): File {
         val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-        val imageFileName = "ExaTech_Img" + timeStamp + "_"
+        val imageFileName = Const.imgnName + timeStamp + "_"
         val storageDir = context!!.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
 
         // Save a file: path for use with ACTION_VIEW intents
@@ -426,7 +426,7 @@ class EODocFragment : Fragment(), View.OnClickListener, DialogInterface.OnClickL
                 }
 
                 override fun onNext(t: ProfileImageResponse) {
-                    Log.e("Getting On Rsposne", "" + t)
+                    LogUtils.logD("Getting On Rsposne", "" + t)
                     t.data?.let {
 
 
@@ -435,7 +435,7 @@ class EODocFragment : Fragment(), View.OnClickListener, DialogInterface.OnClickL
                 }
 
                 override fun onError(e: Throwable) {
-                    Log.e("Getting On Error", "" + e.message)
+                   LogUtils.logD("Getting On Error", "" + e.message)
                     LoadingDialog.dismissDialog()
                     CommonUtils.showOkDialog(
                         context!!,

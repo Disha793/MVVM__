@@ -32,7 +32,7 @@ class DashboardResponseNew {
 
         @SerializedName("ProfilePicStatus")
         @Expose
-        var profilePicStatus = ""
+        var profilePicStatus:String? = ""
 
         @SerializedName("UpComingEventInfo")
         @Expose

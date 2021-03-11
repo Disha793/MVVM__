@@ -45,6 +45,13 @@ object Const {
     const val CATEGORIES_SHARED_PREF_KEY = "CATEGORIES"
     const val UPLOADED_PHOTOS_SHARED_PREF_KEY = "UPLOADED_PHOTOS"
     const val IS_FIRST_TIME = "TRUE"
-
+    const val PASSWORD_PATTERN="^" +
+            "(?=.*[0-9])" +         //at least 1 digit
+            "(?=.*[A-Z])" +         //at least 1 upper case letter
+            "(?=.*[@#$%^&+=!()-_])" +    //at least 1 special character
+            "(?=\\S+$)" +           //no white spaces
+            ".{8,}" +               //at least 8 characters
+            "$"
+const val imgnName="MyRVal_Img"
 
 }

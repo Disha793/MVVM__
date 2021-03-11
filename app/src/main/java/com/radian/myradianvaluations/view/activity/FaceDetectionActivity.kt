@@ -19,14 +19,16 @@ import com.otaliastudios.cameraview.controls.Facing
 import com.otaliastudios.cameraview.frame.Frame
 import com.otaliastudios.cameraview.frame.FrameProcessor
 import com.radian.myradianvaluations.R
+import com.radian.myradianvaluations.constants.Const
 import com.radian.myradianvaluations.interfaces.CaptureImageListener
+import com.radian.myradianvaluations.utils.LogUtils
 import kotlinx.android.synthetic.main.activity_face_detection.*
 import kotlinx.android.synthetic.main.content_face_detection.*
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
-class FaceDetectionActivity :AppCompatActivity(), FrameProcessor {
+class FaceDetectionActivity : AppCompatActivity(), FrameProcessor {
     private var cameraFacing: Facing = Facing.FRONT
     internal lateinit var cameraListener: CameraListener
     internal lateinit var pictureFile: File
@@ -321,27 +323,16 @@ class FaceDetectionActivity :AppCompatActivity(), FrameProcessor {
             camera_view.facing = cameraFacing
 
         }
-        btnCapture.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View?) {
-                if (isFaceDetected) {
-                    camera_view.takePicture()
-                    pictureFile = createImageFile()
-                    cameraListener = CaptureImageListener(pictureFile, this@FaceDetectionActivity)
-                    camera_view.addCameraListener(cameraListener)
-                    Log.e("FilePath", pictureFile.path)
-                }
-
-
-
+        btnCapture.setOnClickListener {
+            if (isFaceDetected) {
+                camera_view.takePicture()
+                pictureFile = createImageFile()
+                cameraListener = CaptureImageListener(pictureFile, this@FaceDetectionActivity)
+                camera_view.addCameraListener(cameraListener)
+                LogUtils.logD("FilePath", pictureFile.path)
             }
-
-        })
-        camera_cancel.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View?) {
-                finish()
-            }
-
-        })
+        }
+        camera_cancel.setOnClickListener { finish() }
 
     }
 
@@ -354,7 +345,7 @@ class FaceDetectionActivity :AppCompatActivity(), FrameProcessor {
 
     private fun createImageFile(): File {
         val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-        val imageFileName = "ExaTech_Img" + timeStamp + "_"
+        val imageFileName = Const.imgnName + timeStamp + "_"
         val storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
 
 
