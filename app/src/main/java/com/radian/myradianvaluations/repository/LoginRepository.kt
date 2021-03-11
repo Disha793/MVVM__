@@ -4,16 +4,11 @@ import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import com.radian.myradianvaluations.network.APIList
 import com.radian.myradianvaluations.network.RetrofitBase
-import com.radian.myradianvaluations.networking.ApiServiceProviderGeneric
 import com.radian.myradianvaluations.utils.CommonUtils
-import com.radian.myradianvaluations.utils.LoadingDialog
-import com.radian.myradianvaluations.view.LoginActivity
 import com.radian.vendorbridge.Response.StatusResponse
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import retrofit2.Response
-import javax.net.ssl.SSLEngineResult
 
 class LoginRepository(val context: Context) {
 

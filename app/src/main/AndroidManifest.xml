@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <application
@@ -17,7 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".view.SplashActivity">
+        <activity android:name=".view.activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,26 +26,26 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".view.LoginActivity"
+            android:name=".view.activity.LoginActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.OrgInfoActivity"
+            android:name=".view.activity.OrgInfoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.PasscodeActivity"
+            android:name=".view.activity.PasscodeActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.WebviewActivity"
+            android:name=".view.activity.WebviewActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.BottomNavigationActivity"
+            android:name=".view.activity.BottomNavigationActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.ActivityCamera"
+            android:name=".view.activity.CameraActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden"/>
         <activity
-            android:name=".view.ActivitySteps"
+            android:name=".view.activity.StepsActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden"/>
     </application>

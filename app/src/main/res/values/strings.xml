@@ -18,6 +18,7 @@
     <string name="error_enter_strt_dte">Please Enter Start Date.</string>
     <string name="error_enter_end_dte">Please Enter End Date.</string>
     <string name="error_enter_appoinmnt">Please Enter Appointment Date and Time.</string>
+    <string name="confirm_passcode_text">Please Confirm Passcode</string>
     <!--EO Error Messages-->
     <string name="enter_coverage_amount">Please enter your coverage amount.</string>
     <string name="enter_policy_number">Please enter policy number.</string>

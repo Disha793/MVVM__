@@ -14,10 +14,10 @@ import com.radian.myradianvaluations.utils.CommonUtils
 import com.radian.myradianvaluations.utils.LoadingDialog
 import com.radian.myradianvaluations.utils.LogUtils
 import com.radian.myradianvaluations.utils.Pref
-import com.radian.myradianvaluations.view.BottomNavigationActivity
-import com.radian.myradianvaluations.view.ManageOrderFragment
-import com.radian.myradianvaluations.view.MessageChatFragment
-import com.radian.myradianvaluations.view.MessageListFragment
+import com.radian.myradianvaluations.view.activity.BottomNavigationActivity
+import com.radian.myradianvaluations.view.fragment.ManageOrderFragment
+import com.radian.myradianvaluations.view.fragment.MessageChatFragment
+import com.radian.myradianvaluations.view.fragment.MessageListFragment
 import com.radian.vendorbridge.Response.SearchFilterResponse
 import com.radian.vendorbridge.Response.StatusResponse
 import io.reactivex.Observer

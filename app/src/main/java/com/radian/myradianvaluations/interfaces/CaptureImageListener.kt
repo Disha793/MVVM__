@@ -4,7 +4,7 @@ package com.radian.myradianvaluations.interfaces
 import com.otaliastudios.cameraview.CameraListener
 import com.otaliastudios.cameraview.PictureResult
 import com.radian.myradianvaluations.utils.LogUtils
-import com.radian.myradianvaluations.view.FaceDetectionActivity
+import com.radian.myradianvaluations.view.activity.FaceDetectionActivity
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileOutputStream

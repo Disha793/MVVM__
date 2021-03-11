@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.radian.myradianvaluations.R
-import com.radian.myradianvaluations.view.BottomNavigationActivity
-import com.radian.myradianvaluations.view.NewOrderDetailFragment
+import com.radian.myradianvaluations.view.activity.BottomNavigationActivity
+import com.radian.myradianvaluations.view.fragment.NewOrderDetailFragment
 import com.radian.vendorbridge.Response.NewOrderResponse
 import kotlinx.android.synthetic.main.activity_bottom_navigation.*
 import kotlinx.android.synthetic.main.row_new_orders.view.*

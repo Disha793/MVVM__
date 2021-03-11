@@ -11,9 +11,7 @@
         android:layout_gravity="bottom"
         android:background="@android:color/white"
         android:gravity="bottom"
-        android:orientation="vertical"
-
-        >
+        android:orientation="vertical">
 
         <View
             android:layout_width="match_parent"

@@ -28,10 +28,7 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/layoutToolbar"
         android:fillViewport="true"
-        android:fitsSystemWindows="true"
-
-
-        >
+        android:fitsSystemWindows="true">
 
         <RelativeLayout
             android:id="@+id/linearMain"
