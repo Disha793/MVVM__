@@ -285,7 +285,7 @@ class PasscodeActivity : AppCompatActivity(), View.OnClickListener {
                 var intent: Intent
 
                 if (it.data.userDetailJson.cocFlag) {
-                    intent = Intent(this@PasscodeActivity, CodeofConduct::class.java)
+                    intent = Intent(this@PasscodeActivity, CodeofConductActivity::class.java)
                     intent.putExtra(Const.btnCount, it.data.userDetailJson.btnCount)
                     intent.putExtra(Const.basicLoginDetail, it)
                     startActivity(intent)
