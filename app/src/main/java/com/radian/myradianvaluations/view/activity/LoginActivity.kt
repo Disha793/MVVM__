@@ -39,7 +39,6 @@ class LoginActivity : AppCompatActivity() {
             //signIN()
             if(isValid())
             getUserStatus()
-
         }
         edtPassword.setOnEditorActionListener { _, p1, _ ->
             if (p1 == EditorInfo.IME_ACTION_GO) {
@@ -117,8 +116,6 @@ class LoginActivity : AppCompatActivity() {
             )
             return false
         }
-
-
         if (TextUtils.isEmpty(edtPassword.text.toString())) {
             CommonUtils.hideKeybord(edtPhoneNumber, this)
             CommonUtils.displayMessage(

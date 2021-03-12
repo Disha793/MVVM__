@@ -89,8 +89,6 @@ class ManageOrderFragment : Fragment(), View.OnClickListener {
         (context as BottomNavigationActivity).imgBack.visibility = View.VISIBLE
         (context as BottomNavigationActivity).txtTitle.text = getString(R.string.title_manage_order)
         (context as BottomNavigationActivity).txtClear.visibility = View.GONE
-
-
     }
 
     private fun getManageOrder() {
@@ -120,14 +118,11 @@ class ManageOrderFragment : Fragment(), View.OnClickListener {
                     context!!,
                     getString(R.string.please_try_again),
                     DialogInterface.OnClickListener { _, _ ->
-
                     },
                     getString(R.string.ok)
                 )
-
             }
         }
-
     }
 
     private fun setOrderDetail(orderDetail: ManageOrderResponse.Data.OrderDetail) {
@@ -228,7 +223,6 @@ class ManageOrderFragment : Fragment(), View.OnClickListener {
                         context!!.startActivity(mapIntent)
                     }
                 }
-
             }
             R.id.linearLOE -> {
                 val url =
@@ -324,7 +318,6 @@ class ManageOrderFragment : Fragment(), View.OnClickListener {
             ),
             REQUEST_CODE
         )
-
     }
 
     private fun markAsReadRevision() {

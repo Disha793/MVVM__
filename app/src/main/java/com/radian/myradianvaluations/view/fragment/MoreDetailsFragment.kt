@@ -23,15 +23,14 @@ import kotlinx.android.synthetic.main.activity_bottom_navigation.*
 import kotlinx.android.synthetic.main.fragment_more_details.view.*
 import kotlinx.android.synthetic.main.layout_toolbar.*
 
-
 class MoreDetailsFragment : Fragment(), View.OnClickListener {
     internal lateinit var view: View
     private val REQUEST_CODE = 101
     private var orderDetail = ManageOrderResponse.Data.OrderDetail()
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         view = inflater.inflate(R.layout.fragment_more_details, container, false)
         view.linearCall.setOnClickListener(this)
@@ -44,7 +43,7 @@ class MoreDetailsFragment : Fragment(), View.OnClickListener {
         super.onActivityCreated(savedInstanceState)
         arguments?.let {
             orderDetail =
-                it.getParcelable<ManageOrderResponse.Data.OrderDetail>(Const.itemIdTag) as ManageOrderResponse.Data.OrderDetail
+                    it.getParcelable<ManageOrderResponse.Data.OrderDetail>(Const.itemIdTag) as ManageOrderResponse.Data.OrderDetail
         }
         setMoreData()
     }
@@ -62,9 +61,7 @@ class MoreDetailsFragment : Fragment(), View.OnClickListener {
         view.txtMoreLoanId.text = showLabel(orderDetail.displayLoanInfo)
         view.txtMoreClient.text = showLabel(orderDetail.clientName)
         view.txtMorePhn.text = showLabel(orderDetail.borrowerPhone?.let {
-            CommonUtils.formatNumber(
-                it
-            )
+            CommonUtils.formatNumber(it)
         })
         view.txtMoreEmail.text = showLabel(orderDetail.borrowerEmail)
         view.txtMoreBorrwr.text = showLabel(orderDetail.borrowerName)
@@ -78,9 +75,9 @@ class MoreDetailsFragment : Fragment(), View.OnClickListener {
     }
 
     override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
+            requestCode: Int,
+            permissions: Array<out String>,
+            grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         val permission = permissions[0]
@@ -88,24 +85,19 @@ class MoreDetailsFragment : Fragment(), View.OnClickListener {
             REQUEST_CODE -> {
                 if (grantResults[0] == PackageManager.PERMISSION_DENIED) {
                     val showRationale =
-                        ActivityCompat.shouldShowRequestPermissionRationale(
-                            context as BottomNavigationActivity,
-                            permission
-                        )
+                            ActivityCompat.shouldShowRequestPermissionRationale(
+                                    context as BottomNavigationActivity, permission)
                     if (!showRationale) {
                         val snackBar = Snackbar.make(
-                            view,
-                            getString(R.string.permission_call),
-                            Snackbar.LENGTH_LONG
-                        )
+                                view, getString(R.string.permission_call), Snackbar.LENGTH_LONG)
                         snackBar.setActionTextColor(
-                            Color.WHITE
+                                Color.WHITE
                         )
                         snackBar.setAction("SETTINGS") {
                             val intent =
-                                Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                                    Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
                             val uri =
-                                Uri.fromParts("package", context!!.packageName, null)
+                                    Uri.fromParts("package", context!!.packageName, null)
                             intent.data = uri
                             startActivityForResult(intent, 12)
                             snackBar.dismiss()
@@ -113,9 +105,9 @@ class MoreDetailsFragment : Fragment(), View.OnClickListener {
                         snackBar.show()
                     } else {
                         val snackBar = Snackbar.make(
-                            view,
-                            getString(R.string.permission_call),
-                            Snackbar.LENGTH_LONG
+                                view,
+                                getString(R.string.permission_call),
+                                Snackbar.LENGTH_LONG
                         )
                         snackBar.setActionTextColor(Color.WHITE)
                         snackBar.setAction("ALLOW") {
@@ -123,49 +115,42 @@ class MoreDetailsFragment : Fragment(), View.OnClickListener {
                             snackBar.dismiss()
                         }
                         snackBar.show()
-
                     }
-
                 }
             }
         }
-
     }
 
     override fun onClick(v: View?) {
         when (v?.id) {
-
             R.id.linearCall -> {
                 if (!orderDetail.borrowerPhone.isNullOrEmpty()) {
                     CommonUtils.showDialog(
-                        context!!,
-                        getString(R.string.call_dialog_title),
-                        DialogInterface.OnClickListener { _, _ ->
+                            context!!,
+                            getString(R.string.call_dialog_title),
+                            DialogInterface.OnClickListener { _, _ ->
 
+                                if (CommonUtils.checkCallPermission(context!!)) {
+                                    val intent = Intent(Intent.ACTION_CALL)
+                                    intent.data =
+                                            Uri.parse("tel:" + orderDetail.borrowerPhone)
+                                    startActivity(intent)
+                                } else {
+                                    requestPermission()
+                                }
 
-                            if (CommonUtils.checkCallPermission(context!!)) {
-                                val intent = Intent(Intent.ACTION_CALL)
-                                intent.data =
-                                    Uri.parse("tel:" + orderDetail.borrowerPhone)
-                                startActivity(intent)
-                            } else {
-                                requestPermission()
-                            }
-
-                        },
-                        DialogInterface.OnCancelListener { _ -> },
-                        "Yes",
-                        "No"
+                            },
+                            DialogInterface.OnCancelListener { _ -> },
+                            "Yes",
+                            "No"
                     )
                 }
-
             }
             R.id.linearEmail -> {
                 if (!orderDetail.borrowerEmail.isNullOrEmpty()) {
                     val emailIntent = Intent(
-                        Intent.ACTION_SENDTO, Uri.fromParts(
-                            "mailto", "" + orderDetail.borrowerEmail, null
-                        )
+                            Intent.ACTION_SENDTO, Uri.fromParts(
+                            "mailto", "" + orderDetail.borrowerEmail, null)
                     )
                     emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Subject")
                     emailIntent.putExtra(Intent.EXTRA_TEXT, "Body")
@@ -178,10 +163,10 @@ class MoreDetailsFragment : Fragment(), View.OnClickListener {
 
     private fun requestPermission() {
         requestPermissions(
-            arrayOf(
-                Manifest.permission.CALL_PHONE
-            ),
-            REQUEST_CODE
+                arrayOf(
+                        Manifest.permission.CALL_PHONE
+                ),
+                REQUEST_CODE
         )
 
     }

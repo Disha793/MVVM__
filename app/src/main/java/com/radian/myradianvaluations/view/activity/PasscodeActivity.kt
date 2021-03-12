@@ -9,7 +9,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.text.TextUtils
-import android.util.Log
 import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -28,7 +27,6 @@ import com.radian.myradianvaluations.constants.APIStatus
 import com.radian.myradianvaluations.constants.Const
 import com.radian.myradianvaluations.constants.DeviceStatus
 import com.radian.myradianvaluations.utils.CommonUtils
-import com.radian.myradianvaluations.utils.LoadingDialog
 import com.radian.myradianvaluations.utils.LogUtils
 import com.radian.myradianvaluations.utils.Pref
 import com.radian.myradianvaluations.viewmodel.PasscodeViewModel
@@ -50,7 +48,6 @@ class PasscodeActivity : AppCompatActivity(), View.OnClickListener {
     private var isConfirmed = false
     private var isForgot = false
     private var isFirstSetup = false
-    private val classTag = this.javaClass.name
     private var fcmToken = ""
     private lateinit var context: Context
     private lateinit var firebaseAnalytics: FirebaseAnalytics
@@ -134,9 +131,9 @@ class PasscodeActivity : AppCompatActivity(), View.OnClickListener {
                 firebaseParams.clear()
                 firebaseParams.putString(Const.methodInvoked, "forgotCodeTapped")
                 CommonUtils.addParamstoFirebaseEvent(
-                    firebaseAnalytics,
-                    Const.methodInvoked,
-                    firebaseParams
+                        firebaseAnalytics,
+                        Const.methodInvoked,
+                        firebaseParams
                 )
                 isForgot = true
                 setForgotLayout()
@@ -173,7 +170,7 @@ class PasscodeActivity : AppCompatActivity(), View.OnClickListener {
                 Const.screenLaunched,
                 firebaseParams
         )
-        Log.d("FCM at AccessCode", Pref.getValue(this, Pref.FCM_TOKEN, "")!!)
+        LogUtils.logD(TAG, Pref.getValue(this, Pref.FCM_TOKEN, "")!!)
         imgBack.visibility = View.GONE
         FirebaseApp.initializeApp(this)
         getToken()
@@ -239,7 +236,6 @@ class PasscodeActivity : AppCompatActivity(), View.OnClickListener {
                         this@PasscodeActivity,
                         getString(R.string.please_try_again),
                         DialogInterface.OnClickListener { _, _ ->
-
                             generateOtp()
                         },
                         getString(R.string.ok)
@@ -250,35 +246,35 @@ class PasscodeActivity : AppCompatActivity(), View.OnClickListener {
             if (it.status.equals(APIStatus.ok, true)) {
 
                 Pref.setValue(
-                    this@PasscodeActivity,
-                    Pref.DEVICE_STATUS,
-                    DeviceStatus.enterAccessCode
+                        this@PasscodeActivity,
+                        Pref.DEVICE_STATUS,
+                        DeviceStatus.enterAccessCode
                 )
                 Pref.setValue(
-                    this@PasscodeActivity,
-                    Pref.AUTH_TOKEN,
-                    "Bearer " + it.data.authToken
+                        this@PasscodeActivity,
+                        Pref.AUTH_TOKEN,
+                        "Bearer " + it.data.authToken
                 )
                 Pref.setValue(
-                    this@PasscodeActivity,
-                    Pref.MOBILE_USER_ID,
-                    it.data.mobileUserId
+                        this@PasscodeActivity,
+                        Pref.MOBILE_USER_ID,
+                        it.data.mobileUserId
                 )
                 Pref.setValue(
-                    this@PasscodeActivity,
-                    Pref.USER_ID,
-                    it.data.userDetailJson.userList.get(0).userId!!
+                        this@PasscodeActivity,
+                        Pref.USER_ID,
+                        it.data.userDetailJson.userList.get(0).userId!!
                 )
                 Pref.setValue(this@PasscodeActivity, Pref.ACCESS_CODE, accessCode)
                 Pref.setValue(
-                    this@PasscodeActivity,
-                    Pref.ORGANIZATN_ID,
-                    it.data.userDetailJson.userList.get(0).orgId
+                        this@PasscodeActivity,
+                        Pref.ORGANIZATN_ID,
+                        it.data.userDetailJson.userList.get(0).orgId
                 )
                 val params = Bundle()
                 params.putString(
-                    "userId",
-                    it.data.userDetailJson.userList.get(0).userId!!.toString()
+                        "userId",
+                        it.data.userDetailJson.userList.get(0).userId!!.toString()
                 )
 
                 CommonUtils.addParamstoFirebaseEvent(firebaseAnalytics, "Logged_IN", params)
@@ -291,26 +287,24 @@ class PasscodeActivity : AppCompatActivity(), View.OnClickListener {
                     startActivity(intent)
                 } else {
                     intent = Intent(
-                        this@PasscodeActivity,
-                        BottomNavigationActivity::class.java
+                            this@PasscodeActivity,
+                            BottomNavigationActivity::class.java
                     )
                     intent.putExtra(Const.basicLoginDetail, it)
                     startActivity(intent)
                 }
 
             } else {
-                if (it.status.equals(APIStatus.unauth,true)) {
+                if (it.status.equals(APIStatus.unauth, true)) {
 //status unauthorized
-                } else if (it.status.equals(APIStatus.error,true)) {
+                } else if (it.status.equals(APIStatus.error, true)) {
                     CommonUtils.displayMessage(
-                        window.decorView.rootView,
-                        it.errorInfo.get(0).errorMessage
+                            window.decorView.rootView,
+                            it.errorInfo.get(0).errorMessage
                     )
                     clearData()
-
                 }
             }
-
         })
 
         if (Pref.getValue(this, Pref.DEVICE_STATUS, 0) == DeviceStatus.firstTimeSetUP) {
@@ -334,8 +328,6 @@ class PasscodeActivity : AppCompatActivity(), View.OnClickListener {
                     )
             )
             isFirstSetup = true
-
-
         } else if (Pref.getValue(this, Pref.DEVICE_STATUS, 0) == DeviceStatus.createAccessCode) {
             txtEnter.setText(getString(R.string.create_new_access_code))
             txtForgot.visibility = View.INVISIBLE
@@ -344,14 +336,11 @@ class PasscodeActivity : AppCompatActivity(), View.OnClickListener {
             txtForgot.visibility = View.VISIBLE
         }
 
-
         if (intent != null)
             scrTag = intent.getIntExtra(Const.scrTag, 0)
         if (scrTag == Const.scrSettingsTag) {
             txtForgot.visibility = View.INVISIBLE
             txtEnter.setText(getString(R.string.enter_current_access_code))
-
-
         }
         btn1.setOnClickListener(this)
         btn2.setOnClickListener(this)
@@ -383,7 +372,6 @@ class PasscodeActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun verifyOtp() {
-
         val postParam = HashMap<String, String>()
         postParam.put("deviceID", CommonUtils.getDeviceUUID(this))
         postParam.put("PhoneNumber", Pref.getValue(context, Pref.PHONE_NUMBER, "")!!)
@@ -399,8 +387,8 @@ class PasscodeActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun callSignIn() {
         val postParam = HashMap<String, String>()
-        postParam.put("deviceID",   CommonUtils.getDeviceUUID(this))
-        postParam.put("PhoneNumber",  Pref.getValue(this, Pref.PHONE_NUMBER, "")!!)
+        postParam.put("deviceID", CommonUtils.getDeviceUUID(this))
+        postParam.put("PhoneNumber", Pref.getValue(this, Pref.PHONE_NUMBER, "")!!)
         postParam.put("PinNo", accessCode)
         postParam.put("FcmToken", Pref.getValue(context, Pref.FCM_TOKEN, "")!!)
         val gson = Gson()
@@ -497,11 +485,8 @@ class PasscodeActivity : AppCompatActivity(), View.OnClickListener {
                                         R.drawable.profile_placeholder
                                 )
                         ).into(imgProfile)
-
             }
-
         })
-
     }
 
     private fun checkRadiobutton() {
@@ -523,7 +508,6 @@ class PasscodeActivity : AppCompatActivity(), View.OnClickListener {
         if (counter == 6) {
             radioBtn6.isChecked = true
         }
-
     }
 
     private fun incrementCountr() {

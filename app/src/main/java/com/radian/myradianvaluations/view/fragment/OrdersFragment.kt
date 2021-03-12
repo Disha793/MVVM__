@@ -30,21 +30,21 @@ class OrdersFragment : Fragment() {
     private lateinit var orderViewModel: OrdersViewModel
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         view = inflater.inflate(R.layout.fragment_orders, container, false)
         (context as BottomNavigationActivity).bottomNavigationView.visibility = View.VISIBLE
         orderViewModel =
-            ViewModelProvider(context as BottomNavigationActivity).get(OrdersViewModel::class.java)
+                ViewModelProvider(context as BottomNavigationActivity).get(OrdersViewModel::class.java)
         orderViewModel.init(context as BottomNavigationActivity)
         view.recyclerView.adapter = OrdersAdapter(context!!, object : OpenOrderClickListener {
             override fun onOpenOrderClick(position: Int) {
                 (context as BottomNavigationActivity).pushFragment(
-                    ManageOrderFragment.newInstance(
-                        orderList.get(position).itemId!!
-                    ), true
+                        ManageOrderFragment.newInstance(
+                                orderList.get(position).itemId!!
+                        ), true
                 )
             }
 
@@ -60,7 +60,6 @@ class OrdersFragment : Fragment() {
         (context as BottomNavigationActivity).txtClear.visibility = View.GONE
         (context as BottomNavigationActivity).imgBack.visibility = View.GONE
         (context as BottomNavigationActivity).txtTitle.text = title
-
     }
 
     private fun getOrderList() {
@@ -79,9 +78,9 @@ class OrdersFragment : Fragment() {
                     }
                 } else if (it.status.equals(APIStatus.unauth, true)) {
                     Toast.makeText(
-                        context!!,
-                        it.errorInfo.get(0).errorMessage,
-                        Toast.LENGTH_SHORT
+                            context!!,
+                            it.errorInfo.get(0).errorMessage,
+                            Toast.LENGTH_SHORT
                     ).show()
                     var intent = Intent(context!!, PasscodeActivity::class.java)
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
@@ -91,17 +90,14 @@ class OrdersFragment : Fragment() {
             if (it == null) {
                 LoadingDialog.dismissDialog()
                 CommonUtils.showOkDialog(
-                    context!!,
-                    getString(R.string.please_try_again),
-                    DialogInterface.OnClickListener { _, _ ->
+                        context!!,
+                        getString(R.string.please_try_again),
+                        DialogInterface.OnClickListener { _, _ ->
 
-                    },
-                    getString(R.string.ok)
+                        },
+                        getString(R.string.ok)
                 )
-
             }
         }
-
-
     }
 }

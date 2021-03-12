@@ -86,7 +86,6 @@ class HomeFragment : Fragment(), View.OnClickListener {
             R.id.imgMessage -> {
                 (context as BottomNavigationActivity).pushFragment(MessageListFragment(), true)
             }
-
             R.id.imgDrawer -> {
                 view.drawer_layout.openDrawer(GravityCompat.END)
             }
@@ -151,9 +150,9 @@ class HomeFragment : Fragment(), View.OnClickListener {
                 startActivity(intent)
                 view.drawer_layout.closeDrawer(GravityCompat.END)
             }
-
         }
     }
+
     override fun onStart() {
         super.onStart()
       //  EventBus.getDefault().register(this)
