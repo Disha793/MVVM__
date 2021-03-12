@@ -33,7 +33,7 @@ class DashboardViewModel : ViewModel(), ApiResponseCallBack {
     }
 
     fun getDashboardData(jsonObject: JsonObject) {
-        apiServiceProviderGeneric.postCallWithoutHeader(
+        apiServiceProviderGeneric.postCall(
             context, ReturnType.POST_Dashboard.endPoint,
             jsonObject,
             ReturnType.POST_Dashboard
@@ -52,6 +52,7 @@ class DashboardViewModel : ViewModel(), ApiResponseCallBack {
         LoadingDialog.dismissDialog()
         try {
             if (returnType == ReturnType.POST_Dashboard) {
+
                 val responseUsers = Gson().fromJson<DashboardResponseNew>(
                     response,
                     object : TypeToken<DashboardResponseNew>() {}.type

@@ -53,6 +53,7 @@ open class APIClient {
         client.connectTimeout(CONNECTION_TIMEOUT, TimeUnit.MINUTES)
         //with oAuthKey
         client.addInterceptor(AuthInterceptor(mContext))
+
         retrofit = Retrofit.Builder().addConverterFactory(GsonConverterFactory.create())
             .baseUrl(BuildConfig.HOST).client(client.build()).build()
         return retrofit
