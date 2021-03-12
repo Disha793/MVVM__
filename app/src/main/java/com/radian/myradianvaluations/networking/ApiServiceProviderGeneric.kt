@@ -3,6 +3,7 @@ package com.radian.myradianvaluations.networking
 import android.content.Context
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
+import com.jakewharton.retrofit2.adapter.rxjava2.Result.response
 import com.radian.myradianvaluations.BuildConfig
 import com.radian.myradianvaluations.R
 import com.radian.myradianvaluations.utils.LogUtils
@@ -11,11 +12,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
+import okhttp3.Headers
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Url
+import retrofit2.http.*
 
 
 class ApiServiceProviderGeneric() : APIClient() {
@@ -44,6 +43,9 @@ class ApiServiceProviderGeneric() : APIClient() {
                 launch(Dispatchers.Main) {
                     if (call.body() != null && call.isSuccessful) {
                        // LogUtils.logE(classTag, "response : ${call.body() as JsonElement}")
+                        val headerList: Headers = call.headers()
+                        LogUtils.logD(classTag,"Header===>"+ headerList.get("Authorization").toString())
+                        LogUtils.logD(classTag, "response : ${call.body() as JsonElement}")
                         apiResponseCallBack.onSuccess(
                             returnType, call.body().toString()
                         )
@@ -82,6 +84,7 @@ fun postCallWithoutHeader(
             launch(Dispatchers.Main) {
                 if (call.body() != null && call.isSuccessful) {
                     // LogUtils.logE(classTag, "response : ${call.body() as JsonElement}")
+
                     apiResponseCallBack.onSuccess(
                         returnType, call.body().toString()
                     )
@@ -118,7 +121,7 @@ fun postCallWithoutHeader(
                     .postCall(url, jsonObj)
                 launch(Dispatchers.Main) {
                     if (call.body() != null && call.isSuccessful) {
-                        LogUtils.logD(classTag, "response : ${call.body() as JsonElement}")
+
                         apiResponseCallBack.onSuccess(
                             returnType, call.body().toString()
                         )
