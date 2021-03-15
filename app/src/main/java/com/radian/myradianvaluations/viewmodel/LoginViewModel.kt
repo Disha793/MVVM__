@@ -2,24 +2,23 @@ package com.radian.myradianvaluations.viewmodel
 
 import android.app.Application
 import android.content.Context
+import android.content.DialogInterface
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
-import com.google.gson.JsonObject
 import com.google.gson.reflect.TypeToken
+import com.radian.myradianvaluations.R
 import com.radian.myradianvaluations.networking.ApiServiceProviderGeneric
 import com.radian.myradianvaluations.networking.ReturnType
-import com.radian.myradianvaluations.repository.LoginRepository
+import com.radian.myradianvaluations.utils.CommonUtils
 import com.radian.myradianvaluations.utils.LoadingDialog
 import com.radian.myradianvaluations.utils.LogUtils
 import com.radian.vendorbridge.Response.StatusResponse
 import com.sunteckindia.networking.ApiResponseCallBack
-import javax.net.ssl.SSLEngineResult
 
 class LoginViewModel(private val applicationContext: Application) :
-    AndroidViewModel(applicationContext), ApiResponseCallBack {
-    private lateinit var loginRepository: LoginRepository
+        AndroidViewModel(applicationContext), ApiResponseCallBack {
     private val apiServiceProviderGeneric = ApiServiceProviderGeneric(this)
     private lateinit var context: Context
     private var mlLoginResponse = MutableLiveData<StatusResponse>()
@@ -28,24 +27,14 @@ class LoginViewModel(private val applicationContext: Application) :
 
     fun init(context: Context) {
         this.context = context
-        loginRepository = LoginRepository.getInstance(context)
     }
 
-    fun signIn(
-        userName: String,
-        phoneNumber: String,
-        password: String
-    ): MutableLiveData<StatusResponse>? {
-        mlLoginResponse = loginRepository.callLoginApi(userName, phoneNumber, password)!!
-        return mlLoginResponse
 
-    }
-
-    fun getUserStatus(jsonObject: JsonObject) {
+    fun getUserStatus(postParam: HashMap<String, Any?>) {
         apiServiceProviderGeneric.postCallWithoutHeader(
-            context, ReturnType.POST_GetUserStatus.endPoint,
-            jsonObject,
-            ReturnType.POST_GetUserStatus
+                context, ReturnType.POST_GetUserStatus.endPoint,
+                postParam,
+                ReturnType.POST_GetUserStatus
         )
     }
 
@@ -58,8 +47,8 @@ class LoginViewModel(private val applicationContext: Application) :
         try {
             if (returnType == ReturnType.POST_GetUserStatus) {
                 val responseUsers = Gson().fromJson<StatusResponse>(
-                    response,
-                    object : TypeToken<StatusResponse>() {}.type
+                        response,
+                        object : TypeToken<StatusResponse>() {}.type
                 )
                 LogUtils.logD("", "" + responseUsers.status)
                 mlLoginResponse?.value = responseUsers
@@ -71,7 +60,12 @@ class LoginViewModel(private val applicationContext: Application) :
 
     override fun onError(returnType: ReturnType, error: String) {
         LoadingDialog.dismissDialog()
-    }
+        CommonUtils.showOkDialog(
+                context!!,
+                context.getString(R.string.please_try_again),
+                DialogInterface.OnClickListener { _, _ -> },
+                context.getString(R.string.ok)
+        )    }
 
 
 }

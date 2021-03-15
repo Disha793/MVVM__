@@ -18,7 +18,7 @@ import com.radian.myradianvaluations.viewmodel.OrgInfoViewModel
 import kotlinx.android.synthetic.main.activity_orginfo.*
 import kotlinx.android.synthetic.main.layout_toolbar.*
 
-class OrgInfoActivity : AppCompatActivity() {
+class HelpTroubleActivity : AppCompatActivity() {
 
     lateinit var orgInfoModel: OrgInfoViewModel
     private var webUrl = ""
@@ -39,9 +39,10 @@ class OrgInfoActivity : AppCompatActivity() {
         } else {
             txtTitle.text = getString(R.string.support)
         }
-        getInfo()
+        //Disha: For next release
+//        getInfo()
         txtHere.setOnClickListener {
-            val intent = Intent(this@OrgInfoActivity, WebviewActivity::class.java)
+            val intent = Intent(this@HelpTroubleActivity, WebviewActivity::class.java)
             intent.putExtra("webUrl", webUrl)
             intent.putExtra(Const.scrTag, Const.scrOrgInfo)
             startActivity(intent)

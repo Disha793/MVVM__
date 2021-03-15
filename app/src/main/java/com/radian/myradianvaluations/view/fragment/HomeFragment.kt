@@ -19,7 +19,7 @@ import com.radian.myradianvaluations.constants.Const
 import com.radian.myradianvaluations.utils.CommonUtils
 import com.radian.myradianvaluations.utils.Pref
 import com.radian.myradianvaluations.view.activity.BottomNavigationActivity
-import com.radian.myradianvaluations.view.activity.OrgInfoActivity
+import com.radian.myradianvaluations.view.activity.HelpTroubleActivity
 import com.radian.myradianvaluations.view.activity.PasscodeActivity
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_bottom_navigation.*
@@ -145,7 +145,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
                     Const.methodInvoked,
                     firebaseParams
                 )
-                val intent = Intent(context!!, OrgInfoActivity::class.java)
+                val intent = Intent(context!!, HelpTroubleActivity::class.java)
                 intent.putExtra(Const.scrTag, Const.scrDrawerTag)
                 startActivity(intent)
                 view.drawer_layout.closeDrawer(GravityCompat.END)

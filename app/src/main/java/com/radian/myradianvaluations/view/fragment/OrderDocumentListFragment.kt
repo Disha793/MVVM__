@@ -31,7 +31,7 @@ import kotlinx.android.synthetic.main.fragment_document_list.view.txtdoc
 import kotlinx.android.synthetic.main.layout_toolbar.*
 import kotlinx.android.synthetic.main.row_document_list.view.*
 
-class DocumentListFragment : Fragment(), View.OnClickListener {
+class OrderDocumentListFragment : Fragment(), View.OnClickListener {
     internal lateinit var view: View
     private var postParam = HashMap<String, Any?>()
     private val classTag = this.javaClass.name
@@ -64,7 +64,8 @@ class DocumentListFragment : Fragment(), View.OnClickListener {
                 itemId = it
             }
         }
-        getDocuments()
+        //Disha: For next release
+//        getDocuments()
     }
 
     private fun setToolbar() {
@@ -107,7 +108,8 @@ class DocumentListFragment : Fragment(), View.OnClickListener {
                     context!!,
                     getString(R.string.please_try_again),
                     DialogInterface.OnClickListener { _, _ ->
-                        getDocuments()
+                        //Disha: For next release
+//                        getDocuments()
 
                     },
                     getString(R.string.ok)
@@ -120,10 +122,10 @@ class DocumentListFragment : Fragment(), View.OnClickListener {
     companion object {
         fun newInstance(
             itemId: Int
-        ): DocumentListFragment {
+        ): OrderDocumentListFragment {
             val args = Bundle()
             args.putInt(Const.itemIdTag, itemId)
-            val fragment = DocumentListFragment()
+            val fragment = OrderDocumentListFragment()
             fragment.arguments = args
             return fragment
         }

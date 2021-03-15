@@ -119,7 +119,7 @@ class BottomNavigationActivity : AppCompatActivity(), View.OnClickListener {
             }
             NotificationConstants.notiScrDocument -> {
                 pushFragment(
-                        DocumentListFragment.newInstance(it.getInt(Const.idTag)), false
+                        OrderDocumentListFragment.newInstance(it.getInt(Const.idTag)), false
                 )
             }
             NotificationConstants.notiScrLoe -> {

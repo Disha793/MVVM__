@@ -60,9 +60,9 @@ class MessageListFragment : Fragment(), View.OnClickListener {
                 view,
                 this@MessageListFragment
             )
-
-        if (messageList.isEmpty())
-            getMessageList()
+        //Disha: For next release
+//        if (messageList.isEmpty())
+//            getMessageList()
 
         CommonUtils.hideKeybord(
             (context as BottomNavigationActivity).window.decorView.rootView,

@@ -18,6 +18,7 @@ import android.provider.Settings
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -40,6 +41,7 @@ object CommonUtils {
         imm.hideSoftInputFromWindow(view.windowToken, 0)
 
     }
+
     internal fun getRealPathFromURI(context: Context, contentUri: Uri): String? {
         var cursor: Cursor? = null
         var path: String?
@@ -63,19 +65,30 @@ object CommonUtils {
             }
         }
     }
+
     fun convertDatetoString(date: Date, sdf: SimpleDateFormat): String {
         return sdf.format(date)
     }
+
     fun convertStringtoDate(date: String, sdf: SimpleDateFormat): Date {
         return sdf.parse(date)
     }
+
     fun displayMessage(mView: View, msg: String) {
         Snackbar.make(mView, msg, Snackbar.LENGTH_SHORT).show()
     }
 
+    fun showToast(context: Context, msg: String) {
+        Toast.makeText(
+                context,
+                msg,
+                Toast.LENGTH_SHORT
+        ).show()
+    }
+
     fun getMapIntent(lat: String, long: String): Intent {
         val gmmIntentUri = Uri.parse(
-            "geo:$lat,$long?q=$lat,$long"
+                "geo:$lat,$long?q=$lat,$long"
         )
         val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
         mapIntent.setPackage("com.google.android.apps.maps")
@@ -84,8 +97,8 @@ object CommonUtils {
 
     internal fun checkCallPermission(context: Context): Boolean {
         val result = ContextCompat.checkSelfPermission(
-            context,
-            Manifest.permission.CALL_PHONE
+                context,
+                Manifest.permission.CALL_PHONE
         )
         return result == PackageManager.PERMISSION_GRANTED
 
@@ -93,10 +106,10 @@ object CommonUtils {
 
     fun displayMessageAction(
 
-        mView: View,
-        msg: String,
-        actionText: String,
-        onClickListener: View.OnClickListener
+            mView: View,
+            msg: String,
+            actionText: String,
+            onClickListener: View.OnClickListener
     ) {
         val snackbar = Snackbar.make(mView, msg, Snackbar.LENGTH_INDEFINITE)
         val snackView = snackbar.view
@@ -110,12 +123,12 @@ object CommonUtils {
 
     fun allPermissionsGranted(context: Context): Boolean {
         val requiredPermissions =
-            arrayOf("android.permission.WRITE_CALENDAR", "android.permission.READ_CALENDAR")
+                arrayOf("android.permission.WRITE_CALENDAR", "android.permission.READ_CALENDAR")
         for (permission in requiredPermissions) {
             if (ContextCompat.checkSelfPermission(
-                    context,
-                    permission
-                ) != PackageManager.PERMISSION_GRANTED
+                            context,
+                            permission
+                    ) != PackageManager.PERMISSION_GRANTED
             ) {
                 return false
             }
@@ -126,7 +139,7 @@ object CommonUtils {
     fun getAppVersion(context: Context): String? {
         try {
             var pInfo: PackageInfo =
-                context.getPackageManager().getPackageInfo(context.getPackageName(), 0)
+                    context.getPackageManager().getPackageInfo(context.getPackageName(), 0)
             val version = pInfo.versionName
             return version
         } catch (e: PackageManager.NameNotFoundException) {
@@ -141,21 +154,21 @@ object CommonUtils {
 
     internal fun formatNumber(phone: String): String {
         return String.format(
-            "(%s)%s-%s",
-            phone.substring(0, 3),
-            phone.substring(3, 6),
-            phone.substring(6, 10)
+                "(%s)%s-%s",
+                phone.substring(0, 3),
+                phone.substring(3, 6),
+                phone.substring(6, 10)
         )
     }
 
     internal fun checkPermission(context: Context): Boolean {
         val result = ContextCompat.checkSelfPermission(
-            context,
-            Manifest.permission.READ_EXTERNAL_STORAGE
+                context,
+                Manifest.permission.READ_EXTERNAL_STORAGE
         )
         val result1 = ContextCompat.checkSelfPermission(
-            context,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
+                context,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
         )
         val result2 = ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA)
 
@@ -163,26 +176,26 @@ object CommonUtils {
     }
 
     fun addParamstoFirebaseEvent(
-        firebaseAnalytics: FirebaseAnalytics,
-        key: String,
-        params: Bundle
+            firebaseAnalytics: FirebaseAnalytics,
+            key: String,
+            params: Bundle
     ) {
         firebaseAnalytics.logEvent(key, params)
     }
 
     fun showOkDialog(
-        context: Context,
-        message: String,
-        onClickListener: DialogInterface.OnClickListener,
-        okText: String
+            context: Context,
+            message: String,
+            onClickListener: DialogInterface.OnClickListener,
+            okText: String
 
     ) {
         AlertDialog.Builder(context).setMessage(message).setCancelable(false)
-            .setPositiveButton(
-                okText
-            ) { p0, p1 -> onClickListener.onClick(p0, p1) }
+                .setPositiveButton(
+                        okText
+                ) { p0, p1 -> onClickListener.onClick(p0, p1) }
 
-            .show()
+                .show()
 
 
     }
@@ -191,8 +204,8 @@ object CommonUtils {
         var formattedPhoneNumber = phoneNumber
         for (i in 0..phoneNumber.length - 1) {
             if (phoneNumber.get(i).equals('(') || phoneNumber.get(i).equals(')') || phoneNumber.get(
-                    i
-                ).equals('-')
+                            i
+                    ).equals('-')
             ) {
                 formattedPhoneNumber = formattedPhoneNumber.replace(phoneNumber.get(i), ' ', false)
             }
@@ -202,29 +215,29 @@ object CommonUtils {
 
     fun isNetworkAvailable(context: Context): Boolean {
         val connectivityManager =
-            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+                context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val activeNetwork: NetworkInfo? = connectivityManager.activeNetworkInfo
         val isConnected: Boolean = activeNetwork?.isConnectedOrConnecting == true
         return isConnected
     }
 
     fun showDialog(
-        context: Context,
-        message: String,
-        onClickListener: DialogInterface.OnClickListener,
-        onCancelListener: DialogInterface.OnCancelListener,
-        okText: String,
-        cancelText: String
+            context: Context,
+            message: String,
+            onClickListener: DialogInterface.OnClickListener,
+            onCancelListener: DialogInterface.OnCancelListener,
+            okText: String,
+            cancelText: String
     ) {
         AlertDialog.Builder(context).setMessage(message).setCancelable(false)
 
-            .setNegativeButton(
-                okText
-            ) { p0, p1 -> onClickListener.onClick(p0, p1) }
-            .setPositiveButton(
-                cancelText
-            ) { p0, p1 -> onCancelListener.onCancel(p0) }
-            .show()
+                .setNegativeButton(
+                        okText
+                ) { p0, p1 -> onClickListener.onClick(p0, p1) }
+                .setPositiveButton(
+                        cancelText
+                ) { p0, p1 -> onCancelListener.onCancel(p0) }
+                .show()
 
 
     }

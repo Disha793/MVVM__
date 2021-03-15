@@ -16,6 +16,7 @@ object Const {
     val scrSearchFilterTag = "SearchFilter"
     val idTag = "id"
     val itemIdTag = "ItemId"
+    val detailData = "NewOrderDetailData"
     val notificationidTag = "mobileNotificationId"
     val loeUrlTag = "loeurl"
     val scrDrawerTag = "Drawer"

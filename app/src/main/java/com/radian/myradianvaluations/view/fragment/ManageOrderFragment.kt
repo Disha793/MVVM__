@@ -266,7 +266,7 @@ class ManageOrderFragment : Fragment(), View.OnClickListener {
             }
             R.id.linearDocument -> {
                 (context as BottomNavigationActivity).pushFragment(
-                    DocumentListFragment.newInstance(
+                    OrderDocumentListFragment.newInstance(
                         orderDetail.itemId!!
                     ), true
                 )

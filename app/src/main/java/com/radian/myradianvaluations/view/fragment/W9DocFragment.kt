@@ -71,8 +71,9 @@ class W9DocFragment : Fragment(), View.OnClickListener, DialogInterface.OnClickL
                 }
             }
             R.id.btnSubmitW9 -> {
-                if (w9List.isNotEmpty() && checkValidation())
-                    submitData()
+                //Disha: For next release
+//                if (w9List.isNotEmpty() && checkValidation())
+//                    submitData()
             }
             R.id.imgDocDelete -> {
                 CommonUtils.showDialog(
@@ -128,7 +129,8 @@ class W9DocFragment : Fragment(), View.OnClickListener, DialogInterface.OnClickL
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        getw9Data()
+        //Disha: For next release
+//        getw9Data()
     }
 
     private fun getw9Data() {
@@ -391,8 +393,9 @@ class W9DocFragment : Fragment(), View.OnClickListener, DialogInterface.OnClickL
     private fun setCameraImage() {
         displayThumbnail()
         fileUri = photoFile.path
-        if (!fileUri.equals(""))
-            uploadDoc(fileUri)
+        //Disha: For next release
+//        if (!fileUri.equals(""))
+//            uploadDoc(fileUri)
     }
 
     private fun displayThumbnail() {
@@ -408,8 +411,9 @@ class W9DocFragment : Fragment(), View.OnClickListener, DialogInterface.OnClickL
 
                 displayThumbnail()
                 fileUri = CommonUtils.getRealPathFromURI(context!!, contentURI)!!
-                if (!fileUri.equals(""))
-                    uploadDoc(fileUri)
+                //Disha: For next release
+//                if (!fileUri.equals(""))
+//                    uploadDoc(fileUri)
             } catch (e: Exception) {
                 LogUtils.logD(TAG, e.message!!)
             }

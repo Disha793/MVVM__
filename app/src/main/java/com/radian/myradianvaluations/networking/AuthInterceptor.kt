@@ -9,9 +9,10 @@ import okhttp3.Response
 class AuthInterceptor(val context: Context) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val requestBuilder = chain.request().newBuilder().addHeader(
-            "Authorization", Pref.getValue(context!!, Pref.AUTH_TOKEN, "")
+                "Authorization", Pref.getValue(
+                context = context, key = Pref.AUTH_TOKEN, defaultValue = "")
         ).build()
-LogUtils.logD("AuthKey",Pref.getValue(context!!, Pref.AUTH_TOKEN, "")!!)
+//LogUtils.logD("AuthKey",Pref.getValue(context!!, Pref.AUTH_TOKEN, "")!!)
         return chain.proceed(requestBuilder)
     }
 }

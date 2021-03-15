@@ -56,7 +56,8 @@ class SettingsFragment : Fragment(), View.OnClickListener {
                     postParam.put("ActionValue", "N")
 
                 }
-                saveNotiStatus()
+                //Disha: For next release
+//                saveNotiStatus()
 
             }
         }
@@ -95,7 +96,8 @@ class SettingsFragment : Fragment(), View.OnClickListener {
 
         }
         setToolbar()
-        getNotificatnStatus()
+        //Disha: For next release
+//        getNotificatnStatus()
         view.switchNoti.setOnClickListener(this)
 
         return view

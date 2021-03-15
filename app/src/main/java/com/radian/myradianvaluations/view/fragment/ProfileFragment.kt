@@ -69,7 +69,8 @@ class ProfileFragment() : Fragment(), DialogInterface.OnClickListener, View.OnCl
     override fun onClick(v: View?) {
         when (v!!.id) {
             R.id.btnSave -> {
-                saveMyProfile()
+                //Disha: For next release
+//                saveMyProfile()
             }
             R.id.imgBack -> {
                 (context as BottomNavigationActivity).supportFragmentManager.popBackStack()
@@ -117,7 +118,8 @@ class ProfileFragment() : Fragment(), DialogInterface.OnClickListener, View.OnCl
         view.imgBack.setOnClickListener(this)
         profileViewModel =
             ViewModelProvider(context as BottomNavigationActivity).get(ProfileViewModel::class.java)
-        getMyProfile()
+        //Disha: For next release
+//        getMyProfile()
         CommonUtils.hideKeybord(
             (context as BottomNavigationActivity).window.decorView.rootView,
             context

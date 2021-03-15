@@ -8,15 +8,12 @@ import android.view.inputmethod.EditorInfo
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.google.gson.Gson
-import com.google.gson.JsonObject
 import com.radian.myradianvaluations.R
 import com.radian.myradianvaluations.constants.APIStatus
 import com.radian.myradianvaluations.constants.Const
 import com.radian.myradianvaluations.constants.DeviceStatus
 
 import com.radian.myradianvaluations.utils.CommonUtils
-import com.radian.myradianvaluations.utils.LoadingDialog
 import com.radian.myradianvaluations.utils.Pref
 import com.radian.myradianvaluations.viewmodel.LoginViewModel
 import kotlinx.android.synthetic.main.activity_login.*
@@ -48,7 +45,7 @@ class LoginActivity : AppCompatActivity() {
             false
         }
         txtHavingTrouble.setOnClickListener {
-            startActivity(Intent(this, OrgInfoActivity::class.java))
+            startActivity(Intent(this, HelpTroubleActivity::class.java))
         }
         txtForgotPwd.setOnClickListener {
             val intent = Intent(this, WebviewActivity::class.java)
@@ -141,13 +138,12 @@ class LoginActivity : AppCompatActivity() {
     }
 
     fun getUserStatus() {
-        val postParam = HashMap<String, String>()
+        val postParam = HashMap<String, Any?>()
         postParam.put("deviceID", CommonUtils.getDeviceUUID(this))
         postParam.put("PhoneNumber", edtPhoneNumber.text.toString())
         postParam.put("UserName", edtUsername.text.toString())
         postParam.put("Password", edtPassword.text.toString())
-        val gson = Gson()
-        loginViewModel.getUserStatus(gson.fromJson(gson.toJson(postParam), JsonObject::class.java))
+        loginViewModel.getUserStatus(postParam)
     }
 
 

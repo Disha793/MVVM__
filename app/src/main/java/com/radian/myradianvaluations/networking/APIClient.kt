@@ -3,6 +3,8 @@ package com.radian.myradianvaluations.networking
 import android.content.Context
 import com.radian.myradianvaluations.BuildConfig
 import com.radian.myradianvaluations.constants.Const.CONNECTION_TIMEOUT
+import com.radian.myradianvaluations.utils.Pref
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -58,6 +60,5 @@ open class APIClient {
             .baseUrl(BuildConfig.HOST).client(client.build()).build()
         return retrofit
     }
-
 
 }

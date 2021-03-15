@@ -50,8 +50,8 @@ class OrdersFragment : Fragment() {
 
         }, orderList)
         showToolbarIcons(getString(R.string.open_orders))
-
-        getOrderList()
+        //Disha: For next release
+//        getOrderList()
         return view
     }
 

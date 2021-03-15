@@ -45,7 +45,8 @@ class MessageChatFragment() : Fragment(), View.OnClickListener {
                         Const.methodInvoked,
                         firebaseParams
                     )
-                    addMessageChat()
+                    //Disha: For next release
+//                    addMessageChat()
                 }
             }
         }
@@ -93,7 +94,8 @@ class MessageChatFragment() : Fragment(), View.OnClickListener {
         }
         setToolbar()
         view.imgSend.setOnClickListener(this)
-        getMessageChat()
+        //Disha: For next release
+//        getMessageChat()
     }
 
     override fun onCreateView(

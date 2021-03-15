@@ -106,8 +106,10 @@ class EODocFragment : Fragment(), View.OnClickListener, DialogInterface.OnClickL
                 )
             }
             R.id.btnSubmitEo -> {
-                if (checkValidation() && eoList.isNotEmpty())
-                    submitData()
+                if (checkValidation() && eoList.isNotEmpty()) {
+                    //Disha: For next release
+//                    submitData()
+                }
             }
             R.id.edtExpiryDate -> {
                 calendar = Calendar.getInstance()
@@ -320,14 +322,17 @@ class EODocFragment : Fragment(), View.OnClickListener, DialogInterface.OnClickL
 
             }
         }
-        getEOData()
+        //Disha: For next release
+//        getEOData()
     }
 
     private fun setCameraImage() {
         displayThumbnail()
         fileUri = photoFile.path
-        if (!fileUri.equals(""))
-            uploadDoc(fileUri)
+        if (!fileUri.equals("")) {
+            //Disha: For next release
+//            uploadDoc(fileUri)
+        }
     }
 
     private fun getEOData() {
@@ -376,8 +381,10 @@ class EODocFragment : Fragment(), View.OnClickListener, DialogInterface.OnClickL
 
                 displayThumbnail()
                 fileUri = CommonUtils.getRealPathFromURI(context!!, contentURI)!!
-                if (!fileUri.equals(""))
-                    uploadDoc(fileUri)
+                if (!fileUri.equals("")) {
+                    //Disha: For next release
+//                    uploadDoc(fileUri)
+                }
 
             } catch (e: Exception) {
                 LogUtils.logD(TAG, e.message!!)
