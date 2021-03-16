@@ -15,14 +15,14 @@ import com.radian.myradianvaluations.constants.Const
 import com.radian.myradianvaluations.utils.CommonUtils
 import com.radian.myradianvaluations.utils.LoadingDialog
 import com.radian.myradianvaluations.utils.LogUtils
-import com.radian.myradianvaluations.viewmodel.OrgInfoViewModel
+import com.radian.myradianvaluations.viewmodel.HelpTroubleViewModel
 import kotlinx.android.synthetic.main.fragment_walkthroughmain.*
 import kotlinx.android.synthetic.main.layout_toolbar.*
 
 class WebviewActivity : AppCompatActivity() {
     private var webUrl = ""
     private var timeout = false
-    lateinit var orgInfoModel: OrgInfoViewModel
+    lateinit var helpTroubleModel: HelpTroubleViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fragment_walkthroughmain)
@@ -57,25 +57,30 @@ class WebviewActivity : AppCompatActivity() {
                 toolbar.visibility = View.VISIBLE
                 txtTitle.visibility = View.VISIBLE
                 txtTitle.text = getString(R.string.forgotPassword)
-                orgInfoModel = ViewModelProvider(this).get(OrgInfoViewModel::class.java)
-                orgInfoModel.init(this)
+                helpTroubleModel = ViewModelProvider(this).get(HelpTroubleViewModel::class.java)
+                helpTroubleModel.init(this)
                 getInfo()
+                observeData()
             }
         }
+    }
 
-
+    private fun observeData() {
+        helpTroubleModel.helpTroubleResponse.observe(this, Observer {
+            webUrl = it.data.forgotPasswordURL!!
+            LogUtils.logD("webUrl", webUrl)
+            loadWebUrl()
+        })
     }
 
     private fun loadWebUrl() {
         LoadingDialog.show(this)
-        webView.getSettings().setLoadWithOverviewMode(true)
-        webView.getSettings().setUseWideViewPort(true)
-        webView.getSettings().setAppCachePath(this.getCacheDir().getAbsolutePath())
-        webView.getSettings().setAppCacheEnabled(true)
-        webView.getSettings().setJavaScriptEnabled(true)
-        webView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT)
+        webView.settings.loadWithOverviewMode = true
+        webView.settings.useWideViewPort = true
+        webView.settings.javaScriptEnabled = true
+        webView.settings.cacheMode = WebSettings.LOAD_DEFAULT
         if (!CommonUtils.isNetworkAvailable(this)) { // loading offline
-            webView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK)
+            webView.settings.cacheMode = WebSettings.LOAD_CACHE_ELSE_NETWORK
         }
         webView.loadUrl(webUrl)
         webView.webViewClient = object : WebViewClient() {
@@ -111,16 +116,7 @@ class WebviewActivity : AppCompatActivity() {
     }
 
     private fun getInfo() {
-        LoadingDialog.show(this)
-        orgInfoModel.getInfo()?.observe(this, Observer {
-            LoadingDialog.dismissDialog()
-            webUrl = it.data.forgotPasswordURL!!
-            LogUtils.logD("webUrl", webUrl)
-            loadWebUrl()
-
-        })
-
-
+        helpTroubleModel.getHelpTroubleData()
     }
 
 }

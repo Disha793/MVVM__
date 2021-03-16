@@ -10,6 +10,9 @@ enum class ReturnType(val endPoint: String) {
     POST_NewOrderList("Mobile/Dashboard/NewOrderList"),
     POST_NewOrderDetail("Mobile/Dashboard/GetNewOrderDetail"),
     POST_ConfirmOrder("mobile/Dashboard/SaveConfirmOrder"),
+    GET_HELPTROUBLE("Mobile/Dashboard/OrganizationInfo")
+
+
     POST_SaveProfile("Mobile/Dashboard/SaveMyProfile"),
     POST_GetProfile("mobile/Dashboard/GetMyProfile"),
     POST_OutOffice("mobile/Dashboard/SaveVendorVacationInfo")

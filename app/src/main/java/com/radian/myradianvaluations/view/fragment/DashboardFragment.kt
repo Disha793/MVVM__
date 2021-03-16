@@ -59,7 +59,7 @@ class DashboardFragment : Fragment(), View.OnClickListener {
         dashboardViewModel = ViewModelProvider(this).get(DashboardViewModel::class.java)
         dashboardViewModel.init(context)
         dashboardViewModel.dashboardData.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-            if (it.status.equals(APIStatus.ok, true)) {
+            if (it.status.equals(APIStatus.unauth, true)) {
                 if (it.data != null && it.data.isUpdateAndroid) {
                     callWhatsNewAPI()
 

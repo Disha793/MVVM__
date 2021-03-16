@@ -96,7 +96,7 @@ class ManageOrderFragment : Fragment(), View.OnClickListener {
         manageOrderViewModel.getOrderDetail(itemId).let {
             it?.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
                 LoadingDialog.dismissDialog()
-                if (it.status ==APIStatus.ok) {
+                if (it.status == APIStatus.ok) {
                     orderDetail = it.data.orderDetail
                     setOrderDetail(orderDetail)
                 } else if (it.status.equals(APIStatus.unauth, true)) {
@@ -211,9 +211,9 @@ class ManageOrderFragment : Fragment(), View.OnClickListener {
             }
             R.id.linearMore -> {
                 (context as BottomNavigationActivity).pushFragment(
-                        MoreDetailsFragment.newInstance(
-                                orderDetail
-                        ), true
+                    MoreDetailsFragment.newInstance(
+                        orderDetail
+                    ), true
                 )
             }
             R.id.linearAddress -> {
@@ -276,20 +276,14 @@ class ManageOrderFragment : Fragment(), View.OnClickListener {
                     markAsReadNote()
                 }
                 (context as BottomNavigationActivity).pushFragment(
-                        MessageChatFragment.newInstance(
-                                orderDetail.orderGenId!!,
-                                orderDetail.itemId
-                        ), true
+                    MessageChatFragment.newInstance(
+                        orderDetail.orderGenId!!,
+                        orderDetail.itemId
+                    ), true
                 )
             }
             R.id.linearRevisions -> {
-                if (orderDetail.newRevisionFlag) {
-                    markAsReadRevision()
-                }
-                (context as BottomNavigationActivity).pushFragment(
-                        RevisedOrderDetailFragment.newInstance(orderDetail.itemId!!),
-                    true
-                )
+
             }
             R.id.btnMark -> {
 //                if (orderDetail.isComplete!!) {
@@ -325,7 +319,7 @@ class ManageOrderFragment : Fragment(), View.OnClickListener {
         manageOrderViewModel.markAsReadRevision(itemId, orderDetail.orderGenId!!).let {
             it?.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
                 LoadingDialog.dismissDialog()
-                if (it.status ==APIStatus.ok) {
+                if (it.status == APIStatus.ok) {
 //on success
                 } else if (it.status.equals(APIStatus.unauth, true)) {
                     Toast.makeText(

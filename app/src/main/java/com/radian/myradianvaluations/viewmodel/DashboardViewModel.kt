@@ -1,5 +1,6 @@
 package com.radian.myradianvaluations.viewmodel
 
+
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,11 +11,9 @@ import com.google.gson.reflect.TypeToken
 import com.radian.myradianvaluations.networking.ApiServiceProviderGeneric
 import com.radian.myradianvaluations.networking.ReturnType
 import com.radian.myradianvaluations.repository.DashboardRepository
-import com.radian.myradianvaluations.repository.LoginRepository
 import com.radian.myradianvaluations.utils.LoadingDialog
 import com.radian.myradianvaluations.utils.LogUtils
 import com.radian.vendorbridge.Response.DashboardResponseNew
-import com.radian.vendorbridge.Response.StatusResponse
 import com.radian.vendorbridge.Response.WhatsNewResponse
 import com.sunteckindia.networking.ApiResponseCallBack
 
@@ -33,11 +32,8 @@ class DashboardViewModel : ViewModel(), ApiResponseCallBack {
     }
 
     fun getDashboardData(jsonObject: JsonObject) {
-        apiServiceProviderGeneric.postCall(
-            context, ReturnType.POST_Dashboard.endPoint,
-            jsonObject,
-            ReturnType.POST_Dashboard
-        )
+
+
     }
 
     fun getWhatsNewAPI(): MutableLiveData<WhatsNewResponse> {
