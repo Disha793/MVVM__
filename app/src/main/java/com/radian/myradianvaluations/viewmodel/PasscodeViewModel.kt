@@ -1,27 +1,24 @@
 package com.radian.myradianvaluations.viewmodel
 
 import android.content.Context
+import android.content.DialogInterface
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.gson.Gson
-import com.google.gson.JsonObject
 import com.google.gson.reflect.TypeToken
+import com.radian.myradianvaluations.R
 import com.radian.myradianvaluations.networking.ApiServiceProviderGeneric
 import com.radian.myradianvaluations.networking.ReturnType
-import com.radian.myradianvaluations.repository.LoginRepository
-import com.radian.myradianvaluations.repository.OrgInfoRepository
-import com.radian.myradianvaluations.repository.PasscodeRepository
+import com.radian.myradianvaluations.utils.CommonUtils
 import com.radian.myradianvaluations.utils.LoadingDialog
 import com.radian.myradianvaluations.utils.LogUtils
 import com.radian.vendorbridge.Response.LoginResponse
-import com.radian.vendorbridge.Response.OrgInfoResponse
 import com.radian.vendorbridge.Response.OtpResponse
 import com.radian.vendorbridge.Response.StatusResponse
 import com.sunteckindia.networking.ApiResponseCallBack
 
 class PasscodeViewModel : ViewModel(), ApiResponseCallBack {
-    lateinit var passcodeRepository: PasscodeRepository
     private var otpResponse = MutableLiveData<OtpResponse>()
     private var verifyotpResponse = MutableLiveData<OtpResponse>()
     private var loginResponse= MutableLiveData<LoginResponse>()
@@ -36,32 +33,31 @@ class PasscodeViewModel : ViewModel(), ApiResponseCallBack {
 
     fun init(context: Context) {
         this.context = context
-        passcodeRepository = PasscodeRepository.getInstance(context)
     }
 
-    fun generateOtp(jsonObject: JsonObject): MutableLiveData<OtpResponse>? {
+    fun generateOtp(postParam: HashMap<String, Any?>): MutableLiveData<OtpResponse>? {
         apiServiceProviderGeneric.postCallWithoutHeader(
             context, ReturnType.POST_GenerateOtp.endPoint,
-            jsonObject,
+                postParam,
             ReturnType.POST_GenerateOtp
         )
         return otpResponse
     }
 
-    fun verifyOtp(jsonObject: JsonObject): MutableLiveData<OtpResponse>? {
+    fun verifyOtp(postParam: HashMap<String, Any?>): MutableLiveData<OtpResponse>? {
         apiServiceProviderGeneric.postCallWithoutHeader(
             context, ReturnType.POST_VerifyOtp.endPoint,
-            jsonObject,
+                postParam,
             ReturnType.POST_VerifyOtp
         )
         return otpResponse
     }
 
-    fun callSignIn(jsonObject: JsonObject) {
+    fun callSignIn(postParam: HashMap<String, Any?>) {
         //  loginResponse = passcodeRepository.callSignIn(accessCode, fcmToken)
         apiServiceProviderGeneric.postCallWithoutHeader(
             context, ReturnType.POST_SignIn.endPoint,
-            jsonObject,
+                postParam,
             ReturnType.POST_SignIn
         )
 
@@ -119,5 +115,10 @@ class PasscodeViewModel : ViewModel(), ApiResponseCallBack {
 
     override fun onError(returnType: ReturnType, error: String) {
         LoadingDialog.dismissDialog()
-    }
+        CommonUtils.showOkDialog(
+                context!!,
+                context.getString(R.string.please_try_again),
+                DialogInterface.OnClickListener { _, _ -> },
+                context.getString(R.string.ok)
+        )    }
 }

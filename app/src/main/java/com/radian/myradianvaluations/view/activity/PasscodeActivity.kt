@@ -19,8 +19,6 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.FirebaseApp
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.iid.FirebaseInstanceId
-import com.google.gson.Gson
-import com.google.gson.JsonObject
 import com.radian.myradianvaluations.BuildConfig
 import com.radian.myradianvaluations.R
 import com.radian.myradianvaluations.constants.APIStatus
@@ -364,15 +362,14 @@ class PasscodeActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun generateOtp() {
 
-        val postParam = HashMap<String, String>()
+        val postParam = HashMap<String, Any?>()
         postParam.put("deviceID", CommonUtils.getDeviceUUID(this))
         postParam.put("PhoneNumber", Pref.getValue(context, Pref.PHONE_NUMBER, "")!!)
-        val gson = Gson()
-        passcodeModel.generateOtp(gson.fromJson(gson.toJson(postParam), JsonObject::class.java))
+        passcodeModel.generateOtp(postParam)
     }
 
     private fun verifyOtp() {
-        val postParam = HashMap<String, String>()
+        val postParam = HashMap<String, Any?>()
         postParam.put("deviceID", CommonUtils.getDeviceUUID(this))
         postParam.put("PhoneNumber", Pref.getValue(context, Pref.PHONE_NUMBER, "")!!)
         postParam.put("VerificationCode", accessCode)
@@ -381,18 +378,16 @@ class PasscodeActivity : AppCompatActivity(), View.OnClickListener {
         postParam.put("Manufacturer", Build.MANUFACTURER)
         postParam.put("OsVersion", android.os.Build.VERSION.SDK_INT.toString())
         postParam.put("FcmToken", fcmToken)
-        val gson = Gson()
-        passcodeModel.verifyOtp(gson.fromJson(gson.toJson(postParam), JsonObject::class.java))
+        passcodeModel.verifyOtp(postParam)
     }
 
     private fun callSignIn() {
-        val postParam = HashMap<String, String>()
+        val postParam = HashMap<String, Any?>()
         postParam.put("deviceID", CommonUtils.getDeviceUUID(this))
         postParam.put("PhoneNumber", Pref.getValue(this, Pref.PHONE_NUMBER, "")!!)
         postParam.put("PinNo", accessCode)
         postParam.put("FcmToken", Pref.getValue(context, Pref.FCM_TOKEN, "")!!)
-        val gson = Gson()
-        passcodeModel.callSignIn(gson.fromJson(gson.toJson(postParam), JsonObject::class.java))
+        passcodeModel.callSignIn(postParam)
 //        passcodeModel.callSignIn(accessCode, fcmToken).let { mutable ->
 //            LoadingDialog.show(context)
 //
