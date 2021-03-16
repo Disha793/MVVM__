@@ -1,19 +1,18 @@
 package com.radian.myradianvaluations.view.fragment
 
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.radian.myradianvaluations.R
 import com.radian.myradianvaluations.adapter.NewOrdersAdapter
 import com.radian.myradianvaluations.constants.APIStatus
 import com.radian.myradianvaluations.utils.CommonUtils
-import com.radian.myradianvaluations.utils.LoadingDialog
+import com.radian.myradianvaluations.utils.Pref
 import com.radian.myradianvaluations.view.activity.BottomNavigationActivity
 import com.radian.myradianvaluations.view.activity.PasscodeActivity
 import com.radian.myradianvaluations.viewmodel.NewOrderViewModel
@@ -28,18 +27,49 @@ class NewOrderFragment : Fragment() {
     private val classTag = NewOrderFragment::class.java.canonicalName!!
     private lateinit var newOrderViewModel: NewOrderViewModel
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         view = inflater.inflate(R.layout.fragment_new_orders, container, false)
         view.recyclerView.adapter = NewOrdersAdapter(context!!, newOrderList)
         newOrderViewModel =
-            ViewModelProvider(context as BottomNavigationActivity).get(NewOrderViewModel::class.java)
+                ViewModelProvider(context as BottomNavigationActivity).get(NewOrderViewModel::class.java)
         newOrderViewModel.init(context as BottomNavigationActivity)
         showToolbarIcons(getString(R.string.new_orders))
         getOrderList()
+        observeNewOrder()
+
         return view
+    }
+
+    private fun observeNewOrder() {
+        newOrderViewModel.newOrderResponse.observe(viewLifecycleOwner, Observer {
+            if (it.status == APIStatus.ok) {
+                newOrderList.clear()
+                newOrderList.addAll(it.mdata?.orderList!!)
+                view.recyclerView.adapter?.notifyDataSetChanged()
+                if (newOrderList.isEmpty()) {
+                    view.txtNoNewOrdr.visibility = View.VISIBLE
+                    view.txtNoNewOrdrDetail.visibility = View.VISIBLE
+                    (context as BottomNavigationActivity).bottomview?.let {
+                        (context as BottomNavigationActivity).removeBadge(
+                                it,
+                                R.id.action_new
+                        )
+                    }
+                } else {
+                    view.txtNoNewOrdr.visibility = View.GONE
+                    view.txtNoNewOrdrDetail.visibility = View.GONE
+                }
+            } else if (it.status.equals(APIStatus.unauth, true)) {
+                CommonUtils.showToast(context!!, it.errorInfo.get(0).errorMessage)
+
+                var intent = Intent(context!!, PasscodeActivity::class.java)
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                startActivity(intent)
+            }
+        })
     }
 
     private fun showToolbarIcons(title: String) {
@@ -52,53 +82,12 @@ class NewOrderFragment : Fragment() {
     }
 
     private fun getOrderList() {
-        newOrderViewModel.getOrderList().let {
-            LoadingDialog.show(context as BottomNavigationActivity)
-            it?.observe(context as BottomNavigationActivity, androidx.lifecycle.Observer {
-                LoadingDialog.dismissDialog()
-                if (it.status == APIStatus.ok) {
-                    newOrderList.clear()
-                    newOrderList.addAll(it.mdata?.orderList!!)
-                    view.recyclerView.adapter?.notifyDataSetChanged()
-                    if (newOrderList.isEmpty()) {
-                        view.txtNoNewOrdr.visibility = View.VISIBLE
-                        view.txtNoNewOrdrDetail.visibility = View.VISIBLE
-                        (context as BottomNavigationActivity).bottomview?.let {
-                            (context as BottomNavigationActivity).removeBadge(
-                                it,
-                                R.id.action_new
-                            )
-                        }
-                    } else {
-                        view.txtNoNewOrdr.visibility = View.GONE
-                        view.txtNoNewOrdrDetail.visibility = View.GONE
-                    }
-                } else if (it.status.equals(APIStatus.unauth, true)) {
-                    Toast.makeText(
-                        context!!,
-                        it.errorInfo.get(0).errorMessage,
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    var intent = Intent(context!!, PasscodeActivity::class.java)
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                    startActivity(intent)
-                }
-
-            })
-            if (it == null) {
-                LoadingDialog.dismissDialog()
-                CommonUtils.showOkDialog(
-                    context!!,
-                    getString(R.string.please_try_again),
-                    DialogInterface.OnClickListener { _, _ ->
-
-                    },
-                    getString(R.string.ok)
-                )
-
-            }
-        }
-
+        val postParam = HashMap<String, Any?>()
+        postParam.put("PhoneNumber", Pref.getValue(context!!, Pref.PHONE_NUMBER, ""))
+        postParam.put("DeviceID", CommonUtils.getDeviceUUID(context!!))
+        postParam.put("MobileUserId", Pref.getValue(context!!, Pref.MOBILE_USER_ID, 0))
+        postParam.put("OrganizationIds", Pref.getValue(context!!, Pref.ORGANIZATN_ID, 0))
+        newOrderViewModel.getNewOrderList(postParam)
 
     }
 }
