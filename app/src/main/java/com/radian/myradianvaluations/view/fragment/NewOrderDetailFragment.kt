@@ -3,7 +3,6 @@ package com.radian.myradianvaluations.view.fragment
 import android.app.Dialog
 import android.content.ContentValues
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
@@ -14,7 +13,6 @@ import android.provider.CalendarContract
 import android.provider.Settings
 import android.util.Log
 import android.view.*
-import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -26,14 +24,18 @@ import com.radian.myradianvaluations.BuildConfig
 import com.radian.myradianvaluations.R
 import com.radian.myradianvaluations.constants.APIStatus
 import com.radian.myradianvaluations.constants.Const
+import com.radian.myradianvaluations.extensions.observeOnce
+import com.radian.myradianvaluations.extensions.snack
+import com.radian.myradianvaluations.extensions.toastShort
 import com.radian.myradianvaluations.utils.CommonUtils
 import com.radian.myradianvaluations.utils.CommonUtils.allPermissionsGranted
-import com.radian.myradianvaluations.utils.LoadingDialog
 import com.radian.myradianvaluations.utils.LogUtils
 import com.radian.myradianvaluations.utils.Pref
 import com.radian.myradianvaluations.view.activity.BottomNavigationActivity
 import com.radian.myradianvaluations.view.activity.PasscodeActivity
 import com.radian.myradianvaluations.viewmodel.NewOrdrDetailViewModel
+import com.radian.myradianvaluations.viewmodel.NewOrdrDetailViewModelFactory
+import com.radian.myradianvaluations.viewmodel.NewOrdrViewModelFactory
 import com.radian.vendorbridge.Response.NewOrderDetailResponse
 import kotlinx.android.synthetic.main.activity_bottom_navigation.*
 import kotlinx.android.synthetic.main.dialog_add_event.view.*
@@ -51,7 +53,6 @@ class NewOrderDetailFragment : Fragment(), View.OnClickListener {
     private var orderDetail = NewOrderDetailResponse.Data.OrderDetail()
     private val classTag = javaClass.canonicalName!!
     private var selectedTimeSlot = ""
-    private var postParam = HashMap<String, Any?>()
     private val itemNoteId = ArrayList<Int>()
     lateinit var eventdialogView: View
     private val unassignedItemId = ArrayList<Int>()
@@ -59,29 +60,72 @@ class NewOrderDetailFragment : Fragment(), View.OnClickListener {
     private val orgIds = ArrayList<Int>()
     private val selectedOrderList = ArrayList<NewOrderDetailResponse.Data.OrderDetail>()
     private val REQUIRED_PERMISSIONS =
-        arrayOf("android.permission.WRITE_CALENDAR", "android.permission.READ_CALENDAR")
+            arrayOf("android.permission.WRITE_CALENDAR", "android.permission.READ_CALENDAR")
     private val REQUEST_CODE_PERMISSIONS = 101
     private lateinit var firebaseAnalytics: FirebaseAnalytics
     private val firebaseParams = Bundle()
     private lateinit var newOrdrDetailViewModel: NewOrdrDetailViewModel
-
+    private lateinit var factory: NewOrdrDetailViewModelFactory
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         view = inflater.inflate(R.layout.fragment_new_order_detail, container, false)
         view.linearAddress.setOnClickListener(this)
         view.linearProduct.setOnClickListener(this)
         view.btnAccept.setOnClickListener(this)
         view.btnDecline.setOnClickListener(this)
-        newOrdrDetailViewModel =
-            ViewModelProvider(context as BottomNavigationActivity).get(NewOrdrDetailViewModel::class.java)
-        newOrdrDetailViewModel.init(context as BottomNavigationActivity)
+        initViewModel()
         setToolbar()
-
+        observeOrderData()
         return view
+    }
+
+    private fun initViewModel() {
+        factory = NewOrdrDetailViewModelFactory(context!!)
+        newOrdrDetailViewModel = ViewModelProvider(this, factory).get(NewOrdrDetailViewModel::class.java)
+    }
+
+    private fun observeOrderData() {
+
+        newOrdrDetailViewModel.newOrderDetailResponse.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            if (it.status == APIStatus.ok) {
+                it.data?.orderDetail?.let {
+                    orderDetail = it
+                }
+                setOrderDetail(orderDetail)
+            } else if (it.status.equals(APIStatus.unauth, true)) {
+                context?.toastShort(it.errorInfo.get(0).errorMessage)
+                var intent = Intent(context!!, PasscodeActivity::class.java)
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                startActivity(intent)
+            }
+        })
+        newOrdrDetailViewModel.confirmOrderResponse.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
+
+            if (it != null) {
+                if (it.status.equals(APIStatus.ok, true)) {
+                    //To add reminder in google cal
+//                if (orderDetail.isAssigned == 0) {
+////                    showAddToCalenderDialog()
+//                } else {
+
+                    (context as BottomNavigationActivity).onBackPressed()
+//                }
+                } else if (it.status.equals(APIStatus.unauth, true)) {
+                    context?.toastShort(it.errorInfo.get(0).errorMessage)
+
+                    var intent = Intent(context!!, PasscodeActivity::class.java)
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    startActivity(intent)
+                }
+
+            }
+            //  newOrdrDetailViewModel.confirmOrderResponse.postValue(null)
+
+        })
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -90,9 +134,9 @@ class NewOrderDetailFragment : Fragment(), View.OnClickListener {
         firebaseParams.clear()
         firebaseParams.putString(Const.screenLaunched, "NewOrderDetail_Launched")
         CommonUtils.addParamstoFirebaseEvent(
-            firebaseAnalytics,
-            Const.screenLaunched,
-            firebaseParams
+                firebaseAnalytics,
+                Const.screenLaunched,
+                firebaseParams
         )
         arguments?.let {
             itemId = it.getInt(Const.itemIdTag)
@@ -106,47 +150,21 @@ class NewOrderDetailFragment : Fragment(), View.OnClickListener {
         (context as BottomNavigationActivity).layout_toolbar.visibility = View.VISIBLE
         (context as BottomNavigationActivity).bottomNavigationView.visibility = View.GONE
         (context as BottomNavigationActivity).txtTitle.text =
-            getString(R.string.title_new_order_detail)
+                getString(R.string.title_new_order_detail)
         (context as BottomNavigationActivity).imgBack.visibility = View.VISIBLE
         (context as BottomNavigationActivity).txtClear.visibility = View.GONE
     }
 
     private fun getOrderDetail() {
-        LoadingDialog.show(context as BottomNavigationActivity)
-        newOrdrDetailViewModel.getOrderDetail(itemId).let {
-            it?.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-                LoadingDialog.dismissDialog()
-                if (it.status == APIStatus.ok) {
-                    it.data?.orderDetail?.let {
-                        orderDetail = it
-                    }
-                    setOrderDetail(orderDetail)
-                } else if (it.status.equals(APIStatus.unauth, true)) {
-                    Toast.makeText(
-                        context!!,
-                        it.errorInfo.get(0).errorMessage,
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    var intent = Intent(context!!, PasscodeActivity::class.java)
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                    startActivity(intent)
-                }
 
-            })
-            if (it == null) {
-                LoadingDialog.dismissDialog()
-                LoadingDialog.dismissDialog()
-                CommonUtils.showOkDialog(
-                    context!!,
-                    getString(R.string.please_try_again),
-                    DialogInterface.OnClickListener { _, _ ->
+        val postParam = HashMap<String, Any?>()
+        postParam.put("PhoneNumber", Pref.getValue(context!!, Pref.PHONE_NUMBER, "")!!)
+        postParam.put("DeviceID", CommonUtils.getDeviceUUID(context!!))
+        postParam.put("MobileUserId", Pref.getValue(context!!, Pref.MOBILE_USER_ID, 0)!!)
+        postParam.put("OrganizationIds", Pref.getValue(context!!, Pref.ORGANIZATN_ID, 0)!!)
+        postParam.put("Itemid", itemId)
 
-                    },
-                    getString(R.string.ok)
-                )
-            }
-        }
-
+        newOrdrDetailViewModel.getOrderDetail(postParam)
     }
 
     private fun setOrderDetail(orderDetail: NewOrderDetailResponse.Data.OrderDetail) {
@@ -159,28 +177,24 @@ class NewOrderDetailFragment : Fragment(), View.OnClickListener {
             view.lblApptTime.visibility = View.GONE
             view.txtNwOrdrDteTime.visibility = View.GONE
             view.viewApptTime.visibility = View.GONE
-
-
         } else {
             view.nwOrdrappraiser.visibility = View.VISIBLE
-            view.lblChooseTimng.visibility = View.VISIBLE
+            view.lblChooseTimng.visibility = View.GONE
             view.viewAppraiser.visibility = View.VISIBLE
-            view.viewChooseTimng.visibility = View.VISIBLE
+            view.viewChooseTimng.visibility = View.GONE
             view.nwOrdrappraiser.text = setValue(orderDetail.message)
             orderDetail.appointmentTimedetails?.let {
                 addChooseTime(it)
             }
-            view.lblApptTime.visibility = View.VISIBLE
-            view.txtNwOrdrDteTime.visibility = View.VISIBLE
-            view.viewApptTime.visibility = View.VISIBLE
+            view.lblApptTime.visibility = View.GONE
+            view.txtNwOrdrDteTime.visibility = View.GONE
+            view.viewApptTime.visibility = View.GONE
         }
-
         view.txtNwOrdrProduct.text = setValue(orderDetail.productName)
         view.txtNwOrdrFee.text = "$" + setValue(orderDetail.paymentAmount)
         view.txtNwOrdrDteTime.text =
-            orderDetail.appointmentDate + orderDetail.startTimeSlot?.let { " | " + "Start between " + it + " - " + orderDetail.endTimeSlot }
+                orderDetail.appointmentDate + orderDetail.startTimeSlot?.let { " | " + "Start between " + it + " - " + orderDetail.endTimeSlot }
         view.txtNwOrdrDue.text = setValue(orderDetail.productDueDate)
-
     }
 
     private fun setValue(value: String?): String {
@@ -191,12 +205,7 @@ class NewOrderDetailFragment : Fragment(), View.OnClickListener {
     }
 
     private fun addChooseTime(appointmentTimedetails: ArrayList<String>) {
-        view.gridTiming.adapter = Timeadapter(
-            context!!,
-            appointmentTimedetails
-        )
-
-
+        view.gridTiming.adapter = Timeadapter(context!!, appointmentTimedetails)
     }
 
     companion object {
@@ -210,66 +219,47 @@ class NewOrderDetailFragment : Fragment(), View.OnClickListener {
     }
 
     private fun confirmOrder() {
-        LoadingDialog.show(context as BottomNavigationActivity)
+        var postParam = HashMap<String, Any?>()
         postParam.put("PhoneNumber", Pref.getValue(context!!, Pref.PHONE_NUMBER, ""))
         postParam.put("MobileUserId", Pref.getValue(context!!, Pref.MOBILE_USER_ID, 0))
         postParam.put("OrganizationIds", Pref.getValue(context!!, Pref.ORGANIZATN_ID, 0))
         postParam.put("DeviceID", CommonUtils.getDeviceUUID(context!!))
-//        postParam.put("ItemIds", itemId)
+        postParam.put("ItemIds", itemId)
         postParam.put("ItemNotes", itemNoteId)
         postParam.put("ActionType", "A")
-        if (orderDetail.isAssigned == 0) {
-            postParam.put(
-                "AppointmentDate",
-                orderDetail.appointmentDate + " " + selectedTimeSlot
-            )
-        }
+        //For unAssigned order appointmentdate
+//        if (orderDetail.isAssigned == 0) {
+//            postParam.put(
+//                    "AppointmentDate",
+//                    orderDetail.appointmentDate + " " + selectedTimeSlot
+//            )
+//        }
         postParam.put("TimeZone", TimeZone.getDefault().id)
-
-        newOrdrDetailViewModel.confirmOrder(postParam, itemIdList, unassignedItemId).let {
-            it?.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-                LoadingDialog.dismissDialog()
-                if (it.status.equals(APIStatus.ok, true)) {
-                    if (orderDetail.isAssigned == 0) {
-
-                        showAddToCalenderDialog()
-                    } else {
-                        (context as BottomNavigationActivity).onBackPressed()
-                    }
-                } else if (it.status.equals(APIStatus.unauth, true)) {
-                    Toast.makeText(
-                        context!!,
-                        it.errorInfo.get(0).errorMessage,
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    var intent = Intent(context!!, PasscodeActivity::class.java)
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                    startActivity(intent)
-                }
-
-            })
-            if (it == null) {
-                LoadingDialog.dismissDialog()
-                CommonUtils.showOkDialog(
-                    context!!,
-                    getString(R.string.please_try_again),
-                    DialogInterface.OnClickListener { _, _ ->
-                        confirmOrder()
-
-                    },
-                    getString(R.string.ok)
-                )
-            }
-        }
-
+        newOrdrDetailViewModel.confirmOrder(postParam)
+//        newOrdrDetailViewModel.confirmOrder(postParam).observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+//            if (it.status.equals(APIStatus.ok, true)) {
+//                //To add reminder in google cal
+////                if (orderDetail.isAssigned == 0) {
+//////                    showAddToCalenderDialog()
+////                } else {
+//
+//                (context as BottomNavigationActivity).onBackPressed()
+////                }
+//            } else if (it.status.equals(APIStatus.unauth, true)) {
+//                context?.toastShort(it.errorInfo.get(0).errorMessage)
+//
+//                var intent = Intent(context!!, PasscodeActivity::class.java)
+//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+//                startActivity(intent)
+//            }
+//        })
 
     }
 
     private fun showAddToCalenderDialog() {
-
         try {
             eventdialogView =
-                LayoutInflater.from(context!!).inflate(R.layout.dialog_add_event, null, false)
+                    LayoutInflater.from(context!!).inflate(R.layout.dialog_add_event, null, false)
 
             val dialog = Dialog(context!!, R.style.FullScreenDialogTheme)
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -280,7 +270,6 @@ class NewOrderDetailFragment : Fragment(), View.OnClickListener {
             dialog.getWindow()!!.setAttributes(lp)
             dialog.show()
 
-
             eventdialogView.txt_date.text = orderDetail.appointmentDate + " " + selectedTimeSlot
             eventdialogView.txt_product.setText(orderDetail.productName)
             eventdialogView.txt_address.setText(orderDetail.displayAddressInfo)
@@ -289,27 +278,24 @@ class NewOrderDetailFragment : Fragment(), View.OnClickListener {
                     dialog.dismiss()
                     (context as BottomNavigationActivity).onBackPressed()
                 }
-
             })
             eventdialogView.btnAddEvent.setOnClickListener(object : View.OnClickListener {
                 override fun onClick(v: View?) {
                     if (allPermissionsGranted(context!!)) {
                         setReminder(
-                            getString(R.string.inspection_scheduled),
-                            "",
-                            orderDetail.appointmentDate,
-                            orderDetail.displayAddressInfo
+                                getString(R.string.inspection_scheduled),
+                                "",
+                                orderDetail.appointmentDate,
+                                orderDetail.displayAddressInfo
                         )
                     } else {
                         requestPermissions(
 
-                            REQUIRED_PERMISSIONS,
-                            REQUEST_CODE_PERMISSIONS
+                                REQUIRED_PERMISSIONS,
+                                REQUEST_CODE_PERMISSIONS
                         )
                     }
-
                 }
-
             })
             eventdialogView.btnOk.setOnClickListener {
                 dialog.dismiss()
@@ -329,15 +315,13 @@ class NewOrderDetailFragment : Fragment(), View.OnClickListener {
         val dateFormat = SimpleDateFormat(Const.formatAppoinmnt)
         try {
             val dEventDate =
-                dateFormat.parse(eventDate) //Date is formatted to standard format “MM/dd/yyyy”
+                    dateFormat.parse(eventDate) //Date is formatted to standard format “MM/dd/yyyy”
             cal.setTime(dEventDate)
-
 
         } catch (e: Exception) {
             LogUtils.logE(classTag, e)
         }
         val reminderDate = dateFormat.format(cal.getTime())
-
         val reminderDayStart = reminderDate
         val reminderDayEnd = reminderDate
         var startTimeInMilliseconds: Long = 0
@@ -383,8 +367,8 @@ class NewOrderDetailFragment : Fragment(), View.OnClickListener {
                 var reminders = ContentValues()
                 reminders.put(CalendarContract.Reminders.EVENT_ID, id)
                 reminders.put(
-                    CalendarContract.Reminders.METHOD,
-                    CalendarContract.Reminders.METHOD_ALERT
+                        CalendarContract.Reminders.METHOD,
+                        CalendarContract.Reminders.METHOD_ALERT
                 )
                 reminders.put(CalendarContract.Reminders.MINUTES, 30)
                 if (Build.VERSION.SDK_INT >= 8) {
@@ -410,31 +394,31 @@ class NewOrderDetailFragment : Fragment(), View.OnClickListener {
     }
 
     override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
+            requestCode: Int,
+            permissions: Array<out String>,
+            grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (grantResults[0] == PackageManager.PERMISSION_DENIED) {
             val showRationale =
-                ActivityCompat.shouldShowRequestPermissionRationale(
-                    context as BottomNavigationActivity,
-                    permissions[0]
-                )
+                    ActivityCompat.shouldShowRequestPermissionRationale(
+                            context as BottomNavigationActivity,
+                            permissions[0]
+                    )
             if (!showRationale) {
                 val snackBar = Snackbar.make(
-                    view,
-                    getString(R.string.permission_calendar),
-                    Snackbar.LENGTH_LONG
+                        view,
+                        getString(R.string.permission_calendar),
+                        Snackbar.LENGTH_LONG
                 )
                 snackBar.setActionTextColor(
-                    Color.WHITE
+                        Color.WHITE
                 )
                 snackBar.setAction("SETTINGS") {
                     val intent =
-                        Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                            Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
                     val uri =
-                        Uri.fromParts("package", context!!.packageName, null)
+                            Uri.fromParts("package", context!!.packageName, null)
                     intent.data = uri
                     startActivityForResult(intent, 12)
                     snackBar.dismiss()
@@ -442,15 +426,15 @@ class NewOrderDetailFragment : Fragment(), View.OnClickListener {
                 snackBar.show()
             } else {
                 val snackBar = Snackbar.make(
-                    view,
-                    getString(R.string.permission_call),
-                    Snackbar.LENGTH_LONG
+                        view,
+                        getString(R.string.permission_call),
+                        Snackbar.LENGTH_LONG
                 )
                 snackBar.setActionTextColor(Color.WHITE)
                 snackBar.setAction("ALLOW") {
                     requestPermissions(
-                        REQUIRED_PERMISSIONS,
-                        REQUEST_CODE_PERMISSIONS
+                            REQUIRED_PERMISSIONS,
+                            REQUEST_CODE_PERMISSIONS
                     )
                     snackBar.dismiss()
                 }
@@ -460,10 +444,10 @@ class NewOrderDetailFragment : Fragment(), View.OnClickListener {
         } else if (requestCode == REQUEST_CODE_PERMISSIONS && allPermissionsGranted(context!!)) {
 
             setReminder(
-                getString(R.string.inspection_scheduled),
-                "",
-                orderDetail.appointmentDate + "" + selectedTimeSlot,
-                orderDetail.displayAddressInfo
+                    getString(R.string.inspection_scheduled),
+                    "",
+                    orderDetail.appointmentDate + "" + selectedTimeSlot,
+                    orderDetail.displayAddressInfo
             )
         }
 
@@ -471,7 +455,7 @@ class NewOrderDetailFragment : Fragment(), View.OnClickListener {
     }
 
     inner class Timeadapter(val context: Context, val timingList: ArrayList<String>) :
-        RecyclerView.Adapter<Timeadapter.ViewHolder>() {
+            RecyclerView.Adapter<Timeadapter.ViewHolder>() {
         var lastClickedPosition = -1
 
         inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -481,7 +465,7 @@ class NewOrderDetailFragment : Fragment(), View.OnClickListener {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
             val gridView =
-                LayoutInflater.from(context).inflate(R.layout.row_choose_time, parent, false)
+                    LayoutInflater.from(context).inflate(R.layout.row_choose_time, parent, false)
             return ViewHolder(gridView)
         }
 
@@ -500,15 +484,15 @@ class NewOrderDetailFragment : Fragment(), View.OnClickListener {
             if (position != lastClickedPosition) {
                 holder.linearLayoutCompat.setBackgroundResource(R.drawable.back_btn_home)
                 holder.txtTiming.setTextColor(
-                    ContextCompat.getColor(
-                        context,
-                        R.color.colorPrimary
-                    )
+                        ContextCompat.getColor(
+                                context,
+                                R.color.colorPrimary
+                        )
                 )
             } else {
                 holder.linearLayoutCompat.setBackgroundResource(R.drawable.back_button_new)
                 holder.txtTiming.setTextColor(
-                    Color.WHITE
+                        Color.WHITE
                 )
             }
         }
@@ -525,8 +509,8 @@ class NewOrderDetailFragment : Fragment(), View.OnClickListener {
             }
             R.id.linearProduct -> {
                 val url =
-                    BuildConfig.HOST + "mobile/Dashboard/GetDownloadOLEDocument?OrderGenID=" + orderDetail.orderGenId + "&ItemSrNo=" + orderDetail.itemSrNo + "&UserId=" + orderDetail.userId + "&ServiceRequestType=" +
-                            orderDetail.serviceRequestType
+                        BuildConfig.HOST + "mobile/Dashboard/GetDownloadOLEDocument?OrderGenID=" + orderDetail.orderGenId + "&ItemSrNo=" + orderDetail.itemSrNo + "&UserId=" + orderDetail.userId + "&ServiceRequestType=" +
+                                orderDetail.serviceRequestType
                 val browserIntent = Intent(Intent.ACTION_VIEW)
                 browserIntent.setDataAndType(Uri.parse(url), "application/pdf")
                 context!!.startActivity(browserIntent)
@@ -546,34 +530,35 @@ class NewOrderDetailFragment : Fragment(), View.OnClickListener {
                     itemIdList.add(itemId)
                     selectedOrderList.add(orderDetail)
                     orgIds.add(orderDetail.orgId)
+                    /*  (context as BottomNavigationActivity).pushFragment(
+                              ConditnlAcceptOrderFragment.newInstance(
+                                      getString(R.string.rejectOrders),
+                                      selectedOrderList,
+                                      itemIdList,
+                                      orgIds
+                              ), true
+                      )*/
                     (context as BottomNavigationActivity).pushFragment(
-                        ConditnlAcceptOrderFragment.newInstance(
-                            getString(R.string.rejectOrders),
-                            selectedOrderList,
-                            itemIdList,
-                            orgIds
-                        ), true
-                    )
+                            NewOrderRejectFragment.newInstance(selectedOrderList.get(0)), true)
                 } else {
-                    CommonUtils.displayMessage(view, getString(R.string.decline_restrictn_msg))
+                    view.snack(getString(R.string.decline_restrictn_msg)) {}
                 }
-
             }
         }
     }
 
     private fun isValid(): Boolean {
-        if (selectedTimeSlot.equals("")) {
-            CommonUtils.showOkDialog(
-                context!!,
-                getString(R.string.error_choose_time),
-                DialogInterface.OnClickListener { _, _ ->
-
-                },
-                "ok"
-            )
-            return false
-        }
+        //For Unassigned order we need to select appointment time slots.
+//        if (selectedTimeSlot.equals("")) {
+//            CommonUtils.showOkDialog(
+//                    context!!,
+//                    getString(R.string.error_choose_time),
+//                    DialogInterface.OnClickListener { _, _ ->
+//                    },
+//                    "ok"
+//            )
+//            return false
+//        }
         return true
     }
 }

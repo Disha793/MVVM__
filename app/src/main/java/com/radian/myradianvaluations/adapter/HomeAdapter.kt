@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.radian.myradianvaluations.R
 import com.radian.myradianvaluations.constants.Const
+import com.radian.myradianvaluations.extensions.makeGone
+import com.radian.myradianvaluations.extensions.makeVisible
 import com.radian.myradianvaluations.interfaces.HomeItemClickListener
 import com.radian.myradianvaluations.utils.DashboardAbbr
 import com.radian.vendorbridge.Response.DashboardResponseNew
@@ -71,7 +73,6 @@ class HomeAdapter(
         holder: ViewHolder,
         position: Int
     ) {
-        disableOtherViews(holder, DashboardAbbr.newOrder)
         holder.nwordrDteTime.visibility = View.VISIBLE
         holder.cardTitle.text = context.getString(R.string.lbl_dash_nwordr)
         holder.txtAdd.text = dashboardList.get(position).displayAddressInfo
@@ -84,8 +85,10 @@ class HomeAdapter(
         }
 
         holder.product.text = dashboardList[position].product
-        holder.linearBtn.visibility = View.VISIBLE
-        holder.product.visibility = View.VISIBLE
+        holder.linearBtn.makeVisible()
+        holder.product.makeVisible()
+        holder.document.makeGone()
+        holder.revision.makeGone()
         holder.btnView.text = context.getString(R.string.lbl_btn_view)
         holder.btnRead.text = context.getString(R.string.lbl_btn_decline)
     }
@@ -94,13 +97,17 @@ class HomeAdapter(
         holder: ViewHolder,
         position: Int
     ) {
-        disableOtherViews(holder, DashboardAbbr.document)
         holder.document.visibility = View.VISIBLE
         holder.cardTitle.text = context.getString(R.string.lbl_dash_document)
         holder.txtAdd.text = dashboardList.get(position).displayAddressInfo
         holder.document.text =
             dashboardList.get(position).documentname!!
-        holder.linearBtn.visibility = View.VISIBLE
+        holder.linearBtn.makeVisible()
+        holder.revision.makeGone()
+        holder.nwordrDteTime.makeGone()
+        holder.product.makeGone()
+        holder.inspectnTime.makeGone()
+        holder.inspectnTime.makeGone()
         holder.btnView.text = context.getString(R.string.lbl_btn_view)
         holder.btnRead.text = context.getString(R.string.lbl_btn_read)
     }
@@ -109,13 +116,16 @@ class HomeAdapter(
         holder: ViewHolder,
         position: Int
     ) {
-        disableOtherViews(holder, DashboardAbbr.inspection)
         holder.inspectnTime.visibility = View.VISIBLE
         holder.cardTitle.text = context.getString(R.string.lbl_dash_inspectn)
         holder.txtAdd.text = dashboardList.get(position).displayAddressInfo
         holder.inspectnTime.text =
             "Scheduled for " + dashboardList.get(position).appointmentDate
         holder.linearBtn.visibility = View.VISIBLE
+        holder.revision.visibility = View.GONE
+        holder.nwordrDteTime.makeGone()
+        holder.product.makeGone()
+        holder.document.makeGone()
         holder.btnView.text = context.getString(R.string.lbl_btn_complete)
         holder.btnRead.text = context.getString(R.string.lbl_btn_update)
     }
@@ -124,45 +134,21 @@ class HomeAdapter(
         holder: ViewHolder,
         position: Int
     ) {
-        disableOtherViews(holder, DashboardAbbr.revision)
         holder.revision.visibility = View.VISIBLE
         holder.cardTitle.text = context.getString(R.string.lbl_dash_revision)
         holder.txtAdd.text = dashboardList[position].displayAddressInfo
         holder.revision.text =
             dashboardList.get(position).revisionRequest?.let { it }
         holder.linearBtn.visibility = View.VISIBLE
+        holder.nwordrDteTime.makeGone()
+        holder.product.makeGone()
+        holder.inspectnTime.makeGone()
+        holder.document.makeGone()
         holder.btnView.text = context.getString(R.string.lbl_btn_view)
         holder.btnRead.text = context.getString(R.string.lbl_btn_read)
     }
 
-    private fun disableOtherViews(holder: ViewHolder, abbr: String) {
-        when (abbr) {
 
-            DashboardAbbr.newOrder -> {
-                holder.document.visibility = View.GONE
-                holder.revision.visibility = View.GONE
-
-            }
-            DashboardAbbr.document -> {
-                holder.revision.visibility = View.GONE
-                holder.nwordrDteTime.visibility = View.GONE
-                holder.product.visibility = View.GONE
-                holder.inspectnTime.visibility = View.GONE
-            }
-            DashboardAbbr.revision -> {
-                holder.nwordrDteTime.visibility = View.GONE
-                holder.product.visibility = View.GONE
-                holder.inspectnTime.visibility = View.GONE
-                holder.document.visibility = View.GONE
-            }
-            DashboardAbbr.inspection -> {
-                holder.revision.visibility = View.GONE
-                holder.nwordrDteTime.visibility = View.GONE
-                holder.product.visibility = View.GONE
-                holder.document.visibility = View.GONE
-            }
-        }
-    }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val txtAdd = view.txtAdd

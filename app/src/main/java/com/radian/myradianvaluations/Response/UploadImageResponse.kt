@@ -2,7 +2,7 @@ package com.radian.vendorbridge.Response
 
 import com.google.gson.annotations.SerializedName
 
-class ProfileImageResponse {
+class UploadImageResponse {
     @SerializedName("Data")
     var data = ""
     @SerializedName("Status")

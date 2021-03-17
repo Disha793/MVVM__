@@ -20,6 +20,7 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.radian.myradianvaluations.R
 import com.radian.myradianvaluations.constants.APIStatus
 import com.radian.myradianvaluations.constants.Const
+import com.radian.myradianvaluations.extensions.snack
 import com.radian.myradianvaluations.utils.CommonUtils
 import com.radian.myradianvaluations.utils.LoadingDialog
 import com.radian.myradianvaluations.utils.Pref
@@ -79,7 +80,7 @@ class ConditnlAcceptOrderFragment : Fragment(), View.OnClickListener {
         view = inflater.inflate(R.layout.fragment_open_order, container, false)
         newOrdrViewModel =
             ViewModelProvider(context as BottomNavigationActivity).get(NewOrdrDetailViewModel::class.java)
-        newOrdrViewModel.init(context as BottomNavigationActivity)
+//        newOrdrViewModel.init(context as BottomNavigationActivity)
         return view
     }
 
@@ -168,7 +169,7 @@ class ConditnlAcceptOrderFragment : Fragment(), View.OnClickListener {
         for (i in 0..orderList.size - 1) {
 
             if (TextUtils.isEmpty(rejectnoteList[i])) {
-                CommonUtils.displayMessage(view, getString(R.string.error_enter_note))
+               view.snack(getString(R.string.error_enter_note)) {}
                 return false
             }
         }
@@ -186,36 +187,36 @@ class ConditnlAcceptOrderFragment : Fragment(), View.OnClickListener {
 
 //        postParam.put("ItemNotes", noteList)
         postParam.put("ActionType", "R")
-        newOrdrViewModel.rejectOrder(postParam, itemId, rejectnoteList, organizationIds).let {
-            it?.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-                LoadingDialog.dismissDialog()
-                if (it.status.equals(APIStatus.ok, true)) {
-                    (context as BottomNavigationActivity).onBackPressed()
-                    (context as BottomNavigationActivity).onBackPressed()
-                } else if (it.status.equals(APIStatus.unauth, true)) {
-                    Toast.makeText(
-                        context!!,
-                        it.errorInfo.get(0).errorMessage,
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    var intent = Intent(context!!, PasscodeActivity::class.java)
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                    startActivity(intent)
-                }
-            })
-            if (it == null) {
-                LoadingDialog.dismissDialog()
-                LoadingDialog.dismissDialog()
-                CommonUtils.showOkDialog(
-                    context!!,
-                    getString(R.string.please_try_again),
-                    DialogInterface.OnClickListener { _, _ ->
-
-                    },
-                    getString(R.string.ok)
-                )
-            }
-        }
+//        newOrdrViewModel.rejectOrder(postParam, itemId, rejectnoteList, organizationIds).let {
+//            it?.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+//                LoadingDialog.dismissDialog()
+//                if (it.status.equals(APIStatus.ok, true)) {
+//                    (context as BottomNavigationActivity).onBackPressed()
+//                    (context as BottomNavigationActivity).onBackPressed()
+//                } else if (it.status.equals(APIStatus.unauth, true)) {
+//                    Toast.makeText(
+//                        context!!,
+//                        it.errorInfo.get(0).errorMessage,
+//                        Toast.LENGTH_SHORT
+//                    ).show()
+//                    var intent = Intent(context!!, PasscodeActivity::class.java)
+//                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+//                    startActivity(intent)
+//                }
+//            })
+//            if (it == null) {
+//                LoadingDialog.dismissDialog()
+//                LoadingDialog.dismissDialog()
+//                CommonUtils.showOkDialog(
+//                    context!!,
+//                    getString(R.string.please_try_again),
+//                    DialogInterface.OnClickListener { _, _ ->
+//
+//                    },
+//                    getString(R.string.ok)
+//                )
+//            }
+//        }
     }
 
     inner class ConditionalAdapter(

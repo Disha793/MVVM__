@@ -13,25 +13,26 @@ import com.radian.myradianvaluations.networking.ReturnType
 import com.radian.myradianvaluations.utils.CommonUtils
 import com.radian.myradianvaluations.utils.LoadingDialog
 import com.radian.myradianvaluations.utils.LogUtils
-import com.radian.vendorbridge.Response.NewOrderResponse
+import com.radian.vendorbridge.Response.StatusResponse
 import com.sunteckindia.networking.ApiResponseCallBack
-class NewOrdrViewModelFactory(private val context:Context) : ViewModelProvider.Factory {
+
+class RejectViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(NewOrderViewModel::class.java)) {
-            return NewOrderViewModel(context) as T
+        if (modelClass.isAssignableFrom(RejectOrderViewModel::class.java)) {
+            return RejectOrderViewModel(context) as T
         }
         throw IllegalArgumentException("Unknown View Model class")
     }
 
 }
-class NewOrderViewModel(private val context:Context) : ViewModel(), ApiResponseCallBack {
-    var newOrderResponse = MutableLiveData<NewOrderResponse>()
+
+class RejectOrderViewModel(private var context: Context) : ViewModel(), ApiResponseCallBack {
+    var rejectOrderResponse = MutableLiveData<StatusResponse>()
     private val apiServiceProviderGeneric = ApiServiceProviderGeneric(this)
 
 
-    fun getNewOrderList(postParams: HashMap<String, Any?>) {
-        apiServiceProviderGeneric.postCall(context, ReturnType.POST_NewOrderList.endPoint, ReturnType.POST_NewOrderList, postParams)
-
+    fun rejectOrder(postParams: HashMap<String, Any?>) {
+        apiServiceProviderGeneric.postCall(context, ReturnType.POST_ConfirmOrder.endPoint, ReturnType.POST_ConfirmOrder, postParams)
     }
 
     override fun onPreExecute(returnType: ReturnType) {
@@ -39,22 +40,12 @@ class NewOrderViewModel(private val context:Context) : ViewModel(), ApiResponseC
     }
 
     override fun onSuccess(returnType: ReturnType, response: String) {
-        LoadingDialog.dismissDialog()
-        try {
-            when (returnType) {
-                ReturnType.POST_NewOrderList -> {
-                    val responseUsers = Gson().fromJson<NewOrderResponse>(
-                            response,
-                            object : TypeToken<NewOrderResponse>() {}.type
-                    )
-                    LogUtils.logD("", "" + responseUsers.status)
-                    newOrderResponse.value = responseUsers
-                }
-            }
-
-        } catch (e: Exception) {
-
-        }
+        val response = Gson().fromJson<StatusResponse>(
+                response,
+                object : TypeToken<StatusResponse>() {}.type
+        )
+        LogUtils.logD("", "" + response.status)
+        rejectOrderResponse.value = response
     }
 
     override fun onError(returnType: ReturnType, error: String) {

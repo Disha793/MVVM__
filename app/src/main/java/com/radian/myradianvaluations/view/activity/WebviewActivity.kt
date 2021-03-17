@@ -16,6 +16,7 @@ import com.radian.myradianvaluations.utils.CommonUtils
 import com.radian.myradianvaluations.utils.LoadingDialog
 import com.radian.myradianvaluations.utils.LogUtils
 import com.radian.myradianvaluations.viewmodel.HelpTroubleViewModel
+import com.radian.myradianvaluations.viewmodel.HelpViewModelFactory
 import kotlinx.android.synthetic.main.fragment_walkthroughmain.*
 import kotlinx.android.synthetic.main.layout_toolbar.*
 
@@ -23,6 +24,7 @@ class WebviewActivity : AppCompatActivity() {
     private var webUrl = ""
     private var timeout = false
     lateinit var helpTroubleModel: HelpTroubleViewModel
+    private lateinit var factory: HelpViewModelFactory
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fragment_walkthroughmain)
@@ -57,12 +59,16 @@ class WebviewActivity : AppCompatActivity() {
                 toolbar.visibility = View.VISIBLE
                 txtTitle.visibility = View.VISIBLE
                 txtTitle.text = getString(R.string.forgotPassword)
-                helpTroubleModel = ViewModelProvider(this).get(HelpTroubleViewModel::class.java)
-                helpTroubleModel.init(this)
+                initViewModel()
                 getInfo()
                 observeData()
             }
         }
+    }
+
+    private fun initViewModel() {
+        factory = HelpViewModelFactory(this)
+        helpTroubleModel = ViewModelProvider(this, factory).get(HelpTroubleViewModel::class.java)
     }
 
     private fun observeData() {
@@ -91,8 +97,8 @@ class WebviewActivity : AppCompatActivity() {
             }
 
             override fun shouldOverrideUrlLoading(
-                view: WebView?,
-                request: WebResourceRequest?
+                    view: WebView?,
+                    request: WebResourceRequest?
             ): Boolean {
 
                 return true

@@ -2,40 +2,46 @@ package com.radian.myradianvaluations.viewmodel
 
 import android.content.Context
 import android.content.DialogInterface
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.radian.myradianvaluations.R
+import com.radian.myradianvaluations.Response.EORepository
 import com.radian.myradianvaluations.networking.ApiServiceProviderGeneric
 import com.radian.myradianvaluations.networking.ReturnType
 import com.radian.myradianvaluations.utils.CommonUtils
 import com.radian.myradianvaluations.utils.LoadingDialog
 import com.radian.myradianvaluations.utils.LogUtils
-import com.radian.vendorbridge.Response.DashboardResponseNew
-import com.radian.vendorbridge.Response.WhatsNewResponse
+import com.radian.vendorbridge.Response.LicenceMasterModel
+import com.radian.vendorbridge.Response.UploadImageResponse
+import com.radian.vendorbridge.Response.VendorProfileResponse
 import com.sunteckindia.networking.ApiResponseCallBack
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 
-class DashboardViewModel : ViewModel(), ApiResponseCallBack {
-    private var dashboardResponse = MutableLiveData<DashboardResponseNew>()
-    var whatsNewResponse = MutableLiveData<WhatsNewResponse>()
+class EODocViewModel : ViewModel(), ApiResponseCallBack {
+    private lateinit var eoRepository: EORepository
+    var uploadImageResponse = MutableLiveData<UploadImageResponse>()
     private lateinit var context: Context
     private val apiServiceProviderGeneric = ApiServiceProviderGeneric(this)
 
-    val dashboardData: LiveData<DashboardResponseNew>
-        get() = dashboardResponse
-
-    fun init(context: Context) {
+    fun init(context: Context): EORepository {
+        eoRepository = EORepository.getInstance(context)
         this.context = context
+        return eoRepository
     }
 
-    fun getDashboardData(postParams: HashMap<String, Any?>) {
-        apiServiceProviderGeneric.postCall(context, ReturnType.POST_Dashboard.endPoint, ReturnType.POST_Dashboard, postParams)
+    fun getVendorProfileDetails(actionType: String): MutableLiveData<VendorProfileResponse> {
+        return eoRepository.getVendorProfileDetails(actionType)
     }
 
-    fun getWhatsNewAPI(postParams: HashMap<String, Any?>) {
-        apiServiceProviderGeneric.postCall(context, ReturnType.POST_WhatsNew.endPoint, ReturnType.POST_WhatsNew, postParams)
+    fun getLicenceMaster(): MutableLiveData<LicenceMasterModel> {
+        return eoRepository.getLicenceMaster()
+    }
+
+    fun uploadImage(file: MultipartBody.Part, fileName: RequestBody, postParams: HashMap<String, RequestBody>) {
+        apiServiceProviderGeneric.multipartPostCall(context, ReturnType.POST_UploadImage.endPoint, file, fileName, ReturnType.POST_UploadImage, postParams)
     }
 
     override fun onPreExecute(returnType: ReturnType) {
@@ -46,24 +52,15 @@ class DashboardViewModel : ViewModel(), ApiResponseCallBack {
         LoadingDialog.dismissDialog()
         try {
             when (returnType) {
-                ReturnType.POST_Dashboard -> {
-                    val responseUsers = Gson().fromJson<DashboardResponseNew>(
+                ReturnType.POST_UploadImage -> {
+                    val response = Gson().fromJson<UploadImageResponse>(
                             response,
-                            object : TypeToken<DashboardResponseNew>() {}.type
+                            object : TypeToken<UploadImageResponse>() {}.type
                     )
-                    LogUtils.logD("", "" + responseUsers.status)
-                    dashboardResponse.value = responseUsers
-                }
-                ReturnType.POST_WhatsNew -> {
-                    val responseUsers = Gson().fromJson<WhatsNewResponse>(
-                            response,
-                            object : TypeToken<WhatsNewResponse>() {}.type
-                    )
-                    LogUtils.logD("", "" + responseUsers.status)
-                    whatsNewResponse.value = responseUsers
+                    LogUtils.logD("", "" + response.status)
+                    uploadImageResponse.value = response
                 }
             }
-
         } catch (e: Exception) {
             LogUtils.logE("", e)
         }

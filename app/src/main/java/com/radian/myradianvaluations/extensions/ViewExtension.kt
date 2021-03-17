@@ -1,9 +1,12 @@
 package com.radian.myradianvaluations.extensions
 
+import android.graphics.Color
 import android.view.View
+import android.widget.TextView
 import androidx.appcompat.widget.AppCompatCheckBox
 import androidx.appcompat.widget.AppCompatRadioButton
 import com.google.android.material.snackbar.Snackbar
+import com.radian.myradianvaluations.R
 
 /**
  * Visibility modifiers and check functions
@@ -70,5 +73,21 @@ inline fun View.snack(
     val snack = Snackbar.make(this, message, length)
     snack.f()
     snack.show()
+}
+inline fun View.snackAction(
+
+        mView: View,
+        msg: String,
+        actionText: String,
+        onClickListener: View.OnClickListener
+) {
+    val snackbar = Snackbar.make(mView, msg, Snackbar.LENGTH_INDEFINITE)
+    val snackView = snackbar.view
+    snackView.setBackgroundColor(Color.BLACK)
+    snackbar.setActionTextColor(Color.WHITE)
+    var textView: TextView = snackView.findViewById<TextView>(R.id.snackbar_text)
+    textView.setTextColor(Color.WHITE)
+    snackbar.setAction(actionText, onClickListener)
+    snackbar.show()
 }
 

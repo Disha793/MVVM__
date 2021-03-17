@@ -11,11 +11,13 @@ import androidx.lifecycle.ViewModelProvider
 import com.radian.myradianvaluations.R
 import com.radian.myradianvaluations.adapter.NewOrdersAdapter
 import com.radian.myradianvaluations.constants.APIStatus
+import com.radian.myradianvaluations.extensions.toastShort
 import com.radian.myradianvaluations.utils.CommonUtils
 import com.radian.myradianvaluations.utils.Pref
 import com.radian.myradianvaluations.view.activity.BottomNavigationActivity
 import com.radian.myradianvaluations.view.activity.PasscodeActivity
 import com.radian.myradianvaluations.viewmodel.NewOrderViewModel
+import com.radian.myradianvaluations.viewmodel.NewOrdrViewModelFactory
 import com.radian.vendorbridge.Response.NewOrderResponse
 import kotlinx.android.synthetic.main.activity_bottom_navigation.*
 import kotlinx.android.synthetic.main.fragment_new_orders.view.*
@@ -26,6 +28,8 @@ class NewOrderFragment : Fragment() {
     private val newOrderList = ArrayList<NewOrderResponse.Data.OrderResponse>()
     private val classTag = NewOrderFragment::class.java.canonicalName!!
     private lateinit var newOrderViewModel: NewOrderViewModel
+    private lateinit var factory: NewOrdrViewModelFactory
+
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
@@ -33,14 +37,20 @@ class NewOrderFragment : Fragment() {
     ): View? {
         view = inflater.inflate(R.layout.fragment_new_orders, container, false)
         view.recyclerView.adapter = NewOrdersAdapter(context!!, newOrderList)
-        newOrderViewModel =
-                ViewModelProvider(context as BottomNavigationActivity).get(NewOrderViewModel::class.java)
-        newOrderViewModel.init(context as BottomNavigationActivity)
+//        newOrderViewModel =
+//                ViewModelProvider(context as BottomNavigationActivity).get(NewOrderViewModel::class.java)
+//        newOrderViewModel.init(context as BottomNavigationActivity)
         showToolbarIcons(getString(R.string.new_orders))
+        initViewModel()
         getOrderList()
         observeNewOrder()
 
         return view
+    }
+
+    private fun initViewModel() {
+        factory = NewOrdrViewModelFactory(context!!)
+        newOrderViewModel = ViewModelProvider(this, factory).get(NewOrderViewModel::class.java)
     }
 
     private fun observeNewOrder() {
@@ -63,8 +73,7 @@ class NewOrderFragment : Fragment() {
                     view.txtNoNewOrdrDetail.visibility = View.GONE
                 }
             } else if (it.status.equals(APIStatus.unauth, true)) {
-                CommonUtils.showToast(context!!, it.errorInfo.get(0).errorMessage)
-
+                context!!.toastShort(it.errorInfo.get(0).errorMessage)
                 var intent = Intent(context!!, PasscodeActivity::class.java)
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                 startActivity(intent)

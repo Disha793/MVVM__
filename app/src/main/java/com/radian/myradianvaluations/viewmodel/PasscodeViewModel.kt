@@ -2,9 +2,9 @@ package com.radian.myradianvaluations.viewmodel
 
 import android.content.Context
 import android.content.DialogInterface
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.radian.myradianvaluations.R
@@ -18,37 +18,37 @@ import com.radian.vendorbridge.Response.OtpResponse
 import com.radian.vendorbridge.Response.StatusResponse
 import com.sunteckindia.networking.ApiResponseCallBack
 
-class PasscodeViewModel : ViewModel(), ApiResponseCallBack {
-    private var otpResponse = MutableLiveData<OtpResponse>()
-    private var verifyotpResponse = MutableLiveData<OtpResponse>()
-    private var loginResponse= MutableLiveData<LoginResponse>()
-    private val apiServiceProviderGeneric = ApiServiceProviderGeneric(this)
-    private lateinit var context: Context
-    val generateOtpResponse: LiveData<OtpResponse>
-        get() = otpResponse
-    val verifyOtpResponseData: LiveData<OtpResponse>
-        get() = verifyotpResponse
-    val loginResponseData: LiveData<LoginResponse>
-        get() = loginResponse
-
-    fun init(context: Context) {
-        this.context = context
+class PasscodeViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
+    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(PasscodeViewModel::class.java)) {
+            return PasscodeViewModel(context) as T
+        }
+        throw IllegalArgumentException("Unknown View Model class")
     }
+
+}
+
+class PasscodeViewModel(val context: Context) : ViewModel(), ApiResponseCallBack {
+    var otpResponse = MutableLiveData<OtpResponse>()
+    var verifyotpResponse = MutableLiveData<OtpResponse>()
+    var loginResponse = MutableLiveData<LoginResponse>()
+    private val apiServiceProviderGeneric = ApiServiceProviderGeneric(this)
+
 
     fun generateOtp(postParam: HashMap<String, Any?>): MutableLiveData<OtpResponse>? {
         apiServiceProviderGeneric.postCallWithoutHeader(
-            context, ReturnType.POST_GenerateOtp.endPoint,
+                context, ReturnType.POST_GenerateOtp.endPoint,
                 postParam,
-            ReturnType.POST_GenerateOtp
+                ReturnType.POST_GenerateOtp
         )
         return otpResponse
     }
 
     fun verifyOtp(postParam: HashMap<String, Any?>): MutableLiveData<OtpResponse>? {
         apiServiceProviderGeneric.postCallWithoutHeader(
-            context, ReturnType.POST_VerifyOtp.endPoint,
+                context, ReturnType.POST_VerifyOtp.endPoint,
                 postParam,
-            ReturnType.POST_VerifyOtp
+                ReturnType.POST_VerifyOtp
         )
         return otpResponse
     }
@@ -56,9 +56,9 @@ class PasscodeViewModel : ViewModel(), ApiResponseCallBack {
     fun callSignIn(postParam: HashMap<String, Any?>) {
         //  loginResponse = passcodeRepository.callSignIn(accessCode, fcmToken)
         apiServiceProviderGeneric.postCallWithoutHeader(
-            context, ReturnType.POST_SignIn.endPoint,
+                context, ReturnType.POST_SignIn.endPoint,
                 postParam,
-            ReturnType.POST_SignIn
+                ReturnType.POST_SignIn
         )
 
     }
@@ -74,8 +74,8 @@ class PasscodeViewModel : ViewModel(), ApiResponseCallBack {
             ReturnType.POST_GenerateOtp -> {
                 try {
                     val responseUsers = Gson().fromJson<OtpResponse>(
-                        response,
-                        object : TypeToken<StatusResponse>() {}.type
+                            response,
+                            object : TypeToken<StatusResponse>() {}.type
                     )
                     LogUtils.logD("", "" + responseUsers.status)
                     otpResponse.value = responseUsers
@@ -87,8 +87,8 @@ class PasscodeViewModel : ViewModel(), ApiResponseCallBack {
             ReturnType.POST_VerifyOtp -> {
                 try {
                     val responseUsers = Gson().fromJson<OtpResponse>(
-                        response,
-                        object : TypeToken<OtpResponse>() {}.type
+                            response,
+                            object : TypeToken<OtpResponse>() {}.type
                     )
                     LogUtils.logD("", "" + responseUsers.status)
                     verifyotpResponse.value = responseUsers
@@ -100,8 +100,8 @@ class PasscodeViewModel : ViewModel(), ApiResponseCallBack {
             ReturnType.POST_SignIn -> {
                 try {
                     val responseUsers = Gson().fromJson<LoginResponse>(
-                        response,
-                        object : TypeToken<LoginResponse>() {}.type
+                            response,
+                            object : TypeToken<LoginResponse>() {}.type
                     )
                     LogUtils.logD("", "" + responseUsers.status)
                     loginResponse.value = responseUsers
@@ -120,5 +120,6 @@ class PasscodeViewModel : ViewModel(), ApiResponseCallBack {
                 context.getString(R.string.please_try_again),
                 DialogInterface.OnClickListener { _, _ -> },
                 context.getString(R.string.ok)
-        )    }
+        )
+    }
 }

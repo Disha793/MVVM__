@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.radian.myradianvaluations.R
 import com.radian.myradianvaluations.adapter.OrdersAdapter
 import com.radian.myradianvaluations.constants.APIStatus
+import com.radian.myradianvaluations.extensions.toastShort
 import com.radian.myradianvaluations.interfaces.OpenOrderClickListener
 import com.radian.myradianvaluations.utils.CommonUtils
 import com.radian.myradianvaluations.utils.LoadingDialog
@@ -77,11 +78,8 @@ class OrdersFragment : Fragment() {
                         view.txtNoOpenOrdr.visibility = View.GONE
                     }
                 } else if (it.status.equals(APIStatus.unauth, true)) {
-                    Toast.makeText(
-                            context!!,
-                            it.errorInfo.get(0).errorMessage,
-                            Toast.LENGTH_SHORT
-                    ).show()
+                    context!!.toastShort(it.errorInfo.get(0).errorMessage)
+
                     var intent = Intent(context!!, PasscodeActivity::class.java)
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                     startActivity(intent)

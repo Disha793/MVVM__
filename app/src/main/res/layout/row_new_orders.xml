@@ -37,6 +37,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/lblnworderTime"
             android:layout_width="wrap_content"
+            android:visibility="gone"
             android:layout_height="wrap_content"
             android:layout_below="@+id/lblnworderProduct"
             android:fontFamily="@font/messinasans_regular"

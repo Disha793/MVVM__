@@ -4,32 +4,29 @@ import android.content.Context
 import android.content.DialogInterface
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.radian.myradianvaluations.R
 import com.radian.myradianvaluations.networking.ApiServiceProviderGeneric
 import com.radian.myradianvaluations.networking.ReturnType
-import com.radian.myradianvaluations.repository.OrgInfoRepository
 import com.radian.myradianvaluations.utils.CommonUtils
 import com.radian.myradianvaluations.utils.LoadingDialog
 import com.radian.myradianvaluations.utils.LogUtils
 import com.radian.vendorbridge.Response.OrgInfoResponse
 import com.sunteckindia.networking.ApiResponseCallBack
+class HelpViewModelFactory(private val context:Context) : ViewModelProvider.Factory {
+    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(HelpTroubleViewModel::class.java)) {
+            return HelpTroubleViewModel(context) as T
+        }
+        throw IllegalArgumentException("Unknown View Model class")
+    }
 
-class HelpTroubleViewModel : ViewModel(), ApiResponseCallBack {
-    lateinit var orgInfoRepository: OrgInfoRepository
+}
+class HelpTroubleViewModel(private var context: Context) : ViewModel(), ApiResponseCallBack {
     var helpTroubleResponse = MutableLiveData<OrgInfoResponse>()
     private val apiServiceProviderGeneric = ApiServiceProviderGeneric(this)
-    private lateinit var context: Context
-    fun init(context: Context) {
-        this.context = context
-        orgInfoRepository = OrgInfoRepository.getInstance(context)
-    }
-
-    fun getInfo(): MutableLiveData<OrgInfoResponse>? {
-        helpTroubleResponse = orgInfoRepository.getOrgInfoAPI()
-        return helpTroubleResponse
-    }
 
     fun getHelpTroubleData() {
         apiServiceProviderGeneric.getCall(

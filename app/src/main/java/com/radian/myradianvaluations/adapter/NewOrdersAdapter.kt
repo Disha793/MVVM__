@@ -38,14 +38,15 @@ class NewOrdersAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.lblnworderAdd.text = newOrderList.get(position).displayAddressInfor
         holder.lblnworderProduct.text = newOrderList.get(position).productName
-        if (newOrderList.get(position).isAssigned == 1) {
-            holder.lblnworderTime.text = newOrderList.get(position).message
-        } else {
-            holder.lblnworderTime.text =
-                newOrderList.get(position).appointmentDate + " | Between " + newOrderList.get(
-                    position
-                ).startTimeSlot + " and " + newOrderList.get(position).endTimeSlot
-        }
+        //For Appointment scheduled time display
+//        if (newOrderList.get(position).isAssigned == 1) {
+//            holder.lblnworderTime.text = newOrderList.get(position).message
+//        } else {
+//            holder.lblnworderTime.text =
+//                newOrderList.get(position).appointmentDate + " | Between " + newOrderList.get(
+//                    position
+//                ).startTimeSlot + " and " + newOrderList.get(position).endTimeSlot
+//        }
 
         holder.cardNewOrdr.setOnClickListener {
             (context as BottomNavigationActivity).bottomNavigationView.visibility = View.GONE

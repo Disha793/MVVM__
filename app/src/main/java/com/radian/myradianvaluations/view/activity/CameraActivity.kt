@@ -30,6 +30,7 @@ import com.radian.myradianvaluations.Response.Categories
 import com.radian.myradianvaluations.Response.UploadedPhotos
 import com.radian.myradianvaluations.constants.Const
 import com.radian.myradianvaluations.databinding.ActivityCameraBinding
+import com.radian.myradianvaluations.extensions.toastShort
 import com.radian.myradianvaluations.utils.LogUtils
 import com.radian.myradianvaluations.utils.Pref
 import java.io.File
@@ -123,7 +124,7 @@ class CameraActivity : AppCompatActivity(), View.OnClickListener {
             object : ImageCapture.OnImageSavedCallback {
                 override fun onError(exc: ImageCaptureException) {
                    LogUtils.logE("TAG", "Photo capture failed: ${exc.message}", exc)
-                    Toast.makeText(baseContext, "Photo capture failed", Toast.LENGTH_SHORT).show()
+                    toastShort(resources.getString(R.string.capture_failed))
                 }
 
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) {

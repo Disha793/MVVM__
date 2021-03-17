@@ -5,8 +5,6 @@ import com.radian.vendorbridge.Response.*
 import io.reactivex.Observable
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import retrofit2.Call
-import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -229,7 +227,7 @@ interface APIList {
         @Part("filename") filename: @JvmSuppressWildcards RequestBody,
         @PartMap values: HashMap<String, RequestBody>
     )
-            : Observable<ProfileImageResponse>
+            : Observable<UploadImageResponse>
 
     @FormUrlEncoded
     @POST("Mobile/Notification/NotificationList")

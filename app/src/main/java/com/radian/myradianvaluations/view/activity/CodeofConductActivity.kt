@@ -18,6 +18,8 @@ import com.radian.myradianvaluations.BuildConfig
 import com.radian.myradianvaluations.R
 import com.radian.myradianvaluations.constants.APIStatus
 import com.radian.myradianvaluations.constants.Const
+import com.radian.myradianvaluations.extensions.snack
+import com.radian.myradianvaluations.extensions.toastShort
 import com.radian.myradianvaluations.network.APIList
 import com.radian.myradianvaluations.network.RetrofitBase
 import com.radian.myradianvaluations.utils.CommonUtils
@@ -51,7 +53,7 @@ class CodeofConductActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun isValid(): Boolean {
         if (TextUtils.isEmpty(edtUserName.text.toString())) {
-            CommonUtils.displayMessage(rootview, "Please Enter Initials")
+            this.findViewById<View>(android.R.id.content).snack(resources.getString(R.string.enter_initials)) {}
             return false
         }
         return true
@@ -61,13 +63,13 @@ class CodeofConductActivity : AppCompatActivity(), View.OnClickListener {
         CoroutineScope(Dispatchers.IO).launch {
             LoadingDialog.show(this@CodeofConductActivity)
             val call = RetrofitBase.getClient().create(APIList::class.java)
-                .saveCompliance(
-                    Pref.getValue(this@CodeofConductActivity, Pref.AUTH_TOKEN, "")!!,
-                    Pref.getValue(this@CodeofConductActivity, Pref.PHONE_NUMBER, "")!!,
-                    CommonUtils.getDeviceUUID(this@CodeofConductActivity),
-                    actionType,
-                    acceptedBy
-                )
+                    .saveCompliance(
+                            Pref.getValue(this@CodeofConductActivity, Pref.AUTH_TOKEN, "")!!,
+                            Pref.getValue(this@CodeofConductActivity, Pref.PHONE_NUMBER, "")!!,
+                            CommonUtils.getDeviceUUID(this@CodeofConductActivity),
+                            actionType,
+                            acceptedBy
+                    )
             response.postValue(call.body())
         }
         response.let {
@@ -80,11 +82,8 @@ class CodeofConductActivity : AppCompatActivity(), View.OnClickListener {
                 } else if (it.status.equals(APIStatus.error)) {
                     //error in api
                 } else if (it.status.equals(APIStatus.unauth, true)) {
-                    Toast.makeText(
-                        this@CodeofConductActivity,
-                        it.errorInfo.get(0).errorMessage,
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    toastShort( it.errorInfo.get(0).errorMessage)
+
                     var intent = Intent(this@CodeofConductActivity, PasscodeActivity::class.java)
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                     startActivity(intent)
@@ -93,13 +92,13 @@ class CodeofConductActivity : AppCompatActivity(), View.OnClickListener {
             if (it == null) {
                 LoadingDialog.dismissDialog()
                 CommonUtils.showOkDialog(
-                    this@CodeofConductActivity,
-                    getString(R.string.please_try_again),
-                    DialogInterface.OnClickListener { _, _ ->
+                        this@CodeofConductActivity,
+                        getString(R.string.please_try_again),
+                        DialogInterface.OnClickListener { _, _ ->
 
 
-                    },
-                    getString(R.string.ok)
+                        },
+                        getString(R.string.ok)
                 )
 
             }
@@ -149,8 +148,8 @@ class CodeofConductActivity : AppCompatActivity(), View.OnClickListener {
 
             @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
             override fun shouldOverrideUrlLoading(
-                view: WebView?,
-                request: WebResourceRequest?
+                    view: WebView?,
+                    request: WebResourceRequest?
             ): Boolean {
                 view?.let {
                     if (request != null && request.url != null)

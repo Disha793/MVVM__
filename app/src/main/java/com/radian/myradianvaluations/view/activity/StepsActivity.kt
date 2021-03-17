@@ -16,7 +16,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.snackbar.Snackbar
 import com.radian.myradianvaluations.R
 import com.radian.myradianvaluations.Response.Assets
 import com.radian.myradianvaluations.Response.Categories
@@ -25,6 +24,7 @@ import com.radian.myradianvaluations.adapter.AssetsAdapter
 import com.radian.myradianvaluations.adapter.CategoriesAdapter
 import com.radian.myradianvaluations.constants.Const
 import com.radian.myradianvaluations.databinding.ActivityStepsBinding
+import com.radian.myradianvaluations.extensions.snack
 import com.radian.myradianvaluations.utils.CommonUtils
 import com.radian.myradianvaluations.utils.Pref
 import kotlinx.android.synthetic.main.layout_toolbar.view.*
@@ -79,7 +79,7 @@ class StepsActivity : AppCompatActivity(), View.OnClickListener, SearchView.OnQu
             addListItems()
         } else {
             listCategories =
-                Pref.getCategoriesArrayList(this, Const.CATEGORIES_SHARED_PREF_KEY, "")
+                    Pref.getCategoriesArrayList(this, Const.CATEGORIES_SHARED_PREF_KEY, "")
             listAssets = Pref.getAssetsArrayList(this, Const.ASSET_SHARED_PREF_KEY, "")
             for (i in listAssets.indices) {
                 if (listAssets[i].isSelected) {
@@ -94,10 +94,10 @@ class StepsActivity : AppCompatActivity(), View.OnClickListener, SearchView.OnQu
         binding.svCategory.setOnQueryTextListener(this)
         binding.includedToolbar.imgBack.setOnClickListener(this)
         binding.rvAssets.addItemDecoration(
-            DividerItemDecoration(
-                binding.rvAssets.getContext(),
-                LinearLayoutManager.VERTICAL
-            )
+                DividerItemDecoration(
+                        binding.rvAssets.getContext(),
+                        LinearLayoutManager.VERTICAL
+                )
         )
 
         adapterAssets = AssetsAdapter(listAssets) {
@@ -158,9 +158,9 @@ class StepsActivity : AppCompatActivity(), View.OnClickListener, SearchView.OnQu
             builder.setPositiveButton("Yes") { _, _ ->
                 listCategories[currentCategoryPosition].imageUri = ""
                 Pref.setCategoriesArrayList(
-                    this,
-                    Const.CATEGORIES_SHARED_PREF_KEY,
-                    listCategories
+                        this,
+                        Const.CATEGORIES_SHARED_PREF_KEY,
+                        listCategories
                 )
                 adapterCategories.notifyItemChanged(currentCategoryPosition)
             }
@@ -182,7 +182,7 @@ class StepsActivity : AppCompatActivity(), View.OnClickListener, SearchView.OnQu
             listCategories[currentCategoryPosition].imageUri = imageUri.toString()
             Pref.setCategoriesArrayList(this, Const.CATEGORIES_SHARED_PREF_KEY, listCategories)
             listCategories =
-                Pref.getCategoriesArrayList(this, Const.CATEGORIES_SHARED_PREF_KEY, "")
+                    Pref.getCategoriesArrayList(this, Const.CATEGORIES_SHARED_PREF_KEY, "")
             adapterCategories.notifyItemChanged(currentCategoryPosition)
         }
     }
@@ -231,7 +231,7 @@ class StepsActivity : AppCompatActivity(), View.OnClickListener, SearchView.OnQu
                 if (currentAssetPosition != -1) {
                     setSelectedStep(2)
                 } else {
-                    Snackbar.make(binding.ll, "Please select asset", Snackbar.LENGTH_LONG).show()
+                    this.findViewById<View>(android.R.id.content).snack(resources.getString(R.string.select_asset)) {}
                 }
             }
             R.id.btnStart -> {

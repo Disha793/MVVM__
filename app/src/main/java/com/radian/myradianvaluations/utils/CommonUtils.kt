@@ -74,17 +74,17 @@ object CommonUtils {
         return sdf.parse(date)
     }
 
-    fun displayMessage(mView: View, msg: String) {
-        Snackbar.make(mView, msg, Snackbar.LENGTH_SHORT).show()
-    }
+//    fun displayMessage(mView: View, msg: String) {
+//        Snackbar.make(mView, msg, Snackbar.LENGTH_SHORT).show()
+//    }
 
-    fun showToast(context: Context, msg: String) {
-        Toast.makeText(
-                context,
-                msg,
-                Toast.LENGTH_SHORT
-        ).show()
-    }
+//    fun showToast(context: Context, msg: String) {
+//        Toast.makeText(
+//                context,
+//                msg,
+//                Toast.LENGTH_SHORT
+//        ).show()
+//    }
 
     fun getMapIntent(lat: String, long: String): Intent {
         val gmmIntentUri = Uri.parse(
@@ -104,22 +104,22 @@ object CommonUtils {
 
     }
 
-    fun displayMessageAction(
-
-            mView: View,
-            msg: String,
-            actionText: String,
-            onClickListener: View.OnClickListener
-    ) {
-        val snackbar = Snackbar.make(mView, msg, Snackbar.LENGTH_INDEFINITE)
-        val snackView = snackbar.view
-        snackView.setBackgroundColor(Color.BLACK)
-        snackbar.setActionTextColor(Color.WHITE)
-        var textView: TextView = snackView.findViewById<TextView>(R.id.snackbar_text)
-        textView.setTextColor(Color.WHITE)
-        snackbar.setAction(actionText, onClickListener)
-        snackbar.show()
-    }
+//    fun displayMessageAction(
+//
+//            mView: View,
+//            msg: String,
+//            actionText: String,
+//            onClickListener: View.OnClickListener
+//    ) {
+//        val snackbar = Snackbar.make(mView, msg, Snackbar.LENGTH_INDEFINITE)
+//        val snackView = snackbar.view
+//        snackView.setBackgroundColor(Color.BLACK)
+//        snackbar.setActionTextColor(Color.WHITE)
+//        var textView: TextView = snackView.findViewById<TextView>(R.id.snackbar_text)
+//        textView.setTextColor(Color.WHITE)
+//        snackbar.setAction(actionText, onClickListener)
+//        snackbar.show()
+//    }
 
     fun allPermissionsGranted(context: Context): Boolean {
         val requiredPermissions =

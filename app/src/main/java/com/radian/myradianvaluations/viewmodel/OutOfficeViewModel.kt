@@ -1,9 +1,9 @@
 package com.radian.myradianvaluations.viewmodel
 
-import android.app.Application
 import android.content.Context
 import android.content.DialogInterface
-import androidx.lifecycle.*
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.radian.myradianvaluations.R
@@ -14,30 +14,18 @@ import com.radian.myradianvaluations.utils.LoadingDialog
 import com.radian.myradianvaluations.utils.LogUtils
 import com.radian.vendorbridge.Response.StatusResponse
 import com.sunteckindia.networking.ApiResponseCallBack
-class LoginViewModelFactory(private val context:Context) : ViewModelProvider.Factory {
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
-            return LoginViewModel(context) as T
-        }
-        throw IllegalArgumentException("Unknown View Model class")
+
+class OutOfficeViewModel : ViewModel(), ApiResponseCallBack {
+    private lateinit var context: Context
+    private val apiServiceProviderGeneric = ApiServiceProviderGeneric(this)
+    var outOfficeResponse = MutableLiveData<StatusResponse>()
+
+    fun init(context: Context) {
+        this.context = context
     }
 
-}
-class LoginViewModel(private val context: Context) : ViewModel(), ApiResponseCallBack {
-    private val apiServiceProviderGeneric = ApiServiceProviderGeneric(this)
-    private var mlLoginResponse = MutableLiveData<StatusResponse>()
-    val userStatus: LiveData<StatusResponse>
-        get() = mlLoginResponse
-
-
-
-
-    fun getUserStatus(postParam: HashMap<String, Any?>) {
-        apiServiceProviderGeneric.postCallWithoutHeader(
-                context, ReturnType.POST_GetUserStatus.endPoint,
-                postParam,
-                ReturnType.POST_GetUserStatus
-        )
+    fun saveOutOfOffice(postParams: HashMap<String, Any?>) {
+        apiServiceProviderGeneric.postCall(context, ReturnType.POST_OutOffice.endPoint, ReturnType.POST_OutOffice, postParams)
     }
 
     override fun onPreExecute(returnType: ReturnType) {
@@ -47,13 +35,15 @@ class LoginViewModel(private val context: Context) : ViewModel(), ApiResponseCal
     override fun onSuccess(returnType: ReturnType, response: String) {
         LoadingDialog.dismissDialog()
         try {
-            if (returnType == ReturnType.POST_GetUserStatus) {
-                val responseUsers = Gson().fromJson<StatusResponse>(
-                        response,
-                        object : TypeToken<StatusResponse>() {}.type
-                )
-                LogUtils.logD("", "" + responseUsers.status)
-                mlLoginResponse?.value = responseUsers
+            when (returnType) {
+                ReturnType.POST_OutOffice -> {
+                    val response = Gson().fromJson<StatusResponse>(
+                            response,
+                            object : TypeToken<StatusResponse>() {}.type
+                    )
+                    LogUtils.logD("", "" + response.status)
+                    outOfficeResponse.value = response
+                }
             }
         } catch (e: Exception) {
             LogUtils.logE("", e)
@@ -67,7 +57,6 @@ class LoginViewModel(private val context: Context) : ViewModel(), ApiResponseCal
                 context.getString(R.string.please_try_again),
                 DialogInterface.OnClickListener { _, _ -> },
                 context.getString(R.string.ok)
-        )    }
-
-
+        )
+    }
 }

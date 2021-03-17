@@ -24,17 +24,17 @@ import com.radian.myradianvaluations.R
 import com.radian.myradianvaluations.constants.APIStatus
 import com.radian.myradianvaluations.constants.Const
 import com.radian.myradianvaluations.constants.DeviceStatus
+import com.radian.myradianvaluations.extensions.snack
 import com.radian.myradianvaluations.utils.CommonUtils
 import com.radian.myradianvaluations.utils.LogUtils
 import com.radian.myradianvaluations.utils.Pref
 import com.radian.myradianvaluations.viewmodel.PasscodeViewModel
+import com.radian.myradianvaluations.viewmodel.PasscodeViewModelFactory
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.access_code_keyboard.*
 import kotlinx.android.synthetic.main.activity_passcode.*
-import kotlinx.android.synthetic.main.activity_passcode.relativeMain
 import kotlinx.android.synthetic.main.layout_toolbar.*
 import java.io.IOException
-import kotlin.collections.HashMap
 
 
 class PasscodeActivity : AppCompatActivity(), View.OnClickListener {
@@ -51,7 +51,222 @@ class PasscodeActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var firebaseAnalytics: FirebaseAnalytics
     private val firebaseParams = Bundle()
     lateinit var passcodeModel: PasscodeViewModel
+    private lateinit var factory: PasscodeViewModelFactory
     private var TAG = PasscodeActivity::class.java.toString()
+
+    @TargetApi(Build.VERSION_CODES.O)
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_passcode)
+        context = this
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this)
+        firebaseParams.clear()
+        firebaseParams.putString(Const.screenLaunched, "AccessCode_Launched")
+        initViewModel()
+        CommonUtils.addParamstoFirebaseEvent(
+                firebaseAnalytics,
+                Const.screenLaunched,
+                firebaseParams
+        )
+        LogUtils.logD(TAG, Pref.getValue(this, Pref.FCM_TOKEN, "")!!)
+        imgBack.visibility = View.GONE
+        FirebaseApp.initializeApp(this)
+        getToken()
+        observePasscodeData()
+        manageUI()
+        btn1.setOnClickListener(this)
+        btn2.setOnClickListener(this)
+        btn3.setOnClickListener(this)
+        btn4.setOnClickListener(this)
+        btn5.setOnClickListener(this)
+        btn6.setOnClickListener(this)
+        btn7.setOnClickListener(this)
+        btn8.setOnClickListener(this)
+        btn9.setOnClickListener(this)
+        btn0.setOnClickListener(this)
+        imgDelete.setOnClickListener(this)
+        txtForgot.setOnClickListener(this)
+
+
+    }
+
+    private fun observePasscodeData() {
+        passcodeModel.otpResponse.observe(this, Observer {
+            if (it.data.deviceStatus == DeviceStatus.verifyOTP) {
+                Pref.setValue(
+                        this,
+                        Pref.DEVICE_STATUS,
+                        it.data.deviceStatus
+                )
+                firebaseParams.clear()
+                firebaseParams.putString(Const.methodInvoked, "OTPGenerated")
+                CommonUtils.addParamstoFirebaseEvent(
+                        firebaseAnalytics,
+                        Const.methodInvoked,
+                        firebaseParams
+                )
+            }
+        })
+        passcodeModel.verifyotpResponse.observe(this, Observer {
+            firebaseParams.clear()
+            firebaseParams.putString("Phonenumber", Pref.getValue(this, Pref.PHONE_NUMBER, "")!!)
+            firebaseParams.putString("DeviceID", CommonUtils.getDeviceUUID(this))
+            firebaseParams.putString("OS", android.os.Build.VERSION.SDK_INT.toString())
+            firebaseParams.putString("DeviceType", "Android")
+            firebaseParams.putString("Manufacture", "Build.MANUFACTURER")
+            firebaseParams.putString("FCM Token", fcmToken)
+            CommonUtils.addParamstoFirebaseEvent(
+                    firebaseAnalytics,
+                    "DeviceConfiguration",
+                    firebaseParams
+            )
+            isForgot = false
+            if (it.status.equals(APIStatus.ok, true)) {
+                if (it.data.deviceStatus == DeviceStatus.createAccessCode) {
+                    Pref.setValue(
+                            this@PasscodeActivity,
+                            Pref.DEVICE_STATUS,
+                            it.data.deviceStatus
+                    )
+                    txtEnter.setText(getString(R.string.create_new_access_code))
+                    txtForgot.visibility = View.INVISIBLE
+                    isFirstSetup = false
+                    isNew = true
+                    clearData()
+                    Pref.setValue(this@PasscodeActivity, Pref.IS_FIRST_TIME, true)
+                    firebaseParams.clear()
+                    firebaseParams.putString(Const.methodInvoked, "OTPVerified")
+                    CommonUtils.addParamstoFirebaseEvent(
+                            firebaseAnalytics,
+                            Const.methodInvoked,
+                            firebaseParams
+                    )
+
+                }
+            } else if (it.status.equals(APIStatus.unauth, true)) {
+                //
+            } else if (it.status.equals(APIStatus.error, true)) {
+                clearData()
+                CommonUtils.showOkDialog(
+                        this@PasscodeActivity,
+                        getString(R.string.please_try_again),
+                        DialogInterface.OnClickListener { _, _ ->
+                            generateOtp()
+                        },
+                        getString(R.string.ok)
+                )
+            }
+        })
+        passcodeModel.loginResponse.observe(this, Observer {
+            if (it.status.equals(APIStatus.ok, true)) {
+
+                Pref.setValue(
+                        this@PasscodeActivity,
+                        Pref.DEVICE_STATUS,
+                        DeviceStatus.enterAccessCode
+                )
+                Pref.setValue(
+                        this@PasscodeActivity,
+                        Pref.AUTH_TOKEN,
+                        "Bearer " + it.data.authToken
+                )
+                Pref.setValue(
+                        this@PasscodeActivity,
+                        Pref.MOBILE_USER_ID,
+                        it.data.mobileUserId
+                )
+                Pref.setValue(
+                        this@PasscodeActivity,
+                        Pref.USER_ID,
+                        it.data.userDetailJson.userList.get(0).userId!!
+                )
+                Pref.setValue(this@PasscodeActivity, Pref.ACCESS_CODE, accessCode)
+                Pref.setValue(
+                        this@PasscodeActivity,
+                        Pref.ORGANIZATN_ID,
+                        it.data.userDetailJson.userList.get(0).orgId
+                )
+                val params = Bundle()
+                params.putString(
+                        "userId",
+                        it.data.userDetailJson.userList.get(0).userId!!.toString()
+                )
+
+                CommonUtils.addParamstoFirebaseEvent(firebaseAnalytics, "Logged_IN", params)
+                var intent: Intent
+
+                if (it.data.userDetailJson.cocFlag) {
+                    intent = Intent(this@PasscodeActivity, CodeofConductActivity::class.java)
+                    intent.putExtra(Const.btnCount, it.data.userDetailJson.btnCount)
+                    intent.putExtra(Const.basicLoginDetail, it)
+                    startActivity(intent)
+                } else {
+                    intent = Intent(
+                            this@PasscodeActivity,
+                            BottomNavigationActivity::class.java
+                    )
+                    intent.putExtra(Const.basicLoginDetail, it)
+                    startActivity(intent)
+                }
+
+            } else {
+                if (it.status.equals(APIStatus.unauth, true)) {
+//status unauthorized
+                } else if (it.status.equals(APIStatus.error, true)) {
+                    this.findViewById<View>(android.R.id.content).snack(it.errorInfo.get(0).errorMessage) {}
+                    clearData()
+                }
+            }
+        })
+    }
+
+    private fun manageUI() {
+        if (Pref.getValue(this, Pref.DEVICE_STATUS, 0) == DeviceStatus.firstTimeSetUP) {
+            txtForgot.visibility = View.INVISIBLE
+            txtEnter.setText(
+                    getString(R.string.forgot_text) + " +" + Pref.getValue(
+                            this,
+                            Pref.PHONE_NUMBER,
+                            ""
+                    )
+            )
+            isFirstSetup = true
+            generateOtp()
+        } else if (Pref.getValue(this, Pref.DEVICE_STATUS, 0) == DeviceStatus.verifyOTP) {
+            txtForgot.visibility = View.INVISIBLE
+            txtEnter.setText(
+                    getString(R.string.forgot_text) + " +" + Pref.getValue(
+                            this,
+                            Pref.PHONE_NUMBER,
+                            ""
+                    )
+            )
+            isFirstSetup = true
+        } else if (Pref.getValue(this, Pref.DEVICE_STATUS, 0) == DeviceStatus.createAccessCode) {
+            txtEnter.setText(getString(R.string.create_new_access_code))
+            txtForgot.visibility = View.INVISIBLE
+        } else if (Pref.getValue(this, Pref.DEVICE_STATUS, 0) == DeviceStatus.enterAccessCode) {
+            txtEnter.setText(getString(R.string.enter_access_code))
+            txtForgot.visibility = View.VISIBLE
+        }
+
+        if (intent != null)
+            scrTag = intent.getIntExtra(Const.scrTag, 0)
+        if (scrTag == Const.scrSettingsTag) {
+            txtForgot.visibility = View.INVISIBLE
+            txtEnter.setText(getString(R.string.enter_current_access_code))
+        }
+        if (Pref.getValue(this, Pref.PROFILE_PIC_STATUS, "").equals("Y", true)) {
+            loadProfileImage()
+        }
+    }
+
+    private fun initViewModel() {
+        factory = PasscodeViewModelFactory(this)
+        passcodeModel = ViewModelProvider(this, factory).get(PasscodeViewModel::class.java)
+    }
+
     override fun onClick(p0: View?) {
 
         when (p0?.id) {
@@ -154,212 +369,6 @@ class PasscodeActivity : AppCompatActivity(), View.OnClickListener {
         clearData()
     }
 
-    @TargetApi(Build.VERSION_CODES.O)
-    @RequiresApi(Build.VERSION_CODES.O)
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_passcode)
-        context = this
-        firebaseAnalytics = FirebaseAnalytics.getInstance(this)
-        firebaseParams.clear()
-        firebaseParams.putString(Const.screenLaunched, "AccessCode_Launched")
-        CommonUtils.addParamstoFirebaseEvent(
-                firebaseAnalytics,
-                Const.screenLaunched,
-                firebaseParams
-        )
-        LogUtils.logD(TAG, Pref.getValue(this, Pref.FCM_TOKEN, "")!!)
-        imgBack.visibility = View.GONE
-        FirebaseApp.initializeApp(this)
-        getToken()
-        passcodeModel = ViewModelProvider(this).get(PasscodeViewModel::class.java)
-        passcodeModel.init(this)
-        passcodeModel.generateOtpResponse.observe(this, Observer {
-            if (it.data.deviceStatus == DeviceStatus.verifyOTP) {
-                Pref.setValue(
-                        this,
-                        Pref.DEVICE_STATUS,
-                        it.data.deviceStatus
-                )
-                firebaseParams.clear()
-                firebaseParams.putString(Const.methodInvoked, "OTPGenerated")
-                CommonUtils.addParamstoFirebaseEvent(
-                        firebaseAnalytics,
-                        Const.methodInvoked,
-                        firebaseParams
-                )
-            }
-        })
-        passcodeModel.verifyOtpResponseData.observe(this, Observer {
-            firebaseParams.clear()
-            firebaseParams.putString("Phonenumber", Pref.getValue(this, Pref.PHONE_NUMBER, "")!!)
-            firebaseParams.putString("DeviceID", CommonUtils.getDeviceUUID(this))
-            firebaseParams.putString("OS", android.os.Build.VERSION.SDK_INT.toString())
-            firebaseParams.putString("DeviceType", "Android")
-            firebaseParams.putString("Manufacture", "Build.MANUFACTURER")
-            firebaseParams.putString("FCM Token", fcmToken)
-            CommonUtils.addParamstoFirebaseEvent(
-                    firebaseAnalytics,
-                    "DeviceConfiguration",
-                    firebaseParams
-            )
-            isForgot = false
-            if (it.status.equals(APIStatus.ok, true)) {
-                if (it.data.deviceStatus == DeviceStatus.createAccessCode) {
-                    Pref.setValue(
-                            this@PasscodeActivity,
-                            Pref.DEVICE_STATUS,
-                            it.data.deviceStatus
-                    )
-                    txtEnter.setText(getString(R.string.create_new_access_code))
-                    txtForgot.visibility = View.INVISIBLE
-                    isFirstSetup = false
-                    isNew = true
-                    clearData()
-                    Pref.setValue(this@PasscodeActivity, Pref.IS_FIRST_TIME, true)
-                    firebaseParams.clear()
-                    firebaseParams.putString(Const.methodInvoked, "OTPVerified")
-                    CommonUtils.addParamstoFirebaseEvent(
-                            firebaseAnalytics,
-                            Const.methodInvoked,
-                            firebaseParams
-                    )
-
-                }
-            } else if (it.status.equals(APIStatus.unauth, true)) {
-                //
-            } else if (it.status.equals(APIStatus.error, true)) {
-                clearData()
-                CommonUtils.showOkDialog(
-                        this@PasscodeActivity,
-                        getString(R.string.please_try_again),
-                        DialogInterface.OnClickListener { _, _ ->
-                            generateOtp()
-                        },
-                        getString(R.string.ok)
-                )
-            }
-        })
-        passcodeModel.loginResponseData.observe(this, Observer {
-            if (it.status.equals(APIStatus.ok, true)) {
-
-                Pref.setValue(
-                        this@PasscodeActivity,
-                        Pref.DEVICE_STATUS,
-                        DeviceStatus.enterAccessCode
-                )
-                Pref.setValue(
-                        this@PasscodeActivity,
-                        Pref.AUTH_TOKEN,
-                        "Bearer " + it.data.authToken
-                )
-                Pref.setValue(
-                        this@PasscodeActivity,
-                        Pref.MOBILE_USER_ID,
-                        it.data.mobileUserId
-                )
-                Pref.setValue(
-                        this@PasscodeActivity,
-                        Pref.USER_ID,
-                        it.data.userDetailJson.userList.get(0).userId!!
-                )
-                Pref.setValue(this@PasscodeActivity, Pref.ACCESS_CODE, accessCode)
-                Pref.setValue(
-                        this@PasscodeActivity,
-                        Pref.ORGANIZATN_ID,
-                        it.data.userDetailJson.userList.get(0).orgId
-                )
-                val params = Bundle()
-                params.putString(
-                        "userId",
-                        it.data.userDetailJson.userList.get(0).userId!!.toString()
-                )
-
-                CommonUtils.addParamstoFirebaseEvent(firebaseAnalytics, "Logged_IN", params)
-                var intent: Intent
-
-                if (it.data.userDetailJson.cocFlag) {
-                    intent = Intent(this@PasscodeActivity, CodeofConductActivity::class.java)
-                    intent.putExtra(Const.btnCount, it.data.userDetailJson.btnCount)
-                    intent.putExtra(Const.basicLoginDetail, it)
-                    startActivity(intent)
-                } else {
-                    intent = Intent(
-                            this@PasscodeActivity,
-                            BottomNavigationActivity::class.java
-                    )
-                    intent.putExtra(Const.basicLoginDetail, it)
-                    startActivity(intent)
-                }
-
-            } else {
-                if (it.status.equals(APIStatus.unauth, true)) {
-//status unauthorized
-                } else if (it.status.equals(APIStatus.error, true)) {
-                    CommonUtils.displayMessage(
-                            window.decorView.rootView,
-                            it.errorInfo.get(0).errorMessage
-                    )
-                    clearData()
-                }
-            }
-        })
-
-        if (Pref.getValue(this, Pref.DEVICE_STATUS, 0) == DeviceStatus.firstTimeSetUP) {
-            txtForgot.visibility = View.INVISIBLE
-            txtEnter.setText(
-                    getString(R.string.forgot_text) + " +" + Pref.getValue(
-                            this,
-                            Pref.PHONE_NUMBER,
-                            ""
-                    )
-            )
-            isFirstSetup = true
-            generateOtp()
-        } else if (Pref.getValue(this, Pref.DEVICE_STATUS, 0) == DeviceStatus.verifyOTP) {
-            txtForgot.visibility = View.INVISIBLE
-            txtEnter.setText(
-                    getString(R.string.forgot_text) + " +" + Pref.getValue(
-                            this,
-                            Pref.PHONE_NUMBER,
-                            ""
-                    )
-            )
-            isFirstSetup = true
-        } else if (Pref.getValue(this, Pref.DEVICE_STATUS, 0) == DeviceStatus.createAccessCode) {
-            txtEnter.setText(getString(R.string.create_new_access_code))
-            txtForgot.visibility = View.INVISIBLE
-        } else if (Pref.getValue(this, Pref.DEVICE_STATUS, 0) == DeviceStatus.enterAccessCode) {
-            txtEnter.setText(getString(R.string.enter_access_code))
-            txtForgot.visibility = View.VISIBLE
-        }
-
-        if (intent != null)
-            scrTag = intent.getIntExtra(Const.scrTag, 0)
-        if (scrTag == Const.scrSettingsTag) {
-            txtForgot.visibility = View.INVISIBLE
-            txtEnter.setText(getString(R.string.enter_current_access_code))
-        }
-        btn1.setOnClickListener(this)
-        btn2.setOnClickListener(this)
-        btn3.setOnClickListener(this)
-        btn4.setOnClickListener(this)
-        btn5.setOnClickListener(this)
-        btn6.setOnClickListener(this)
-        btn7.setOnClickListener(this)
-        btn8.setOnClickListener(this)
-        btn9.setOnClickListener(this)
-        btn0.setOnClickListener(this)
-
-        imgDelete.setOnClickListener(this)
-        txtForgot.setOnClickListener(this)
-        if (Pref.getValue(this, Pref.PROFILE_PIC_STATUS, "").equals("Y", true)) {
-            loadProfileImage()
-        }
-
-
-    }
-
     private fun generateOtp() {
 
         val postParam = HashMap<String, Any?>()
@@ -388,83 +397,6 @@ class PasscodeActivity : AppCompatActivity(), View.OnClickListener {
         postParam.put("PinNo", accessCode)
         postParam.put("FcmToken", Pref.getValue(context, Pref.FCM_TOKEN, "")!!)
         passcodeModel.callSignIn(postParam)
-//        passcodeModel.callSignIn(accessCode, fcmToken).let { mutable ->
-//            LoadingDialog.show(context)
-//
-//            mutable?.observe(this, Observer {
-//                LoadingDialog.dismissDialog()
-//                if (it.status.equals(APIStatus.ok)) {
-//                    Pref.setValue(
-//                        this,
-//                        Pref.DEVICE_STATUS,
-//                        DeviceStatus.enterAccessCode
-//                    )
-//                    Pref.setValue(
-//                        this,
-//                        Pref.AUTH_TOKEN,
-//                        "Bearer " + it.data.authToken
-//                    )
-//                    Pref.setValue(
-//                        this,
-//                        Pref.MOBILE_USER_ID,
-//                        it.data.mobileUserId
-//                    )
-//                    Pref.setValue(
-//                        this,
-//                        Pref.USER_ID,
-//                        it.data.userDetailJson.userList.get(0).userId!!
-//                    )
-//                    Pref.setValue(this, Pref.ACCESS_CODE, accessCode)
-//                    Pref.setValue(
-//                        this,
-//                        Pref.ORGANIZATN_ID,
-//                        it.data.userDetailJson.userList.get(0).orgId
-//                    )
-//                    val params = Bundle()
-//                    params.putString(
-//                        "userId",
-//                        it.data.userDetailJson.userList.get(0).userId!!.toString()
-//                    )
-//
-//                    CommonUtils.addParamstoFirebaseEvent(firebaseAnalytics, "Logged_IN", params)
-//                    var intent: Intent
-//
-//                    if (it.data.userDetailJson.cocFlag) {
-//                        intent = Intent(this, CodeofConduct::class.java)
-//                        intent.putExtra(Const.btnCount, it.data.userDetailJson.btnCount)
-//                        intent.putExtra(Const.basicLoginDetail, it)
-//                        startActivity(intent)
-//                    } else {
-//                        intent = Intent(
-//                            this,
-//                            BottomNavigationActivity::class.java
-//                        )
-//                        intent.putExtra(Const.basicLoginDetail, it)
-//                        startActivity(intent)
-//                    }
-//                } else {
-//                    if (it.status.equals(APIStatus.unauth)) {
-////status unauthorized
-//                    } else if (it.status.equals(APIStatus.error)) {
-//                        CommonUtils.displayMessage(
-//                            window.decorView.rootView,
-//                            it.errorInfo.get(0).errorMessage
-//                        )
-//                        clearData()
-//
-//                    }
-//                }
-//                if (mutable?.value == null) {
-//                    LoadingDialog.dismissDialog()
-//                    CommonUtils.displayMessage(
-//                        window.decorView.rootView,
-//                        getString(R.string.please_try_again)
-//                    )
-//                }
-//            })
-//
-//
-//        }
 
     }
 
@@ -516,8 +448,7 @@ class PasscodeActivity : AppCompatActivity(), View.OnClickListener {
                     if (accessCode.equals(previousAccessCode)) {
                         callSignIn()
                     } else {
-                        CommonUtils.displayMessage(relativeMain,
-                                resources.getString(R.string.confirm_passcode_text))
+                        this.findViewById<View>(android.R.id.content).snack(resources.getString(R.string.confirm_passcode_text)) {}
                     }
                 } else if (isNew) {
                     previousAccessCode = accessCode

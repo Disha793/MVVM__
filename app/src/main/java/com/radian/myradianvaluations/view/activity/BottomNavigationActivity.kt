@@ -20,6 +20,7 @@ import com.radian.myradianvaluations.R
 import com.radian.myradianvaluations.constants.APIStatus
 import com.radian.myradianvaluations.constants.Const
 import com.radian.myradianvaluations.constants.NotificationConstants
+import com.radian.myradianvaluations.extensions.toastShort
 import com.radian.myradianvaluations.network.APIList
 import com.radian.myradianvaluations.network.RetrofitBase
 import com.radian.myradianvaluations.utils.CommonUtils
@@ -262,11 +263,8 @@ class BottomNavigationActivity : AppCompatActivity(), View.OnClickListener {
                 if (it.status.equals(APIStatus.ok, true)) {
                     //Notification read badge updated successfully
                 } else if (it.status.equals(APIStatus.unauth, true)) {
-                    Toast.makeText(
-                        this@BottomNavigationActivity,
-                        it.errorInfo.get(0).errorMessage,
-                        Toast.LENGTH_SHORT
-                    ).show()
+                   toastShort( it.errorInfo.get(0).errorMessage)
+
                     var intent =
                         Intent(this@BottomNavigationActivity, PasscodeActivity::class.java)
                     intent.flags =

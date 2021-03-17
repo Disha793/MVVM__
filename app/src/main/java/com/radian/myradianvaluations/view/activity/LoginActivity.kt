@@ -12,35 +12,36 @@ import com.radian.myradianvaluations.R
 import com.radian.myradianvaluations.constants.APIStatus
 import com.radian.myradianvaluations.constants.Const
 import com.radian.myradianvaluations.constants.DeviceStatus
-
+import com.radian.myradianvaluations.extensions.snack
 import com.radian.myradianvaluations.utils.CommonUtils
 import com.radian.myradianvaluations.utils.Pref
 import com.radian.myradianvaluations.viewmodel.LoginViewModel
+import com.radian.myradianvaluations.viewmodel.LoginViewModelFactory
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.layout_toolbar.*
 import java.util.regex.Pattern
 
 class LoginActivity : AppCompatActivity() {
     internal lateinit var loginViewModel: LoginViewModel
+    private lateinit var factory: LoginViewModelFactory
     private val PASSWORD_PATTERN = Pattern.compile(
-        Const.PASSWORD_PATTERN
+            Const.PASSWORD_PATTERN
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        loginViewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
         imgBack.visibility = View.GONE
-        loginViewModel.init(this)
+        initViewModel()
         btnNxt.setOnClickListener {
             //signIN()
-            if(isValid())
-            getUserStatus()
+            if (isValid())
+                getUserStatus()
         }
         edtPassword.setOnEditorActionListener { _, p1, _ ->
             if (p1 == EditorInfo.IME_ACTION_GO) {
-                if(isValid())
-                getUserStatus()
+                if (isValid())
+                    getUserStatus()
             }
             false
         }
@@ -56,34 +57,39 @@ class LoginActivity : AppCompatActivity() {
             intent.putExtra(Const.scrTag, Const.scrSignUp)
             startActivity(intent)
         }
+        observeLoginData()
+
+    }
+
+    private fun initViewModel() {
+        factory = LoginViewModelFactory(this)
+        loginViewModel = ViewModelProvider(this, factory).get(LoginViewModel::class.java)
+    }
+
+    private fun observeLoginData() {
         loginViewModel.userStatus.observe(this, Observer {
             if (it?.status.equals(APIStatus.ok, true)) {
                 Pref.setValue(
-                    this,
-                    Pref.PHONE_NUMBER,
-                    CommonUtils.getPhoneNumber(edtPhoneNumber.text.toString())
+                        this,
+                        Pref.PHONE_NUMBER,
+                        CommonUtils.getPhoneNumber(edtPhoneNumber.text.toString())
                 )
 
                 if (it.data.deviceStatusResponse.deviceStaus == DeviceStatus.notAuthorized) {
-                    CommonUtils.displayMessage(
-                        relativeMain,
-                        it.data.deviceStatusResponse.message
-                    )
+                    this.findViewById<View>(android.R.id.content).snack(it.data.deviceStatusResponse.message) {}
+
                 } else {
                     Pref.setValue(
-                        this@LoginActivity,
-                        Pref.DEVICE_STATUS,
-                        it.data.deviceStatusResponse.deviceStaus
+                            this@LoginActivity,
+                            Pref.DEVICE_STATUS,
+                            it.data.deviceStatusResponse.deviceStaus
                     )
                     Pref.setValue(this@LoginActivity, Pref.IS_FIRST_TIME, true)
                     var intent = Intent(this@LoginActivity, PasscodeActivity::class.java)
                     startActivity(intent)
                 }
             } else if (it?.status.equals(APIStatus.error, true)) {
-                CommonUtils.displayMessage(
-                    relativeMain,
-                    it?.errorInfo!!.get(0).errorMessage
-                )
+                this.findViewById<View>(android.R.id.content).snack(it?.errorInfo!!.get(0).errorMessage) {}
             }
         })
     }
@@ -91,42 +97,29 @@ class LoginActivity : AppCompatActivity() {
     fun isValid(): Boolean {
         if (TextUtils.isEmpty(edtPhoneNumber.text)) {
             CommonUtils.hideKeybord(edtPhoneNumber, this)
-            CommonUtils.displayMessage(
-                relativeMain,
-                getString(R.string.error_login_empty)
-            )
+            this.findViewById<View>(android.R.id.content).snack(getString(R.string.error_login_empty)) {}
             return false
         }
         if (edtPhoneNumber.text.toString().trim().length != 10) {
             CommonUtils.hideKeybord(edtUsername, this)
-            CommonUtils.displayMessage(
-                relativeMain,
-                getString(R.string.error_login_invalid_number)
-            )
+            this.findViewById<View>(android.R.id.content).snack(getString(R.string.error_login_invalid_number)) {}
+
             return false
         }
         if (TextUtils.isEmpty(edtUsername.text.toString())) {
             CommonUtils.hideKeybord(edtUsername, this)
-            CommonUtils.displayMessage(
-                relativeMain,
-                getString(R.string.error_login_empty_username)
-            )
+            this.findViewById<View>(android.R.id.content).snack(getString(R.string.error_login_empty_username)) {}
             return false
         }
         if (TextUtils.isEmpty(edtPassword.text.toString())) {
             CommonUtils.hideKeybord(edtPhoneNumber, this)
-            CommonUtils.displayMessage(
-                relativeMain,
-                getString(R.string.error_login_empty_password)
-            )
+            this.findViewById<View>(android.R.id.content).snack(getString(R.string.error_login_empty_password)) {}
+
             return false
         }
         if (!PASSWORD_PATTERN.matcher(edtPassword.text.toString()).matches()) {
             CommonUtils.hideKeybord(edtPassword, this)
-            CommonUtils.displayMessage(
-                relativeMain,
-                getString(R.string.error_login_invalid_password)
-            )
+            this.findViewById<View>(android.R.id.content).snack(getString(R.string.error_login_invalid_password)) {}
             return false
         }
         return true
