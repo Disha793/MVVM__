@@ -89,7 +89,7 @@ class ProfileFragment() : Fragment(), DialogInterface.OnClickListener, View.OnCl
         view.img_camera.setOnClickListener(this)
         view.imgBack.setOnClickListener(this)
         //Disha: For next release
-//        getMyProfile()
+        getMyProfile()
         observeProfileData()
         CommonUtils.hideKeybord(
             (context as BottomNavigationActivity).window.decorView.rootView,
@@ -145,7 +145,7 @@ class ProfileFragment() : Fragment(), DialogInterface.OnClickListener, View.OnCl
         when (v!!.id) {
             R.id.btnSave -> {
                 //Disha: For next release
-//                saveMyProfile()
+                saveMyProfile()
             }
             R.id.imgBack -> {
                 (context as BottomNavigationActivity).supportFragmentManager.popBackStack()
@@ -628,7 +628,7 @@ class ProfileFragment() : Fragment(), DialogInterface.OnClickListener, View.OnCl
                     data?.getStringExtra("FilePath")?.let {
                         fileUriToUpload = it
                         //Disha: For next release
-//                        uploadProfileImage(it)
+                        uploadProfileImage(it)
                     }
                 }
             }

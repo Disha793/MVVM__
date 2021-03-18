@@ -7,13 +7,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.radian.myradianvaluations.R
 import com.radian.myradianvaluations.Response.OrderListResponse
-import com.radian.myradianvaluations.interfaces.OpenOrderClickListener
+import com.radian.myradianvaluations.interfaces.ListItemClickListener
 import kotlinx.android.synthetic.main.row_open_orders.view.*
 
 
 class OrdersAdapter(
     private val context: Context,
-    private val onClickListener: OpenOrderClickListener,
+    private val onClickListener: ListItemClickListener,
     private val orderList: ArrayList<OrderListResponse.Data.OrderDetail>
 ) :
     RecyclerView.Adapter<OrdersAdapter.ViewHolder>() {
@@ -47,7 +47,7 @@ class OrdersAdapter(
         }
 
         holder.cardOpenOrder.setOnClickListener {
-            onClickListener.onOpenOrderClick(position)
+            onClickListener.onItemClick(position)
         }
     }
 

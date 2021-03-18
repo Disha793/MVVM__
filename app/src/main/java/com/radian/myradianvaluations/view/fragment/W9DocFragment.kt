@@ -87,7 +87,7 @@ class W9DocFragment : Fragment(), View.OnClickListener, DialogInterface.OnClickL
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         //Disha: For next release
-//        getw9Data()
+        getw9Data()
     }
 
     private fun initViewModel() {
@@ -106,8 +106,8 @@ class W9DocFragment : Fragment(), View.OnClickListener, DialogInterface.OnClickL
             }
             R.id.btnSubmitW9 -> {
                 //Disha: For next release
-//                if (w9List.isNotEmpty() && checkValidation())
-//                    submitData()
+                if (w9List.isNotEmpty() && checkValidation())
+                    submitData()
             }
             R.id.imgDocDelete -> {
                 CommonUtils.showDialog(
@@ -367,8 +367,8 @@ class W9DocFragment : Fragment(), View.OnClickListener, DialogInterface.OnClickL
         displayThumbnail()
         fileUri = photoFile.path
         //Disha: For next release
-//        if (!fileUri.equals(""))
-//            uploadDoc(fileUri)
+        if (!fileUri.equals(""))
+            uploadDoc(fileUri)
     }
 
     private fun displayThumbnail() {
@@ -385,8 +385,8 @@ class W9DocFragment : Fragment(), View.OnClickListener, DialogInterface.OnClickL
                 displayThumbnail()
                 fileUri = CommonUtils.getRealPathFromURI(context!!, contentURI)!!
                 //Disha: For next release
-//                if (!fileUri.equals(""))
-//                    uploadDoc(fileUri)
+                if (!fileUri.equals(""))
+                    uploadDoc(fileUri)
             } catch (e: Exception) {
                 LogUtils.logD(TAG, e.message!!)
             }

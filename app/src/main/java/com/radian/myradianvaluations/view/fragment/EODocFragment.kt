@@ -113,7 +113,7 @@ class EODocFragment : Fragment(), View.OnClickListener, DialogInterface.OnClickL
             }
         }
         //Disha: For next release
-//        getEOData()
+        getEOData()
     }
     private fun initViewModel() {
         factory = EODocViewModelFactory(context!!)
@@ -133,7 +133,7 @@ class EODocFragment : Fragment(), View.OnClickListener, DialogInterface.OnClickL
         fileUri = photoFile.path
         if (!fileUri.equals("")) {
             //Disha: For next release
-//            uploadDoc(fileUri)
+            uploadDoc(fileUri)
         }
     }
 
@@ -195,7 +195,7 @@ class EODocFragment : Fragment(), View.OnClickListener, DialogInterface.OnClickL
             R.id.btnSubmitEo -> {
                 if (checkValidation() && eoList.isNotEmpty()) {
                     //Disha: For next release
-//                    submitData()
+                    submitData()
                 }
             }
             R.id.edtExpiryDate -> {
@@ -406,7 +406,7 @@ class EODocFragment : Fragment(), View.OnClickListener, DialogInterface.OnClickL
                 fileUri = CommonUtils.getRealPathFromURI(context!!, contentURI)!!
                 if (!fileUri.equals("")) {
                     //Disha: For next release
-//                    uploadDoc(fileUri)
+                    uploadDoc(fileUri)
                 }
 
             } catch (e: Exception) {

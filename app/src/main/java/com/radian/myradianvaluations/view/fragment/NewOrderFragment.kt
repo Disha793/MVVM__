@@ -38,14 +38,10 @@ class NewOrderFragment : Fragment() {
     ): View? {
         view = inflater.inflate(R.layout.fragment_new_orders, container, false)
         view.recyclerView.adapter = NewOrdersAdapter(context!!, newOrderList)
-//        newOrderViewModel =
-//                ViewModelProvider(context as BottomNavigationActivity).get(NewOrderViewModel::class.java)
-//        newOrderViewModel.init(context as BottomNavigationActivity)
         showToolbarIcons(getString(R.string.new_orders))
         initViewModel()
         getOrderList()
         observeNewOrder()
-
         return view
     }
 
@@ -55,7 +51,7 @@ class NewOrderFragment : Fragment() {
     }
 
     private fun observeNewOrder() {
-        newOrderViewModel.newOrderResponse.observeOnce(viewLifecycleOwner, Observer {
+        newOrderViewModel.newOrderResponse.observe(viewLifecycleOwner, Observer {
             if (it.status == APIStatus.ok) {
                 newOrderList.clear()
                 newOrderList.addAll(it.mdata?.orderList!!)
@@ -88,7 +84,6 @@ class NewOrderFragment : Fragment() {
         (context as BottomNavigationActivity).imgBack.visibility = View.GONE
         (context as BottomNavigationActivity).txtTitle.text = title
         (context as BottomNavigationActivity).bottomNavigationView.visibility = View.VISIBLE
-
     }
 
     private fun getOrderList() {
@@ -98,6 +93,5 @@ class NewOrderFragment : Fragment() {
         postParam.put("MobileUserId", Pref.getValue(context!!, Pref.MOBILE_USER_ID, 0))
         postParam.put("OrganizationIds", Pref.getValue(context!!, Pref.ORGANIZATN_ID, 0))
         newOrderViewModel.getNewOrderList(postParam)
-
     }
 }

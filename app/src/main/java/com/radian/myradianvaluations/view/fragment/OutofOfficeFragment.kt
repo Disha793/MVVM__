@@ -135,7 +135,7 @@ class OutofOfficeFragment : Fragment(), View.OnClickListener {
             R.id.txtConfirm -> {
                 if (isValid()) {
                     //Disha: For next release
-//                    saveVendorVacationInfo()
+                    saveVendorVacationInfo()
                 }
 
             }

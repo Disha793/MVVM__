@@ -72,7 +72,7 @@ class DashboardFragment : Fragment(), View.OnClickListener {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         //Disha: For next release
-//        getDashboardData()
+        getDashboardData()
     }
 
     override fun onAttach(context: Context) {

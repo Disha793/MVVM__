@@ -62,8 +62,8 @@ class MessageListFragment : Fragment(), View.OnClickListener {
                 this@MessageListFragment
             )
         //Disha: For next release
-//        if (messageList.isEmpty())
-//            getMessageList()
+        if (messageList.isEmpty())
+            getMessageList()
 
         CommonUtils.hideKeybord(
             (context as BottomNavigationActivity).window.decorView.rootView,

@@ -36,7 +36,6 @@ import com.radian.myradianvaluations.view.activity.BottomNavigationActivity
 import com.radian.myradianvaluations.view.activity.PasscodeActivity
 import com.radian.myradianvaluations.viewmodel.NewOrdrDetailViewModel
 import com.radian.myradianvaluations.viewmodel.NewOrdrDetailViewModelFactory
-import com.radian.myradianvaluations.viewmodel.NewOrdrViewModelFactory
 import kotlinx.android.synthetic.main.activity_bottom_navigation.*
 import kotlinx.android.synthetic.main.dialog_add_event.view.*
 import kotlinx.android.synthetic.main.fragment_new_order_detail.view.*
@@ -224,9 +223,13 @@ class NewOrderDetailFragment : Fragment(), View.OnClickListener {
         postParam.put("MobileUserId", Pref.getValue(context!!, Pref.MOBILE_USER_ID, 0))
         postParam.put("OrganizationIds", Pref.getValue(context!!, Pref.ORGANIZATN_ID, 0))
         postParam.put("DeviceID", CommonUtils.getDeviceUUID(context!!))
-        postParam.put("ItemIds", itemId)
         postParam.put("ItemNotes", itemNoteId)
         postParam.put("ActionType", "A")
+        if (orderDetail.isAssigned == 0) {
+            postParam.put("UnassignedItemIds", itemId)
+        } else {
+            postParam.put("ItemIds", itemId)
+        }
         //For unAssigned order appointmentdate
 //        if (orderDetail.isAssigned == 0) {
 //            postParam.put(
@@ -236,24 +239,6 @@ class NewOrderDetailFragment : Fragment(), View.OnClickListener {
 //        }
         postParam.put("TimeZone", TimeZone.getDefault().id)
         newOrdrDetailViewModel.confirmOrder(postParam)
-//        newOrdrDetailViewModel.confirmOrder(postParam).observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-//            if (it.status.equals(APIStatus.ok, true)) {
-//                //To add reminder in google cal
-////                if (orderDetail.isAssigned == 0) {
-//////                    showAddToCalenderDialog()
-////                } else {
-//
-//                (context as BottomNavigationActivity).onBackPressed()
-////                }
-//            } else if (it.status.equals(APIStatus.unauth, true)) {
-//                context?.toastShort(it.errorInfo.get(0).errorMessage)
-//
-//                var intent = Intent(context!!, PasscodeActivity::class.java)
-//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-//                startActivity(intent)
-//            }
-//        })
-
     }
 
     private fun showAddToCalenderDialog() {
@@ -502,7 +487,7 @@ class NewOrderDetailFragment : Fragment(), View.OnClickListener {
         when (v?.id) {
 
             R.id.linearAddress -> {
-                orderDetail?.let{
+                orderDetail?.let {
                     val mapIntent = CommonUtils.getMapIntent(it.lat, it.lng)
                     if (mapIntent.resolveActivity(context!!.packageManager) != null) {
                         context!!.startActivity(mapIntent)
@@ -511,15 +496,15 @@ class NewOrderDetailFragment : Fragment(), View.OnClickListener {
 
             }
             R.id.linearProduct -> {
-               orderDetail?.let{
-                   val url =
-                       BuildConfig.HOST + "mobile/Dashboard/GetDownloadOLEDocument?OrderGenID=" + it.orderGenId + "&ItemSrNo=" + it.itemSrNo + "&UserId=" + it.userId + "&ServiceRequestType=" +
-                               it.serviceRequestType
-                   val browserIntent = Intent(Intent.ACTION_VIEW)
-                   browserIntent.setDataAndType(Uri.parse(url), "application/pdf")
-                   context!!.startActivity(browserIntent)
+                orderDetail?.let {
+                    val url =
+                            BuildConfig.HOST + "mobile/Dashboard/GetDownloadOLEDocument?OrderGenID=" + it.orderGenId + "&ItemSrNo=" + it.itemSrNo + "&UserId=" + it.userId + "&ServiceRequestType=" +
+                                    it.serviceRequestType
+                    val browserIntent = Intent(Intent.ACTION_VIEW)
+                    browserIntent.setDataAndType(Uri.parse(url), "application/pdf")
+                    context!!.startActivity(browserIntent)
 
-               }
+                }
 
 
             }

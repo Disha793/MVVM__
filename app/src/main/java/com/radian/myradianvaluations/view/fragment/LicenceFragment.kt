@@ -108,7 +108,7 @@ class LicenceFragment : Fragment(), View.OnClickListener, DialogInterface.OnClic
         super.onActivityCreated(savedInstanceState)
         view.txtAddDoc.visibility = View.VISIBLE
         //Disha: For next release
-//        getLicenceMaster()
+        getLicenceMaster()
 
         dateListener = DatePickerDialog.OnDateSetListener { _, year, month, day ->
             calendar.set(Calendar.YEAR, year)
@@ -150,8 +150,8 @@ class LicenceFragment : Fragment(), View.OnClickListener, DialogInterface.OnClic
             }
             R.id.btnSubmitLi -> {
                 //Disha: For next release
-//                if (checkValidation() && licenceList.isNotEmpty())
-//                    submitData()
+                if (checkValidation() && licenceList.isNotEmpty())
+                    submitData()
             }
             R.id.imgDocDelete -> {
                 CommonUtils.showDialog(
@@ -443,8 +443,8 @@ class LicenceFragment : Fragment(), View.OnClickListener, DialogInterface.OnClic
         displayThumbnail()
         fileUri = photoFile.path
         //Disha: For next release
-//        if (!fileUri.equals(""))
-//            uploadDoc(fileUri)
+        if (!fileUri.equals(""))
+            uploadDoc(fileUri)
     }
 
     private fun displayThumbnail() {
@@ -461,8 +461,8 @@ class LicenceFragment : Fragment(), View.OnClickListener, DialogInterface.OnClic
                 displayThumbnail()
                 fileUri = CommonUtils.getRealPathFromURI(context!!, contentURI)!!
                 //Disha: For next release
-//                if (!fileUri.equals(""))
-//                    uploadDoc(fileUri)
+                if (!fileUri.equals(""))
+                    uploadDoc(fileUri)
             } catch (e: Exception) {
                 LogUtils.logD(TAG, e.message!!)
             }

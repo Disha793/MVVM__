@@ -14,5 +14,15 @@ enum class ReturnType(val endPoint: String) {
     POST_SaveProfile("Mobile/Dashboard/SaveMyProfile"),
     POST_GetProfile("mobile/Dashboard/GetMyProfile"),
     POST_OutOffice("mobile/Dashboard/SaveVendorVacationInfo"),
-    POST_UploadImage("mobile/Dashboard/UploadDocument")
+    POST_UploadImage("mobile/Dashboard/UploadDocument"),
+    POST_OrderList("Mobile/Dashboard/OrderList"),
+    POST_ManageOrderDetail("Mobile/Dashboard/GetManageOrderDetail"),
+    //For Mark as read from dashboard
+    POST_Dashboard_MarkReadRevisionReq("Mobile/Dashboard/DismissRequest"),
+    POST_OrderDocListReq("mobile/Dashboard/GetTileOrderDocuments"),
+    //For doc masrk as read from dashboard and order detail
+    POST_OrderMarkDocReadReq("mobile/Dashboard/SaveDocumentMarkAsRead"),
+    //For Revision and Message mark As read from order detail
+    POST_OrderMarkReadReq("Mobile/notification/ReadBulkNotification"),
+
 }
