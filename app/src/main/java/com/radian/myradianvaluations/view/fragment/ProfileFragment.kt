@@ -20,7 +20,6 @@ import android.provider.Settings
 import android.text.TextUtils
 import android.view.*
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -35,6 +34,7 @@ import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetectorOptions
 import com.radian.myradianvaluations.BuildConfig
 import com.radian.myradianvaluations.R
 import com.radian.myradianvaluations.constants.Const
+import com.radian.myradianvaluations.extensions.observeOnce
 import com.radian.myradianvaluations.extensions.snack
 import com.radian.myradianvaluations.extensions.toastShort
 import com.radian.myradianvaluations.utils.CommonUtils
@@ -44,6 +44,7 @@ import com.radian.myradianvaluations.view.activity.BottomNavigationActivity
 import com.radian.myradianvaluations.view.activity.FaceDetectionActivity
 import com.radian.myradianvaluations.view.activity.PasscodeActivity
 import com.radian.myradianvaluations.viewmodel.ProfileViewModel
+import com.radian.myradianvaluations.viewmodel.ProfileViewModelFactory
 import com.radian.vendorbridge.Response.ProfileResponse
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.dialog_add_event.view.*
@@ -67,6 +68,7 @@ class ProfileFragment() : Fragment(), DialogInterface.OnClickListener, View.OnCl
     private val firebaseParams = Bundle()
     lateinit internal var dialogView: View
     private lateinit var profileViewModel: ProfileViewModel
+    private lateinit var factory: ProfileViewModelFactory
     private var fileUriToUpload: String? = null
     internal lateinit var context: Context
     private val REQUEST_FOR_CAMERA = 101
@@ -80,29 +82,23 @@ class ProfileFragment() : Fragment(), DialogInterface.OnClickListener, View.OnCl
     ): View? {
         view = inflater.inflate(R.layout.fragment_profile, container, false)
         this.context = getContext()!!
-        profileViewModel =
-                ViewModelProvider(context as BottomNavigationActivity).get(ProfileViewModel::class.java)
-        profileViewModel.init(context)
-        view.img_camera.setOnClickListener(View.OnClickListener {
-            if (CommonUtils.checkPermission(context)) {
-                showProfileInfoDialog()
-            } else {
-                requestPermission()
-            }
-        })
+        initViewModel()
+        view.img_camera.setOnClickListener(this)
         view.imgBack.setOnClickListener(this)
         //Disha: For next release
 //        getMyProfile()
-        CommonUtils.hideKeybord(
-                (context as BottomNavigationActivity).window.decorView.rootView,
-                context
-        )
         observeProfileData()
+        CommonUtils.hideKeybord((context as BottomNavigationActivity).window.decorView.rootView, context)
         return view
     }
 
+    private fun initViewModel() {
+        factory = ProfileViewModelFactory(context!!)
+        profileViewModel = ViewModelProvider(this, factory).get(ProfileViewModel::class.java)
+    }
+
     private fun observeProfileData() {
-        profileViewModel.saveProfileResponse.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+        profileViewModel.saveProfileResponse.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
             if (it.status.equals("ok", true)) {
                 getMyProfile()
 
@@ -114,7 +110,7 @@ class ProfileFragment() : Fragment(), DialogInterface.OnClickListener, View.OnCl
             }
         })
 
-        profileViewModel.getProfileResponse.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+        profileViewModel.getProfileResponse.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
             if (it.status.equals("ok", true)) {
                 setProfile(it.data.get(0))
             } else if (it.status.equals("UNAUTHORIZED", true)) {
@@ -125,7 +121,7 @@ class ProfileFragment() : Fragment(), DialogInterface.OnClickListener, View.OnCl
                 startActivity(intent)
             }
         })
-        profileViewModel.uploadImageResponse.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+        profileViewModel.uploadImageResponse.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
             LogUtils.logD(TAG, "" + it)
             it.data?.let {
                 loadProfileImage(it)
@@ -141,6 +137,13 @@ class ProfileFragment() : Fragment(), DialogInterface.OnClickListener, View.OnCl
             }
             R.id.imgBack -> {
                 (context as BottomNavigationActivity).supportFragmentManager.popBackStack()
+            }
+            R.id.img_camera -> {
+                if (CommonUtils.checkPermission(context)) {
+                    showProfileInfoDialog()
+                } else {
+                    requestPermission()
+                }
             }
         }
     }
@@ -467,7 +470,7 @@ class ProfileFragment() : Fragment(), DialogInterface.OnClickListener, View.OnCl
                         )
                     }
                     if (it.isEmpty()) {
-                     view.snack( resources.getString(R.string.face_not_detect)){}
+                        view.snack(resources.getString(R.string.face_not_detect)) {}
                     }
                 }
                 .addOnFailureListener {
@@ -699,7 +702,6 @@ class ProfileFragment() : Fragment(), DialogInterface.OnClickListener, View.OnCl
         postField.put("FileName ", CommonUtils.requestBody(file.name))
 
         profileViewModel.uploadImage(profileImgBody, filename, postField)
-
 
 
     }

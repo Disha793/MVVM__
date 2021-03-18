@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.radian.myradianvaluations.R
 import com.radian.myradianvaluations.constants.APIStatus
 import com.radian.myradianvaluations.constants.Const
+import com.radian.myradianvaluations.extensions.observeOnce
 import com.radian.myradianvaluations.extensions.toastShort
 import com.radian.myradianvaluations.utils.CommonUtils
 import com.radian.myradianvaluations.utils.Pref
@@ -48,7 +49,7 @@ class NewOrderRejectFragment : Fragment(), View.OnClickListener {
 
     private fun observeData() {
 
-        rejectOrderViewModel.rejectOrderResponse.observe(viewLifecycleOwner, Observer {
+        rejectOrderViewModel.rejectOrderResponse.observeOnce(viewLifecycleOwner, Observer {
             if (it.status.equals(APIStatus.ok, true)) {
                 (context as BottomNavigationActivity).onBackPressed()
                 (context as BottomNavigationActivity).onBackPressed()

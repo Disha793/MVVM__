@@ -9,7 +9,6 @@ import android.os.Bundle
 import android.text.Html
 import android.text.Spanned
 import android.view.*
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.radian.myradianvaluations.BuildConfig
@@ -17,6 +16,7 @@ import com.radian.myradianvaluations.R
 import com.radian.myradianvaluations.adapter.HomeAdapter
 import com.radian.myradianvaluations.constants.APIStatus
 import com.radian.myradianvaluations.constants.Const
+import com.radian.myradianvaluations.extensions.observeOnce
 import com.radian.myradianvaluations.extensions.snack
 import com.radian.myradianvaluations.extensions.toastShort
 import com.radian.myradianvaluations.interfaces.HomeItemClickListener
@@ -25,6 +25,7 @@ import com.radian.myradianvaluations.view.activity.BottomNavigationActivity
 import com.radian.myradianvaluations.view.activity.PasscodeActivity
 import com.radian.myradianvaluations.view.activity.WebviewActivity
 import com.radian.myradianvaluations.viewmodel.DashboardViewModel
+import com.radian.myradianvaluations.viewmodel.DashboardViewModelFactory
 import com.radian.vendorbridge.Response.DashboardResponseNew
 import com.radian.vendorbridge.Response.ManageOrderResponse
 import com.squareup.picasso.Picasso
@@ -49,6 +50,8 @@ class DashboardFragment : Fragment(), View.OnClickListener {
     private var orderDetail = ManageOrderResponse.Data.OrderDetail()
     private var upcomingItemId = 0
     private lateinit var dashboardViewModel: DashboardViewModel
+    private lateinit var factory: DashboardViewModelFactory
+
     internal lateinit var context: Context
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -57,9 +60,32 @@ class DashboardFragment : Fragment(), View.OnClickListener {
     ): View? {
         view = inflater.inflate(R.layout.fragment_dashboard_new, container, false)
         dashboardViewModel = ViewModelProvider(this).get(DashboardViewModel::class.java)
-        dashboardViewModel.init(context)
+        initViewModel()
         observeDashboardData()
         dashboardItemClick()
+        view.layoutCovid.setOnClickListener(this)
+        view.linearUpcoming.setOnClickListener(this)
+        return view
+    }
+
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        //Disha: For next release
+//        getDashboardData()
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        this.context = context
+    }
+
+    private fun initViewModel() {
+        factory = DashboardViewModelFactory(context!!)
+        dashboardViewModel = ViewModelProvider(this, factory).get(DashboardViewModel::class.java)
+    }
+
+    private fun dashboardItemClick() {
         view.recyclerview.adapter =
                 HomeAdapter(context, dashboardList, object : HomeItemClickListener {
                     override fun homeItemClicked(position: Int, abbr: String, actionType: String) {
@@ -121,30 +147,10 @@ class DashboardFragment : Fragment(), View.OnClickListener {
                         }
                     }
                 })
-
-        view.layoutCovid.setOnClickListener(this)
-        view.linearUpcoming.setOnClickListener(this)
-
-        return view
-    }
-
-    private fun dashboardItemClick() {
-
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        //Disha: For next release
-//        getDashboardData()
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        this.context = context
     }
 
     private fun observeDashboardData() {
-        dashboardViewModel.dashboardData.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+        dashboardViewModel.dashboardData.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
             if (it.status.equals(APIStatus.ok, true)) {
                 if (it.data != null && it.data.isUpdateAndroid) {
                     callWhatsNewAPI()
@@ -193,14 +199,14 @@ class DashboardFragment : Fragment(), View.OnClickListener {
                 }
 
             } else if (it.status.equals(APIStatus.unauth, true)) {
-                context.toastShort( it.errorInfo.get(0).errorMessage)
+                context.toastShort(it.errorInfo.get(0).errorMessage)
 
                 var intent = Intent(context, PasscodeActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)
             }
         })
-        dashboardViewModel.whatsNewResponse.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+        dashboardViewModel.whatsNewResponse.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
             showAppUpdateDialog(it.data.whatsnew)
         })
     }
@@ -220,7 +226,6 @@ class DashboardFragment : Fragment(), View.OnClickListener {
 
 
     private fun getDashboardData() {
-
         val postParam = HashMap<String, Any?>()
         postParam.put("PhoneNumber", Pref.getValue(context!!, Pref.PHONE_NUMBER, "")!!)
         postParam.put("DeviceID", CommonUtils.getDeviceUUID(context!!))

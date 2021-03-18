@@ -191,4 +191,5 @@ The app streamlines every step of the process, including accepting orders, sched
     <string name="face_not_detect">Face is not detected in selected picture</string>
     <string name="capture_failed">Photo capture failed</string>
     <string name="select_asset">Please select asset</string>
+    <string name="unknown_viewmodel">Unknown View Model class</string>
 </resources>

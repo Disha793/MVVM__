@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.radian.myradianvaluations.R
 import com.radian.myradianvaluations.adapter.NewOrdersAdapter
 import com.radian.myradianvaluations.constants.APIStatus
+import com.radian.myradianvaluations.extensions.observeOnce
 import com.radian.myradianvaluations.extensions.toastShort
 import com.radian.myradianvaluations.utils.CommonUtils
 import com.radian.myradianvaluations.utils.Pref
@@ -54,7 +55,7 @@ class NewOrderFragment : Fragment() {
     }
 
     private fun observeNewOrder() {
-        newOrderViewModel.newOrderResponse.observe(viewLifecycleOwner, Observer {
+        newOrderViewModel.newOrderResponse.observeOnce(viewLifecycleOwner, Observer {
             if (it.status == APIStatus.ok) {
                 newOrderList.clear()
                 newOrderList.addAll(it.mdata?.orderList!!)

@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.radian.myradianvaluations.R
 import com.radian.myradianvaluations.constants.APIStatus
 import com.radian.myradianvaluations.constants.Const
+import com.radian.myradianvaluations.extensions.observeOnce
 import com.radian.myradianvaluations.viewmodel.HelpTroubleViewModel
 import com.radian.myradianvaluations.viewmodel.HelpViewModelFactory
 import kotlinx.android.synthetic.main.activity_orginfo.*
@@ -56,7 +57,7 @@ class HelpTroubleActivity : AppCompatActivity() {
     }
 
     private fun observeData() {
-        helpTroubleModel.helpTroubleResponse.observe(this, Observer {
+        helpTroubleModel.helpTroubleResponse.observeOnce(this, Observer {
             if (it.status.equals(APIStatus.ok, true)) {
                 txt_phone_number.text = it.data.contactDetail?.contactNumber
                 txt_working_days.text = it.data.contactDetail?.workingDays

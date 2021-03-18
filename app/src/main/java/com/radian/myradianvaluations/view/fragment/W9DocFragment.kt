@@ -26,6 +26,7 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.radian.myradianvaluations.R
 import com.radian.myradianvaluations.constants.APIStatus
 import com.radian.myradianvaluations.constants.Const
+import com.radian.myradianvaluations.extensions.observeOnce
 import com.radian.myradianvaluations.extensions.snack
 import com.radian.myradianvaluations.extensions.toastShort
 import com.radian.myradianvaluations.network.APIList
@@ -37,6 +38,7 @@ import com.radian.myradianvaluations.utils.Pref
 import com.radian.myradianvaluations.view.activity.BottomNavigationActivity
 import com.radian.myradianvaluations.view.activity.PasscodeActivity
 import com.radian.myradianvaluations.viewmodel.EODocViewModel
+import com.radian.myradianvaluations.viewmodel.EODocViewModelFactory
 import com.radian.vendorbridge.Response.StatusResponse
 import com.radian.vendorbridge.Response.VendorProfileResponse
 import io.reactivex.Observer
@@ -55,6 +57,7 @@ import java.util.*
 class W9DocFragment : Fragment(), View.OnClickListener, DialogInterface.OnClickListener {
     internal var postParam = HashMap<String, Any?>()
     private lateinit var eoDocViewModel: EODocViewModel
+    private lateinit var factory: EODocViewModelFactory
     internal lateinit var view: View
     private val REQUEST_FOR_CAMERA = 101
     private val REQUEST_FOR_GALLERY = 102
@@ -75,9 +78,7 @@ class W9DocFragment : Fragment(), View.OnClickListener, DialogInterface.OnClickL
         view = inflater.inflate(R.layout.fragment_w9_doc, container, false)
         view.btnSubmitW9.setOnClickListener(this)
         view.txtAddDoc.setOnClickListener(this)
-        eoDocViewModel =
-                ViewModelProvider(context as BottomNavigationActivity).get(EODocViewModel::class.java)
-        eoDocViewModel.init(context as BottomNavigationActivity)
+        initViewModel()
         observeW9DocData()
         return view
     }
@@ -86,6 +87,11 @@ class W9DocFragment : Fragment(), View.OnClickListener, DialogInterface.OnClickL
         super.onActivityCreated(savedInstanceState)
         //Disha: For next release
 //        getw9Data()
+    }
+
+    private fun initViewModel() {
+        factory = EODocViewModelFactory(context!!)
+        eoDocViewModel = ViewModelProvider(this, factory).get(EODocViewModel::class.java)
     }
 
     override fun onClick(v: View?) {
@@ -129,7 +135,7 @@ class W9DocFragment : Fragment(), View.OnClickListener, DialogInterface.OnClickL
     }
 
     private fun observeW9DocData() {
-        eoDocViewModel.uploadImageResponse.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+        eoDocViewModel.uploadImageResponse.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
             LogUtils.logD(TAG, "" + it)
             it.data?.let {}
         })

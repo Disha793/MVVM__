@@ -20,7 +20,7 @@ class HelpViewModelFactory(private val context:Context) : ViewModelProvider.Fact
         if (modelClass.isAssignableFrom(HelpTroubleViewModel::class.java)) {
             return HelpTroubleViewModel(context) as T
         }
-        throw IllegalArgumentException("Unknown View Model class")
+        throw IllegalArgumentException(context.resources.getString(R.string.unknown_viewmodel))
     }
 
 }

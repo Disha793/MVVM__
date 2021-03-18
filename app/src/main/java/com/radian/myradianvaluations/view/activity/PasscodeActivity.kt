@@ -24,6 +24,8 @@ import com.radian.myradianvaluations.R
 import com.radian.myradianvaluations.constants.APIStatus
 import com.radian.myradianvaluations.constants.Const
 import com.radian.myradianvaluations.constants.DeviceStatus
+import com.radian.myradianvaluations.extensions.makeGone
+import com.radian.myradianvaluations.extensions.observeOnce
 import com.radian.myradianvaluations.extensions.snack
 import com.radian.myradianvaluations.utils.CommonUtils
 import com.radian.myradianvaluations.utils.LogUtils
@@ -70,7 +72,7 @@ class PasscodeActivity : AppCompatActivity(), View.OnClickListener {
                 firebaseParams
         )
         LogUtils.logD(TAG, Pref.getValue(this, Pref.FCM_TOKEN, "")!!)
-        imgBack.visibility = View.GONE
+
         FirebaseApp.initializeApp(this)
         getToken()
         observePasscodeData()
@@ -92,7 +94,7 @@ class PasscodeActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun observePasscodeData() {
-        passcodeModel.otpResponse.observe(this, Observer {
+        passcodeModel.otpResponse.observeOnce(this, Observer {
             if (it.data.deviceStatus == DeviceStatus.verifyOTP) {
                 Pref.setValue(
                         this,
@@ -108,7 +110,7 @@ class PasscodeActivity : AppCompatActivity(), View.OnClickListener {
                 )
             }
         })
-        passcodeModel.verifyotpResponse.observe(this, Observer {
+        passcodeModel.verifyotpResponse.observeOnce(this, Observer {
             firebaseParams.clear()
             firebaseParams.putString("Phonenumber", Pref.getValue(this, Pref.PHONE_NUMBER, "")!!)
             firebaseParams.putString("DeviceID", CommonUtils.getDeviceUUID(this))
@@ -158,7 +160,7 @@ class PasscodeActivity : AppCompatActivity(), View.OnClickListener {
                 )
             }
         })
-        passcodeModel.loginResponse.observe(this, Observer {
+        passcodeModel.loginResponse.observeOnce(this, Observer {
             if (it.status.equals(APIStatus.ok, true)) {
 
                 Pref.setValue(
@@ -222,6 +224,7 @@ class PasscodeActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun manageUI() {
+        imgBack.makeGone()
         if (Pref.getValue(this, Pref.DEVICE_STATUS, 0) == DeviceStatus.firstTimeSetUP) {
             txtForgot.visibility = View.INVISIBLE
             txtEnter.setText(

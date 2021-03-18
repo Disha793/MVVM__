@@ -21,7 +21,7 @@ class NewOrdrDetailViewModelFactory(private val context:Context) : ViewModelProv
         if (modelClass.isAssignableFrom(NewOrdrDetailViewModel::class.java)) {
             return NewOrdrDetailViewModel(context) as T
         }
-        throw IllegalArgumentException("Unknown View Model class")
+        throw IllegalArgumentException(context.resources.getString(R.string.unknown_viewmodel))
     }
 }
 class NewOrdrDetailViewModel(private val context:Context) : ViewModel(), ApiResponseCallBack {

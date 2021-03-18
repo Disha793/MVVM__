@@ -13,6 +13,7 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.radian.myradianvaluations.R
 import com.radian.myradianvaluations.constants.APIStatus
 import com.radian.myradianvaluations.constants.Const
+import com.radian.myradianvaluations.extensions.observeOnce
 import com.radian.myradianvaluations.extensions.snack
 import com.radian.myradianvaluations.extensions.snackAction
 import com.radian.myradianvaluations.extensions.toastShort
@@ -104,11 +105,11 @@ class OutofOfficeFragment : Fragment(), View.OnClickListener {
     }
 
     private fun observeOutOfficeData() {
-        outOfficeViewModel.outOfficeResponse.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+        outOfficeViewModel.outOfficeResponse.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
             if (it.status.equals(APIStatus.ok, true)) {
                 view.snackAction(view,
                         it.data.message,
-                        "ok",
+                        resources.getString(R.string.ok),
                         View.OnClickListener {
                             (context as BottomNavigationActivity).onBackPressed()
                         })

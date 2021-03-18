@@ -5,6 +5,7 @@ import android.content.DialogInterface
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.radian.myradianvaluations.R
@@ -17,18 +18,22 @@ import com.radian.vendorbridge.Response.DashboardResponseNew
 import com.radian.vendorbridge.Response.WhatsNewResponse
 import com.sunteckindia.networking.ApiResponseCallBack
 
-class DashboardViewModel : ViewModel(), ApiResponseCallBack {
+class DashboardViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
+    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(DashboardViewModel::class.java)) {
+            return DashboardViewModel(context) as T
+        }
+        throw IllegalArgumentException(context.resources.getString(R.string.unknown_viewmodel))
+    }
+}
+
+class DashboardViewModel(private val context: Context) : ViewModel(), ApiResponseCallBack {
     private var dashboardResponse = MutableLiveData<DashboardResponseNew>()
     var whatsNewResponse = MutableLiveData<WhatsNewResponse>()
-    private lateinit var context: Context
     private val apiServiceProviderGeneric = ApiServiceProviderGeneric(this)
 
     val dashboardData: LiveData<DashboardResponseNew>
         get() = dashboardResponse
-
-    fun init(context: Context) {
-        this.context = context
-    }
 
     fun getDashboardData(postParams: HashMap<String, Any?>) {
         apiServiceProviderGeneric.postCall(context, ReturnType.POST_Dashboard.endPoint, ReturnType.POST_Dashboard, postParams)

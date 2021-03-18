@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.DialogInterface
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.radian.myradianvaluations.R
@@ -18,18 +19,21 @@ import com.radian.vendorbridge.Response.UploadImageResponse
 import com.sunteckindia.networking.ApiResponseCallBack
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+class ProfileViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
+    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(ProfileViewModel::class.java)) {
+            return ProfileViewModel(context) as T
+        }
+        throw IllegalArgumentException(context.resources.getString(R.string.unknown_viewmodel))
+    }
+}
 
-class ProfileViewModel : ViewModel(), ApiResponseCallBack {
-    private lateinit var context: Context
+class ProfileViewModel(private val context: Context) : ViewModel(), ApiResponseCallBack {
     private val apiServiceProviderGeneric = ApiServiceProviderGeneric(this)
     var saveProfileResponse = MutableLiveData<StatusResponse>()
     var getProfileResponse = MutableLiveData<ProfileResponse>()
     var uploadImageResponse = MutableLiveData<UploadImageResponse>()
-
-    fun init(context: Context) {
-        this.context = context
-    }
-
+    
     fun saveProfileAPI(postParams: HashMap<String, Any?>) {
         apiServiceProviderGeneric.postCall(context, ReturnType.POST_SaveProfile.endPoint, ReturnType.POST_SaveProfile, postParams)
     }

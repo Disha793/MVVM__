@@ -90,7 +90,7 @@ class NewOrderDetailFragment : Fragment(), View.OnClickListener {
 
     private fun observeOrderData() {
 
-        newOrdrDetailViewModel.newOrderDetailResponse.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+        newOrdrDetailViewModel.newOrderDetailResponse.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
             if (it.status == APIStatus.ok) {
                 it.data?.orderDetail?.let {
                     orderDetail = it

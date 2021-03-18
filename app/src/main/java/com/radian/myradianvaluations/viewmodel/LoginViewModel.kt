@@ -19,7 +19,7 @@ class LoginViewModelFactory(private val context:Context) : ViewModelProvider.Fac
         if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
             return LoginViewModel(context) as T
         }
-        throw IllegalArgumentException("Unknown View Model class")
+        throw IllegalArgumentException(context.resources.getString(R.string.unknown_viewmodel))
     }
 
 }

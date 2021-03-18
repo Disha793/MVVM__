@@ -23,7 +23,7 @@ class PasscodeViewModelFactory(private val context: Context) : ViewModelProvider
         if (modelClass.isAssignableFrom(PasscodeViewModel::class.java)) {
             return PasscodeViewModel(context) as T
         }
-        throw IllegalArgumentException("Unknown View Model class")
+        throw IllegalArgumentException(context.resources.getString(R.string.unknown_viewmodel))
     }
 
 }

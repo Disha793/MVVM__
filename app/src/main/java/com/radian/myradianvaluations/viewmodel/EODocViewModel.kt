@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.DialogInterface
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.radian.myradianvaluations.R
@@ -19,16 +20,21 @@ import com.radian.vendorbridge.Response.VendorProfileResponse
 import com.sunteckindia.networking.ApiResponseCallBack
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-
-class EODocViewModel : ViewModel(), ApiResponseCallBack {
+class EODocViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
+    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(EODocViewModel::class.java)) {
+            return EODocViewModel(context) as T
+        }
+        throw IllegalArgumentException(context.resources.getString(R.string.unknown_viewmodel))
+    }
+}
+class EODocViewModel(private val context: Context) : ViewModel(), ApiResponseCallBack {
     private lateinit var eoRepository: EORepository
     var uploadImageResponse = MutableLiveData<UploadImageResponse>()
-    private lateinit var context: Context
     private val apiServiceProviderGeneric = ApiServiceProviderGeneric(this)
 
     fun init(context: Context): EORepository {
         eoRepository = EORepository.getInstance(context)
-        this.context = context
         return eoRepository
     }
 

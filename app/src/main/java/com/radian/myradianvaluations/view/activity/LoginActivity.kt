@@ -12,6 +12,7 @@ import com.radian.myradianvaluations.R
 import com.radian.myradianvaluations.constants.APIStatus
 import com.radian.myradianvaluations.constants.Const
 import com.radian.myradianvaluations.constants.DeviceStatus
+import com.radian.myradianvaluations.extensions.observeOnce
 import com.radian.myradianvaluations.extensions.snack
 import com.radian.myradianvaluations.utils.CommonUtils
 import com.radian.myradianvaluations.utils.Pref
@@ -67,7 +68,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun observeLoginData() {
-        loginViewModel.userStatus.observe(this, Observer {
+        loginViewModel.userStatus.observeOnce(this, Observer {
             if (it?.status.equals(APIStatus.ok, true)) {
                 Pref.setValue(
                         this,

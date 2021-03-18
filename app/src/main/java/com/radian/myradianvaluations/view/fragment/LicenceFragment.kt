@@ -29,6 +29,7 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.radian.myradianvaluations.R
 import com.radian.myradianvaluations.constants.APIStatus
 import com.radian.myradianvaluations.constants.Const
+import com.radian.myradianvaluations.extensions.observeOnce
 import com.radian.myradianvaluations.extensions.snack
 import com.radian.myradianvaluations.extensions.toastShort
 import com.radian.myradianvaluations.network.APIList
@@ -40,6 +41,7 @@ import com.radian.myradianvaluations.utils.Pref
 import com.radian.myradianvaluations.view.activity.BottomNavigationActivity
 import com.radian.myradianvaluations.view.activity.PasscodeActivity
 import com.radian.myradianvaluations.viewmodel.EODocViewModel
+import com.radian.myradianvaluations.viewmodel.EODocViewModelFactory
 import com.radian.vendorbridge.Response.LicenceMasterModel
 import com.radian.vendorbridge.Response.StatusResponse
 import com.radian.vendorbridge.Response.VendorProfileResponse
@@ -76,6 +78,7 @@ class LicenceFragment : Fragment(), View.OnClickListener, DialogInterface.OnClic
     private var fileUri: String = ""
     private val firebaseParams = Bundle()
     private lateinit var eoDocViewModel: EODocViewModel
+    private lateinit var factory: EODocViewModelFactory
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -85,18 +88,20 @@ class LicenceFragment : Fragment(), View.OnClickListener, DialogInterface.OnClic
 
         firebaseAnalytics = FirebaseAnalytics.getInstance(context!!)
         view = inflater.inflate(R.layout.fragment_licence_update, container, false)
-        spinnerAdapter =
-                ArrayAdapter(context!!, R.layout.spinner_item, licenceTypeList)
-        spinnerAdapter.setDropDownViewResource(R.layout.spinner_item)
-        eoDocViewModel =
-                ViewModelProvider(context as BottomNavigationActivity).get(EODocViewModel::class.java)
-        eoDocViewModel.init(context as BottomNavigationActivity)
-        view.spnLicenceTyp.setAdapter(spinnerAdapter)
+        initViewModel()
+        setSpinner()
         view.edtExpiryDte.setOnClickListener(this)
         view.btnSubmitLi.setOnClickListener(this)
         view.txtAddDoc.setOnClickListener(this)
         observeLicenceData()
         return view
+    }
+
+    private fun setSpinner() {
+        spinnerAdapter =
+                ArrayAdapter(context!!, R.layout.spinner_item, licenceTypeList)
+        spinnerAdapter.setDropDownViewResource(R.layout.spinner_item)
+        view.spnLicenceTyp.setAdapter(spinnerAdapter)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -115,6 +120,11 @@ class LicenceFragment : Fragment(), View.OnClickListener, DialogInterface.OnClic
                     )
             )
         }
+    }
+
+    private fun initViewModel() {
+        factory = EODocViewModelFactory(context!!)
+        eoDocViewModel = ViewModelProvider(this, factory).get(EODocViewModel::class.java)
     }
 
     override fun onClick(dialog: DialogInterface?, position: Int) {
@@ -190,17 +200,17 @@ class LicenceFragment : Fragment(), View.OnClickListener, DialogInterface.OnClic
         val builder = AlertDialog.Builder(context)
 
         var options = Array<CharSequence>(3, { "" })
-        options[0] = "Camera"
-        options[1] = "Gallery"
-        options[2] = "Cancel"
-        builder.setTitle("Select Options")
+        options[0] = resources.getString(R.string.camera)
+        options[1] = resources.getString(R.string.gallery)
+        options[2] = resources.getString(R.string.cancel)
+        builder.setTitle(resources.getString(R.string.select_option))
         builder.setItems(options, this)
         builder.show()
     }
 
     private fun observeLicenceData() {
 
-        eoDocViewModel.uploadImageResponse.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+        eoDocViewModel.uploadImageResponse.observeOnce(viewLifecycleOwner, androidx.lifecycle.Observer {
             LogUtils.logD(TAG, "" + it)
             it.data?.let {}
         })
@@ -381,37 +391,6 @@ class LicenceFragment : Fragment(), View.OnClickListener, DialogInterface.OnClic
         postField.put("FileName", CommonUtils.requestBody(file.name))
 
         eoDocViewModel.uploadImage(image, filename, postField)
-//        RetrofitBase.getClient().create(APIList::class.java)
-//                .uploadImage(
-//                        Pref.getValue(context!!, Pref.AUTH_TOKEN, "")!!,
-//                        profileImgBody,
-//                        filename,
-//                        postField
-//                )
-//                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(object : Observer<UploadImageResponse> {
-//                    override fun onComplete() {
-//                        LoadingDialog.dismissDialog()
-//                    }
-//
-//                    override fun onSubscribe(d: Disposable) {
-//                        LoadingDialog.show(context!!)
-//                    }
-//
-//                    override fun onNext(t: UploadImageResponse) {
-//                        LogUtils.logD("Getting On Rsposne", "" + t)
-//                        t.data?.let {
-//
-//
-//                        }
-//
-//                    }
-//
-//                    override fun onError(e: Throwable) {
-//                        LogUtils.logD("Getting On Error", "" + e.message)
-//                        LoadingDialog.dismissDialog()
-//                    }
-//                })
 
     }
 
