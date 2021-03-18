@@ -15,10 +15,10 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 import com.radian.myradianvaluations.R
+import com.radian.myradianvaluations.Response.ManageOrderResponse
 import com.radian.myradianvaluations.constants.Const
 import com.radian.myradianvaluations.utils.CommonUtils
 import com.radian.myradianvaluations.view.activity.BottomNavigationActivity
-import com.radian.vendorbridge.Response.ManageOrderResponse
 import kotlinx.android.synthetic.main.activity_bottom_navigation.*
 import kotlinx.android.synthetic.main.fragment_more_details.view.*
 import kotlinx.android.synthetic.main.layout_toolbar.*

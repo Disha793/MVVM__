@@ -5,13 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.radian.myradianvaluations.DashboardResponseNew
 import com.radian.myradianvaluations.R
 import com.radian.myradianvaluations.constants.Const
 import com.radian.myradianvaluations.extensions.makeGone
 import com.radian.myradianvaluations.extensions.makeVisible
 import com.radian.myradianvaluations.interfaces.HomeItemClickListener
 import com.radian.myradianvaluations.utils.DashboardAbbr
-import com.radian.vendorbridge.Response.DashboardResponseNew
 import kotlinx.android.synthetic.main.row_dashboard_new.view.*
 
 class HomeAdapter(

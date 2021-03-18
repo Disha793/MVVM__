@@ -3,9 +3,10 @@ package com.radian.myradianvaluations.viewmodel
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.radian.myradianvaluations.Response.MessageChatResponse
+import com.radian.myradianvaluations.Response.StatusResponse
 import com.radian.myradianvaluations.repository.MessageChatRepository
-import com.radian.vendorbridge.Response.MessageChatResponse
-import com.radian.vendorbridge.Response.StatusResponse
+
 
 class MessageChatViewModel : ViewModel() {
     private lateinit var messageRespository: MessageChatRepository

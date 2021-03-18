@@ -76,6 +76,7 @@ The app streamlines every step of the process, including accepting orders, sched
     <string name="docTitle">Document</string>
     <string name="settingsTitle">Settings</string>
     <string name="coc">Code of Conduct</string>
+    <string name="radianResponse">Radian’s response to COVID 19</string>
     <!--Out of office-->
     <string name="aboutUs">About us</string>
     <string name="confirm">Confirm</string>

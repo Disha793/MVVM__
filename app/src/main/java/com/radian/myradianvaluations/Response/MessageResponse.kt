@@ -1,4 +1,4 @@
-package com.radian.vendorbridge.Response
+package com.radian.myradianvaluations.Response
 
 class MessageResponse{
     var orderId:Int=0

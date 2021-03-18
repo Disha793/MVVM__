@@ -5,7 +5,6 @@ import com.google.gson.JsonElement
 import com.radian.myradianvaluations.BuildConfig
 import com.radian.myradianvaluations.R
 import com.radian.myradianvaluations.utils.LogUtils
-import com.sunteckindia.networking.ApiResponseCallBack
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob

@@ -2,12 +2,12 @@ package com.radian.myradianvaluations.repository
 
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
+import com.radian.myradianvaluations.Response.OrderDocResponse
+import com.radian.myradianvaluations.Response.StatusResponse
 import com.radian.myradianvaluations.network.APIList
 import com.radian.myradianvaluations.network.RetrofitBase
 import com.radian.myradianvaluations.utils.CommonUtils
 import com.radian.myradianvaluations.utils.Pref
-import com.radian.vendorbridge.Response.OrderDocResponse
-import com.radian.vendorbridge.Response.StatusResponse
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.radian.myradianvaluations.R
+import com.radian.myradianvaluations.Response.NewOrderDetailResponse
 import com.radian.myradianvaluations.constants.APIStatus
 import com.radian.myradianvaluations.constants.Const
 import com.radian.myradianvaluations.extensions.observeOnce
@@ -19,7 +20,6 @@ import com.radian.myradianvaluations.view.activity.BottomNavigationActivity
 import com.radian.myradianvaluations.view.activity.PasscodeActivity
 import com.radian.myradianvaluations.viewmodel.RejectOrderViewModel
 import com.radian.myradianvaluations.viewmodel.RejectViewModelFactory
-import com.radian.vendorbridge.Response.NewOrderDetailResponse
 import kotlinx.android.synthetic.main.activity_bottom_navigation.*
 import kotlinx.android.synthetic.main.fragment_new_order_reject.view.*
 import kotlinx.android.synthetic.main.layout_toolbar.*

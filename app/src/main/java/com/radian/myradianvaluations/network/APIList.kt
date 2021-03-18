@@ -1,7 +1,10 @@
 package com.radian.myradianvaluations.network
 
 
-import com.radian.vendorbridge.Response.*
+
+import com.radian.myradianvaluations.DashboardResponseNew
+import com.radian.myradianvaluations.Response.*
+import com.radian.myradianvaluations.Response.UploadImageResponse
 import io.reactivex.Observable
 import okhttp3.MultipartBody
 import okhttp3.RequestBody

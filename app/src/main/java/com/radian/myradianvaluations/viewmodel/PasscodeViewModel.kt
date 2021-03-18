@@ -8,15 +8,17 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.radian.myradianvaluations.R
+import com.radian.myradianvaluations.Response.LoginResponse
+import com.radian.myradianvaluations.Response.OtpResponse
+import com.radian.myradianvaluations.Response.StatusResponse
+import com.radian.myradianvaluations.networking.ApiResponseCallBack
 import com.radian.myradianvaluations.networking.ApiServiceProviderGeneric
 import com.radian.myradianvaluations.networking.ReturnType
 import com.radian.myradianvaluations.utils.CommonUtils
 import com.radian.myradianvaluations.utils.LoadingDialog
 import com.radian.myradianvaluations.utils.LogUtils
-import com.radian.vendorbridge.Response.LoginResponse
-import com.radian.vendorbridge.Response.OtpResponse
-import com.radian.vendorbridge.Response.StatusResponse
-import com.sunteckindia.networking.ApiResponseCallBack
+
+
 
 class PasscodeViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {

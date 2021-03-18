@@ -1,4 +1,4 @@
-package com.sunteckindia.networking
+package com.radian.myradianvaluations.networking
 
 import com.radian.myradianvaluations.networking.ReturnType
 

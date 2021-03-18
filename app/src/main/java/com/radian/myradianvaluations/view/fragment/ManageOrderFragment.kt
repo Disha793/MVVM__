@@ -19,6 +19,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.radian.myradianvaluations.BuildConfig
 import com.radian.myradianvaluations.R
+import com.radian.myradianvaluations.Response.ManageOrderResponse
 import com.radian.myradianvaluations.constants.APIStatus
 import com.radian.myradianvaluations.constants.Const
 import com.radian.myradianvaluations.extensions.toastShort
@@ -29,7 +30,6 @@ import com.radian.myradianvaluations.view.activity.StepsActivity
 import com.radian.myradianvaluations.view.activity.BottomNavigationActivity
 import com.radian.myradianvaluations.view.activity.PasscodeActivity
 import com.radian.myradianvaluations.viewmodel.ManageOrderViewModel
-import com.radian.vendorbridge.Response.ManageOrderResponse
 import kotlinx.android.synthetic.main.activity_bottom_navigation.*
 import kotlinx.android.synthetic.main.fragment_manage_order.view.*
 import kotlinx.android.synthetic.main.layout_toolbar.*

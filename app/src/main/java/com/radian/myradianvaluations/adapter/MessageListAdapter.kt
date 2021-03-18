@@ -8,6 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.radian.myradianvaluations.R
+import com.radian.myradianvaluations.Response.SearchFilterResponse
+import com.radian.myradianvaluations.Response.StatusResponse
 import com.radian.myradianvaluations.network.APIList
 import com.radian.myradianvaluations.network.RetrofitBase
 import com.radian.myradianvaluations.utils.CommonUtils
@@ -18,8 +20,6 @@ import com.radian.myradianvaluations.view.activity.BottomNavigationActivity
 import com.radian.myradianvaluations.view.fragment.ManageOrderFragment
 import com.radian.myradianvaluations.view.fragment.MessageChatFragment
 import com.radian.myradianvaluations.view.fragment.MessageListFragment
-import com.radian.vendorbridge.Response.SearchFilterResponse
-import com.radian.vendorbridge.Response.StatusResponse
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable

@@ -68,7 +68,7 @@ class OutofOfficeFragment : Fragment(), View.OnClickListener {
         view.txtConfirm.setOnClickListener(this)
         view.edtStrtDate.setOnClickListener(this)
         view.edtEndDate.setOnClickListener(this)
-        dateListener = DatePickerDialog.OnDateSetListener { p0, year, month, day ->
+        dateListener = DatePickerDialog.OnDateSetListener { _, year, month, day ->
             cal.set(Calendar.YEAR, year)
             cal.set(Calendar.MONTH, month)
             cal.set(Calendar.DAY_OF_MONTH, day)

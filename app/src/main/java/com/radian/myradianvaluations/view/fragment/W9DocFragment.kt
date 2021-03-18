@@ -24,6 +24,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.radian.myradianvaluations.R
+import com.radian.myradianvaluations.Response.StatusResponse
+import com.radian.myradianvaluations.Response.VendorProfileResponse
 import com.radian.myradianvaluations.constants.APIStatus
 import com.radian.myradianvaluations.constants.Const
 import com.radian.myradianvaluations.extensions.observeOnce
@@ -39,8 +41,7 @@ import com.radian.myradianvaluations.view.activity.BottomNavigationActivity
 import com.radian.myradianvaluations.view.activity.PasscodeActivity
 import com.radian.myradianvaluations.viewmodel.EODocViewModel
 import com.radian.myradianvaluations.viewmodel.EODocViewModelFactory
-import com.radian.vendorbridge.Response.StatusResponse
-import com.radian.vendorbridge.Response.VendorProfileResponse
+
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -328,46 +329,6 @@ class W9DocFragment : Fragment(), View.OnClickListener, DialogInterface.OnClickL
         postField.put("FileName ", CommonUtils.requestBody(file.name))
 
         eoDocViewModel.uploadImage(image, filename, postField)
-//        RetrofitBase.getClient().create(APIList::class.java)
-//            .uploadImage(
-//                Pref.getValue(context!!, Pref.AUTH_TOKEN, "")!!,
-//                profileImgBody,
-//                filename,
-//                postField
-//            )
-//            .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-//            .subscribe(object : Observer<UploadImageResponse> {
-//                override fun onComplete() {
-//                    LoadingDialog.dismissDialog()
-//                }
-//
-//                override fun onSubscribe(d: Disposable) {
-//                    LoadingDialog.show(context!!)
-//                }
-//
-//                override fun onNext(t: UploadImageResponse) {
-//                    LogUtils.logD("Getting On Rsposne", "" + t)
-//                    t.data?.let {
-//
-//
-//                    }
-//
-//                }
-//
-//                override fun onError(e: Throwable) {
-//                    LogUtils.logD("Getting On Error", "" + e.message)
-//                    LoadingDialog.dismissDialog()
-//                    CommonUtils.showOkDialog(
-//                        context!!,
-//                        getString(R.string.please_try_again),
-//                        DialogInterface.OnClickListener { _, _ ->
-//
-//
-//                        },
-//                        getString(R.string.ok)
-//                    )
-//                }
-//            })
 
     }
 

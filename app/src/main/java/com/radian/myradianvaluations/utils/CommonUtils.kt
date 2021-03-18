@@ -236,7 +236,7 @@ object CommonUtils {
                 ) { p0, p1 -> onClickListener.onClick(p0, p1) }
                 .setPositiveButton(
                         cancelText
-                ) { p0, p1 -> onCancelListener.onCancel(p0) }
+                ) { p0, _ -> onCancelListener.onCancel(p0) }
                 .show()
 
 

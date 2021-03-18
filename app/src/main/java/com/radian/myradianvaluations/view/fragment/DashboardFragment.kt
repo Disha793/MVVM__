@@ -12,7 +12,9 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.radian.myradianvaluations.BuildConfig
+import com.radian.myradianvaluations.DashboardResponseNew
 import com.radian.myradianvaluations.R
+import com.radian.myradianvaluations.Response.ManageOrderResponse
 import com.radian.myradianvaluations.adapter.HomeAdapter
 import com.radian.myradianvaluations.constants.APIStatus
 import com.radian.myradianvaluations.constants.Const
@@ -26,8 +28,7 @@ import com.radian.myradianvaluations.view.activity.PasscodeActivity
 import com.radian.myradianvaluations.view.activity.WebviewActivity
 import com.radian.myradianvaluations.viewmodel.DashboardViewModel
 import com.radian.myradianvaluations.viewmodel.DashboardViewModelFactory
-import com.radian.vendorbridge.Response.DashboardResponseNew
-import com.radian.vendorbridge.Response.ManageOrderResponse
+
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.dialog_app_update.view.*
 import kotlinx.android.synthetic.main.fragment_dashboard_new.view.*
@@ -59,7 +60,6 @@ class DashboardFragment : Fragment(), View.OnClickListener {
             savedInstanceState: Bundle?
     ): View? {
         view = inflater.inflate(R.layout.fragment_dashboard_new, container, false)
-        dashboardViewModel = ViewModelProvider(this).get(DashboardViewModel::class.java)
         initViewModel()
         observeDashboardData()
         dashboardItemClick()

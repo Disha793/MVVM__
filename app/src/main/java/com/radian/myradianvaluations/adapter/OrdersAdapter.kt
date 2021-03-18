@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.radian.myradianvaluations.R
+import com.radian.myradianvaluations.Response.OrderListResponse
 import com.radian.myradianvaluations.interfaces.OpenOrderClickListener
-import com.radian.vendorbridge.Response.OrderListResponse
 import kotlinx.android.synthetic.main.row_open_orders.view.*
 
 

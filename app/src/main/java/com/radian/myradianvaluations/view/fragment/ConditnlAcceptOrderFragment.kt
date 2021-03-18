@@ -18,6 +18,7 @@ import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.lifecycle.ViewModelProvider
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.radian.myradianvaluations.R
+import com.radian.myradianvaluations.Response.NewOrderDetailResponse
 import com.radian.myradianvaluations.constants.APIStatus
 import com.radian.myradianvaluations.constants.Const
 import com.radian.myradianvaluations.extensions.snack
@@ -27,7 +28,6 @@ import com.radian.myradianvaluations.utils.Pref
 import com.radian.myradianvaluations.view.activity.BottomNavigationActivity
 import com.radian.myradianvaluations.view.activity.PasscodeActivity
 import com.radian.myradianvaluations.viewmodel.NewOrdrDetailViewModel
-import com.radian.vendorbridge.Response.NewOrderDetailResponse
 import kotlinx.android.synthetic.main.activity_bottom_navigation.*
 import kotlinx.android.synthetic.main.fragment_open_order.view.*
 import kotlinx.android.synthetic.main.layout_toolbar.*

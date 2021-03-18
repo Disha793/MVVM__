@@ -27,6 +27,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.radian.myradianvaluations.R
+import com.radian.myradianvaluations.Response.StatusResponse
+import com.radian.myradianvaluations.Response.VendorProfileResponse
 import com.radian.myradianvaluations.constants.APIStatus
 import com.radian.myradianvaluations.constants.Const
 import com.radian.myradianvaluations.extensions.observeOnce
@@ -44,8 +46,6 @@ import com.radian.myradianvaluations.viewmodel.EODocViewModel
 import com.radian.myradianvaluations.viewmodel.EODocViewModelFactory
 import com.radian.myradianvaluations.viewmodel.ProfileViewModel
 import com.radian.myradianvaluations.viewmodel.ProfileViewModelFactory
-import com.radian.vendorbridge.Response.StatusResponse
-import com.radian.vendorbridge.Response.VendorProfileResponse
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable

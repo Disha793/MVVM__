@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
 import com.radian.myradianvaluations.BuildConfig
 import com.radian.myradianvaluations.R
+import com.radian.myradianvaluations.Response.StatusResponse
 import com.radian.myradianvaluations.constants.APIStatus
 import com.radian.myradianvaluations.constants.Const
 import com.radian.myradianvaluations.extensions.snack
@@ -25,7 +26,6 @@ import com.radian.myradianvaluations.network.RetrofitBase
 import com.radian.myradianvaluations.utils.CommonUtils
 import com.radian.myradianvaluations.utils.LoadingDialog
 import com.radian.myradianvaluations.utils.Pref
-import com.radian.vendorbridge.Response.StatusResponse
 import kotlinx.android.synthetic.main.activity_code_conduct.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

@@ -46,13 +46,13 @@ class WebviewActivity : AppCompatActivity() {
             } else if (it == Const.scrCovidTag) {
                 toolbar.visibility = View.VISIBLE
                 txtTitle.visibility = View.VISIBLE
-                txtTitle.text = "Radian’s response to COVID 19"
+                txtTitle.text = getString(R.string.radianResponse)
                 webUrl = "https://www.radian.com/covid-19/"
                 loadWebUrl()
             } else if (it == Const.scrSignUp) {
                 toolbar.visibility = View.VISIBLE
                 txtTitle.visibility = View.VISIBLE
-                txtTitle.text = "Sign up"
+                txtTitle.text = getString(R.string.signup)
                 webUrl = "https://falcon.radianvaluations.com/NewVendorProfile"
                 loadWebUrl()
             } else {
@@ -111,7 +111,7 @@ class WebviewActivity : AppCompatActivity() {
                     try {
                         Thread.sleep(2000)
                     } catch (e: InterruptedException) {
-                        e.printStackTrace()
+                        LogUtils.logE("", e)
                     }
                     if (timeout) {
                         LoadingDialog.dismissDialog()

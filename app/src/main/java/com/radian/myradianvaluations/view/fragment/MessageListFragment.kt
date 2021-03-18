@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.radian.myradianvaluations.R
+import com.radian.myradianvaluations.Response.SearchFilterResponse
 import com.radian.myradianvaluations.adapter.MessageListAdapter
 import com.radian.myradianvaluations.constants.APIStatus
 import com.radian.myradianvaluations.constants.Const
@@ -21,7 +22,6 @@ import com.radian.myradianvaluations.utils.LoadingDialog
 import com.radian.myradianvaluations.view.activity.BottomNavigationActivity
 import com.radian.myradianvaluations.view.activity.PasscodeActivity
 import com.radian.myradianvaluations.viewmodel.MessageListViewModel
-import com.radian.vendorbridge.Response.SearchFilterResponse
 import kotlinx.android.synthetic.main.activity_bottom_navigation.*
 import kotlinx.android.synthetic.main.fragment_message_list.view.*
 import kotlinx.android.synthetic.main.layout_toolbar.*

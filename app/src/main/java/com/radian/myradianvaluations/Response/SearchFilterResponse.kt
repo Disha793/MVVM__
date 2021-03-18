@@ -1,4 +1,4 @@
-package com.radian.vendorbridge.Response
+package com.radian.myradianvaluations.Response
 
 import android.os.Parcel
 import android.os.Parcelable

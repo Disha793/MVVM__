@@ -3,8 +3,9 @@ package com.radian.myradianvaluations.viewmodel
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.radian.myradianvaluations.Response.OrderListResponse
 import com.radian.myradianvaluations.repository.OrdersRepository
-import com.radian.vendorbridge.Response.OrderListResponse
+
 
 class OrdersViewModel :ViewModel(){
     private lateinit var orderRepository: OrdersRepository

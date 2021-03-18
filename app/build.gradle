@@ -82,13 +82,13 @@ dependencies {
 //Firebase Analytics
     implementation 'com.google.firebase:firebase-analytics:18.0.1'
     implementation 'com.google.firebase:firebase-messaging:20.2.3'
-    // implementation 'com.google.firebase:firebase-crashlytics:17.0.0'
+    implementation 'com.google.firebase:firebase-crashlytics:17.1.1'
 //Glide
     implementation 'com.github.bumptech.glide:glide:4.10.0'
     //Picasso
     implementation 'com.squareup.picasso:picasso:2.5.2'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
-    implementation 'com.google.firebase:firebase-crashlytics:17.1.1'
+
 //for databinding
     kapt 'com.android.databinding:compiler:3.1.4'
     //implementing multidex

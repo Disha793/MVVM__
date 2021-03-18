@@ -30,6 +30,7 @@ import com.radian.myradianvaluations.Response.Categories
 import com.radian.myradianvaluations.Response.UploadedPhotos
 import com.radian.myradianvaluations.constants.Const
 import com.radian.myradianvaluations.databinding.ActivityCameraBinding
+import com.radian.myradianvaluations.utils.CommonUtils
 import com.radian.myradianvaluations.extensions.toastShort
 import com.radian.myradianvaluations.utils.LogUtils
 import com.radian.myradianvaluations.utils.Pref
@@ -132,6 +133,13 @@ class CameraActivity : AppCompatActivity(), View.OnClickListener {
                     val msg = "Photo capture succeeded: $savedUri"
 
                     listCategories[currentListPosition].imageUri = savedUri.toString()
+                    listCategories[currentListPosition].timeStamp =
+                        CommonUtils.convertDatetoString(
+                            Date(),
+                            SimpleDateFormat(Const.formatAppoinmnt)
+                        )
+                    listCategories[currentListPosition].lat = 0.0
+                    listCategories[currentListPosition].long = 0.0
                     Pref.setCategoriesArrayList(
                         this@CameraActivity,
                         Const.CATEGORIES_SHARED_PREF_KEY,

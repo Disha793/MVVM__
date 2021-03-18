@@ -22,6 +22,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.radian.myradianvaluations.BuildConfig
 import com.radian.myradianvaluations.R
+import com.radian.myradianvaluations.Response.NewOrderDetailResponse
 import com.radian.myradianvaluations.constants.APIStatus
 import com.radian.myradianvaluations.constants.Const
 import com.radian.myradianvaluations.extensions.observeOnce
@@ -36,7 +37,6 @@ import com.radian.myradianvaluations.view.activity.PasscodeActivity
 import com.radian.myradianvaluations.viewmodel.NewOrdrDetailViewModel
 import com.radian.myradianvaluations.viewmodel.NewOrdrDetailViewModelFactory
 import com.radian.myradianvaluations.viewmodel.NewOrdrViewModelFactory
-import com.radian.vendorbridge.Response.NewOrderDetailResponse
 import kotlinx.android.synthetic.main.activity_bottom_navigation.*
 import kotlinx.android.synthetic.main.dialog_add_event.view.*
 import kotlinx.android.synthetic.main.fragment_new_order_detail.view.*
@@ -502,18 +502,26 @@ class NewOrderDetailFragment : Fragment(), View.OnClickListener {
         when (v?.id) {
 
             R.id.linearAddress -> {
-                val mapIntent = CommonUtils.getMapIntent(orderDetail.lat, orderDetail.lng)
-                if (mapIntent.resolveActivity(context!!.getPackageManager()) != null) {
-                    context!!.startActivity(mapIntent)
+                orderDetail?.let{
+                    val mapIntent = CommonUtils.getMapIntent(it.lat, it.lng)
+                    if (mapIntent.resolveActivity(context!!.packageManager) != null) {
+                        context!!.startActivity(mapIntent)
+                    }
                 }
+
             }
             R.id.linearProduct -> {
-                val url =
-                        BuildConfig.HOST + "mobile/Dashboard/GetDownloadOLEDocument?OrderGenID=" + orderDetail.orderGenId + "&ItemSrNo=" + orderDetail.itemSrNo + "&UserId=" + orderDetail.userId + "&ServiceRequestType=" +
-                                orderDetail.serviceRequestType
-                val browserIntent = Intent(Intent.ACTION_VIEW)
-                browserIntent.setDataAndType(Uri.parse(url), "application/pdf")
-                context!!.startActivity(browserIntent)
+               orderDetail?.let{
+                   val url =
+                       BuildConfig.HOST + "mobile/Dashboard/GetDownloadOLEDocument?OrderGenID=" + it.orderGenId + "&ItemSrNo=" + it.itemSrNo + "&UserId=" + it.userId + "&ServiceRequestType=" +
+                               it.serviceRequestType
+                   val browserIntent = Intent(Intent.ACTION_VIEW)
+                   browserIntent.setDataAndType(Uri.parse(url), "application/pdf")
+                   context!!.startActivity(browserIntent)
+
+               }
+
+
             }
             R.id.btnAccept -> {
                 if (orderDetail.isAssigned == 1) {

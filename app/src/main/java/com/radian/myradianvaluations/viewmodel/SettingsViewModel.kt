@@ -4,9 +4,10 @@ import android.content.Context
 import android.provider.Settings
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.radian.myradianvaluations.Response.NotiStatusResponse
+import com.radian.myradianvaluations.Response.StatusResponse
 import com.radian.myradianvaluations.repository.SettingsRepository
-import com.radian.vendorbridge.Response.NotiStatusResponse
-import com.radian.vendorbridge.Response.StatusResponse
+
 
 class SettingsViewModel : ViewModel() {
     private lateinit var settingsRepository: SettingsRepository

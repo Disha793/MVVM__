@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.radian.myradianvaluations.R
+import com.radian.myradianvaluations.Response.OrderListResponse
 import com.radian.myradianvaluations.adapter.OrdersAdapter
 import com.radian.myradianvaluations.constants.APIStatus
 import com.radian.myradianvaluations.extensions.toastShort
@@ -19,7 +20,6 @@ import com.radian.myradianvaluations.utils.LoadingDialog
 import com.radian.myradianvaluations.view.activity.BottomNavigationActivity
 import com.radian.myradianvaluations.view.activity.PasscodeActivity
 import com.radian.myradianvaluations.viewmodel.OrdersViewModel
-import com.radian.vendorbridge.Response.OrderListResponse
 import kotlinx.android.synthetic.main.activity_bottom_navigation.*
 import kotlinx.android.synthetic.main.fragment_orders.view.*
 import kotlinx.android.synthetic.main.layout_toolbar.*

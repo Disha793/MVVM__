@@ -8,13 +8,14 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.radian.myradianvaluations.R
+import com.radian.myradianvaluations.Response.NewOrderResponse
+import com.radian.myradianvaluations.networking.ApiResponseCallBack
 import com.radian.myradianvaluations.networking.ApiServiceProviderGeneric
 import com.radian.myradianvaluations.networking.ReturnType
 import com.radian.myradianvaluations.utils.CommonUtils
 import com.radian.myradianvaluations.utils.LoadingDialog
 import com.radian.myradianvaluations.utils.LogUtils
-import com.radian.vendorbridge.Response.NewOrderResponse
-import com.sunteckindia.networking.ApiResponseCallBack
+
 class NewOrdrViewModelFactory(private val context:Context) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(NewOrderViewModel::class.java)) {

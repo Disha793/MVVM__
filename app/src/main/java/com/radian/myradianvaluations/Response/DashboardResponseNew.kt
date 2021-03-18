@@ -1,7 +1,8 @@
-package com.radian.vendorbridge.Response
+package com.radian.myradianvaluations
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import com.radian.myradianvaluations.Response.ErrorInfo
 
 
 class DashboardResponseNew {

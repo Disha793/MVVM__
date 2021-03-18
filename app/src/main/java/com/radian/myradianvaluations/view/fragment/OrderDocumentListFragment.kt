@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.radian.myradianvaluations.BuildConfig
 import com.radian.myradianvaluations.R
+import com.radian.myradianvaluations.Response.OrderDetailResponse
+import com.radian.myradianvaluations.Response.OrderDocResponse
 import com.radian.myradianvaluations.constants.APIStatus
 import com.radian.myradianvaluations.constants.Const
 import com.radian.myradianvaluations.extensions.toastShort
@@ -24,8 +26,6 @@ import com.radian.myradianvaluations.utils.Pref
 import com.radian.myradianvaluations.view.activity.BottomNavigationActivity
 import com.radian.myradianvaluations.view.activity.PasscodeActivity
 import com.radian.myradianvaluations.viewmodel.DocumentListViewModel
-import com.radian.vendorbridge.Response.OrderDetailResponse
-import com.radian.vendorbridge.Response.OrderDocResponse
 import kotlinx.android.synthetic.main.activity_bottom_navigation.*
 import kotlinx.android.synthetic.main.fragment_document_list.view.*
 import kotlinx.android.synthetic.main.fragment_document_list.view.txtdoc
