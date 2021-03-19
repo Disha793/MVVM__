@@ -194,4 +194,5 @@ The app streamlines every step of the process, including accepting orders, sched
     <string name="select_asset">Please select asset</string>
     <string name="unknown_viewmodel">Unknown View Model class</string>
     <string name="photo_upload">Photo Upload</string>
+    <string name="success">Success</string>
 </resources>

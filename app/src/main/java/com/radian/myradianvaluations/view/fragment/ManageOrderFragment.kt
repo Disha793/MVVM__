@@ -24,6 +24,7 @@ import com.radian.myradianvaluations.constants.APIStatus
 import com.radian.myradianvaluations.constants.Const
 import com.radian.myradianvaluations.extensions.*
 import com.radian.myradianvaluations.utils.CommonUtils
+import com.radian.myradianvaluations.utils.LogUtils
 import com.radian.myradianvaluations.utils.Pref
 import com.radian.myradianvaluations.view.activity.BottomNavigationActivity
 import com.radian.myradianvaluations.view.activity.PasscodeActivity
@@ -86,17 +87,13 @@ class ManageOrderFragment : Fragment(), View.OnClickListener {
             if (it.status == APIStatus.ok) {
                 //on success
                 if (actionType == "R") {
+                    LogUtils.logD(classTag, resources.getString(R.string.success))
                     //                (context as BottomNavigationActivity).pushFragment(
 //                        RevisedOrderDetailFragment.newInstance(orderDetail.itemId!!),
 //                        true
 //                )
                 } else if (actionType == "N") {
-                    (context as BottomNavigationActivity).pushFragment(
-                            MessageChatFragment.newInstance(
-                                    orderDetail.orderGenId!!,
-                                    orderDetail.itemId
-                            ), true
-                    )
+                    LogUtils.logD(classTag, resources.getString(R.string.success))
                 }
 
             } else if (it.status.equals(APIStatus.unauth, true)) {
@@ -297,6 +294,12 @@ class ManageOrderFragment : Fragment(), View.OnClickListener {
                     actionType = "N"
                     markAsReadRequest()
                 }
+                (context as BottomNavigationActivity).pushFragment(
+                        MessageChatFragment.newInstance(
+                                orderDetail.orderGenId!!,
+                                orderDetail.itemId
+                        ), true
+                )
             }
             R.id.linearRevisions -> {
                 if (orderDetail.newRevisionFlag) {

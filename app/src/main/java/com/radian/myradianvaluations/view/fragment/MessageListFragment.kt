@@ -1,14 +1,13 @@
 package com.radian.myradianvaluations.view.fragment
 
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.text.HtmlCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.radian.myradianvaluations.R
@@ -18,10 +17,12 @@ import com.radian.myradianvaluations.constants.APIStatus
 import com.radian.myradianvaluations.constants.Const
 import com.radian.myradianvaluations.extensions.toastShort
 import com.radian.myradianvaluations.utils.CommonUtils
-import com.radian.myradianvaluations.utils.LoadingDialog
+import com.radian.myradianvaluations.utils.DashboardAbbr
+import com.radian.myradianvaluations.utils.Pref
 import com.radian.myradianvaluations.view.activity.BottomNavigationActivity
 import com.radian.myradianvaluations.view.activity.PasscodeActivity
 import com.radian.myradianvaluations.viewmodel.MessageListViewModel
+import com.radian.myradianvaluations.viewmodel.MessageListViewModelFactory
 import kotlinx.android.synthetic.main.activity_bottom_navigation.*
 import kotlinx.android.synthetic.main.fragment_message_list.view.*
 import kotlinx.android.synthetic.main.layout_toolbar.*
@@ -32,54 +33,79 @@ class MessageListFragment : Fragment(), View.OnClickListener {
     lateinit var firebaseAnalytics: FirebaseAnalytics
     private val firebaseParams = Bundle()
     private lateinit var messageListViewModel: MessageListViewModel
-    override fun onClick(p0: View?) {
-        //onClick event
-
-    }
-
+    private lateinit var factory: MessageListViewModelFactory
     internal lateinit var view: View
     private val classTag = this.javaClass.name
     private val messageList = ArrayList<SearchFilterResponse.Data.OrderList.Order>()
+
+    override fun onCreateView(
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
+    ): View? {
+        view = inflater.inflate(R.layout.fragment_message_list, container, false)
+        (context as BottomNavigationActivity).txtClear.setOnClickListener(this)
+        setToolbar()
+        initViewModel()
+        observeMessageListData()
+        return view
+    }
+
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         firebaseAnalytics = FirebaseAnalytics.getInstance(context!!)
         firebaseParams.clear()
         firebaseParams.putString(Const.screenLaunched, "Message")
         CommonUtils.addParamstoFirebaseEvent(
-            firebaseAnalytics,
-            Const.screenLaunched,
-            firebaseParams
+                firebaseAnalytics,
+                Const.screenLaunched,
+                firebaseParams
         )
-        messageList.clear()
-        messageListViewModel =
-            ViewModelProvider(context as BottomNavigationActivity).get(MessageListViewModel::class.java)
-        messageListViewModel.init(context as BottomNavigationActivity)
-        view.recyclerview.adapter =
-            MessageListAdapter(
-                context!!,
-                messageList,
-                view,
-                this@MessageListFragment
-            )
+        manageUI()
+
         //Disha: For next release
         if (messageList.isEmpty())
             getMessageList()
-
-        CommonUtils.hideKeybord(
-            (context as BottomNavigationActivity).window.decorView.rootView,
-            context!!
-        )
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        view = inflater.inflate(R.layout.fragment_message_list, container, false)
-        (context as BottomNavigationActivity).txtClear.setOnClickListener(this)
-        setToolbar()
-        return view
+    private fun initViewModel() {
+        factory = MessageListViewModelFactory(context!!)
+        messageListViewModel = ViewModelProvider(this, factory).get(MessageListViewModel::class.java)
+    }
+
+    private fun observeMessageListData() {
+        messageListViewModel.messageListResponse.observe(viewLifecycleOwner, Observer {
+            if (it.status.equals(APIStatus.ok, true)) {
+                messageList.clear()
+                messageList.addAll(it.data.orderList.messageList)
+                view.recyclerview.adapter?.notifyDataSetChanged()
+                setMessageCount(messageList.size.toString())
+                showNoMsg()
+            } else if (it.status.equals(APIStatus.unauth, true)) {
+                context!!.toastShort(it.errorInfo.get(0).errorMessage)
+
+                var intent = Intent(context!!, PasscodeActivity::class.java)
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                startActivity(intent)
+            }
+        })
+
+    }
+
+    private fun manageUI() {
+        messageList.clear()
+        view.recyclerview.adapter =
+                MessageListAdapter(
+                        context!!,
+                        messageList,
+                        view,
+                        this@MessageListFragment
+                )
+        CommonUtils.hideKeybord(
+                (context as BottomNavigationActivity).window.decorView.rootView,
+                context!!
+        )
     }
 
     private fun setMessageCount(count: String) {
@@ -91,10 +117,10 @@ class MessageListFragment : Fragment(), View.OnClickListener {
         }
 
         view.txtOrderCount.setText(
-            HtmlCompat.fromHtml(
-                countMessageTitle,
-                HtmlCompat.FROM_HTML_MODE_LEGACY
-            )
+                HtmlCompat.fromHtml(
+                        countMessageTitle,
+                        HtmlCompat.FROM_HTML_MODE_LEGACY
+                )
         )
     }
 
@@ -108,41 +134,15 @@ class MessageListFragment : Fragment(), View.OnClickListener {
     }
 
     fun getMessageList() {
-        LoadingDialog.show(context as BottomNavigationActivity)
-        messageListViewModel.getMessageList().let {
-            it?.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-                LoadingDialog.dismissDialog()
-                if (it.status.equals(APIStatus.ok, true)) {
-                    messageList.clear()
-                    messageList.addAll(it.data.orderList.messageList)
-                    view.recyclerview.adapter?.notifyDataSetChanged()
-                    setMessageCount(messageList.size.toString())
-                    showNoMsg()
-                } else if (it.status.equals(APIStatus.unauth, true)) {
-                    context!!.toastShort(it.errorInfo.get(0).errorMessage)
+        val postParam = HashMap<String, Any?>()
 
-                    var intent = Intent(context!!, PasscodeActivity::class.java)
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                    startActivity(intent)
-                }
-            })
-            if (it == null) {
-                LoadingDialog.dismissDialog()
-                LoadingDialog.dismissDialog()
-                CommonUtils.showOkDialog(
-                    context!!,
-                    getString(R.string.please_try_again),
-                    DialogInterface.OnClickListener { _, _ ->
-                        getMessageList()
-
-                    },
-                    getString(R.string.ok)
-                )
-            }
-        }
-
+        postParam.put("PhoneNumber", Pref.getValue(context!!, Pref.PHONE_NUMBER, ""))
+        postParam.put("DeviceID", CommonUtils.getDeviceUUID(context!!))
+        postParam.put("MobileUserId", Pref.getValue(context!!, Pref.MOBILE_USER_ID, 0))
+        postParam.put("OrganizationIds", Pref.getValue(context!!, Pref.ORGANIZATN_ID, 0))
+        postParam.put("Tiles", DashboardAbbr.N_MESSAGE)
+        messageListViewModel.getMessageList(postParam)
     }
-
 
     private fun showNoMsg() {
         if (messageList.isEmpty()) {
@@ -158,14 +158,16 @@ class MessageListFragment : Fragment(), View.OnClickListener {
         }
     }
 
-
     override fun onResume() {
         super.onResume()
         CommonUtils.hideKeybord(
-            (context as BottomNavigationActivity).window.decorView.rootView,
-            context!!
+                (context as BottomNavigationActivity).window.decorView.rootView,
+                context!!
         )
 
     }
 
+    override fun onClick(p0: View?) {
+        //onClick event
+    }
 }

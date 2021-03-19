@@ -24,5 +24,8 @@ enum class ReturnType(val endPoint: String) {
     POST_OrderMarkDocReadReq("mobile/Dashboard/SaveDocumentMarkAsRead"),
     //For Revision and Message mark As read from order detail
     POST_OrderMarkReadReq("Mobile/notification/ReadBulkNotification"),
+    POST_MessageChat("mobile/Dashboard/GetTileOrderNotes"),
+    POST_SendMessage("mobile/Dashboard/AddMessage"),
+    POST_DashboardTile("mobile/Dashboard/GetDashboardTileDetails"),
 
 }
