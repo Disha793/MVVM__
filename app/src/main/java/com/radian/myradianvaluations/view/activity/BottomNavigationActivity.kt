@@ -7,7 +7,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.Toast
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -115,7 +114,7 @@ class BottomNavigationActivity : AppCompatActivity(), View.OnClickListener {
             }
             NotificationConstants.notiScrRevisionOrdrDetil -> {
                 pushFragment(
-                        RevisedOrderDetailFragment.newInstance(it.getInt(Const.idTag)), false
+                        OrderRevisionRequestFragment.newInstance(it.getInt(Const.idTag)), false
                 )
             }
             NotificationConstants.notiScrDocument -> {

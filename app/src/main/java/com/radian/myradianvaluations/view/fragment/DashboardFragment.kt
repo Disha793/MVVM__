@@ -99,7 +99,7 @@ class DashboardFragment : Fragment(), View.OnClickListener {
                                 }
                                 DashboardAbbr.revision -> {
                                     (context as BottomNavigationActivity).pushFragment(
-                                            RevisedOrderDetailFragment.newInstance(
+                                            OrderRevisionRequestFragment.newInstance(
                                                     dashboardList.get(
                                                             position
                                                     ).itemId!!
