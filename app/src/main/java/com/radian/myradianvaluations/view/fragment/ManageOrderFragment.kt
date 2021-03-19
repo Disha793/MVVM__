@@ -284,7 +284,6 @@ class ManageOrderFragment : Fragment(), View.OnClickListener {
                     emailIntent.putExtra(Intent.EXTRA_TEXT, "Body")
                     startActivity(Intent.createChooser(emailIntent, "Send email..."))
                 }
-
             }
             R.id.linearDocument -> {
                 (context as BottomNavigationActivity).pushFragment(
