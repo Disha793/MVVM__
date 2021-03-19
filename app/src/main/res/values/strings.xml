@@ -77,10 +77,27 @@ The app streamlines every step of the process, including accepting orders, sched
     <string name="settingsTitle">Settings</string>
     <string name="coc">Code of Conduct</string>
     <string name="radianResponse">Radian’s response to COVID 19</string>
+    <string name="revisionTitle">Revisions</string>
+    <string name="appointmentTitle">Appointment</string>
     <!--Out of office-->
     <string name="aboutUs">About us</string>
     <string name="confirm">Confirm</string>
     <string name="cancel">Cancel</string>
+    <!--Revision Request-->
+    <string name="revisionLabel">Revision</string>
+    <string name="detail">Details</string>
+    <string name="no_revision_found">No Revision Found</string>
+    <!--Appointment screen labels-->
+    <string name="add_edit_title">Add/Edit Appointment Time</string>
+    <string name="new_date_time">Date and Time</string>
+    <string name="add_note">Add Note</string>
+    <string name="save_changes">Save Changes</string>
+    <string name="appointmnt_details">Appointment Details</string>
+    <string name="time">Time</string>
+    <string name="apt_address">Address</string>
+    <string name="contact_name">Contact Name</string>
+    <string name="apt_phone">Phone</string>
+    <string name="apt_email">Email</string>
     <!--Passcode labels-->
     <string name="enter_access_code">Please enter your passcode</string>
     <string name="enter_current_access_code">Please enter your current passcode</string>
@@ -194,5 +211,7 @@ The app streamlines every step of the process, including accepting orders, sched
     <string name="select_asset">Please select asset</string>
     <string name="unknown_viewmodel">Unknown View Model class</string>
     <string name="photo_upload">Photo Upload</string>
+    <string name="order">Order</string>
+
     <string name="success">Success</string>
 </resources>
