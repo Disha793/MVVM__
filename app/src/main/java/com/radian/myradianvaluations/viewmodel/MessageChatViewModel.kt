@@ -13,7 +13,6 @@ import com.radian.myradianvaluations.Response.StatusResponse
 import com.radian.myradianvaluations.networking.ApiResponseCallBack
 import com.radian.myradianvaluations.networking.ApiServiceProviderGeneric
 import com.radian.myradianvaluations.networking.ReturnType
-import com.radian.myradianvaluations.repository.MessageChatRepository
 import com.radian.myradianvaluations.utils.CommonUtils
 import com.radian.myradianvaluations.utils.LoadingDialog
 import com.radian.myradianvaluations.utils.LogUtils

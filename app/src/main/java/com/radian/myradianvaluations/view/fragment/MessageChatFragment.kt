@@ -16,7 +16,6 @@ import com.radian.myradianvaluations.Response.MessageChatResponse
 import com.radian.myradianvaluations.adapter.MessageChatAdapter
 import com.radian.myradianvaluations.constants.APIStatus
 import com.radian.myradianvaluations.constants.Const
-import com.radian.myradianvaluations.extensions.observeOnce
 import com.radian.myradianvaluations.extensions.snackAction
 import com.radian.myradianvaluations.extensions.toastShort
 import com.radian.myradianvaluations.utils.CommonUtils
@@ -27,7 +26,6 @@ import com.radian.myradianvaluations.viewmodel.MessageChatViewModel
 import com.radian.myradianvaluations.viewmodel.MessageChatViewModelFactory
 import kotlinx.android.synthetic.main.fragment_message_chat.view.*
 import kotlinx.android.synthetic.main.layout_toolbar.*
-
 
 class MessageChatFragment() : Fragment(), View.OnClickListener {
 
@@ -40,8 +38,7 @@ class MessageChatFragment() : Fragment(), View.OnClickListener {
     val firebaseParams = Bundle()
     private lateinit var messageChatViewModel: MessageChatViewModel
     private lateinit var factory: MessageChatViewModelFactory
-
-    override fun onCreateView(
+        override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
@@ -64,6 +61,7 @@ class MessageChatFragment() : Fragment(), View.OnClickListener {
         view.imgSend.setOnClickListener(this)
         getMessageChat()
     }
+
     private fun observeChatData() {
 
         messageChatViewModel.messageChatResponse.observe(viewLifecycleOwner, Observer {
@@ -102,6 +100,7 @@ class MessageChatFragment() : Fragment(), View.OnClickListener {
         factory = MessageChatViewModelFactory(context!!)
         messageChatViewModel = ViewModelProvider(this, factory).get(MessageChatViewModel::class.java)
     }
+
     private fun manageUI() {
         view.msgRecycle.adapter =
                 MessageChatAdapter(context!!, chatList)
@@ -109,8 +108,6 @@ class MessageChatFragment() : Fragment(), View.OnClickListener {
         var linearLayoutManager = LinearLayoutManager(activity)
 
         view.msgRecycle.layoutManager = linearLayoutManager
-
-
     }
 
     companion object {

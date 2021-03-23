@@ -9,6 +9,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.radian.myradianvaluations.R
 import com.radian.myradianvaluations.Response.SearchFilterResponse
+import com.radian.myradianvaluations.Response.StatusResponse
 import com.radian.myradianvaluations.networking.ApiResponseCallBack
 import com.radian.myradianvaluations.networking.ApiServiceProviderGeneric
 import com.radian.myradianvaluations.networking.ReturnType
@@ -27,12 +28,16 @@ class MessageListViewModelFactory(private val context: Context) : ViewModelProvi
 
 class MessageListViewModel(private val context: Context) : ViewModel(), ApiResponseCallBack {
     var messageListResponse = MutableLiveData<SearchFilterResponse>()
+    var deleteMessageResponse = MutableLiveData<StatusResponse>()
     private val apiServiceProviderGeneric = ApiServiceProviderGeneric(this)
 
     fun getMessageList(postParams: HashMap<String, Any?>) {
         apiServiceProviderGeneric.postCall(context, ReturnType.POST_DashboardTile.endPoint, ReturnType.POST_DashboardTile, postParams)
     }
 
+    fun deleteMessage(postParams: HashMap<String, Any?>){
+        apiServiceProviderGeneric.postCall(context, ReturnType.POST_DeleteMessage.endPoint, ReturnType.POST_DeleteMessage, postParams)
+    }
     override fun onPreExecute(returnType: ReturnType) {
         LoadingDialog.show(context)
     }
@@ -48,6 +53,14 @@ class MessageListViewModel(private val context: Context) : ViewModel(), ApiRespo
                     )
                     LogUtils.logD("", "" + response.status)
                     messageListResponse.value = response
+                }
+                ReturnType.POST_DeleteMessage -> {
+                    val response = Gson().fromJson<StatusResponse>(
+                        response,
+                        object : TypeToken<StatusResponse>() {}.type
+                    )
+                    LogUtils.logD("", "" + response.status)
+                    deleteMessageResponse.value = response
                 }
             }
 

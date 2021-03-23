@@ -27,5 +27,6 @@ enum class ReturnType(val endPoint: String) {
     POST_MessageChat("mobile/Dashboard/GetTileOrderNotes"),
     POST_SendMessage("mobile/Dashboard/AddMessage"),
     POST_DashboardTile("mobile/Dashboard/GetDashboardTileDetails"),
+    POST_DeleteMessage("mobile/Dashboard/SaveMessageMarkAsRead"),
 
 }

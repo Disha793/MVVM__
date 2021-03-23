@@ -51,7 +51,6 @@ class MessageListFragment : Fragment(), View.OnClickListener {
         return view
     }
 
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         firebaseAnalytics = FirebaseAnalytics.getInstance(context!!)
@@ -91,6 +90,7 @@ class MessageListFragment : Fragment(), View.OnClickListener {
             }
         })
 
+
     }
 
     private fun manageUI() {
@@ -100,7 +100,7 @@ class MessageListFragment : Fragment(), View.OnClickListener {
                         context!!,
                         messageList,
                         view,
-                        this@MessageListFragment
+                        this@MessageListFragment,messageListViewModel,viewLifecycleOwner
                 )
         CommonUtils.hideKeybord(
                 (context as BottomNavigationActivity).window.decorView.rootView,
@@ -170,4 +170,6 @@ class MessageListFragment : Fragment(), View.OnClickListener {
     override fun onClick(p0: View?) {
         //onClick event
     }
+
+
 }

@@ -2,28 +2,21 @@ package com.radian.myradianvaluations.adapter
 
 import android.content.Context
 import android.content.DialogInterface
-import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.LifecycleOwner
+import androidx.recyclerview.widget.RecyclerView
 import com.radian.myradianvaluations.R
 import com.radian.myradianvaluations.Response.SearchFilterResponse
-import com.radian.myradianvaluations.Response.StatusResponse
-import com.radian.myradianvaluations.network.APIList
-import com.radian.myradianvaluations.network.RetrofitBase
 import com.radian.myradianvaluations.utils.CommonUtils
-import com.radian.myradianvaluations.utils.LoadingDialog
-import com.radian.myradianvaluations.utils.LogUtils
 import com.radian.myradianvaluations.utils.Pref
 import com.radian.myradianvaluations.view.activity.BottomNavigationActivity
 import com.radian.myradianvaluations.view.fragment.ManageOrderFragment
 import com.radian.myradianvaluations.view.fragment.MessageChatFragment
 import com.radian.myradianvaluations.view.fragment.MessageListFragment
-import io.reactivex.Observer
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
+import com.radian.myradianvaluations.viewmodel.MessageListViewModel
 import kotlinx.android.synthetic.main.fragment_message_list.view.*
 import kotlinx.android.synthetic.main.layout_toolbar.*
 import kotlinx.android.synthetic.main.row_message_list.view.*
@@ -33,7 +26,9 @@ class MessageListAdapter(
     context: Context,
     messageList: ArrayList<SearchFilterResponse.Data.OrderList.Order>,
     messageListFragment: View,
-    val messageListFragment1: MessageListFragment
+    val messageListFragment1: MessageListFragment,
+    val messageListViewModel: MessageListViewModel,
+    val viewLifecycleOwner: LifecycleOwner
 
 ) : RecyclerView.Adapter<MessageListAdapter.ViewHolder>() {
     val context = context
@@ -41,8 +36,20 @@ class MessageListAdapter(
     val messageListFragment = messageListFragment
     val selectedMessage = ArrayList<Int>()
     var positionList = ArrayList<Int>()
-    var postParam = HashMap<String, Any?>()
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder {
+
+        messageListViewModel.deleteMessageResponse.observe(
+            viewLifecycleOwner,
+            androidx.lifecycle.Observer {
+                for (i in 0..positionList.size - 1) {
+                    messageList.removeAt(0)
+                    positionList.removeAt(0)
+                    notifyDataSetChanged()
+                }
+                messageListFragment1.getMessageList()
+                showEmptyList()
+            })
+
         return ViewHolder(
             LayoutInflater.from(context).inflate(R.layout.row_message_list, p0, false)
         )
@@ -50,7 +57,6 @@ class MessageListAdapter(
 
     override fun getItemCount(): Int {
         return messageList.size
-
     }
 
     override fun getItemId(position: Int): Long {
@@ -58,6 +64,7 @@ class MessageListAdapter(
     }
 
     override fun getItemViewType(position: Int) = position
+
     override fun onBindViewHolder(p0: ViewHolder, p1: Int) {
         p0.orderId.setText(messageList.get(p1).orderGenId.toString())
         p0.txtMsgTitle.setText(messageList.get(p1).product)
@@ -71,7 +78,6 @@ class MessageListAdapter(
                         R.drawable.img_unselect
                     )
                 )
-
             }
             "1" -> {
                 p0.checkBox.setImageDrawable(
@@ -80,7 +86,6 @@ class MessageListAdapter(
                         R.drawable.img_select
                     )
                 )
-
             }
         }
 
@@ -101,6 +106,7 @@ class MessageListAdapter(
             )
 
         })
+
         p0.checkBox.setOnClickListener {
             when (messageList.get(p0.adapterPosition).tag) {
                 "0" -> {
@@ -141,11 +147,14 @@ class MessageListAdapter(
             }
 
         }
+
         p0.linearClear.setOnClickListener(View.OnClickListener {
+            selectedMessage.add(messageList.get(p0.adapterPosition).itemNoteId!!)
             messageList.removeAt(p1)
             notifyDataSetChanged()
             deleteMessage()
         })
+
         (context as BottomNavigationActivity).txtClear.setOnClickListener(View.OnClickListener {
             if (!positionList.isEmpty()) {
                 if (positionList.size > 1) {
@@ -153,10 +162,7 @@ class MessageListAdapter(
                         context,
                         context.resources.getString(R.string.clear_message),
                         DialogInterface.OnClickListener { _, _ ->
-
                             deleteMessage()
-
-
                         },
                         DialogInterface.OnCancelListener { _ ->
 
@@ -193,13 +199,11 @@ class MessageListAdapter(
             messageListFragment.txtNoMsg.visibility = View.VISIBLE
             messageListFragment.txtOrderCount.visibility = View.GONE
             (context as BottomNavigationActivity).txtClear.visibility = View.GONE
-
         }
-
-
     }
 
     fun deleteMessage() {
+        var postParam = HashMap<String, Any?>()
         postParam.put("PhoneNumber", Pref.getValue(context, Pref.PHONE_NUMBER, ""))
         postParam.put("MobileUserId", Pref.getValue(context, Pref.MOBILE_USER_ID, 0).toString())
         postParam.put("ItemNoteIds", selectedMessage)
@@ -208,49 +212,9 @@ class MessageListAdapter(
         } else {
             postParam.put("ClearAll", "N")
         }
-
         postParam.put("DeviceID", CommonUtils.getDeviceUUID(context))
         postParam.put("OrganizationIds", Pref.getValue(context, Pref.ORGANIZATN_ID, 0).toString())
-        RetrofitBase.getClient().create(APIList::class.java)
-            .deleteMessage(Pref.getValue(context, Pref.AUTH_TOKEN, "")!!, postParam)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : Observer<StatusResponse> {
-                override fun onComplete() {
-                    LoadingDialog.dismissDialog()
-
-                }
-
-                override fun onSubscribe(d: Disposable) {
-                    LoadingDialog.show(context)
-                }
-
-                override fun onNext(t: StatusResponse) {
-                    for (i in 0..positionList.size - 1) {
-                        messageList.removeAt(0)
-                        positionList.removeAt(0)
-                        notifyDataSetChanged()
-
-
-                    }
-                    messageListFragment1.getMessageList()
-                    showEmptyList()
-                }
-
-                override fun onError(e: Throwable) {
-                    LogUtils.logE(MessageListFragment::class.java.toString(), e.message!!, e)
-                    LoadingDialog.dismissDialog()
-                    CommonUtils.showOkDialog(
-                        context,
-                        context.getString(R.string.please_try_again),
-                        DialogInterface.OnClickListener { _, _ ->
-                            deleteMessage()
-
-                        },
-                        context.getString(R.string.ok)
-                    )
-                }
-            })
+        messageListViewModel.deleteMessage(postParam)
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -263,7 +227,7 @@ class MessageListAdapter(
         val txtAdd = view.txtAdd
         val cardView = view.cardView
         val linearClear = view.linearClear
-
     }
 
 }
+
