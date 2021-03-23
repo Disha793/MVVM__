@@ -30,7 +30,7 @@ enum class ReturnType(val endPoint: String) {
     //Revision List from order detail
     POST_OrderRevisionRequest("mobile/Dashboard/GetTileOrderRevision"),
     //to add/edit appoitment from order detail
-    POST_AddAppointment("mobile/Dashboard/AddEditInspection")
-    POST_DeleteMessage("mobile/Dashboard/SaveMessageMarkAsRead"),
+    POST_AddAppointment("mobile/Dashboard/AddEditInspection"),
+    POST_DeleteMessage("mobile/Dashboard/SaveMessageMarkAsRead")
 
 }

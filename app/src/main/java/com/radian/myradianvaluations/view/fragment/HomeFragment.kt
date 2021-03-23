@@ -16,7 +16,10 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.radian.myradianvaluations.BuildConfig
 import com.radian.myradianvaluations.R
 import com.radian.myradianvaluations.constants.Const
+import com.radian.myradianvaluations.extensions.makeGone
+import com.radian.myradianvaluations.extensions.makeVisible
 import com.radian.myradianvaluations.utils.CommonUtils
+import com.radian.myradianvaluations.utils.EventBusMessage
 import com.radian.myradianvaluations.utils.Pref
 import com.radian.myradianvaluations.view.activity.BottomNavigationActivity
 import com.radian.myradianvaluations.view.activity.HelpTroubleActivity
@@ -26,6 +29,9 @@ import kotlinx.android.synthetic.main.activity_bottom_navigation.*
 import kotlinx.android.synthetic.main.dashbard_sidemenu.view.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
 import kotlinx.android.synthetic.main.toolbar_dashboard.view.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 
 class HomeFragment : Fragment(), View.OnClickListener {
@@ -38,8 +44,8 @@ class HomeFragment : Fragment(), View.OnClickListener {
         savedInstanceState: Bundle?
     ): View? {
         view = inflater.inflate(R.layout.fragment_home, container, false)
-        (context as BottomNavigationActivity).layout_toolbar.visibility = View.GONE
-        (context as BottomNavigationActivity).bottomNavigationView.visibility = View.VISIBLE
+        (context as BottomNavigationActivity).layout_toolbar.makeGone()
+        (context as BottomNavigationActivity).bottomNavigationView.makeVisible()
         if (Pref.getValue(context!!, Pref.PROFILE_PIC_STATUS, "").equals("Y", true)) {
             loadProfileImage()
         }
@@ -78,10 +84,10 @@ class HomeFragment : Fragment(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.imgUser -> {
-                view.toolbarDashboard.visibility = View.GONE
-                (context as BottomNavigationActivity).layout_toolbar.visibility = View.GONE
+                view.toolbarDashboard.makeGone()
+                (context as BottomNavigationActivity).layout_toolbar.makeGone()
                 (context as BottomNavigationActivity).pushFragment(ProfileFragment(), true)
-                (context as BottomNavigationActivity).bottomNavigationView.visibility = View.GONE
+                (context as BottomNavigationActivity).bottomNavigationView.makeGone()
             }
             R.id.imgMessage -> {
                 (context as BottomNavigationActivity).pushFragment(MessageListFragment(), true)
@@ -155,12 +161,20 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
     override fun onStart() {
         super.onStart()
-      //  EventBus.getDefault().register(this)
+          EventBus.getDefault().register(this)
     }
 
     override fun onStop() {
         super.onStop()
-        //EventBus.getDefault().unregister(this)
+        EventBus.getDefault().unregister(this)
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onMessageEvent(event: EventBusMessage?) {
+
+        if (event!!.count == 0)
+            view.imgNotiDot.visibility = View.GONE
+        else
+            view.imgNotiDot.visibility = View.VISIBLE
     }
     private fun signoutDialogue() {
         //changed position of positive , negative button due to client requirement

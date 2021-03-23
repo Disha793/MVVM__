@@ -73,7 +73,7 @@ class HomeAdapter(
         holder: ViewHolder,
         position: Int
     ) {
-        holder.nwordrDteTime.visibility = View.VISIBLE
+        holder.nwordrDteTime.makeVisible()
         holder.cardTitle.text = context.getString(R.string.lbl_dash_nwordr)
         holder.txtAdd.text = dashboardList.get(position).displayAddressInfo
         if (!dashboardList[position].appointmentDate.isNullOrBlank() && !dashboardList[position].startTimeSlot.isNullOrEmpty()) {
@@ -97,7 +97,7 @@ class HomeAdapter(
         holder: ViewHolder,
         position: Int
     ) {
-        holder.document.visibility = View.VISIBLE
+        holder.document.makeVisible()
         holder.cardTitle.text = context.getString(R.string.lbl_dash_document)
         holder.txtAdd.text = dashboardList.get(position).displayAddressInfo
         holder.document.text =
@@ -116,13 +116,13 @@ class HomeAdapter(
         holder: ViewHolder,
         position: Int
     ) {
-        holder.inspectnTime.visibility = View.VISIBLE
+        holder.inspectnTime.makeVisible()
         holder.cardTitle.text = context.getString(R.string.lbl_dash_inspectn)
         holder.txtAdd.text = dashboardList.get(position).displayAddressInfo
         holder.inspectnTime.text =
             "Scheduled for " + dashboardList.get(position).appointmentDate
-        holder.linearBtn.visibility = View.VISIBLE
-        holder.revision.visibility = View.GONE
+        holder.linearBtn.makeVisible()
+        holder.revision.makeGone()
         holder.nwordrDteTime.makeGone()
         holder.product.makeGone()
         holder.document.makeGone()
@@ -134,12 +134,12 @@ class HomeAdapter(
         holder: ViewHolder,
         position: Int
     ) {
-        holder.revision.visibility = View.VISIBLE
+        holder.revision.makeVisible()
         holder.cardTitle.text = context.getString(R.string.lbl_dash_revision)
         holder.txtAdd.text = dashboardList[position].displayAddressInfo
         holder.revision.text =
             dashboardList.get(position).revisionRequest?.let { it }
-        holder.linearBtn.visibility = View.VISIBLE
+        holder.linearBtn.makeVisible()
         holder.nwordrDteTime.makeGone()
         holder.product.makeGone()
         holder.inspectnTime.makeGone()
