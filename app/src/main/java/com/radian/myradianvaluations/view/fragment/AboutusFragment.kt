@@ -10,13 +10,15 @@ import androidx.fragment.app.Fragment
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.radian.myradianvaluations.R
 import com.radian.myradianvaluations.constants.Const
+import com.radian.myradianvaluations.extensions.makeGone
+import com.radian.myradianvaluations.extensions.makeVisible
 import com.radian.myradianvaluations.utils.CommonUtils
 import com.radian.myradianvaluations.view.activity.BottomNavigationActivity
 import kotlinx.android.synthetic.main.activity_bottom_navigation.*
 import kotlinx.android.synthetic.main.fragment_about.view.*
 import kotlinx.android.synthetic.main.layout_toolbar.*
 
-class AboutusFragment:Fragment() {
+class AboutusFragment : Fragment() {
     lateinit var firebaseAnalytics: FirebaseAnalytics
     private val firebaseParams = Bundle()
     override fun onCreateView(
@@ -40,16 +42,20 @@ class AboutusFragment:Fragment() {
         firebaseAnalytics = FirebaseAnalytics.getInstance(context!!)
         firebaseParams.clear()
         firebaseParams.putString(Const.screenLaunched, "About")
-        CommonUtils.addParamstoFirebaseEvent(firebaseAnalytics, Const.screenLaunched, firebaseParams)
+        CommonUtils.addParamstoFirebaseEvent(
+            firebaseAnalytics,
+            Const.screenLaunched,
+            firebaseParams
+        )
     }
 
     private fun setToolbar() {
-        (context as BottomNavigationActivity).layout_toolbar.visibility = View.VISIBLE
-        (context as BottomNavigationActivity).txtTitle.visibility = View.VISIBLE
+        (context as BottomNavigationActivity).layout_toolbar.makeVisible()
+        (context as BottomNavigationActivity).txtTitle.makeVisible()
         (context as BottomNavigationActivity).txtTitle.text = resources.getString(R.string.aboutUs)
-        (context as BottomNavigationActivity).imgBack.visibility = View.VISIBLE
-        (context as BottomNavigationActivity).bottomNavigationView.visibility = View.GONE
-        (context as BottomNavigationActivity).txtClear.visibility = View.GONE
+        (context as BottomNavigationActivity).imgBack.makeVisible()
+        (context as BottomNavigationActivity).bottomNavigationView.makeGone()
+        (context as BottomNavigationActivity).txtClear.makeGone()
 
     }
 

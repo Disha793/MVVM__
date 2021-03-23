@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.radian.myradianvaluations.R
 import com.radian.myradianvaluations.Response.OrderListResponse
+import com.radian.myradianvaluations.extensions.makeGone
+import com.radian.myradianvaluations.extensions.makeVisible
 import com.radian.myradianvaluations.interfaces.ListItemClickListener
 import kotlinx.android.synthetic.main.row_open_orders.view.*
 
@@ -31,9 +33,9 @@ class OrdersAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         if (orderList.get(position).notificationCount!! > 1)
-            holder.linearAtten.visibility = View.VISIBLE
+            holder.linearAtten.makeVisible()
         else
-            holder.linearAtten.visibility = View.GONE
+            holder.linearAtten.makeGone()
         holder.lblOrderAdd.text = orderList.get(position).displayAddInfo
         holder.lblorderProduct.text = orderList.get(position).product
         if (!orderList.get(position).appointmentDate.isNullOrEmpty()) {

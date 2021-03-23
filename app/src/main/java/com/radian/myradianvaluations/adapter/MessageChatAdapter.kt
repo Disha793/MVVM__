@@ -10,19 +10,21 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.radian.myradianvaluations.R
 import com.radian.myradianvaluations.Response.MessageChatResponse
+import com.radian.myradianvaluations.extensions.makeGone
+import com.radian.myradianvaluations.extensions.makeVisible
 import com.radian.myradianvaluations.utils.Pref
 import kotlinx.android.synthetic.main.row_message.view.*
 
 class MessageChatAdapter(
-        context: Context,
-        chatList: ArrayList<MessageChatResponse.TileOrderNote>
+    context: Context,
+    chatList: ArrayList<MessageChatResponse.TileOrderNote>
 ) : RecyclerView.Adapter<MessageChatAdapter.ViewHolder>() {
     val context = context
     val chatList = chatList
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder {
         return ViewHolder(
-                LayoutInflater.from(context).inflate(R.layout.row_message, p0, false)
+            LayoutInflater.from(context).inflate(R.layout.row_message, p0, false)
         )
     }
 
@@ -38,20 +40,25 @@ class MessageChatAdapter(
     private fun bindData(holder: ViewHolder, position: Int) {
         holder.txtName.setText(chatList.get(holder.adapterPosition).createdUserName)
         holder.txtMsg.setText(chatList.get(holder.adapterPosition).note)
-        holder.txtDate.visibility = View.VISIBLE
+        holder.txtDate.makeVisible()
         holder.txtDate.setText(chatList.get(position).createdDate)
-        if (chatList.get(holder.adapterPosition).userId == Pref.getValue(context, Pref.USER_ID, 0)) {
+        if (chatList.get(holder.adapterPosition).userId == Pref.getValue(
+                context,
+                Pref.USER_ID,
+                0
+            )
+        ) {
             val params = holder.layout.layoutParams as RecyclerView.LayoutParams
             params.setMargins(200, 0, 0, 0)
             holder.layout.setLayoutParams(params)
-            holder.receiveBubble.visibility = View.VISIBLE
-            holder.sendBubble.visibility = View.GONE
+            holder.receiveBubble.makeVisible()
+            holder.sendBubble.makeGone()
         } else {
             val params = holder.layout.layoutParams as RecyclerView.LayoutParams
             params.setMargins(0, 0, 200, 0)
             holder.layout.setLayoutParams(params)
-            holder.sendBubble.visibility = View.VISIBLE
-            holder.receiveBubble.visibility = View.GONE
+            holder.sendBubble.makeVisible()
+            holder.receiveBubble.makeGone()
 
         }
     }

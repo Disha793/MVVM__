@@ -15,6 +15,10 @@ fun View.makeVisible() {
     this.visibility = View.VISIBLE
 }
 
+fun View.makeInVisible() {
+    this.visibility = View.INVISIBLE
+}
+
 fun View.makeGone() {
     this.visibility = View.GONE
 }
@@ -74,12 +78,13 @@ inline fun View.snack(
     snack.f()
     snack.show()
 }
+
 inline fun View.snackAction(
 
-        mView: View,
-        msg: String,
-        actionText: String,
-        onClickListener: View.OnClickListener
+    mView: View,
+    msg: String,
+    actionText: String,
+    onClickListener: View.OnClickListener
 ) {
     val snackbar = Snackbar.make(mView, msg, Snackbar.LENGTH_INDEFINITE)
     val snackView = snackbar.view

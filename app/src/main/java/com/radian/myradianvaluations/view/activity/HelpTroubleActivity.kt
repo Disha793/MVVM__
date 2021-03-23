@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.radian.myradianvaluations.R
 import com.radian.myradianvaluations.constants.APIStatus
 import com.radian.myradianvaluations.constants.Const
+import com.radian.myradianvaluations.extensions.makeVisible
 import com.radian.myradianvaluations.extensions.observeOnce
 import com.radian.myradianvaluations.viewmodel.HelpTroubleViewModel
 import com.radian.myradianvaluations.viewmodel.HelpViewModelFactory
@@ -25,8 +26,8 @@ class HelpTroubleActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_orginfo)
         initViewModel()
-        imgBack.visibility = View.VISIBLE
-        txtTitle.visibility = View.VISIBLE
+        imgBack.makeVisible()
+        txtTitle.makeVisible()
         txtTitle.setTextColor(ContextCompat.getColor(this, android.R.color.white))
         if (intent != null && intent.getStringExtra(Const.scrTag) != null) {
             intent.getStringExtra(Const.scrTag)?.let {

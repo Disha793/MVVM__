@@ -13,6 +13,8 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.radian.myradianvaluations.R
 import com.radian.myradianvaluations.constants.APIStatus
 import com.radian.myradianvaluations.constants.Const
+import com.radian.myradianvaluations.extensions.makeGone
+import com.radian.myradianvaluations.extensions.makeVisible
 import com.radian.myradianvaluations.extensions.snackAction
 import com.radian.myradianvaluations.extensions.toastShort
 import com.radian.myradianvaluations.utils.CommonUtils
@@ -118,16 +120,16 @@ class SettingsFragment : Fragment(), View.OnClickListener {
     }
 
     private fun setToolbar() {
-        (context as BottomNavigationActivity).layout_toolbar.visibility = View.VISIBLE
+        (context as BottomNavigationActivity).layout_toolbar.makeVisible()
         (context as BottomNavigationActivity).txtTitle.text =
             resources.getString(R.string.settingsTitle)
-        (context as BottomNavigationActivity).imgBack.visibility = View.VISIBLE
-        (context as BottomNavigationActivity).txtClear.visibility = View.GONE
-        (context as BottomNavigationActivity).bottomNavigationView.visibility = View.GONE
+        (context as BottomNavigationActivity).imgBack.makeVisible()
+        (context as BottomNavigationActivity).txtClear.makeGone()
+        (context as BottomNavigationActivity).bottomNavigationView.makeGone()
 
     }
 
-  private  fun getNotificatnStatus() {
+    private fun getNotificatnStatus() {
         LoadingDialog.show(context as BottomNavigationActivity)
         settingsViewModel.getNotiStatus().let {
             it?.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
@@ -163,16 +165,16 @@ class SettingsFragment : Fragment(), View.OnClickListener {
 
     }
 
-  private  fun saveNotiStatus() {
+    private fun saveNotiStatus() {
         LoadingDialog.show(context as BottomNavigationActivity)
         settingsViewModel.saveNotiStatus().let {
             it?.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
                 LoadingDialog.dismissDialog()
                 if (it.status.equals(APIStatus.ok, true)) {
-                   view.snackAction(  view,
-                           "Notification Updated",
-                           "ok",
-                           View.OnClickListener { })
+                    view.snackAction(view,
+                        "Notification Updated",
+                        "ok",
+                        View.OnClickListener { })
 
                 } else if (it.status.equals(APIStatus.unauth, true)) {
 

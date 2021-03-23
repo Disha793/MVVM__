@@ -17,6 +17,7 @@ import com.radian.myradianvaluations.Response.OrderDocResponse
 import com.radian.myradianvaluations.adapter.OrderDocListAdapter
 import com.radian.myradianvaluations.constants.APIStatus
 import com.radian.myradianvaluations.constants.Const
+import com.radian.myradianvaluations.extensions.makeGone
 import com.radian.myradianvaluations.extensions.observeOnce
 import com.radian.myradianvaluations.extensions.toastShort
 import com.radian.myradianvaluations.interfaces.ListItemClickListener
@@ -41,9 +42,9 @@ class OrderDocumentListFragment : Fragment(), View.OnClickListener {
     private lateinit var orderDocumentListViewModel: OrderDocumentListViewModel
     private lateinit var factory: OrderDocumentListViewModelFactory
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         view = inflater.inflate(R.layout.fragment_document_list, container, false)
         firebaseAnalytics = FirebaseAnalytics.getInstance(context!!)
@@ -67,12 +68,13 @@ class OrderDocumentListFragment : Fragment(), View.OnClickListener {
 
     private fun initViewModel() {
         factory = OrderDocumentListViewModelFactory(context!!)
-        orderDocumentListViewModel = ViewModelProvider(this, factory).get(OrderDocumentListViewModel::class.java)
+        orderDocumentListViewModel =
+            ViewModelProvider(this, factory).get(OrderDocumentListViewModel::class.java)
     }
 
     private fun setToolbar() {
-        (context as BottomNavigationActivity).bottomNavigationView.visibility = View.GONE
-        (context as BottomNavigationActivity).txtClear.visibility = View.GONE
+        (context as BottomNavigationActivity).bottomNavigationView.makeGone()
+        (context as BottomNavigationActivity).txtClear.makeGone()
         (context as BottomNavigationActivity).txtTitle.text = getString(R.string.lbl_documents)
     }
 
@@ -83,12 +85,12 @@ class OrderDocumentListFragment : Fragment(), View.OnClickListener {
                 firebaseParams.clear()
                 firebaseParams.putString(Const.screenLaunched, "DocumentViewer_Launched")
                 CommonUtils.addParamstoFirebaseEvent(
-                        firebaseAnalytics,
-                        Const.screenLaunched,
-                        firebaseParams
+                    firebaseAnalytics,
+                    Const.screenLaunched,
+                    firebaseParams
                 )
                 val url =
-                        BuildConfig.HOST + "mobile/Dashboard/GetDownloadDocument?DocId=" + docList[position].documentId + "&Name=" + docList[position].documentName + "&UserId=" + docList[position].userId
+                    BuildConfig.HOST + "mobile/Dashboard/GetDownloadDocument?DocId=" + docList[position].documentId + "&Name=" + docList[position].documentName + "&UserId=" + docList[position].userId
                 val browserIntent = Intent(Intent.ACTION_VIEW)
                 browserIntent.setDataAndType(Uri.parse(url), "application/pdf")
                 context!!.startActivity(browserIntent)
@@ -111,7 +113,7 @@ class OrderDocumentListFragment : Fragment(), View.OnClickListener {
 
                 var intent = Intent(context!!, PasscodeActivity::class.java)
                 intent.flags =
-                        Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)
             }
         })
@@ -139,7 +141,7 @@ class OrderDocumentListFragment : Fragment(), View.OnClickListener {
 
     companion object {
         fun newInstance(
-                itemId: Int
+            itemId: Int
         ): OrderDocumentListFragment {
             val args = Bundle()
             args.putInt(Const.itemIdTag, itemId)
@@ -151,8 +153,8 @@ class OrderDocumentListFragment : Fragment(), View.OnClickListener {
 
 
     private fun markAsRead(
-            docList: ArrayList<OrderDocResponse.TileOrder>,
-            position: Int
+        docList: ArrayList<OrderDocResponse.TileOrder>,
+        position: Int
     ) {
         val postParam = HashMap<String, Any?>()
         postParam.put("PhoneNumber", Pref.getValue(context!!, Pref.PHONE_NUMBER, ""))
@@ -169,8 +171,8 @@ class OrderDocumentListFragment : Fragment(), View.OnClickListener {
 
             R.id.linearLoe -> {
                 val url =
-                        BuildConfig.HOST + "mobile/Dashboard/GetDownloadOLEDocument?OrderGenID=" + orderDetail.orderGenId + "&ItemSrNo=" + orderDetail.itemSrNo + "&UserId=" +
-                                orderDetail.userId + "&ServiceRequestType=" + orderDetail.serviceRequestType
+                    BuildConfig.HOST + "mobile/Dashboard/GetDownloadOLEDocument?OrderGenID=" + orderDetail.orderGenId + "&ItemSrNo=" + orderDetail.itemSrNo + "&UserId=" +
+                            orderDetail.userId + "&ServiceRequestType=" + orderDetail.serviceRequestType
                 val browserIntent = Intent(Intent.ACTION_VIEW)
                 browserIntent.setDataAndType(Uri.parse(url), "application/pdf")
                 context!!.startActivity(browserIntent)

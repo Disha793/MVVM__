@@ -10,6 +10,11 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import com.radian.myradianvaluations.R
 import com.radian.myradianvaluations.Response.SearchFilterResponse
+import com.radian.myradianvaluations.Response.StatusResponse
+import com.radian.myradianvaluations.extensions.makeGone
+import com.radian.myradianvaluations.extensions.makeVisible
+import com.radian.myradianvaluations.network.APIList
+import com.radian.myradianvaluations.network.RetrofitBase
 import com.radian.myradianvaluations.utils.CommonUtils
 import com.radian.myradianvaluations.utils.Pref
 import com.radian.myradianvaluations.view.activity.BottomNavigationActivity
@@ -196,9 +201,10 @@ class MessageListAdapter(
 
     fun showEmptyList() {
         if (messageList.isEmpty()) {
-            messageListFragment.txtNoMsg.visibility = View.VISIBLE
-            messageListFragment.txtOrderCount.visibility = View.GONE
-            (context as BottomNavigationActivity).txtClear.visibility = View.GONE
+            messageListFragment.txtNoMsg.makeVisible()
+            messageListFragment.txtOrderCount.makeGone()
+            (context as BottomNavigationActivity).txtClear.makeGone()
+
         }
     }
 

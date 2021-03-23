@@ -9,6 +9,8 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
 import com.radian.myradianvaluations.R
 import com.radian.myradianvaluations.Response.Assets
+import com.radian.myradianvaluations.extensions.makeGone
+import com.radian.myradianvaluations.extensions.makeVisible
 
 class AssetsAdapter(var listAssets: ArrayList<Assets>, var onItemClick: (Any) -> Unit) :
     RecyclerView.Adapter<AssetsAdapter.AssetViewHolder>() {
@@ -24,9 +26,9 @@ class AssetsAdapter(var listAssets: ArrayList<Assets>, var onItemClick: (Any) ->
 
         holder.tvAssetName.text = listAssets[position].name
         if (listAssets[position].isSelected)
-            holder.ivSelected.visibility = View.VISIBLE
+            holder.ivSelected.makeVisible()
         else
-            holder.ivSelected.visibility = View.GONE
+            holder.ivSelected.makeGone()
 
         holder.rlAsset.setOnClickListener {
             onItemClick(position)

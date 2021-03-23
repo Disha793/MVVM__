@@ -71,11 +71,11 @@ class OrderRevisionRequestFragment : Fragment() {
     }
 
     private fun setToolbar() {
-        (context as BottomNavigationActivity).layout_toolbar.visibility = View.VISIBLE
-        (context as BottomNavigationActivity).bottomNavigationView.visibility = View.GONE
-        (context as BottomNavigationActivity).txtClear.visibility = View.GONE
+        (context as BottomNavigationActivity).layout_toolbar.makeVisible()
+        (context as BottomNavigationActivity).bottomNavigationView.makeGone()
+        (context as BottomNavigationActivity).txtClear.makeGone()
         (context as BottomNavigationActivity).txtTitle.text = getString(R.string.revisionTitle)
-        (context as BottomNavigationActivity).imgBack.visibility = View.VISIBLE
+        (context as BottomNavigationActivity).imgBack.makeVisible()
     }
 
     private fun initViewModel() {

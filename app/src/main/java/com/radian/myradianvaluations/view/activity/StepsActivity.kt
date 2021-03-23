@@ -24,6 +24,8 @@ import com.radian.myradianvaluations.adapter.AssetsAdapter
 import com.radian.myradianvaluations.adapter.CategoriesAdapter
 import com.radian.myradianvaluations.constants.Const
 import com.radian.myradianvaluations.databinding.ActivityStepsBinding
+import com.radian.myradianvaluations.extensions.makeGone
+import com.radian.myradianvaluations.extensions.makeVisible
 import com.radian.myradianvaluations.extensions.snack
 import com.radian.myradianvaluations.utils.CommonUtils
 import com.radian.myradianvaluations.utils.Pref
@@ -79,7 +81,7 @@ class StepsActivity : AppCompatActivity(), View.OnClickListener, SearchView.OnQu
             addListItems()
         } else {
             listCategories =
-                    Pref.getCategoriesArrayList(this, Const.CATEGORIES_SHARED_PREF_KEY, "")
+                Pref.getCategoriesArrayList(this, Const.CATEGORIES_SHARED_PREF_KEY, "")
             listAssets = Pref.getAssetsArrayList(this, Const.ASSET_SHARED_PREF_KEY, "")
             for (i in listAssets.indices) {
                 if (listAssets[i].isSelected) {
@@ -94,10 +96,10 @@ class StepsActivity : AppCompatActivity(), View.OnClickListener, SearchView.OnQu
         binding.svCategory.setOnQueryTextListener(this)
         binding.includedToolbar.imgBack.setOnClickListener(this)
         binding.rvAssets.addItemDecoration(
-                DividerItemDecoration(
-                        binding.rvAssets.getContext(),
-                        LinearLayoutManager.VERTICAL
-                )
+            DividerItemDecoration(
+                binding.rvAssets.getContext(),
+                LinearLayoutManager.VERTICAL
+            )
         )
 
         adapterAssets = AssetsAdapter(listAssets) {
@@ -158,9 +160,9 @@ class StepsActivity : AppCompatActivity(), View.OnClickListener, SearchView.OnQu
             builder.setPositiveButton("Yes") { _, _ ->
                 listCategories[currentCategoryPosition].imageUri = ""
                 Pref.setCategoriesArrayList(
-                        this,
-                        Const.CATEGORIES_SHARED_PREF_KEY,
-                        listCategories
+                    this,
+                    Const.CATEGORIES_SHARED_PREF_KEY,
+                    listCategories
                 )
                 adapterCategories.notifyItemChanged(currentCategoryPosition)
             }
@@ -182,7 +184,7 @@ class StepsActivity : AppCompatActivity(), View.OnClickListener, SearchView.OnQu
             listCategories[currentCategoryPosition].imageUri = imageUri.toString()
             Pref.setCategoriesArrayList(this, Const.CATEGORIES_SHARED_PREF_KEY, listCategories)
             listCategories =
-                    Pref.getCategoriesArrayList(this, Const.CATEGORIES_SHARED_PREF_KEY, "")
+                Pref.getCategoriesArrayList(this, Const.CATEGORIES_SHARED_PREF_KEY, "")
             adapterCategories.notifyItemChanged(currentCategoryPosition)
         }
     }
@@ -208,14 +210,14 @@ class StepsActivity : AppCompatActivity(), View.OnClickListener, SearchView.OnQu
         listAssets.add(Assets("Asset 3", false))
         listAssets.add(Assets("Asset 4", false))
 
-        listCategories.add(Categories("Living Room", null,"",0.0,0.0))
-        listCategories.add(Categories("Bed Room", null,"",0.0,0.0))
-        listCategories.add(Categories("Bath Room", null,"",0.0,0.0))
-        listCategories.add(Categories("Terrace Room", null,"",0.0,0.0))
-        listCategories.add(Categories("Living Room", null,"",0.0,0.0))
-        listCategories.add(Categories("Bed Room", null,"",0.0,0.0))
-        listCategories.add(Categories("Bath Room", null,"",0.0,0.0))
-        listCategories.add(Categories("Terrace Room", null,"",0.0,0.0))
+        listCategories.add(Categories("Living Room", null, "", 0.0, 0.0))
+        listCategories.add(Categories("Bed Room", null, "", 0.0, 0.0))
+        listCategories.add(Categories("Bath Room", null, "", 0.0, 0.0))
+        listCategories.add(Categories("Terrace Room", null, "", 0.0, 0.0))
+        listCategories.add(Categories("Living Room", null, "", 0.0, 0.0))
+        listCategories.add(Categories("Bed Room", null, "", 0.0, 0.0))
+        listCategories.add(Categories("Bath Room", null, "", 0.0, 0.0))
+        listCategories.add(Categories("Terrace Room", null, "", 0.0, 0.0))
 
         Pref.setCategoriesArrayList(this, Const.CATEGORIES_SHARED_PREF_KEY, listCategories)
         Pref.setAssetsArrayList(this, Const.ASSET_SHARED_PREF_KEY, listAssets)
@@ -231,7 +233,8 @@ class StepsActivity : AppCompatActivity(), View.OnClickListener, SearchView.OnQu
                 if (currentAssetPosition != -1) {
                     setSelectedStep(2)
                 } else {
-                    this.findViewById<View>(android.R.id.content).snack(resources.getString(R.string.select_asset)) {}
+                    this.findViewById<View>(android.R.id.content)
+                        .snack(resources.getString(R.string.select_asset)) {}
                 }
             }
             R.id.btnStart -> {
@@ -250,15 +253,15 @@ class StepsActivity : AppCompatActivity(), View.OnClickListener, SearchView.OnQu
             binding.rlStepOne.isSelected = true
             binding.rlStepTwo.isSelected = false
             binding.btnStart.text = "Next"
-            binding.rvAssets.visibility = View.VISIBLE
-            binding.llCategories.visibility = View.GONE
+            binding.rvAssets.makeVisible()
+            binding.llCategories.makeGone()
         } else if (index == 2) {
             binding.rlStepOne.isSelected = false
             binding.rlStepTwo.isSelected = true
             binding.btnStart.text = "Submit"
 
-            binding.rvAssets.visibility = View.GONE
-            binding.llCategories.visibility = View.VISIBLE
+            binding.rvAssets.makeGone()
+            binding.llCategories.makeVisible()
         }
     }
 

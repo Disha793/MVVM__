@@ -37,9 +37,7 @@ import com.radian.myradianvaluations.Response.ProfileResponse
 import com.radian.myradianvaluations.Response.StatusResponse
 import com.radian.myradianvaluations.constants.APIStatus
 import com.radian.myradianvaluations.constants.Const
-import com.radian.myradianvaluations.extensions.observeOnce
-import com.radian.myradianvaluations.extensions.snack
-import com.radian.myradianvaluations.extensions.toastShort
+import com.radian.myradianvaluations.extensions.*
 import com.radian.myradianvaluations.utils.CommonUtils
 import com.radian.myradianvaluations.utils.LogUtils
 import com.radian.myradianvaluations.utils.Pref
@@ -182,11 +180,11 @@ class ProfileFragment() : Fragment(), DialogInterface.OnClickListener, View.OnCl
         lp.height = WindowManager.LayoutParams.MATCH_PARENT
         dialog.getWindow()!!.setAttributes(lp)
         dialog.show()
-        infodialogView.txt_date.visibility = View.GONE
+        infodialogView.txt_date.makeGone()
 
-        infodialogView.txt_address.visibility = View.GONE
+        infodialogView.txt_address.makeGone()
         infodialogView.btnAddEvent.setText(getString(R.string.lbl_next_step))
-        infodialogView.txtDialogSubTitle.visibility = View.VISIBLE
+        infodialogView.txtDialogSubTitle.makeVisible()
         infodialogView.txtDialogSubTitle.setText(getString(R.string.lbl_dilg_header))
         infodialogView.txtDialogTitle.setText(getString(R.string.lbl_add_photo))
         infodialogView.txtDialogTitle.setTypeface(null, Typeface.BOLD)

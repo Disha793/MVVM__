@@ -19,6 +19,8 @@ import com.radian.myradianvaluations.R
 import com.radian.myradianvaluations.Response.StatusResponse
 import com.radian.myradianvaluations.constants.APIStatus
 import com.radian.myradianvaluations.constants.Const
+import com.radian.myradianvaluations.extensions.makeGone
+import com.radian.myradianvaluations.extensions.makeVisible
 import com.radian.myradianvaluations.extensions.snack
 import com.radian.myradianvaluations.extensions.toastShort
 import com.radian.myradianvaluations.network.APIList
@@ -53,7 +55,8 @@ class CodeofConductActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun isValid(): Boolean {
         if (TextUtils.isEmpty(edtUserName.text.toString())) {
-            this.findViewById<View>(android.R.id.content).snack(resources.getString(R.string.enter_initials)) {}
+            this.findViewById<View>(android.R.id.content)
+                .snack(resources.getString(R.string.enter_initials)) {}
             return false
         }
         return true
@@ -63,13 +66,13 @@ class CodeofConductActivity : AppCompatActivity(), View.OnClickListener {
         CoroutineScope(Dispatchers.IO).launch {
             LoadingDialog.show(this@CodeofConductActivity)
             val call = RetrofitBase.getClient().create(APIList::class.java)
-                    .saveCompliance(
-                            Pref.getValue(this@CodeofConductActivity, Pref.AUTH_TOKEN, "")!!,
-                            Pref.getValue(this@CodeofConductActivity, Pref.PHONE_NUMBER, "")!!,
-                            CommonUtils.getDeviceUUID(this@CodeofConductActivity),
-                            actionType,
-                            acceptedBy
-                    )
+                .saveCompliance(
+                    Pref.getValue(this@CodeofConductActivity, Pref.AUTH_TOKEN, "")!!,
+                    Pref.getValue(this@CodeofConductActivity, Pref.PHONE_NUMBER, "")!!,
+                    CommonUtils.getDeviceUUID(this@CodeofConductActivity),
+                    actionType,
+                    acceptedBy
+                )
             response.postValue(call.body())
         }
         response.let {
@@ -77,12 +80,13 @@ class CodeofConductActivity : AppCompatActivity(), View.OnClickListener {
                 LoadingDialog.dismissDialog()
                 if (it.status.equals(APIStatus.ok, true)) {
                     var intent: Intent
-                    intent = Intent(this@CodeofConductActivity, BottomNavigationActivity::class.java)
+                    intent =
+                        Intent(this@CodeofConductActivity, BottomNavigationActivity::class.java)
                     startActivity(intent)
                 } else if (it.status.equals(APIStatus.error)) {
                     //error in api
                 } else if (it.status.equals(APIStatus.unauth, true)) {
-                    toastShort( it.errorInfo.get(0).errorMessage)
+                    toastShort(it.errorInfo.get(0).errorMessage)
 
                     var intent = Intent(this@CodeofConductActivity, PasscodeActivity::class.java)
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
@@ -92,13 +96,13 @@ class CodeofConductActivity : AppCompatActivity(), View.OnClickListener {
             if (it == null) {
                 LoadingDialog.dismissDialog()
                 CommonUtils.showOkDialog(
-                        this@CodeofConductActivity,
-                        getString(R.string.please_try_again),
-                        DialogInterface.OnClickListener { _, _ ->
+                    this@CodeofConductActivity,
+                    getString(R.string.please_try_again),
+                    DialogInterface.OnClickListener { _, _ ->
 
 
-                        },
-                        getString(R.string.ok)
+                    },
+                    getString(R.string.ok)
                 )
 
             }
@@ -113,22 +117,22 @@ class CodeofConductActivity : AppCompatActivity(), View.OnClickListener {
         intent.getIntExtra(Const.btnCount, 0).let {
             when (it) {
                 3 -> {
-                    btnAccept.visibility = View.VISIBLE
-                    btnReject.visibility = View.VISIBLE
-                    btnnRemind.visibility = View.VISIBLE
+                    btnAccept.makeVisible()
+                    btnReject.makeVisible()
+                    btnnRemind.makeVisible()
                     linearBtn.weightSum = 3F
                 }
                 2 -> {
-                    btnAccept.visibility = View.VISIBLE
-                    btnReject.visibility = View.VISIBLE
-                    btnnRemind.visibility = View.GONE
+                    btnAccept.makeVisible()
+                    btnReject.makeVisible()
+                    btnnRemind.makeGone()
                     linearBtn.weightSum = 2F
                 }
             }
         }
 
-        txtTitle.visibility = View.VISIBLE
-        viewLine.visibility = View.VISIBLE
+        txtTitle.makeVisible()
+        viewLine.makeVisible()
         txtTitle.setText(getString(R.string.coc))
         LoadingDialog.show(this)
         webView.getSettings().setLoadWithOverviewMode(true)
@@ -148,8 +152,8 @@ class CodeofConductActivity : AppCompatActivity(), View.OnClickListener {
 
             @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
             override fun shouldOverrideUrlLoading(
-                    view: WebView?,
-                    request: WebResourceRequest?
+                view: WebView?,
+                request: WebResourceRequest?
             ): Boolean {
                 view?.let {
                     if (request != null && request.url != null)

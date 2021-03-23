@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.radian.myradianvaluations.R
 import com.radian.myradianvaluations.constants.Const
+import com.radian.myradianvaluations.extensions.makeVisible
 import com.radian.myradianvaluations.utils.CommonUtils
 import com.radian.myradianvaluations.utils.LoadingDialog
 import com.radian.myradianvaluations.utils.LogUtils
@@ -28,36 +29,36 @@ class WebviewActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fragment_walkthroughmain)
-        imgBack.visibility = View.VISIBLE
-        viewLine.visibility = View.VISIBLE
+        imgBack.makeVisible()
+        viewLine.makeVisible()
         imgBack.setOnClickListener { onBackPressed() }
 
         intent.getIntExtra(Const.scrTag, 0).let {
             if (it == Const.scrOrgInfo) {
-                toolbar.visibility = View.VISIBLE
+                toolbar.makeVisible()
 
                 intent.getStringExtra("webUrl")?.let {
-                    txtTitle.visibility = View.VISIBLE
+                    txtTitle.makeVisible()
                     txtTitle.setText(getString(R.string.joinUs))
                     webUrl = it
                     LogUtils.logD("webUrl", webUrl)
                     loadWebUrl()
                 }
             } else if (it == Const.scrCovidTag) {
-                toolbar.visibility = View.VISIBLE
-                txtTitle.visibility = View.VISIBLE
+                toolbar.makeVisible()
+                txtTitle.makeVisible()
                 txtTitle.text = getString(R.string.radianResponse)
                 webUrl = "https://www.radian.com/covid-19/"
                 loadWebUrl()
             } else if (it == Const.scrSignUp) {
-                toolbar.visibility = View.VISIBLE
-                txtTitle.visibility = View.VISIBLE
+                toolbar.makeVisible()
+                txtTitle.makeVisible()
                 txtTitle.text = getString(R.string.signup)
                 webUrl = "https://falcon.radianvaluations.com/NewVendorProfile"
                 loadWebUrl()
             } else {
-                toolbar.visibility = View.VISIBLE
-                txtTitle.visibility = View.VISIBLE
+                toolbar.makeVisible()
+                txtTitle.makeVisible()
                 txtTitle.text = getString(R.string.forgotPassword)
                 initViewModel()
                 getInfo()
@@ -97,8 +98,8 @@ class WebviewActivity : AppCompatActivity() {
             }
 
             override fun shouldOverrideUrlLoading(
-                    view: WebView?,
-                    request: WebResourceRequest?
+                view: WebView?,
+                request: WebResourceRequest?
             ): Boolean {
 
                 return true

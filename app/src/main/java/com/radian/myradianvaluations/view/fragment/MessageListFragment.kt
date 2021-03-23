@@ -15,6 +15,8 @@ import com.radian.myradianvaluations.Response.SearchFilterResponse
 import com.radian.myradianvaluations.adapter.MessageListAdapter
 import com.radian.myradianvaluations.constants.APIStatus
 import com.radian.myradianvaluations.constants.Const
+import com.radian.myradianvaluations.extensions.makeGone
+import com.radian.myradianvaluations.extensions.makeVisible
 import com.radian.myradianvaluations.extensions.toastShort
 import com.radian.myradianvaluations.utils.CommonUtils
 import com.radian.myradianvaluations.utils.DashboardAbbr
@@ -39,9 +41,9 @@ class MessageListFragment : Fragment(), View.OnClickListener {
     private val messageList = ArrayList<SearchFilterResponse.Data.OrderList.Order>()
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         view = inflater.inflate(R.layout.fragment_message_list, container, false)
         (context as BottomNavigationActivity).txtClear.setOnClickListener(this)
@@ -57,9 +59,9 @@ class MessageListFragment : Fragment(), View.OnClickListener {
         firebaseParams.clear()
         firebaseParams.putString(Const.screenLaunched, "Message")
         CommonUtils.addParamstoFirebaseEvent(
-                firebaseAnalytics,
-                Const.screenLaunched,
-                firebaseParams
+            firebaseAnalytics,
+            Const.screenLaunched,
+            firebaseParams
         )
         manageUI()
 
@@ -125,11 +127,11 @@ class MessageListFragment : Fragment(), View.OnClickListener {
     }
 
     private fun setToolbar() {
-        (context as BottomNavigationActivity).bottomNavigationView.visibility = View.GONE
+        (context as BottomNavigationActivity).bottomNavigationView.makeGone()
         (context as BottomNavigationActivity).txtTitle.text = getString(R.string.messages)
-        (context as BottomNavigationActivity).txtClear.visibility = View.VISIBLE
-        (context as BottomNavigationActivity).layout_toolbar.visibility = View.VISIBLE
-        (context as BottomNavigationActivity).imgBack.visibility = View.VISIBLE
+        (context as BottomNavigationActivity).txtClear.makeVisible()
+        (context as BottomNavigationActivity).layout_toolbar.makeVisible()
+        (context as BottomNavigationActivity).imgBack.makeVisible()
 
     }
 
@@ -146,14 +148,13 @@ class MessageListFragment : Fragment(), View.OnClickListener {
 
     private fun showNoMsg() {
         if (messageList.isEmpty()) {
-            view.txtNoMsg.visibility = View.VISIBLE
-            (context as BottomNavigationActivity).txtClear.visibility = View.GONE
-            view.txtOrderCount.visibility = View.GONE
+            view.txtNoMsg.makeVisible()
+            (context as BottomNavigationActivity).txtClear.makeGone()
+            view.txtOrderCount.makeGone()
         } else {
-            view.txtNoMsg.visibility = View.GONE
-            (context as BottomNavigationActivity).txtClear.visibility = View.VISIBLE
-            view.txtOrderCount.visibility = View.VISIBLE
-
+            view.txtNoMsg.makeGone()
+            (context as BottomNavigationActivity).txtClear.makeVisible()
+            view.txtOrderCount.makeVisible()
 
         }
     }

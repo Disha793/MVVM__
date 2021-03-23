@@ -12,6 +12,7 @@ import com.radian.myradianvaluations.R
 import com.radian.myradianvaluations.constants.APIStatus
 import com.radian.myradianvaluations.constants.Const
 import com.radian.myradianvaluations.constants.DeviceStatus
+import com.radian.myradianvaluations.extensions.makeGone
 import com.radian.myradianvaluations.extensions.observeOnce
 import com.radian.myradianvaluations.extensions.snack
 import com.radian.myradianvaluations.utils.CommonUtils
@@ -32,7 +33,7 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        imgBack.visibility = View.GONE
+        imgBack.makeGone()
         initViewModel()
         btnNxt.setOnClickListener {
             //signIN()

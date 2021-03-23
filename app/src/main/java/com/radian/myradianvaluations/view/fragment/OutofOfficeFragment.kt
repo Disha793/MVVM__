@@ -13,10 +13,7 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.radian.myradianvaluations.R
 import com.radian.myradianvaluations.constants.APIStatus
 import com.radian.myradianvaluations.constants.Const
-import com.radian.myradianvaluations.extensions.observeOnce
-import com.radian.myradianvaluations.extensions.snack
-import com.radian.myradianvaluations.extensions.snackAction
-import com.radian.myradianvaluations.extensions.toastShort
+import com.radian.myradianvaluations.extensions.*
 import com.radian.myradianvaluations.utils.CommonUtils
 import com.radian.myradianvaluations.utils.Pref
 import com.radian.myradianvaluations.view.activity.BottomNavigationActivity
@@ -98,9 +95,9 @@ class OutofOfficeFragment : Fragment(), View.OnClickListener {
     }
 
     fun setToolbar() {
-        (context as BottomNavigationActivity).layout_toolbar.visibility = View.VISIBLE
-        (context as BottomNavigationActivity).bottomNavigationView.visibility = View.GONE
-        (context as BottomNavigationActivity).imgBack.visibility = View.VISIBLE
+        (context as BottomNavigationActivity).layout_toolbar.makeVisible()
+        (context as BottomNavigationActivity).bottomNavigationView.makeGone()
+        (context as BottomNavigationActivity).imgBack.makeVisible()
         (context as BottomNavigationActivity).txtTitle.text = getString(R.string.outOfOfiice)
     }
 

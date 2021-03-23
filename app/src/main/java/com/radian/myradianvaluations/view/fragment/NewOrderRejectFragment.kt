@@ -12,6 +12,8 @@ import com.radian.myradianvaluations.R
 import com.radian.myradianvaluations.Response.NewOrderDetailResponse
 import com.radian.myradianvaluations.constants.APIStatus
 import com.radian.myradianvaluations.constants.Const
+import com.radian.myradianvaluations.extensions.makeGone
+import com.radian.myradianvaluations.extensions.makeVisible
 import com.radian.myradianvaluations.extensions.observeOnce
 import com.radian.myradianvaluations.extensions.toastShort
 import com.radian.myradianvaluations.utils.CommonUtils
@@ -30,9 +32,9 @@ class NewOrderRejectFragment : Fragment(), View.OnClickListener {
     private lateinit var rejectOrderViewModel: RejectOrderViewModel
     private lateinit var factory: RejectViewModelFactory
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         view = inflater.inflate(R.layout.fragment_new_order_reject, container, false)
         setToolbar()
@@ -44,7 +46,8 @@ class NewOrderRejectFragment : Fragment(), View.OnClickListener {
 
     private fun initViewModel() {
         factory = RejectViewModelFactory(context!!)
-        rejectOrderViewModel = ViewModelProvider(this, factory).get(RejectOrderViewModel::class.java)
+        rejectOrderViewModel =
+            ViewModelProvider(this, factory).get(RejectOrderViewModel::class.java)
     }
 
     private fun observeData() {
@@ -64,11 +67,11 @@ class NewOrderRejectFragment : Fragment(), View.OnClickListener {
     }
 
     private fun setToolbar() {
-        (context as BottomNavigationActivity).bottomNavigationView.visibility = View.GONE
+        (context as BottomNavigationActivity).bottomNavigationView.makeGone()
         (context as BottomNavigationActivity).txtTitle.text =
-                resources.getString(R.string.rejectOrders)
-        (context as BottomNavigationActivity).imgBack.visibility = View.VISIBLE
-        (context as BottomNavigationActivity).txtClear.visibility = View.VISIBLE
+            resources.getString(R.string.rejectOrders)
+        (context as BottomNavigationActivity).imgBack.makeVisible()
+        (context as BottomNavigationActivity).txtClear.makeVisible()
         (context as BottomNavigationActivity).txtClear.text = "Confirm"
         (context as BottomNavigationActivity).txtClear.setOnClickListener(this)
     }
@@ -77,7 +80,7 @@ class NewOrderRejectFragment : Fragment(), View.OnClickListener {
 
         arguments?.let {
             it.getParcelable<NewOrderDetailResponse.Data.OrderDetail>(
-                    Const.detailData
+                Const.detailData
             )?.let {
                 setData(it)
 
@@ -111,8 +114,7 @@ class NewOrderRejectFragment : Fragment(), View.OnClickListener {
         postParams.put("OrganizationIds", Pref.getValue(context!!, Pref.ORGANIZATN_ID, 0))
         postParams.put("DeviceID", CommonUtils.getDeviceUUID(context!!))
         postParams.put("ItemIds", iteamID)
-
-//        postParams.put("ItemNotes", noteList)
+        postParams.put("ItemNotes", view.edtRejectNote.text.toString())
         postParams.put("ActionType", "R")
         rejectOrderViewModel.rejectOrder(postParams)
     }

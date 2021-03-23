@@ -12,6 +12,8 @@ import com.radian.myradianvaluations.R
 import com.radian.myradianvaluations.Response.NewOrderResponse
 import com.radian.myradianvaluations.adapter.NewOrdersAdapter
 import com.radian.myradianvaluations.constants.APIStatus
+import com.radian.myradianvaluations.extensions.makeGone
+import com.radian.myradianvaluations.extensions.makeVisible
 import com.radian.myradianvaluations.extensions.observeOnce
 import com.radian.myradianvaluations.extensions.toastShort
 import com.radian.myradianvaluations.utils.CommonUtils
@@ -32,9 +34,9 @@ class NewOrderFragment : Fragment() {
     private lateinit var factory: NewOrdrViewModelFactory
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         view = inflater.inflate(R.layout.fragment_new_orders, container, false)
         view.recyclerView.adapter = NewOrdersAdapter(context!!, newOrderList)
@@ -57,17 +59,17 @@ class NewOrderFragment : Fragment() {
                 newOrderList.addAll(it.mdata?.orderList!!)
                 view.recyclerView.adapter?.notifyDataSetChanged()
                 if (newOrderList.isEmpty()) {
-                    view.txtNoNewOrdr.visibility = View.VISIBLE
-                    view.txtNoNewOrdrDetail.visibility = View.VISIBLE
+                    view.txtNoNewOrdr.makeVisible()
+                    view.txtNoNewOrdrDetail.makeVisible()
                     (context as BottomNavigationActivity).bottomview?.let {
                         (context as BottomNavigationActivity).removeBadge(
-                                it,
-                                R.id.action_new
+                            it,
+                            R.id.action_new
                         )
                     }
                 } else {
-                    view.txtNoNewOrdr.visibility = View.GONE
-                    view.txtNoNewOrdrDetail.visibility = View.GONE
+                    view.txtNoNewOrdr.makeGone()
+                    view.txtNoNewOrdrDetail.makeGone()
                 }
             } else if (it.status.equals(APIStatus.unauth, true)) {
                 context!!.toastShort(it.errorInfo.get(0).errorMessage)
@@ -79,11 +81,11 @@ class NewOrderFragment : Fragment() {
     }
 
     private fun showToolbarIcons(title: String) {
-        (context as BottomNavigationActivity).layout_toolbar.visibility = View.VISIBLE
-        (context as BottomNavigationActivity).txtClear.visibility = View.GONE
-        (context as BottomNavigationActivity).imgBack.visibility = View.GONE
+        (context as BottomNavigationActivity).layout_toolbar.makeVisible()
+        (context as BottomNavigationActivity).txtClear.makeGone()
+        (context as BottomNavigationActivity).imgBack.makeGone()
         (context as BottomNavigationActivity).txtTitle.text = title
-        (context as BottomNavigationActivity).bottomNavigationView.visibility = View.VISIBLE
+        (context as BottomNavigationActivity).bottomNavigationView.makeVisible()
     }
 
     private fun getOrderList() {

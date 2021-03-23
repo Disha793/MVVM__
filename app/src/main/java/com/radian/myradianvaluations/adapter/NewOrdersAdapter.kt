@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.radian.myradianvaluations.R
 import com.radian.myradianvaluations.Response.NewOrderResponse
+import com.radian.myradianvaluations.extensions.makeGone
 import com.radian.myradianvaluations.view.activity.BottomNavigationActivity
 import com.radian.myradianvaluations.view.fragment.NewOrderDetailFragment
 
@@ -50,7 +51,7 @@ class NewOrdersAdapter(
 //        }
 
         holder.cardNewOrdr.setOnClickListener {
-            (context as BottomNavigationActivity).bottomNavigationView.visibility = View.GONE
+            (context as BottomNavigationActivity).bottomNavigationView.makeGone()
             (context as BottomNavigationActivity).pushFragment(
                 NewOrderDetailFragment.newInstance(
                     newOrderList.get(position).itemId

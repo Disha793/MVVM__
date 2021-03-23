@@ -17,12 +17,14 @@ import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.PagerAdapter
 import com.google.android.material.tabs.TabLayout
 import com.radian.myradianvaluations.R
+import com.radian.myradianvaluations.extensions.makeGone
+import com.radian.myradianvaluations.extensions.makeVisible
 import com.radian.myradianvaluations.view.activity.BottomNavigationActivity
 import kotlinx.android.synthetic.main.activity_bottom_navigation.*
 import kotlinx.android.synthetic.main.fragment_document.view.*
 import kotlinx.android.synthetic.main.layout_toolbar.*
 
-class DocumentFragment:Fragment() ,TabLayout.OnTabSelectedListener{
+class DocumentFragment : Fragment(), TabLayout.OnTabSelectedListener {
     private val classTag = this.javaClass.name
     internal lateinit var view: View
     internal lateinit var pagerAdapter: Pager
@@ -44,12 +46,12 @@ class DocumentFragment:Fragment() ,TabLayout.OnTabSelectedListener{
     }
 
     private fun setToolbar() {
-        (context as BottomNavigationActivity).layout_toolbar.visibility = View.VISIBLE
-        (context as BottomNavigationActivity).txtTitle.visibility = View.VISIBLE
+        (context as BottomNavigationActivity).layout_toolbar.makeVisible()
+        (context as BottomNavigationActivity).txtTitle.makeVisible()
         (context as BottomNavigationActivity).txtTitle.setText(resources.getString(R.string.docTitle))
-        (context as BottomNavigationActivity).bottomNavigationView.visibility = View.GONE
-        (context as BottomNavigationActivity).imgBack.visibility = View.VISIBLE
-        (context as BottomNavigationActivity).txtClear.visibility = View.GONE
+        (context as BottomNavigationActivity).bottomNavigationView.makeGone()
+        (context as BottomNavigationActivity).imgBack.makeVisible()
+        (context as BottomNavigationActivity).txtClear.makeGone()
 
     }
 
@@ -131,7 +133,7 @@ class DocumentFragment:Fragment() ,TabLayout.OnTabSelectedListener{
             val tabView = LayoutInflater.from(context).inflate(R.layout.tab_layout, null)
             val tabText = tabView.findViewById(R.id.tabText) as TextView
             val tabIcon = tabView.findViewById(R.id.tabIcon) as ImageView
-            tabIcon.visibility = View.GONE
+            tabIcon.makeGone()
             when (position) {
                 0 -> {
                     tabText.setText(context.resources.getString(R.string.eo))

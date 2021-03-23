@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.radian.myradianvaluations.R
 import com.radian.myradianvaluations.Response.OrderDocResponse
+import com.radian.myradianvaluations.extensions.makeInVisible
+import com.radian.myradianvaluations.extensions.makeVisible
 import com.radian.myradianvaluations.interfaces.ListItemClickListener
 import kotlinx.android.synthetic.main.row_document_list.view.*
 
@@ -34,11 +36,11 @@ class OrderDocListAdapter(private val itemClick: ListItemClickListener, private 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.txtDoc.text = docList.get(position).documentName
         if (docList[position].isNewDocument == 1) {
-            holder.imgDot.visibility = View.VISIBLE
-            holder.txtNewDoc.visibility = View.VISIBLE
+            holder.imgDot.makeVisible()
+            holder.txtNewDoc.makeVisible()
         } else {
-            holder.imgDot.visibility = View.INVISIBLE
-            holder.txtNewDoc.visibility = View.INVISIBLE
+            holder.imgDot.makeInVisible()
+            holder.txtNewDoc.makeInVisible()
         }
 
         holder.linearDocument.setOnClickListener{

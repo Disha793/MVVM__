@@ -231,7 +231,7 @@ class ManageOrderFragment : Fragment(), View.OnClickListener {
 //        postParam.put("TimeZone", TimeZone.getDefault().id)
 
 //on Sucess       if (it.status.equals(APIStaus.ok, true)) {
-//            view.btnMark.visibility = View.GONE
+//            view.btnMark.makeGone()
 //        } else if (t.status.equals(APIStatus.unauth, true)) {
 //            Toast.makeText(
 //                context!!,

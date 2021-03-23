@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.radian.myradianvaluations.R
 import com.radian.myradianvaluations.Response.Categories
+import com.radian.myradianvaluations.extensions.makeGone
+import com.radian.myradianvaluations.extensions.makeVisible
 
 class CategoriesAdapter(
     var context: Context,
@@ -48,9 +50,9 @@ class CategoriesAdapter(
                 .into(holder.ivImage)
         }
         if (filterList[position].imageUri.isNullOrEmpty()) {
-            holder.ivDelete.visibility = View.GONE
+            holder.ivDelete.makeGone()
         } else {
-            holder.ivDelete.visibility = View.VISIBLE
+            holder.ivDelete.makeVisible()
         }
         holder.ivGallery.setOnClickListener {
             onGalleryClick(position)

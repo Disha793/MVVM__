@@ -30,6 +30,8 @@ import com.radian.myradianvaluations.R
 import com.radian.myradianvaluations.Response.ManageOrderResponse
 import com.radian.myradianvaluations.constants.APIStatus
 import com.radian.myradianvaluations.constants.Const
+import com.radian.myradianvaluations.extensions.makeGone
+import com.radian.myradianvaluations.extensions.makeVisible
 import com.radian.myradianvaluations.extensions.observeOnce
 import com.radian.myradianvaluations.extensions.snack
 import com.radian.myradianvaluations.utils.CommonUtils
@@ -107,7 +109,11 @@ class OrderAppointmentFragment : Fragment(), View.OnClickListener,
         firebaseAnalytics = FirebaseAnalytics.getInstance(context!!)
         firebaseParams.clear()
         firebaseParams.putString(Const.screenLaunched, "Appointment_Launched")
-        CommonUtils.addParamstoFirebaseEvent(firebaseAnalytics, Const.screenLaunched, firebaseParams)
+        CommonUtils.addParamstoFirebaseEvent(
+            firebaseAnalytics,
+            Const.screenLaunched,
+            firebaseParams
+        )
         arguments?.let {
             orderDetail =
                 it.getParcelable<ManageOrderResponse.Data.OrderDetail>(Const.itemIdTag) as ManageOrderResponse.Data.OrderDetail
@@ -116,11 +122,11 @@ class OrderAppointmentFragment : Fragment(), View.OnClickListener,
     }
 
     private fun setToolbar() {
-        (context as BottomNavigationActivity).layout_toolbar.visibility = View.VISIBLE
-        (context as BottomNavigationActivity).bottomNavigationView.visibility = View.GONE
-        (context as BottomNavigationActivity).imgBack.visibility = View.VISIBLE
+        (context as BottomNavigationActivity).layout_toolbar.makeVisible()
+        (context as BottomNavigationActivity).bottomNavigationView.makeGone()
+        (context as BottomNavigationActivity).imgBack.makeVisible()
         (context as BottomNavigationActivity).txtTitle.text = getString(R.string.appointmentTitle)
-        (context as BottomNavigationActivity).txtClear.visibility = View.GONE
+        (context as BottomNavigationActivity).txtClear.makeGone()
     }
 
     private fun initViewModel() {
@@ -461,11 +467,11 @@ class OrderAppointmentFragment : Fragment(), View.OnClickListener,
                 var remindersUri = context!!.getContentResolver().insert(reminderUri, reminders)
                 Log.e("RemindersTest", remindersUri.toString())
                 if (dialogView != null) {
-                    dialogView.btnOk.visibility = View.VISIBLE
-                    dialogView.btnAddEvent.visibility = View.GONE
-                    dialogView.img_close.visibility = View.GONE
-                    dialogView.imgEventAdded.visibility = View.VISIBLE
-                    dialogView.txtEventAdded.visibility = View.VISIBLE
+                    dialogView.btnOk.makeVisible()
+                    dialogView.btnAddEvent.makeGone()
+                    dialogView.img_close.makeGone()
+                    dialogView.imgEventAdded.makeVisible()
+                    dialogView.txtEventAdded.makeVisible()
                 }
             } catch (e: Exception) {
                 e.printStackTrace()

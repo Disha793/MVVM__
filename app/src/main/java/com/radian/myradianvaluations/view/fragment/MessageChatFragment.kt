@@ -16,6 +16,8 @@ import com.radian.myradianvaluations.Response.MessageChatResponse
 import com.radian.myradianvaluations.adapter.MessageChatAdapter
 import com.radian.myradianvaluations.constants.APIStatus
 import com.radian.myradianvaluations.constants.Const
+import com.radian.myradianvaluations.extensions.makeGone
+import com.radian.myradianvaluations.extensions.observeOnce
 import com.radian.myradianvaluations.extensions.snackAction
 import com.radian.myradianvaluations.extensions.toastShort
 import com.radian.myradianvaluations.utils.CommonUtils
@@ -144,7 +146,7 @@ class MessageChatFragment() : Fragment(), View.OnClickListener {
 
         (context as BottomNavigationActivity).txtTitle.text =
                 resources.getString(R.string.messagesTitle) + ":" + orderId
-        (context as BottomNavigationActivity).txtClear.visibility = View.GONE
+        (context as BottomNavigationActivity).txtClear.makeGone()
     }
 
     fun getMessageChat() {

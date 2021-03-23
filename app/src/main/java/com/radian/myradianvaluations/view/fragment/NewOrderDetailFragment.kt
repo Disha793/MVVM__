@@ -149,12 +149,12 @@ class NewOrderDetailFragment : Fragment(), View.OnClickListener {
     }
 
     private fun setToolbar() {
-        (context as BottomNavigationActivity).layout_toolbar.visibility = View.VISIBLE
-        (context as BottomNavigationActivity).bottomNavigationView.visibility = View.GONE
+        (context as BottomNavigationActivity).layout_toolbar.makeVisible()
+        (context as BottomNavigationActivity).bottomNavigationView.makeGone()
         (context as BottomNavigationActivity).txtTitle.text =
             getString(R.string.title_new_order_detail)
-        (context as BottomNavigationActivity).imgBack.visibility = View.VISIBLE
-        (context as BottomNavigationActivity).txtClear.visibility = View.GONE
+        (context as BottomNavigationActivity).imgBack.makeVisible()
+        (context as BottomNavigationActivity).txtClear.makeGone()
     }
 
     private fun getOrderDetail() {
@@ -367,11 +367,11 @@ class NewOrderDetailFragment : Fragment(), View.OnClickListener {
                 var remindersUri = context!!.contentResolver.insert(reminderUri, reminders)
                 Log.e("RemindersTest", remindersUri.toString())
                 if (eventdialogView != null) {
-                    eventdialogView.btnOk.visibility = View.VISIBLE
-                    eventdialogView.btnAddEvent.visibility = View.GONE
-                    eventdialogView.img_close.visibility = View.GONE
-                    eventdialogView.imgEventAdded.visibility = View.VISIBLE
-                    eventdialogView.txtEventAdded.visibility = View.VISIBLE
+                    eventdialogView.btnOk.makeVisible()
+                    eventdialogView.btnAddEvent.makeGone()
+                    eventdialogView.img_close.makeGone()
+                    eventdialogView.imgEventAdded.makeVisible()
+                    eventdialogView.txtEventAdded.makeVisible()
                 }
             } catch (e: Exception) {
                 LogUtils.logE(classTag, e)

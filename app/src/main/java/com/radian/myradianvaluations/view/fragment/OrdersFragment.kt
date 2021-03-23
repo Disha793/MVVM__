@@ -40,7 +40,7 @@ class OrdersFragment : Fragment() {
             savedInstanceState: Bundle?
     ): View? {
         view = inflater.inflate(R.layout.fragment_orders, container, false)
-        (context as BottomNavigationActivity).bottomNavigationView.visibility = View.VISIBLE
+        (context as BottomNavigationActivity).bottomNavigationView.makeVisible()
         initViewModel()
         showToolbarIcons(getString(R.string.open_orders))
         getOrderList()
@@ -57,9 +57,9 @@ class OrdersFragment : Fragment() {
                 orderList.addAll(it.data.orderDetails)
                 view.recyclerView.adapter?.notifyDataSetChanged()
                 if (orderList.isEmpty()) {
-                    view.txtNoOpenOrdr.visibility = View.VISIBLE
+                    view.txtNoOpenOrdr.makeVisible()
                 } else {
-                    view.txtNoOpenOrdr.visibility = View.GONE
+                    view.txtNoOpenOrdr.makeGone()
                 }
             } else if (it.status.equals(APIStatus.unauth, true)) {
                 context!!.toastShort(it.errorInfo.get(0).errorMessage)

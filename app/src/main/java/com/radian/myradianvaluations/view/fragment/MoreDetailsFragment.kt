@@ -17,6 +17,8 @@ import com.google.android.material.snackbar.Snackbar
 import com.radian.myradianvaluations.R
 import com.radian.myradianvaluations.Response.ManageOrderResponse
 import com.radian.myradianvaluations.constants.Const
+import com.radian.myradianvaluations.extensions.makeGone
+import com.radian.myradianvaluations.extensions.makeVisible
 import com.radian.myradianvaluations.utils.CommonUtils
 import com.radian.myradianvaluations.view.activity.BottomNavigationActivity
 import kotlinx.android.synthetic.main.activity_bottom_navigation.*
@@ -49,10 +51,10 @@ class MoreDetailsFragment : Fragment(), View.OnClickListener {
     }
 
     private fun setToolbar() {
-        (context as BottomNavigationActivity).bottomNavigationView.visibility = View.GONE
-        (context as BottomNavigationActivity).imgBack.visibility = View.VISIBLE
+        (context as BottomNavigationActivity).bottomNavigationView.makeGone()
+        (context as BottomNavigationActivity).imgBack.makeVisible()
         (context as BottomNavigationActivity).txtTitle.text = getString(R.string.moreDetailsTitle)
-        (context as BottomNavigationActivity).txtClear.visibility = View.GONE
+        (context as BottomNavigationActivity).txtClear.makeGone()
     }
 
     private fun setMoreData() {
