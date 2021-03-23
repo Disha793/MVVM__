@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/common_back_grey"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/_5sdp">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/linearLayoutCompat1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_6sdp"
+        android:background="@android:color/white"
+        android:elevation="@dimen/_3sdp"
+        android:padding="@dimen/_8sdp"
+        app:cardCornerRadius="@dimen/_10sdp">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_5sdp"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/_10sdp">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:text="@string/add_edit_title"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/_16sdp"
+                android:textStyle="bold"
+                android:fontFamily="@font/messinasans_semibold"/>
+
+            <View
+                style="@style/nwOrdrDividrStyle"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@color/divider_light_grey" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edtDateTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:background="@drawable/back_appt_text_box"
+                android:focusableInTouchMode="false"
+                android:fontFamily="@font/messinasans_regular"
+                android:hint="@string/new_date_time"
+                android:paddingStart="@dimen/_7sdp"
+                android:paddingLeft="@dimen/_7sdp"
+                android:paddingTop="@dimen/_7sdp"
+                android:paddingBottom="@dimen/_7sdp"
+                android:textColorHint="@color/txtColorGrey" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edtNote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@drawable/back_appt_text_box"
+                android:hint="@string/add_note"
+                android:paddingLeft="@dimen/_7sdp"
+                android:paddingTop="@dimen/_20sdp"
+                android:paddingBottom="@dimen/_20sdp"
+                android:textColorHint="@color/txtColorGrey"
+                android:fontFamily="@font/messinasans_regular"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnSave"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:background="@drawable/back_button_new"
+                android:text="@string/save_changes"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:fontFamily="@font/messinasans_semibold"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.cardview.widget.CardView>
+
+    <ScrollView
+        android:id="@+id/linearLayoutCompat2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearLayoutCompat1"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:scrollbars="none">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_6sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:background="@android:color/white"
+            android:elevation="@dimen/_3sdp"
+            android:padding="@dimen/_5sdp"
+            app:cardCornerRadius="@dimen/_10sdp">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_5sdp"
+                android:orientation="vertical"
+                android:paddingTop="@dimen/_10sdp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_8sdp"
+                    android:fontFamily="@font/messinasans_semibold"
+                    android:text="@string/appointmnt_details"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/_16sdp"
+                    android:textStyle="bold" />
+
+                <View
+                    style="@style/nwOrdrDividrStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:background="@color/divider_light_grey" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/_9sdp"
+                    android:paddingBottom="@dimen/_9sdp">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/messinasans_regular"
+                        android:text="@string/time"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/_14sdp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/txtApptTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/messinasans_regular"
+                        android:text="Not Scheduled"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/_14sdp"
+
+                        />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <View
+                    style="@style/nwOrdrDividrStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:background="@color/divider_light_grey" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/_9sdp"
+                    android:paddingBottom="@dimen/_9sdp"
+                    android:weightSum="2">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.7"
+                        android:fontFamily="@font/messinasans_regular"
+                        android:text="@string/apt_address"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/_14sdp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/txtApptAdd"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.3"
+                        android:fontFamily="@font/messinasans_regular"
+                        android:gravity="end"
+                        android:text=""
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/_14sdp" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <View
+                    style="@style/nwOrdrDividrStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:background="@color/divider_light_grey" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/_9sdp"
+                    android:paddingBottom="@dimen/_9sdp"
+                    android:weightSum="2">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/messinasans_regular"
+                        android:text="@string/contact_name"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/_14sdp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/txtApptName"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/messinasans_regular"
+                        android:gravity="end"
+                        android:text=""
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/_14sdp" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <View
+                    style="@style/nwOrdrDividrStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:background="@color/divider_light_grey" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/linearCall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/_9sdp"
+                    android:paddingBottom="@dimen/_9sdp">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/messinasans_regular"
+                        android:text="@string/apt_phone"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/_14sdp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/txtApptPhone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/messinasans_regular"
+                        android:text=""
+                        android:textColor="@color/color_green"
+                        android:textSize="@dimen/_14sdp" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <View
+                    style="@style/nwOrdrDividrStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:background="@color/divider_light_grey" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/linearEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/_9sdp"
+                    android:paddingBottom="@dimen/_9sdp"
+                    android:weightSum="2">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/messinasans_regular"
+                        android:text="@string/apt_email"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/_14sdp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/txtApptEmail"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:gravity="end"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/messinasans_regular"
+                        android:text=""
+                        android:textColor="@color/color_green"
+                        android:textSize="@dimen/_14sdp" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.cardview.widget.CardView>
+
+    </ScrollView>
+
+
+</RelativeLayout>

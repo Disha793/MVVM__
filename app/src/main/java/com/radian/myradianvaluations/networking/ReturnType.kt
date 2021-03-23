@@ -27,6 +27,10 @@ enum class ReturnType(val endPoint: String) {
     POST_MessageChat("mobile/Dashboard/GetTileOrderNotes"),
     POST_SendMessage("mobile/Dashboard/AddMessage"),
     POST_DashboardTile("mobile/Dashboard/GetDashboardTileDetails"),
+    //Revision List from order detail
+    POST_OrderRevisionRequest("mobile/Dashboard/GetTileOrderRevision"),
+    //to add/edit appoitment from order detail
+    POST_AddAppointment("mobile/Dashboard/AddEditInspection")
     POST_DeleteMessage("mobile/Dashboard/SaveMessageMarkAsRead"),
 
 }
