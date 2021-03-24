@@ -348,7 +348,7 @@ interface APIList {
         @Field("EOCARRIER") docDes: String?,
         @Field("DOCIDABBR") docAbbr: String?,
         @Field("VPCATEGORY") vpCat: String?,
-        @Field("EOAMOUNT") eoAmnt: String?,
+            @Field("EOAMOUNT") eoAmnt: String?,
         @Field("EOPOLICYNO") eoPolicy: String?,
         @Field("EXPIRYDATE") expiry: String?
 

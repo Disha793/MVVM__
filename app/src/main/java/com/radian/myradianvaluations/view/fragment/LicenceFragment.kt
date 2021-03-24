@@ -28,25 +28,17 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.radian.myradianvaluations.R
 import com.radian.myradianvaluations.Response.LicenceMasterModel
-import com.radian.myradianvaluations.Response.StatusResponse
 import com.radian.myradianvaluations.Response.VendorProfileResponse
 import com.radian.myradianvaluations.constants.APIStatus
 import com.radian.myradianvaluations.constants.Const
 import com.radian.myradianvaluations.extensions.*
-import com.radian.myradianvaluations.network.APIList
-import com.radian.myradianvaluations.network.RetrofitBase
 import com.radian.myradianvaluations.utils.CommonUtils
-import com.radian.myradianvaluations.utils.LoadingDialog
 import com.radian.myradianvaluations.utils.LogUtils
 import com.radian.myradianvaluations.utils.Pref
 import com.radian.myradianvaluations.view.activity.BottomNavigationActivity
 import com.radian.myradianvaluations.view.activity.PasscodeActivity
 import com.radian.myradianvaluations.viewmodel.EODocViewModel
 import com.radian.myradianvaluations.viewmodel.EODocViewModelFactory
-import io.reactivex.Observer
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_licence_update.*
 import kotlinx.android.synthetic.main.fragment_licence_update.view.*
 import okhttp3.MediaType
@@ -214,14 +206,9 @@ class LicenceFragment : Fragment(), View.OnClickListener, DialogInterface.OnClic
                 LogUtils.logD(TAG, "" + it)
                 it.data?.let {}
             })
-
-    }
-
-    private fun getLicenceMaster() {
-        LoadingDialog.show(context as BottomNavigationActivity)
-        eoDocViewModel.getLicenceMaster().let {
-            it?.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-                LoadingDialog.dismissDialog()
+        eoDocViewModel.licenceMasterResponse.observe(
+            viewLifecycleOwner,
+            androidx.lifecycle.Observer {
                 if (it.status.equals(APIStatus.ok, ignoreCase = true)) {
                     licenceTypeList.addAll(it.data.listLicence)
                     spinnerAdapter.notifyDataSetChanged()
@@ -234,17 +221,9 @@ class LicenceFragment : Fragment(), View.OnClickListener, DialogInterface.OnClic
                     startActivity(intent)
                 }
             })
-            if (it == null) {
-                LoadingDialog.dismissDialog()
-            }
-        }
-
-    }
-
-    private fun getLicenceData() {
-        eoDocViewModel.getVendorProfileDetails("PROFILELI").let {
-            it?.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-                LoadingDialog.dismissDialog()
+        eoDocViewModel.vendorProfileResponse.observe(
+            viewLifecycleOwner,
+            androidx.lifecycle.Observer {
                 if (it.status.equals(APIStatus.ok, true)) {
                     licenceList.add(it.data)
                     if (licenceList.isNotEmpty())
@@ -257,87 +236,72 @@ class LicenceFragment : Fragment(), View.OnClickListener, DialogInterface.OnClic
                         view.txtNoData.setText(it.errorInfo.get(0).errorMessage)
                     }
                 }
-
             })
-            if (it == null) {
-                LoadingDialog.dismissDialog()
-                CommonUtils.showOkDialog(
-                    context!!,
-                    getString(R.string.please_try_again),
-                    DialogInterface.OnClickListener { _, _ ->
+        eoDocViewModel.saveLicenceResponse.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            if (it.status.equals(APIStatus.ok, true)) {
 
+//on success
+            } else if (it.status.equals(APIStatus.unauth, true)) {
+                context!!.toastShort(it.errorInfo.get(0).errorMessage)
 
-                    },
-                    getString(R.string.ok)
-                )
+                var intent = Intent(context, PasscodeActivity::class.java)
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                startActivity(intent)
             }
-        }
 
+        })
+    }
+
+    private fun getLicenceMaster() {
+        val postParams = HashMap<String, Any?>()
+        postParams.put(
+            "PhoneNumber",
+            Pref.getValue(context!!, Pref.PHONE_NUMBER, "")!!
+        )
+        postParams.put("DeviceID", CommonUtils.getDeviceUUID(context!!))
+        postParams.put("MobileUserId", Pref.getValue(context!!, Pref.MOBILE_USER_ID, 0)!!)
+        postParams.put("DropDownType", "LICTYPE")
+        postParams.put("Organizations", Pref.getValue(context!!, Pref.ORGANIZATN_ID, 0)!!)
+        eoDocViewModel.getLicenceMaster(postParams)
+    }
+
+    private fun getLicenceData() {
+        val postParams = HashMap<String, Any?>()
+        postParams.put(
+            "PhoneNumber",
+            Pref.getValue(context!!, Pref.PHONE_NUMBER, "")!!
+        )
+        postParams.put("DeviceID", CommonUtils.getDeviceUUID(context!!))
+        postParams.put("MobileUserId", Pref.getValue(context!!, Pref.MOBILE_USER_ID, 0)!!)
+        postParams.put("ActionType", "PROFILELI")
+        eoDocViewModel.getVendorProfileDetails(postParams)
     }
 
     private fun submitData() {
 
-        RetrofitBase.getClient().create(APIList::class.java)
-            .saveLicenceDetails(
-                Pref.getValue(context!!, Pref.AUTH_TOKEN, "")!!,
-                Pref.getValue(context!!, Pref.PHONE_NUMBER, "")!!,
-                CommonUtils.getDeviceUUID(context!!),
-                Pref.getValue(context!!, Pref.MOBILE_USER_ID, 0)!!,
-                "PROFILELI",
-                licenceList.get(0).vENDORID,
-                licenceList.get(0).vENDORGROUPID,
-                licenceList.get(0).dOCGROUP,
-                licenceList.get(0).dOCID,
-                licenceList.get(0).dOCDESCRIPTION,
-                licenceList.get(0).dOCIDABBR,
-                licenceList.get(0).vPCATEGORY,
-                edtLicenceNo.text.toString(),
-                spinnerAdapter.getItem(spnLicenceTyp.selectedItemPosition)!!.valueCode,
-                edtExpiryDte.text.toString()
+        val postParams = HashMap<String, Any?>()
+        postParams.put(
+            "PhoneNumber",
+            Pref.getValue(context!!, Pref.PHONE_NUMBER, "")!!
+        )
+        postParams.put("DeviceID", CommonUtils.getDeviceUUID(context!!))
+        postParams.put("MobileUserId", Pref.getValue(context!!, Pref.MOBILE_USER_ID, 0)!!)
+        postParams.put("ActionType", "PROFILELI")
+        postParams.put("VENDORID", licenceList.get(0).vENDORID)
+        postParams.put("VENDORGROUPID", licenceList.get(0).vENDORGROUPID)
+        postParams.put("DOCGROUP", licenceList.get(0).dOCGROUP)
+        postParams.put("DOCID", licenceList.get(0).dOCID)
+        postParams.put("DOCDESCRIPTION", licenceList.get(0).dOCDESCRIPTION)
+        postParams.put("DOCIDABBR", licenceList.get(0).dOCIDABBR)
+        postParams.put("VPCATEGORY", licenceList.get(0).vPCATEGORY)
+        postParams.put("LICENSE", edtLicenceNo.text.toString())
+        postParams.put(
+            "LICENSETYPEID",
+            spinnerAdapter.getItem(spnLicenceTyp.selectedItemPosition)!!.valueCode
+        )
+        postParams.put("EXPIRYDATE", edtExpiryDte.text.toString())
 
-
-            ).subscribeOn(Schedulers.io())
-
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : Observer<StatusResponse> {
-                override fun onComplete() {
-                    LoadingDialog.dismissDialog()
-
-                }
-
-                override fun onSubscribe(d: Disposable) {
-                    LoadingDialog.show(context!!)
-                }
-
-                override fun onNext(t: StatusResponse) {
-                    if (t.status.equals(APIStatus.ok, true)) {
-
-//on success
-                    } else if (t.status.equals(APIStatus.unauth, true)) {
-                        context!!.toastShort(t.errorInfo.get(0).errorMessage)
-
-                        var intent = Intent(context, PasscodeActivity::class.java)
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                        startActivity(intent)
-                    }
-
-                }
-
-                override fun onError(e: Throwable) {
-                    LogUtils.logE(TAG, e.message!!, e)
-                    LoadingDialog.dismissDialog()
-                    CommonUtils.showOkDialog(
-                        context!!,
-                        getString(R.string.please_try_again),
-                        DialogInterface.OnClickListener { _, _ ->
-                            submitData()
-
-                        },
-                        getString(R.string.ok)
-                    )
-                }
-
-            })
+        eoDocViewModel.saveLicenceResponse(postParams)
     }
 
     private fun setData() {

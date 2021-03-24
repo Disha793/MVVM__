@@ -8,8 +8,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.radian.myradianvaluations.R
-import com.radian.myradianvaluations.Response.EORepository
 import com.radian.myradianvaluations.Response.LicenceMasterModel
+import com.radian.myradianvaluations.Response.StatusResponse
 import com.radian.myradianvaluations.Response.UploadImageResponse
 import com.radian.myradianvaluations.Response.VendorProfileResponse
 import com.radian.myradianvaluations.networking.ApiResponseCallBack
@@ -31,21 +31,57 @@ class EODocViewModelFactory(private val context: Context) : ViewModelProvider.Fa
 }
 
 class EODocViewModel(private val context: Context) : ViewModel(), ApiResponseCallBack {
-    private lateinit var eoRepository: EORepository
     var uploadImageResponse = MutableLiveData<UploadImageResponse>()
+    var vendorProfileResponse = MutableLiveData<VendorProfileResponse>()
+    var licenceMasterResponse = MutableLiveData<LicenceMasterModel>()
+    var saveLicenceResponse = MutableLiveData<StatusResponse>()
+    var saveW9DataResponse = MutableLiveData<StatusResponse>()
+    var saveEoDocResponse = MutableLiveData<StatusResponse>()
     private val apiServiceProviderGeneric = ApiServiceProviderGeneric(this)
 
-    fun init(context: Context): EORepository {
-        eoRepository = EORepository.getInstance(context)
-        return eoRepository
+    fun getVendorProfileDetails(postParams: HashMap<String, Any?>) {
+        apiServiceProviderGeneric.postCall(
+            context,
+            ReturnType.POST_VendorProfileDetail.endPoint,
+            ReturnType.POST_VendorProfileDetail,
+            postParams
+        )
     }
 
-    fun getVendorProfileDetails(actionType: String): MutableLiveData<VendorProfileResponse> {
-        return eoRepository.getVendorProfileDetails(actionType)
+    fun getLicenceMaster(postParams: HashMap<String, Any?>) {
+        apiServiceProviderGeneric.postCall(
+            context,
+            ReturnType.POST_LicenceMaster.endPoint,
+            ReturnType.POST_LicenceMaster,
+            postParams
+        )
     }
 
-    fun getLicenceMaster(): MutableLiveData<LicenceMasterModel> {
-        return eoRepository.getLicenceMaster()
+    fun saveLicenceResponse(postParams: HashMap<String, Any?>) {
+        apiServiceProviderGeneric.postCall(
+            context,
+            ReturnType.POST_SaveLicence.endPoint,
+            ReturnType.POST_SaveLicence,
+            postParams
+        )
+    }
+
+    fun saveW9DataResponse(postParams: HashMap<String, Any?>) {
+        apiServiceProviderGeneric.postCall(
+            context,
+            ReturnType.POST_SaveW9Data.endPoint,
+            ReturnType.POST_SaveW9Data,
+            postParams
+        )
+    }
+
+    fun saveEoDateResponse(postParams: HashMap<String, Any?>) {
+        apiServiceProviderGeneric.postCall(
+            context,
+            ReturnType.POST_SaveEoDocData.endPoint,
+            ReturnType.POST_SaveEoDocData,
+            postParams
+        )
     }
 
     fun uploadImage(
@@ -78,6 +114,30 @@ class EODocViewModel(private val context: Context) : ViewModel(), ApiResponseCal
                     )
                     LogUtils.logD("", "" + response.status)
                     uploadImageResponse.value = response
+                }
+                ReturnType.POST_VendorProfileDetail -> {
+                    val response = Gson().fromJson<VendorProfileResponse>(
+                        response,
+                        object : TypeToken<VendorProfileResponse>() {}.type
+                    )
+                    LogUtils.logD("", "" + response.status)
+                    vendorProfileResponse.value = response
+                }
+                ReturnType.POST_LicenceMaster -> {
+                    val response = Gson().fromJson<LicenceMasterModel>(
+                        response,
+                        object : TypeToken<LicenceMasterModel>() {}.type
+                    )
+                    LogUtils.logD("", "" + response.status)
+                    licenceMasterResponse.value = response
+                }
+                ReturnType.POST_SaveLicence -> {
+                    val response = Gson().fromJson<StatusResponse>(
+                        response,
+                        object : TypeToken<StatusResponse>() {}.type
+                    )
+                    LogUtils.logD("", "" + response.status)
+                    saveLicenceResponse.value = response
                 }
             }
         } catch (e: Exception) {

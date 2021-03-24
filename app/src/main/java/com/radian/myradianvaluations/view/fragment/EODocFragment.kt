@@ -18,7 +18,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.DatePicker
-import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
@@ -27,27 +26,17 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.radian.myradianvaluations.R
-import com.radian.myradianvaluations.Response.StatusResponse
 import com.radian.myradianvaluations.Response.VendorProfileResponse
 import com.radian.myradianvaluations.constants.APIStatus
 import com.radian.myradianvaluations.constants.Const
 import com.radian.myradianvaluations.extensions.*
-import com.radian.myradianvaluations.network.APIList
-import com.radian.myradianvaluations.network.RetrofitBase
 import com.radian.myradianvaluations.utils.CommonUtils
-import com.radian.myradianvaluations.utils.LoadingDialog
 import com.radian.myradianvaluations.utils.LogUtils
 import com.radian.myradianvaluations.utils.Pref
 import com.radian.myradianvaluations.view.activity.BottomNavigationActivity
 import com.radian.myradianvaluations.view.activity.PasscodeActivity
 import com.radian.myradianvaluations.viewmodel.EODocViewModel
 import com.radian.myradianvaluations.viewmodel.EODocViewModelFactory
-import com.radian.myradianvaluations.viewmodel.ProfileViewModel
-import com.radian.myradianvaluations.viewmodel.ProfileViewModelFactory
-import io.reactivex.Observer
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_eo_doc.*
 import kotlinx.android.synthetic.main.fragment_eo_doc.view.*
 import okhttp3.MediaType
@@ -74,7 +63,6 @@ class EODocFragment : Fragment(), View.OnClickListener, DialogInterface.OnClickL
     private val eoList = ArrayList<VendorProfileResponse.Data>()
     lateinit var dateListener: DatePickerDialog.OnDateSetListener
     internal lateinit var calendar: Calendar
-    internal var postParam = HashMap<String, Any?>()
     private lateinit var eoDocViewModel: EODocViewModel
     private lateinit var factory: EODocViewModelFactory
 
@@ -127,7 +115,41 @@ class EODocFragment : Fragment(), View.OnClickListener, DialogInterface.OnClickL
                 it.data?.let {
                 }
             })
+        eoDocViewModel.vendorProfileResponse.observe(
+            viewLifecycleOwner,
+            androidx.lifecycle.Observer {
+                if (it.status.equals(APIStatus.ok, true)) {
+                    eoList.add(it.data)
+                    if (eoList.isNotEmpty())
+                        setData()
+                } else if (it.status.equals(APIStatus.unauth, true)) {
+                    context!!.toastShort(it.errorInfo.get(0).errorMessage)
 
+                    var intent = Intent(context, PasscodeActivity::class.java)
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    startActivity(intent)
+                } else if (it.status.equals(APIStatus.error, true)) {
+                    if (it.errorInfo.isNotEmpty() && it.errorInfo.get(0).errorCode.equals("EONoUpdate")) {
+                        view.txtNoData.makeVisible()
+                        view.linearData.makeGone()
+                        view.btnSubmitEo.makeGone()
+                        view.txtNoData.setText(it.errorInfo.get(0).errorMessage)
+                    }
+                }
+            })
+        eoDocViewModel.saveEoDocResponse.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            if (it.status.equals(APIStatus.ok, true)) {
+//on success
+            } else if (it.status.equals(APIStatus.error, true)) {
+//on error
+            } else if (it.status.equals(APIStatus.unauth, true)) {
+                context!!.toastShort(it.errorInfo.get(0).errorMessage)
+                var intent = Intent(context, PasscodeActivity::class.java)
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                startActivity(intent)
+            }
+
+        })
     }
 
     private fun setCameraImage() {
@@ -231,63 +253,24 @@ class EODocFragment : Fragment(), View.OnClickListener, DialogInterface.OnClickL
     }
 
     private fun submitData() {
-
-        RetrofitBase.getClient().create(APIList::class.java).saveEoDetails(
-            Pref.getValue(context!!, Pref.AUTH_TOKEN, "")!!,
-            Pref.getValue(context!!, Pref.PHONE_NUMBER, "")!!,
-            CommonUtils.getDeviceUUID(context!!),
-            Pref.getValue(context!!, Pref.MOBILE_USER_ID, 0)!!,
-            eoList.get(0).vENDORID,
-            eoList.get(0).vENDORGROUPID,
-            eoList.get(0).dOCGROUP,
-            eoList.get(0).dOCID,
-            view.edtProvider.text.toString(),
-            eoList.get(0).dOCIDABBR,
-            eoList.get(0).vPCATEGORY,
-            view.edtCoverageAmnt.text.toString(),
-            view.edtPolicyNo.text.toString(),
-            view.edtExpiryDate.text.toString()
-
-        ).subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : Observer<StatusResponse> {
-                override fun onComplete() {
-                    LoadingDialog.dismissDialog()
-
-                }
-
-                override fun onSubscribe(d: Disposable) {
-                    LoadingDialog.show(context!!)
-                }
-
-                override fun onNext(t: StatusResponse) {
-                    if (t.status.equals(APIStatus.ok, true)) {
-//on success
-                    } else if (t.status.equals(APIStatus.error, true)) {
-//on error
-                    } else if (t.status.equals(APIStatus.unauth, true)) {
-                        context!!.toastShort(t.errorInfo.get(0).errorMessage)
-                        var intent = Intent(context, PasscodeActivity::class.java)
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                        startActivity(intent)
-                    }
-
-                }
-
-                override fun onError(e: Throwable) {
-                    LoadingDialog.dismissDialog()
-                    CommonUtils.showOkDialog(
-                        context!!,
-                        getString(R.string.please_try_again),
-                        DialogInterface.OnClickListener { _, _ ->
-
-
-                        },
-                        getString(R.string.ok)
-                    )
-
-                }
-            })
+        val postParams = HashMap<String, Any?>()
+        postParams.put(
+            "PhoneNumber",
+            Pref.getValue(context!!, Pref.PHONE_NUMBER, "")!!
+        )
+        postParams.put("DeviceID", CommonUtils.getDeviceUUID(context!!))
+        postParams.put("MobileUserId", Pref.getValue(context!!, Pref.MOBILE_USER_ID, 0)!!)
+        postParams.put("VENDORID", eoList.get(0).vENDORID)
+        postParams.put("VENDORGROUPID", eoList.get(0).vENDORGROUPID)
+        postParams.put("DOCGROUP", eoList.get(0).dOCGROUP)
+        postParams.put("DOCID", eoList.get(0).dOCID)
+        postParams.put("EOCARRIER", view.edtProvider.text.toString())
+        postParams.put("DOCIDABBR", eoList.get(0).dOCIDABBR)
+        postParams.put("VPCATEGORY", eoList.get(0).vPCATEGORY)
+        postParams.put("EOAMOUNT", view.edtCoverageAmnt.text.toString())
+        postParams.put("EOPOLICYNO", view.edtPolicyNo.text.toString())
+        postParams.put("EXPIRYDATE", view.edtExpiryDate.text.toString())
+        eoDocViewModel.saveEoDateResponse(postParams)
     }
 
     private fun openDialog() {
@@ -347,49 +330,27 @@ class EODocFragment : Fragment(), View.OnClickListener, DialogInterface.OnClickL
     }
 
     private fun showDatePickerDialog() {
-
         var datePickerDialog = DatePickerDialog(
             context!!,
             dateListener,
             calendar.get(Calendar.YEAR),
             calendar.get(Calendar.MONTH),
             calendar.get(Calendar.DAY_OF_MONTH)
-
         )
         datePickerDialog.datePicker.minDate = calendar.timeInMillis
         datePickerDialog.show()
     }
 
     private fun getEOData() {
-        LoadingDialog.show(context as BottomNavigationActivity)
-        eoDocViewModel.getVendorProfileDetails("PROFILEEO").let {
-            it?.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-                LoadingDialog.dismissDialog()
-                if (it.status.equals(APIStatus.ok, true)) {
-                    eoList.add(it.data)
-                    if (eoList.isNotEmpty())
-                        setData()
-                } else if (it.status.equals(APIStatus.unauth, true)) {
-                    context!!.toastShort(it.errorInfo.get(0).errorMessage)
-
-                    var intent = Intent(context, PasscodeActivity::class.java)
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                    startActivity(intent)
-                } else if (it.status.equals(APIStatus.error, true)) {
-                    if (it.errorInfo.isNotEmpty() && it.errorInfo.get(0).errorCode.equals("EONoUpdate")) {
-                        view.txtNoData.makeVisible()
-                        view.linearData.makeGone()
-                        view.btnSubmitEo.makeGone()
-                        view.txtNoData.setText(it.errorInfo.get(0).errorMessage)
-                    }
-                }
-
-            })
-            if (it == null) {
-                LoadingDialog.dismissDialog()
-            }
-        }
-
+        val postParams = HashMap<String, Any?>()
+        postParams.put(
+            "PhoneNumber",
+            Pref.getValue(context!!, Pref.PHONE_NUMBER, "")!!
+        )
+        postParams.put("DeviceID", CommonUtils.getDeviceUUID(context!!))
+        postParams.put("MobileUserId", Pref.getValue(context!!, Pref.MOBILE_USER_ID, 0)!!)
+        postParams.put("ActionType", "PROFILEEO")
+        eoDocViewModel.getVendorProfileDetails(postParams)
     }
 
     private fun setData() {

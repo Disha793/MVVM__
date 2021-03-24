@@ -24,26 +24,17 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.radian.myradianvaluations.R
-import com.radian.myradianvaluations.Response.StatusResponse
 import com.radian.myradianvaluations.Response.VendorProfileResponse
 import com.radian.myradianvaluations.constants.APIStatus
 import com.radian.myradianvaluations.constants.Const
 import com.radian.myradianvaluations.extensions.*
-import com.radian.myradianvaluations.network.APIList
-import com.radian.myradianvaluations.network.RetrofitBase
 import com.radian.myradianvaluations.utils.CommonUtils
-import com.radian.myradianvaluations.utils.LoadingDialog
 import com.radian.myradianvaluations.utils.LogUtils
 import com.radian.myradianvaluations.utils.Pref
 import com.radian.myradianvaluations.view.activity.BottomNavigationActivity
 import com.radian.myradianvaluations.view.activity.PasscodeActivity
 import com.radian.myradianvaluations.viewmodel.EODocViewModel
 import com.radian.myradianvaluations.viewmodel.EODocViewModelFactory
-
-import io.reactivex.Observer
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_w9_doc.*
 import kotlinx.android.synthetic.main.fragment_w9_doc.view.*
 import okhttp3.MediaType
@@ -140,13 +131,9 @@ class W9DocFragment : Fragment(), View.OnClickListener, DialogInterface.OnClickL
                 LogUtils.logD(TAG, "" + it)
                 it.data?.let {}
             })
-    }
-
-    private fun getw9Data() {
-        LoadingDialog.show(context as BottomNavigationActivity)
-        eoDocViewModel.getVendorProfileDetails("PROFILEW9").let {
-            it?.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-                LoadingDialog.dismissDialog()
+        eoDocViewModel.vendorProfileResponse.observe(
+            viewLifecycleOwner,
+            androidx.lifecycle.Observer {
                 if (it.status.equals(APIStatus.ok, true)) {
                     w9List.add(it.data)
                     if (w9List.isNotEmpty())
@@ -169,23 +156,32 @@ class W9DocFragment : Fragment(), View.OnClickListener, DialogInterface.OnClickL
                         view.txtNoData.setText(it.errorInfo.get(0).errorMessage)
                     }
                 }
-
             })
-            if (it == null) {
-                LoadingDialog.dismissDialog()
-                CommonUtils.showOkDialog(
-                    context!!,
-                    getString(R.string.please_try_again),
-                    DialogInterface.OnClickListener { _, _ ->
+        eoDocViewModel.saveW9DataResponse.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            if (it.status.equals("ok", true)) {
+//on success
+            } else if (it.status.equals("error", true)) {
+//on error
+            } else if (it.status.equals("UNAUTHORIZED", true)) {
+                context!!.toastShort(it.errorInfo.get(0).errorMessage)
 
-
-                    },
-                    getString(R.string.ok)
-                )
+                var intent = Intent(context, PasscodeActivity::class.java)
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                startActivity(intent)
             }
-        }
+        })
+    }
 
-
+    private fun getw9Data() {
+        val postParams = HashMap<String, Any?>()
+        postParams.put(
+            "PhoneNumber",
+            Pref.getValue(context!!, Pref.PHONE_NUMBER, "")!!
+        )
+        postParams.put("DeviceID", CommonUtils.getDeviceUUID(context!!))
+        postParams.put("MobileUserId", Pref.getValue(context!!, Pref.MOBILE_USER_ID, 0)!!)
+        postParams.put("ActionType", "PROFILEW9")
+        eoDocViewModel.getVendorProfileDetails(postParams)
     }
 
     private fun checkValidation(): Boolean {
@@ -210,62 +206,20 @@ class W9DocFragment : Fragment(), View.OnClickListener, DialogInterface.OnClickL
     }
 
     private fun submitData() {
+        val postParams = HashMap<String, Any?>()
+        postParams.put(
+            "PhoneNumber",
+            Pref.getValue(context!!, Pref.PHONE_NUMBER, "")!!
+        )
+        postParams.put("DeviceID", CommonUtils.getDeviceUUID(context!!))
+        postParams.put("MobileUserId", Pref.getValue(context!!, Pref.MOBILE_USER_ID, 0)!!)
+        postParams.put("VENDORID", w9List.get(0).vENDORIDW9)
         postParam.put("AddressLine1", edtAddLine1.text.toString())
         postParam.put("AddressLine2", edtAddLine2.text.toString())
         postParam.put("City", edtCity.text.toString())
         postParam.put("State", edtstate.text.toString())
         postParam.put("Zip", edtZip.text.toString())
-        RetrofitBase.getClient().create(APIList::class.java).saveW9Details(
-            Pref.getValue(context!!, Pref.AUTH_TOKEN, "")!!,
-            Pref.getValue(context!!, Pref.PHONE_NUMBER, "")!!,
-            CommonUtils.getDeviceUUID(context!!),
-            Pref.getValue(context!!, Pref.MOBILE_USER_ID, 0)!!,
-            w9List.get(0).vENDORIDW9,
-            postParam
-
-        ).subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : Observer<StatusResponse> {
-                override fun onComplete() {
-                    LoadingDialog.dismissDialog()
-
-                }
-
-                override fun onSubscribe(d: Disposable) {
-                    LoadingDialog.show(context!!)
-                }
-
-                override fun onNext(t: StatusResponse) {
-                    if (t.status.equals("ok", true)) {
-//on success
-                    } else if (t.status.equals("error", true)) {
-//on error
-                    } else if (t.status.equals("UNAUTHORIZED", true)) {
-                        context!!.toastShort(t.errorInfo.get(0).errorMessage)
-
-                        var intent = Intent(context, PasscodeActivity::class.java)
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                        startActivity(intent)
-                    }
-
-                }
-
-                override fun onError(e: Throwable) {
-                    LoadingDialog.dismissDialog()
-                    CommonUtils.showOkDialog(
-                        context!!,
-                        getString(R.string.please_try_again),
-                        DialogInterface.OnClickListener { _, _ ->
-
-
-                        },
-                        getString(R.string.ok)
-                    )
-
-                }
-
-            })
-
+        eoDocViewModel.saveW9DataResponse(postParam)
     }
 
     private fun setData() {
