@@ -151,7 +151,6 @@ class OrderDocumentListFragment : Fragment(), View.OnClickListener {
         }
     }
 
-
     private fun markAsRead(
         docList: ArrayList<OrderDocResponse.TileOrder>,
         position: Int
@@ -168,7 +167,6 @@ class OrderDocumentListFragment : Fragment(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         when (v?.id) {
-
             R.id.linearLoe -> {
                 val url =
                     BuildConfig.HOST + "mobile/Dashboard/GetDownloadOLEDocument?OrderGenID=" + orderDetail.orderGenId + "&ItemSrNo=" + orderDetail.itemSrNo + "&UserId=" +
