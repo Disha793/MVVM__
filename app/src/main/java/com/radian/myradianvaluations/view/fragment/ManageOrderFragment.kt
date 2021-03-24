@@ -18,6 +18,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.radian.myradianvaluations.PhotoUploadFragment
 import com.radian.myradianvaluations.BuildConfig
 import com.radian.myradianvaluations.R
 import com.radian.myradianvaluations.Response.ManageOrderResponse
@@ -45,7 +46,6 @@ class ManageOrderFragment : Fragment(), View.OnClickListener {
     private var itemId = 0
     private val classTag = this::class.java.canonicalName!!
     private var orderDetail = ManageOrderResponse.Data.OrderDetail()
-    private var postParam = HashMap<String, Any?>()
     private lateinit var firebaseAnalytics: FirebaseAnalytics
     private val firebaseParams = Bundle()
     private lateinit var manageOrderViewModel: ManageOrderViewModel
@@ -242,12 +242,12 @@ class ManageOrderFragment : Fragment(), View.OnClickListener {
 //            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
 //            startActivity(intent)
 //        }
-  //  }
+        //  }
 
-}
+    }
 
-private fun notifyBorrower() {
-    //
+    private fun notifyBorrower() {
+        //
 //Api name:  "Mobile/Dashboard/NotifyBorrower"   Response Type: NotiStatusResponse
 //  Params:      postParam.put("PhoneNumber", Pref.getValue(context!!, Pref.PHONE_NUMBER, ""))
 //        postParam.put("DeviceID", Utils.getDeviceUUID(context!!))
@@ -275,204 +275,203 @@ private fun notifyBorrower() {
 //            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
 //            startActivity(intent)
 //        }
-}
+    }
 
-override fun onClick(v: View?) {
-    when (v?.id) {
+    override fun onClick(v: View?) {
+        when (v?.id) {
 
-        R.id.linearAppt -> {
+            R.id.linearAppt -> {
 //Appointment Click
 //                (context as BottomNavigationActivity).pushFragment(
 //                    OrderAppointmentFragment.newInstance(
 //                        orderDetail
 //                    ), true
 //                )
-        }
-        R.id.linearMore -> {
-            (context as BottomNavigationActivity).pushFragment(
-                MoreDetailsFragment.newInstance(
-                    orderDetail
-                ), true
-            )
-        }
-        R.id.linearAddress -> {
-            if (orderDetail.lat != null && orderDetail.lng != null) {
-                val mapIntent = CommonUtils.getMapIntent(orderDetail.lat!!, orderDetail.lng!!)
-                if (mapIntent.resolveActivity(context!!.getPackageManager()) != null) {
-                    context!!.startActivity(mapIntent)
-                }
             }
-        }
-        R.id.linearLOE -> {
-            val url =
-                BuildConfig.HOST + "mobile/Dashboard/GetDownloadOLEDocument?OrderGenID=" + orderDetail.orderGenId + "&ItemSrNo=" + orderDetail.itemSrNo + "&UserId=" +
-                        orderDetail.userId + "&ServiceRequestType=" + orderDetail.serviceRequestType
-            val browserIntent = Intent(Intent.ACTION_VIEW)
-            browserIntent.setDataAndType(Uri.parse(url), "application/pdf")
-            context!!.startActivity(browserIntent)
-        }
-        R.id.linearCall -> {
-            if (!orderDetail.borrowerPhone.isNullOrBlank()) {
-                if (CommonUtils.checkCallPermission(context!!)) {
-                    CommonUtils.showDialog(
-                        context!!,
-                        getString(R.string.call_dialog_title),
-                        DialogInterface.OnClickListener { _, _ ->
-                            makePhoneCall()
-                        },
-                        DialogInterface.OnCancelListener { _ -> },
-                        "Yes",
-                        "No"
-                    )
-                } else {
-                    requestPermission()
-                }
-            }
-
-        }
-        R.id.linearEmail -> {
-            if (!orderDetail.borrowerEmail.isNullOrEmpty()) {
-                val emailIntent = Intent(
-                    Intent.ACTION_SENDTO, Uri.fromParts(
-                        "mailto", "" + orderDetail.borrowerEmail, null
-                    )
+            R.id.linearMore -> {
+                (context as BottomNavigationActivity).pushFragment(
+                    MoreDetailsFragment.newInstance(
+                        orderDetail
+                    ), true
                 )
-                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Subject")
-                emailIntent.putExtra(Intent.EXTRA_TEXT, "Body")
-                startActivity(Intent.createChooser(emailIntent, "Send email..."))
             }
-        }
-        R.id.linearDocument -> {
-            (context as BottomNavigationActivity).pushFragment(
-                OrderDocumentListFragment.newInstance(
-                    orderDetail.itemId!!
-                ), true
-            )
-        }
-        R.id.linearMessages -> {
-            if (orderDetail.newNoteCountFlag) {
-                actionType = "N"
-                markAsReadRequest()
+            R.id.linearAddress -> {
+                if (orderDetail.lat != null && orderDetail.lng != null) {
+                    val mapIntent = CommonUtils.getMapIntent(orderDetail.lat!!, orderDetail.lng!!)
+                    if (mapIntent.resolveActivity(context!!.getPackageManager()) != null) {
+                        context!!.startActivity(mapIntent)
+                    }
+                }
             }
-            (context as BottomNavigationActivity).pushFragment(
-                MessageChatFragment.newInstance(
-                    orderDetail.orderGenId!!,
-                    orderDetail.itemId
-                ), true
-            )
-        }
-        R.id.linearRevisions -> {
-            if (orderDetail.newRevisionFlag) {
-                actionType = "R"
-                markAsReadRequest()
+            R.id.linearLOE -> {
+                val url =
+                    BuildConfig.HOST + "mobile/Dashboard/GetDownloadOLEDocument?OrderGenID=" + orderDetail.orderGenId + "&ItemSrNo=" + orderDetail.itemSrNo + "&UserId=" +
+                            orderDetail.userId + "&ServiceRequestType=" + orderDetail.serviceRequestType
+                val browserIntent = Intent(Intent.ACTION_VIEW)
+                browserIntent.setDataAndType(Uri.parse(url), "application/pdf")
+                context!!.startActivity(browserIntent)
             }
+            R.id.linearCall -> {
+                if (!orderDetail.borrowerPhone.isNullOrBlank()) {
+                    if (CommonUtils.checkCallPermission(context!!)) {
+                        CommonUtils.showDialog(
+                            context!!,
+                            getString(R.string.call_dialog_title),
+                            DialogInterface.OnClickListener { _, _ ->
+                                makePhoneCall()
+                            },
+                            DialogInterface.OnCancelListener { _ -> },
+                            "Yes",
+                            "No"
+                        )
+                    } else {
+                        requestPermission()
+                    }
+                }
+
+            }
+            R.id.linearEmail -> {
+                if (!orderDetail.borrowerEmail.isNullOrEmpty()) {
+                    val emailIntent = Intent(
+                        Intent.ACTION_SENDTO, Uri.fromParts(
+                            "mailto", "" + orderDetail.borrowerEmail, null
+                        )
+                    )
+                    emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Subject")
+                    emailIntent.putExtra(Intent.EXTRA_TEXT, "Body")
+                    startActivity(Intent.createChooser(emailIntent, "Send email..."))
+                }
+            }
+            R.id.linearDocument -> {
+                (context as BottomNavigationActivity).pushFragment(
+                    OrderDocumentListFragment.newInstance(
+                        orderDetail.itemId!!
+                    ), true
+                )
+            }
+            R.id.linearMessages -> {
+                if (orderDetail.newNoteCountFlag) {
+                    actionType = "N"
+                    markAsReadRequest()
+                }
+                (context as BottomNavigationActivity).pushFragment(
+                    MessageChatFragment.newInstance(
+                        orderDetail.orderGenId!!,
+                        orderDetail.itemId
+                    ), true
+                )
+            }
+            R.id.linearRevisions -> {
+                if (orderDetail.newRevisionFlag) {
+                    actionType = "R"
+                    markAsReadRequest()
+                }
 //                (context as BottomNavigationActivity).pushFragment(
 //                    OrderRevisionRequestFragment.newInstance(orderDetail.itemId!!),
 //                    true
 //                )
-        }
-        R.id.btnMark -> {
-            //Appointment Related things
+            }
+            R.id.btnMark -> {
+                //Appointment Related things
 //                if (orderDetail.isComplete!!) {
 //                    completeInspection()
 //                } else if (orderDetail.isNotify!!) {
 //                    notifyBorrower()
 //                }
-            //Currently btnMArk renamed to photo upload below is photo upload activity
-            val intent = Intent(context, StepsActivity::class.java)
-            startActivity(intent)
+                //Currently btnMArk renamed to photo upload below is photo upload activity
+                (context as BottomNavigationActivity).pushFragment(PhotoUploadFragment(), false)
+            }
         }
     }
-}
 
-private fun makePhoneCall() {
-    val intent = Intent(Intent.ACTION_CALL)
-    intent.data =
-        Uri.parse("tel:" + orderDetail.borrowerPhone)
-    startActivity(intent)
-}
+    private fun makePhoneCall() {
+        val intent = Intent(Intent.ACTION_CALL)
+        intent.data =
+            Uri.parse("tel:" + orderDetail.borrowerPhone)
+        startActivity(intent)
+    }
 
-private fun requestPermission() {
+    private fun requestPermission() {
 
-    requestPermissions(
-        arrayOf(
-            Manifest.permission.CALL_PHONE
-        ),
-        REQUEST_CODE
-    )
-}
+        requestPermissions(
+            arrayOf(
+                Manifest.permission.CALL_PHONE
+            ),
+            REQUEST_CODE
+        )
+    }
 
-private fun markAsReadRequest() {
-    val postParam = HashMap<String, Any?>()
-    postParam.put("PhoneNumber", Pref.getValue(context!!, Pref.PHONE_NUMBER, "")!!)
-    postParam.put("DeviceID", CommonUtils.getDeviceUUID(context!!))
-    postParam.put("MobileUserId", Pref.getValue(context!!, Pref.MOBILE_USER_ID, 0)!!)
-    postParam.put("OrganizationIds", Pref.getValue(context!!, Pref.ORGANIZATN_ID, 0)!!)
-    postParam.put("ActionType", actionType)
-    postParam.put("Itemid", itemId)
-    postParam.put("Orderid", orderDetail.orderGenId)
-    manageOrderViewModel.markAsReadRevision(postParam)
-}
+    private fun markAsReadRequest() {
+        val postParam = HashMap<String, Any?>()
+        postParam.put("PhoneNumber", Pref.getValue(context!!, Pref.PHONE_NUMBER, "")!!)
+        postParam.put("DeviceID", CommonUtils.getDeviceUUID(context!!))
+        postParam.put("MobileUserId", Pref.getValue(context!!, Pref.MOBILE_USER_ID, 0)!!)
+        postParam.put("OrganizationIds", Pref.getValue(context!!, Pref.ORGANIZATN_ID, 0)!!)
+        postParam.put("ActionType", actionType)
+        postParam.put("Itemid", itemId)
+        postParam.put("Orderid", orderDetail.orderGenId)
+        manageOrderViewModel.markAsReadRevision(postParam)
+    }
 
 
-override fun onRequestPermissionsResult(
-    requestCode: Int,
-    permissions: Array<out String>,
-    grantResults: IntArray
-) {
-    super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-    val permission = permissions[0]
-    when (requestCode) {
-        REQUEST_CODE -> {
-            if (grantResults[0] == PackageManager.PERMISSION_DENIED) {
-                val showRationale =
-                    ActivityCompat.shouldShowRequestPermissionRationale(
-                        context as BottomNavigationActivity,
-                        permission
-                    )
-                if (!showRationale) {
-                    val snackBar = Snackbar.make(
-                        view,
-                        getString(R.string.permission_call),
-                        Snackbar.LENGTH_LONG
-                    )
-                    snackBar.setActionTextColor(
-                        Color.WHITE
-                    )
-                    snackBar.setAction("SETTINGS") {
-                        val intent =
-                            Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-                        val uri =
-                            Uri.fromParts("package", context!!.packageName, null)
-                        intent.data = uri
-                        startActivityForResult(intent, 12)
-                        snackBar.dismiss()
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        val permission = permissions[0]
+        when (requestCode) {
+            REQUEST_CODE -> {
+                if (grantResults[0] == PackageManager.PERMISSION_DENIED) {
+                    val showRationale =
+                        ActivityCompat.shouldShowRequestPermissionRationale(
+                            context as BottomNavigationActivity,
+                            permission
+                        )
+                    if (!showRationale) {
+                        val snackBar = Snackbar.make(
+                            view,
+                            getString(R.string.permission_call),
+                            Snackbar.LENGTH_LONG
+                        )
+                        snackBar.setActionTextColor(
+                            Color.WHITE
+                        )
+                        snackBar.setAction("SETTINGS") {
+                            val intent =
+                                Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                            val uri =
+                                Uri.fromParts("package", context!!.packageName, null)
+                            intent.data = uri
+                            startActivityForResult(intent, 12)
+                            snackBar.dismiss()
+                        }
+                        snackBar.show()
+                    } else {
+                        val snackBar = Snackbar.make(
+                            view,
+                            getString(R.string.permission_call),
+                            Snackbar.LENGTH_LONG
+                        )
+                        snackBar.setActionTextColor(Color.WHITE)
+                        snackBar.setAction("ALLOW") {
+                            requestPermission()
+                            snackBar.dismiss()
+                        }
+                        snackBar.show()
+
                     }
-                    snackBar.show()
-                } else {
-                    val snackBar = Snackbar.make(
-                        view,
-                        getString(R.string.permission_call),
-                        Snackbar.LENGTH_LONG
-                    )
-                    snackBar.setActionTextColor(Color.WHITE)
-                    snackBar.setAction("ALLOW") {
-                        requestPermission()
-                        snackBar.dismiss()
-                    }
-                    snackBar.show()
 
                 }
-
+                (context as BottomNavigationActivity).pushFragment(
+                    MessageChatFragment.newInstance(
+                        orderDetail.orderGenId!!,
+                        orderDetail.itemId
+                    ), true
+                )
             }
-            (context as BottomNavigationActivity).pushFragment(
-                MessageChatFragment.newInstance(
-                    orderDetail.orderGenId!!,
-                    orderDetail.itemId
-                ), true
-            )
         }
-    }
 
-}
+    }
 }
