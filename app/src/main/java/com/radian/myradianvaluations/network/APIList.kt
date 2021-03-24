@@ -277,7 +277,7 @@ interface APIList {
         @Header("Authorization") authToken: String,
         @Field("PhoneNumber") phoneNumber: String,
         @Field("DeviceID") deviceId: String,
-        @Field("ActionType") actionType: String,
+    @Field("ActionType") actionType: String,
         @Field("AcceptedBy") acceptedBy: String?
     ): Response<StatusResponse>
 

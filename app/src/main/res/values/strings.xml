@@ -41,6 +41,9 @@
     <string name="w9">W9 Document</string>
     <string name="licence">License Update</string>
     <string name="delete">Delete</string>
+    <!--Photo Upload tab-->
+    <string name="all_photos">All Photos</string>
+    <string name="sub_photos">Sub Photos</string>
     <!--Profile dialog labels-->
     <string name="lbl_next_step">Next Step</string>
     <string name="lbl_dilg_header">We\'ll send this photo to your inspection contacts before your inspections. Make sure to use an image you\'d want them to see!</string>
@@ -79,6 +82,7 @@ The app streamlines every step of the process, including accepting orders, sched
     <string name="radianResponse">Radian’s response to COVID 19</string>
     <string name="revisionTitle">Revisions</string>
     <string name="appointmentTitle">Appointment</string>
+    <string name="photoUploadTitle">Photos</string>
     <!--Out of office-->
     <string name="aboutUs">About us</string>
     <string name="confirm">Confirm</string>
