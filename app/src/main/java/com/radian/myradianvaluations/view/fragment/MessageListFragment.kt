@@ -98,15 +98,15 @@ class MessageListFragment : Fragment(), View.OnClickListener {
     private fun manageUI() {
         messageList.clear()
         view.recyclerview.adapter =
-                MessageListAdapter(
-                        context!!,
-                        messageList,
-                        view,
-                        this@MessageListFragment,messageListViewModel,viewLifecycleOwner
-                )
+            MessageListAdapter(
+                context!!,
+                messageList,
+                view,
+                this@MessageListFragment, messageListViewModel, viewLifecycleOwner
+            )
         CommonUtils.hideKeybord(
-                (context as BottomNavigationActivity).window.decorView.rootView,
-                context!!
+            (context as BottomNavigationActivity).window.decorView.rootView,
+            context!!
         )
     }
 
@@ -119,10 +119,10 @@ class MessageListFragment : Fragment(), View.OnClickListener {
         }
 
         view.txtOrderCount.setText(
-                HtmlCompat.fromHtml(
-                        countMessageTitle,
-                        HtmlCompat.FROM_HTML_MODE_LEGACY
-                )
+            HtmlCompat.fromHtml(
+                countMessageTitle,
+                HtmlCompat.FROM_HTML_MODE_LEGACY
+            )
         )
     }
 
@@ -162,8 +162,8 @@ class MessageListFragment : Fragment(), View.OnClickListener {
     override fun onResume() {
         super.onResume()
         CommonUtils.hideKeybord(
-                (context as BottomNavigationActivity).window.decorView.rootView,
-                context!!
+            (context as BottomNavigationActivity).window.decorView.rootView,
+            context!!
         )
 
     }

@@ -137,11 +137,11 @@ class CodeofConductActivity : AppCompatActivity(), View.OnClickListener {
                 }
             }
             R.id.btnReject -> {
-                saveVendorcompliance("D", null)
+                saveVendorcompliance("D", "")
 
             }
             R.id.btnnRemind -> {
-                saveVendorcompliance("R", null)
+                saveVendorcompliance("R", "")
 
             }
         }
@@ -162,8 +162,6 @@ class CodeofConductActivity : AppCompatActivity(), View.OnClickListener {
         postParam.put("DeviceID", CommonUtils.getDeviceUUID(this))
         postParam.put("ActionType", actionType)
         postParam.put("AcceptedBy", acceptedBy)
-
-
         codeofConductViewModel.saveVendorCompliance(postParam)
 
 

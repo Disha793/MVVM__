@@ -212,7 +212,11 @@ class MessageListAdapter(
         var postParam = HashMap<String, Any?>()
         postParam.put("PhoneNumber", Pref.getValue(context, Pref.PHONE_NUMBER, ""))
         postParam.put("MobileUserId", Pref.getValue(context, Pref.MOBILE_USER_ID, 0).toString())
-        postParam.put("ItemNoteIds", selectedMessage)
+        if (selectedMessage.size > 1) {
+            postParam.put("ItemNoteIds", selectedMessage)
+        } else {
+            postParam.put("ItemNoteIds", selectedMessage.get(0))
+        }
         if (selectedMessage.isEmpty()) {
             postParam.put("ClearAll", "Y")
         } else {

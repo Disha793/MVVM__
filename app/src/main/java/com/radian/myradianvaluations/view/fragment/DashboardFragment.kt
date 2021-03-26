@@ -9,7 +9,6 @@ import android.os.Bundle
 import android.text.Html
 import android.text.Spanned
 import android.view.*
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.radian.myradianvaluations.BuildConfig
@@ -31,7 +30,6 @@ import com.radian.myradianvaluations.viewmodel.DashboardViewModelFactory
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.dialog_app_update.view.*
 import kotlinx.android.synthetic.main.fragment_dashboard_new.view.*
-import kotlinx.android.synthetic.main.fragment_new_order_reject.view.*
 import kotlinx.android.synthetic.main.fragment_order_appointment.view.*
 import kotlinx.android.synthetic.main.toolbar_dashboard.view.*
 import org.greenrobot.eventbus.EventBus
@@ -109,18 +107,23 @@ class DashboardFragment : Fragment(), View.OnClickListener {
                                 )
                             }
                             DashboardAbbr.document -> {
-                                val url =
-                                    BuildConfig.HOST + "mobile/Dashboard/GetDownloadDocument?DocId=" + dashboardList.get(
-                                        position
-                                    ).documentId + "&Name=" + dashboardList[position].documentname + "&UserId=" + dashboardList.get(
-                                        position
-                                    ).userId
-                                val browserIntent = Intent(Intent.ACTION_VIEW)
-                                browserIntent.setDataAndType(Uri.parse(url), "application/pdf")
-                                context!!.startActivity(browserIntent)
+                                try {
+                                    val url =
+                                        BuildConfig.HOST + "mobile/Dashboard/GetDownloadDocument?DocId=" + dashboardList.get(
+                                            position
+                                        ).documentId + "&Name=" + dashboardList[position].documentname + "&UserId=" + dashboardList.get(
+                                            position
+                                        ).userId
+                                    val browserIntent = Intent(Intent.ACTION_VIEW)
+                                    browserIntent.setDataAndType(Uri.parse(url), "application/pdf")
+                                    context!!.startActivity(browserIntent)
+                                } catch (e: java.lang.Exception) {
+                                    LogUtils.logE(classTag, e)
+                                }
+
                             }
                             DashboardAbbr.inspection -> {
-                                markInspectionComplete(position)
+                                //markInspectionComplete(position)
                             }
 
                         }
@@ -137,7 +140,7 @@ class DashboardFragment : Fragment(), View.OnClickListener {
                                 }
                             }
                             DashboardAbbr.revision -> {
-                                dismissRevisnReq(position)
+                                markAsReadRevisionReq(position)
                             }
                             DashboardAbbr.inspection -> {
                                 notCompleteInspection(position)
@@ -453,7 +456,7 @@ class DashboardFragment : Fragment(), View.OnClickListener {
 
     }
 
-    private fun dismissRevisnReq(position: Int) {
+    private fun markAsReadRevisionReq(position: Int) {
         val postParam = HashMap<String, Any?>()
         postParam.put("PhoneNumber", Pref.getValue(context!!, Pref.PHONE_NUMBER, ""))
         postParam.put("DeviceID", CommonUtils.getDeviceUUID(context!!))

@@ -23,7 +23,7 @@ class SplashActivity : AppCompatActivity() {
             if (intent.getStringExtra("data") != null) {
                 val jsonObject = JSONObject(intent.getStringExtra("data"))
                 Log.e("JsonObject at Splash", jsonObject.toString())
-                val resultIntent = Intent(this, SplashActivity::class.java)
+                val resultIntent = Intent(this, BottomNavigationActivity::class.java)
                 resultIntent.putExtra(Const.idTag, jsonObject.getInt(Const.idTag))
                 resultIntent.putExtra(
                     Const.notificationidTag,

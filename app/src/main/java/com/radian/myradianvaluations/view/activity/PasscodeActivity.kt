@@ -199,7 +199,6 @@ class PasscodeActivity : AppCompatActivity(), View.OnClickListener {
                 if (it.data.userDetailJson.cocFlag) {
                     intent = Intent(this@PasscodeActivity, CodeofConductActivity::class.java)
                     intent.putExtra(Const.btnCount, it.data.userDetailJson.btnCount)
-                    intent.putExtra(Const.basicLoginDetail, it)
                     startActivity(intent)
                 } else {
                     intent = Intent(
@@ -208,6 +207,7 @@ class PasscodeActivity : AppCompatActivity(), View.OnClickListener {
                     )
                     intent.putExtra(Const.basicLoginDetail, it)
                     startActivity(intent)
+
                 }
 
             } else {
@@ -576,7 +576,7 @@ class PasscodeActivity : AppCompatActivity(), View.OnClickListener {
                         }
                         // Get new Instance ID token
                         fcmToken = task.result?.token!!
-
+                        Pref.setValue(this, Pref.FCM_TOKEN, fcmToken)
 
                     })
 

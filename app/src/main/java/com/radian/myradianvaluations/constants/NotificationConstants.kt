@@ -24,6 +24,7 @@ object NotificationConstants {
     val notiAbbrDue = "DUE"
     val notiAbbrScheduled = "SCHEDULED"
     val notiAbbrCompleted = "COMPLETED"
+    //this is for broadcast order
     val notiAbbrGroup = "GROUP"
 
 }
