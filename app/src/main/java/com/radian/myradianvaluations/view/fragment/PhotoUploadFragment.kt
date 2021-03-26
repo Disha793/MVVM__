@@ -24,6 +24,7 @@ import com.radian.myradianvaluations.view.fragment.AllAndSubPhotosFragment
 import kotlinx.android.synthetic.main.activity_bottom_navigation.*
 import kotlinx.android.synthetic.main.fragment_document.view.*
 import kotlinx.android.synthetic.main.layout_toolbar.*
+import kotlinx.android.synthetic.main.layout_toolbar.view.*
 
 class PhotoUploadFragment : Fragment(), TabLayout.OnTabSelectedListener {
     internal lateinit var view: View
@@ -41,7 +42,6 @@ class PhotoUploadFragment : Fragment(), TabLayout.OnTabSelectedListener {
         setToolbar()
         setUpViewPager()
         setupTabs()
-
         return view
     }
 
@@ -150,4 +150,6 @@ class PhotoUploadFragment : Fragment(), TabLayout.OnTabSelectedListener {
     override fun onTabReselected(tab: TabLayout.Tab?) {
 
     }
+
+
 }
