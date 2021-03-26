@@ -133,7 +133,7 @@ class LicenceFragment : Fragment(), View.OnClickListener, DialogInterface.OnClic
             }
             R.id.txtAddDoc -> {
                 if (CommonUtils.checkPermission(context!!)) {
-                    openDialog()
+                    CommonUtils.openDialog(context!!, this)
                 } else {
                     requestPermission()
                 }
@@ -186,17 +186,6 @@ class LicenceFragment : Fragment(), View.OnClickListener, DialogInterface.OnClic
 
     }
 
-    private fun openDialog() {
-        val builder = AlertDialog.Builder(context)
-
-        var options = Array<CharSequence>(3, { "" })
-        options[0] = resources.getString(R.string.camera)
-        options[1] = resources.getString(R.string.gallery)
-        options[2] = resources.getString(R.string.cancel)
-        builder.setTitle(resources.getString(R.string.select_option))
-        builder.setItems(options, this)
-        builder.show()
-    }
 
     private fun observeLicenceData() {
 

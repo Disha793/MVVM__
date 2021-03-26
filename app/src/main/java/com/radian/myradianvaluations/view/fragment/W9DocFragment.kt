@@ -88,7 +88,7 @@ class W9DocFragment : Fragment(), View.OnClickListener, DialogInterface.OnClickL
         when (v!!.id) {
             R.id.txtAddDoc -> {
                 if (CommonUtils.checkPermission(context!!)) {
-                    openDialog()
+                    CommonUtils.openDialog(context!!, this)
                 } else {
                     requestPermission()
                 }
@@ -247,17 +247,7 @@ class W9DocFragment : Fragment(), View.OnClickListener, DialogInterface.OnClickL
 
     }
 
-    private fun openDialog() {
-        val builder = AlertDialog.Builder(context)
 
-        var options = Array<CharSequence>(3, { "" })
-        options[0] = "Camera"
-        options[1] = "Gallery"
-        options[2] = "Cancel"
-        builder.setTitle("Select Options")
-        builder.setItems(options, this)
-        builder.show()
-    }
 
     private fun uploadDoc(fileUri: String) {
         val file = File(fileUri)

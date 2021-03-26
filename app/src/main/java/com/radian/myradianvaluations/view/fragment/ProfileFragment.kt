@@ -504,16 +504,7 @@ class ProfileFragment() : Fragment(), DialogInterface.OnClickListener, View.OnCl
     }
 
     private fun openDialog() {
-        //To change body of created functions use File | Settings | File Templates.
-        val builder = AlertDialog.Builder(context)
-
-        var options = Array<CharSequence>(3, { "" })
-        options[0] = resources.getString(R.string.camera)
-        options[1] = resources.getString(R.string.gallery)
-        options[2] = resources.getString(R.string.cancel)
-        builder.setTitle(resources.getString(R.string.select_option))
-        builder.setItems(options, this)
-        builder.show()
+        CommonUtils.openDialog(context, this)
     }
 
     private fun openCamera() {
