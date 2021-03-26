@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cardHome"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -24,14 +25,53 @@
             android:layout_weight="2"
             android:orientation="vertical">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/txtAdd"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/messinasans_regular"
-                android:text="1234 Street"
-                android:textColor="@color/color_green"
-                android:textSize="@dimen/_12sdp" />
+                android:orientation="horizontal"
+               >
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txtAdd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_toStartOf="@+id/txtLblMiles"
+                    android:fontFamily="@font/messinasans_regular"
+                    android:gravity="start"
+                    tools:text="1234 Street"
+                    android:textColor="@color/color_green"
+                    android:textSize="@dimen/_12sdp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txtLblMiles"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_toStartOf="@+id/txtValMiles"
+                    android:fontFamily="@font/messinasans_regular"
+                    android:gravity="end"
+                    android:text="@string/miles"
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/_12sdp"
+                    android:visibility="gone" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txtValMiles"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:layout_marginLeft="@dimen/_3sdp"
+                    android:layout_marginRight="@dimen/_3sdp"
+                    android:fontFamily="@font/messinasans_regular"
+                    android:gravity="end"
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/_12sdp"
+                    android:visibility="gone" />
+            </RelativeLayout>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/cardTitle"
@@ -44,6 +84,16 @@
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/_14sdp"
                 android:textStyle="bold" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/nwOrdrFee"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_6sdp"
+                android:fontFamily="@font/messinasans_regular"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/_11sdp"
+                android:visibility="gone" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/nwordrDteTime"
@@ -119,7 +169,7 @@
                     android:paddingBottom="@dimen/_3sdp"
                     android:text="View"
                     android:textAllCaps="false"
-                    android:textColor="@color/colorPrimary"/>
+                    android:textColor="@color/colorPrimary" />
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnRead"
@@ -132,12 +182,12 @@
                     android:minWidth="0dp"
                     android:minHeight="0dp"
                     android:paddingStart="@dimen/_14sdp"
-                    android:textColor="@color/colorPrimary"
                     android:paddingTop="@dimen/_3sdp"
                     android:paddingEnd="@dimen/_14sdp"
                     android:paddingBottom="@dimen/_3sdp"
                     android:text="Decline"
-                    android:textAllCaps="false" />
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorPrimary" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
 

@@ -38,15 +38,17 @@ class OrdersAdapter(
             holder.linearAtten.makeGone()
         holder.lblOrderAdd.text = orderList.get(position).displayAddInfo
         holder.lblorderProduct.text = orderList.get(position).product
-        if (!orderList.get(position).appointmentDate.isNullOrEmpty()) {
-            holder.lblorderTime.text =
-                orderList.get(position).appointmentDate + " at " + orderList.get(position).appointmentTime
-
-        } else {
-             orderList.get(position).message?.let{
-                 holder.lblorderTime.text =it
-             }
-        }
+        holder.lblorderTime.makeGone()
+        //This is to show appointment date and time
+//        if (!orderList.get(position).appointmentDate.isNullOrEmpty()) {
+//            holder.lblorderTime.text =
+//                orderList.get(position).appointmentDate + " at " + orderList.get(position).appointmentTime
+//
+//        } else {
+//             orderList.get(position).message?.let{
+//                 holder.lblorderTime.text =it
+//             }
+//        }
 
         holder.cardOpenOrder.setOnClickListener {
             onClickListener.onItemClick(position)

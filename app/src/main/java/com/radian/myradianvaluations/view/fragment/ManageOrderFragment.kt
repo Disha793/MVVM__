@@ -150,7 +150,7 @@ class ManageOrderFragment : Fragment(), View.OnClickListener {
     private fun setOrderDetail(orderDetail: ManageOrderResponse.Data.OrderDetail) {
         view.txtAdd.text = orderDetail.displayAddressInfo
         if (!orderDetail.lockbox.isNullOrBlank()) {
-            view.txtLockBox.makeVisible()
+            view.txtLockBox.makeGone()
             view.txtLockBox.text = orderDetail.lockbox
         } else {
             view.txtLockBox.makeGone()
@@ -379,7 +379,7 @@ class ManageOrderFragment : Fragment(), View.OnClickListener {
 //                    notifyBorrower()
 //                }
                 //Currently btnMArk renamed to photo upload below is photo upload activity
-                (context as BottomNavigationActivity).pushFragment(PhotoUploadFragment(), false)
+                (context as BottomNavigationActivity).pushFragment(PhotoUploadFragment(), true)
             }
         }
     }
