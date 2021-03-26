@@ -76,13 +76,24 @@ class HomeAdapter(
         holder.nwordrDteTime.makeVisible()
         holder.cardTitle.text = context.getString(R.string.lbl_dash_nwordr)
         holder.txtAdd.text = dashboardList.get(position).displayAddressInfo
-        if (!dashboardList[position].appointmentDate.isNullOrBlank() && !dashboardList[position].startTimeSlot.isNullOrEmpty()) {
-            holder.nwordrDteTime.text =
-                dashboardList[position].appointmentDate + " | " + "Between " + dashboardList[
-                        position].startTimeSlot + " and " + dashboardList[position].endTimeSlot
-        } else {
-            holder.nwordrDteTime.text = dashboardList[position].message
+        dashboardList[position].fee?.let {
+            holder.nwOrdrFee.makeVisible()
+            holder.nwOrdrFee.text = "Fee: $" + it
         }
+        holder.nwOrdrMilesLabl.makeVisible()
+        holder.nwOrdrMileValue.makeVisible()
+        holder.nwOrdrMileValue.text = dashboardList[position].proximity
+        //This is to show appoiontment date and time
+        holder.nwordrDteTime.makeGone()
+
+
+//        if (!dashboardList[position].appointmentDate.isNullOrBlank() && !dashboardList[position].startTimeSlot.isNullOrEmpty()) {
+//            holder.nwordrDteTime.text =
+//                dashboardList[position].appointmentDate + " | " + "Between " + dashboardList[
+//                        position].startTimeSlot + " and " + dashboardList[position].endTimeSlot
+//        } else {
+//            holder.nwordrDteTime.text = dashboardList[position].message
+//        }
 
         holder.product.text = dashboardList[position].product
         holder.linearBtn.makeVisible()
@@ -149,7 +160,6 @@ class HomeAdapter(
     }
 
 
-
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val txtAdd = view.txtAdd
         val cardTitle = view.cardTitle
@@ -162,6 +172,9 @@ class HomeAdapter(
         val btnView = view.btnView
         val btnRead = view.btnRead
         val cardHome = view.cardHome
+        val nwOrdrFee = view.nwOrdrFee
+        val nwOrdrMilesLabl = view.txtLblMiles
+        val nwOrdrMileValue = view.txtValMiles
     }
 
 }

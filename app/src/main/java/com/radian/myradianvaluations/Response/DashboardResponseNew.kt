@@ -33,7 +33,7 @@ class DashboardResponseNew {
 
         @SerializedName("ProfilePicStatus")
         @Expose
-        var profilePicStatus:String? = ""
+        var profilePicStatus: String? = ""
 
         @SerializedName("UpComingEventInfo")
         @Expose
@@ -84,6 +84,14 @@ class DashboardResponseNew {
             @SerializedName("DisplayAddressInfo")
             @Expose
             val displayAddressInfo: String? = null
+
+            @SerializedName("Fee")
+            @Expose
+            val fee: String? = null
+
+            @SerializedName("Proximity")
+            @Expose
+            val proximity: String = ""
 
             @SerializedName("ProductName")
             @Expose
@@ -136,9 +144,10 @@ class DashboardResponseNew {
             @SerializedName("RevisionRequest")
             @Expose
             val revisionRequest: String? = null
+
             @SerializedName("IsAssigned")
             @Expose
-            var isAssigned=0
+            var isAssigned = 0
         }
 
         class UpcomingAppointmnt {

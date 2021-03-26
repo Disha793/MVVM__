@@ -25,4 +25,5 @@
     <color name="darkPlatinum">#95C7DC</color>
     <color name="lightPlatinum">#B1E1F5</color>
     <color name="graphBackground">#EBEBEB</color>
+    <color name="red">#E93323</color>
 </resources>
