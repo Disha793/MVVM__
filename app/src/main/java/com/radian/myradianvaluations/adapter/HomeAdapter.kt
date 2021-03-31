@@ -80,9 +80,11 @@ class HomeAdapter(
             holder.nwOrdrFee.makeVisible()
             holder.nwOrdrFee.text = "Fee: $" + it
         }
-        holder.nwOrdrMilesLabl.makeVisible()
-        holder.nwOrdrMileValue.makeVisible()
-        holder.nwOrdrMileValue.text = dashboardList[position].proximity
+        dashboardList[position].proximity?.let {
+            holder.nwOrdrMilesLabl.makeVisible()
+            holder.nwOrdrMileValue.makeVisible()
+            holder.nwOrdrMileValue.text = dashboardList[position].proximity
+        }
         //This is to show appoiontment date and time
         holder.nwordrDteTime.makeGone()
 

@@ -114,7 +114,7 @@
             android:layout_marginBottom="@dimen/_10sdp"
             android:paddingLeft="0dp"
             android:visibility="visible"
-            app:srcCompat="@drawable/img_myradian_valuations" />
+            app:srcCompat="@drawable/ic_login_toolbar" />
 
     </androidx.cardview.widget.CardView>
 </RelativeLayout>

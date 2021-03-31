@@ -204,6 +204,6 @@
         android:layout_gravity="bottom"
         android:layout_marginTop="@dimen/_30sdp"
         android:paddingLeft="0dp"
-        app:srcCompat="@drawable/img_myradian_valuations" />
+        app:srcCompat="@drawable/ic_login_toolbar" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

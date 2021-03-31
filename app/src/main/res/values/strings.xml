@@ -218,6 +218,7 @@ The app streamlines every step of the process, including accepting orders, sched
     <string name="photo_upload">Photo Upload</string>
     <string name="order">Order</string>
     <string name="miles">Miles:</string>
+    <string name="notification_updated">Notification Updated</string>
 
     <string name="success">Success</string>
 </resources>

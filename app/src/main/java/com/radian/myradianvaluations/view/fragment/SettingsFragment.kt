@@ -34,6 +34,7 @@ class SettingsFragment : Fragment(), View.OnClickListener {
     val classTag = this.javaClass.name
     private lateinit var settingsViewModel: SettingsViewModel
     internal lateinit var view: View
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -50,7 +51,6 @@ class SettingsFragment : Fragment(), View.OnClickListener {
     }
 
     private fun observeNotificationData() {
-
         settingsViewModel.notiStatusResponse.observe(viewLifecycleOwner, Observer {
             if (it.status.equals(APIStatus.ok, true)) {
                 view.switchNoti.isChecked =
@@ -58,10 +58,8 @@ class SettingsFragment : Fragment(), View.OnClickListener {
                         "y",
                         true
                     )
-
             } else if (it.status.equals(APIStatus.unauth, true)) {
                 context!!.toastShort(it.errorInfo.get(0).errorMessage)
-
                 var intent = Intent(context!!, PasscodeActivity::class.java)
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                 startActivity(intent)
@@ -71,8 +69,8 @@ class SettingsFragment : Fragment(), View.OnClickListener {
         settingsViewModel.saveNotiStatusResponse.observe(viewLifecycleOwner, Observer {
             if (it.status.equals(APIStatus.ok, true)) {
                 view.snackAction(view,
-                    "Notification Updated",
-                    "ok",
+                    resources.getString(R.string.notification_updated),
+                    resources.getString(R.string.ok),
                     View.OnClickListener { })
 
             } else if (it.status.equals(APIStatus.unauth, true)) {
@@ -110,7 +108,6 @@ class SettingsFragment : Fragment(), View.OnClickListener {
         (context as BottomNavigationActivity).imgBack.makeVisible()
         (context as BottomNavigationActivity).txtClear.makeGone()
         (context as BottomNavigationActivity).bottomNavigationView.makeGone()
-
     }
 
     private fun getNotificatnStatus() {
@@ -175,13 +172,10 @@ class SettingsFragment : Fragment(), View.OnClickListener {
                         Const.scrSettingsTag
                     )
                 )
-
                 activity?.overridePendingTransition(R.anim.slide_up, R.anim.no_change)
-
             }
-
         }
     }
-
-
 }
+
+
