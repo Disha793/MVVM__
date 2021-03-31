@@ -120,6 +120,16 @@ class DashboardFragment : Fragment(), View.OnClickListener {
                                 } catch (e: java.lang.Exception) {
                                     LogUtils.logE(classTag, e)
                                 }
+//                                val url =
+//                                    BuildConfig.HOST + "mobile/Dashboard/GetDownloadDocument?DocId=" + dashboardList.get(
+//                                        position
+//                                    ).documentId + "&Name=" + dashboardList[position].documentname + "&UserId=" + dashboardList.get(
+//                                        position
+//                                    ).userId
+//                                val intent = Intent(context, WebviewActivity::class.java)
+//                                intent.putExtra("webUrl", url)
+//                                intent.putExtra(Const.scrTag, Const.scrViewPdf)
+//                                startActivity(intent)
 
                             }
                             DashboardAbbr.inspection -> {

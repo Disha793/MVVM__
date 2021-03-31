@@ -99,6 +99,7 @@ class PasscodeActivity : AppCompatActivity(), View.OnClickListener {
                     Pref.DEVICE_STATUS,
                     it.data.deviceStatus
                 )
+
                 firebaseParams.clear()
                 firebaseParams.putString(Const.methodInvoked, "OTPGenerated")
                 CommonUtils.addParamstoFirebaseEvent(

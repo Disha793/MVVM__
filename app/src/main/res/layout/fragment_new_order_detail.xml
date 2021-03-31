@@ -7,6 +7,11 @@
     android:background="@color/common_back_grey"
     android:orientation="vertical">
 
+    <include
+        android:id="@+id/viewLoe"
+        layout="@layout/layout_accept_loe"
+        android:visibility="gone" />
+
     <ScrollView
         android:id="@+id/scrollview"
         android:layout_width="match_parent"
@@ -64,12 +69,12 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
                             android:layout_gravity="end|top"
                             android:layout_marginEnd="@dimen/_5sdp"
+                            android:layout_marginRight="@dimen/_5sdp"
                             android:gravity="center"
-                            android:orientation="vertical"
-                            android:layout_alignParentRight="true"
-                            android:layout_marginRight="@dimen/_5sdp">
+                            android:orientation="vertical">
 
                             <androidx.appcompat.widget.AppCompatImageView
                                 android:id="@+id/imgDirection"
@@ -85,10 +90,10 @@
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/imgDirection"
                                 android:layout_alignParentEnd="true"
+                                android:layout_alignParentRight="true"
                                 android:text="Directions"
                                 android:textColor="@android:color/black"
-                                android:textSize="@dimen/_10sdp"
-                                android:layout_alignParentRight="true" />
+                                android:textSize="@dimen/_10sdp" />
                         </androidx.appcompat.widget.LinearLayoutCompat>
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -154,12 +159,12 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
                             android:layout_gravity="end|top"
                             android:layout_marginEnd="@dimen/_5sdp"
+                            android:layout_marginRight="@dimen/_5sdp"
                             android:gravity="center"
-                            android:orientation="vertical"
-                            android:layout_alignParentRight="true"
-                            android:layout_marginRight="@dimen/_5sdp">
+                            android:orientation="vertical">
 
                             <androidx.appcompat.widget.AppCompatImageView
                                 android:id="@+id/imgPdf"
@@ -216,29 +221,29 @@
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/lblApptTime"
                         style="@style/nwOrdrLableTxtStyle"
-                        android:visibility="gone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_5sdp"
-                        android:text="Available Appointment Times" />
+                        android:text="Available Appointment Times"
+                        android:visibility="gone" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/txtNwOrdrDteTime"
                         style="@style/nwOrdrValTxtStyle"
                         android:layout_width="wrap_content"
-                        android:visibility="gone"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/_5sdp"
-                        android:text="NA" />
+                        android:text="NA"
+                        android:visibility="gone" />
 
                     <View
                         android:id="@+id/viewApptTime"
                         style="@style/nwOrdrDividrStyle"
                         android:layout_width="match_parent"
-                        android:visibility="gone"
                         android:layout_height="0.5dp"
                         android:layout_marginTop="@dimen/_5sdp"
-                        android:background="@color/divider_light_grey" />
+                        android:background="@color/divider_light_grey"
+                        android:visibility="gone" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/lblChooseTimng"
@@ -251,11 +256,11 @@
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/gridTiming"
-                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_7sdp"
                         android:verticalSpacing="@dimen/_5sdp"
+                        android:visibility="gone"
                         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                         app:spanCount="4" />
 

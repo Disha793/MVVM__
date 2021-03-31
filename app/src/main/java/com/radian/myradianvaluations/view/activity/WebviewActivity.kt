@@ -32,11 +32,27 @@ class WebviewActivity : AppCompatActivity() {
         imgBack.makeVisible()
         viewLine.makeVisible()
         imgBack.setOnClickListener { onBackPressed() }
+        getIntentData()
 
+    }
+
+    private fun initViewModel() {
+        factory = HelpViewModelFactory(this)
+        helpTroubleModel = ViewModelProvider(this, factory).get(HelpTroubleViewModel::class.java)
+    }
+
+    private fun observeData() {
+        helpTroubleModel.helpTroubleResponse.observe(this, Observer {
+            webUrl = it.data.forgotPasswordURL!!
+            LogUtils.logD("webUrl", webUrl)
+            loadWebUrl()
+        })
+    }
+
+    private fun getIntentData() {
         intent.getIntExtra(Const.scrTag, 0).let {
             if (it == Const.scrOrgInfo) {
                 toolbar.makeVisible()
-
                 intent.getStringExtra("webUrl")?.let {
                     txtTitle.makeVisible()
                     txtTitle.setText(getString(R.string.joinUs))
@@ -56,7 +72,20 @@ class WebviewActivity : AppCompatActivity() {
                 txtTitle.text = getString(R.string.signup)
                 webUrl = "https://falcon.radianvaluations.com/NewVendorProfile"
                 loadWebUrl()
-            } else {
+
+            }
+            else if(it==Const.scrViewPdf)
+            {
+                intent.getStringExtra("webUrl")?.let {
+                    toolbar.makeVisible()
+                    txtTitle.makeVisible()
+                    txtTitle.setText(getString(R.string.showPdfTitle))
+                    webUrl = it
+                    LogUtils.logD("webUrl", webUrl)
+                    loadWebUrl()
+                }
+            }
+            else {
                 toolbar.makeVisible()
                 txtTitle.makeVisible()
                 txtTitle.text = getString(R.string.forgotPassword)
@@ -65,19 +94,6 @@ class WebviewActivity : AppCompatActivity() {
                 observeData()
             }
         }
-    }
-
-    private fun initViewModel() {
-        factory = HelpViewModelFactory(this)
-        helpTroubleModel = ViewModelProvider(this, factory).get(HelpTroubleViewModel::class.java)
-    }
-
-    private fun observeData() {
-        helpTroubleModel.helpTroubleResponse.observe(this, Observer {
-            webUrl = it.data.forgotPasswordURL!!
-            LogUtils.logD("webUrl", webUrl)
-            loadWebUrl()
-        })
     }
 
     private fun loadWebUrl() {

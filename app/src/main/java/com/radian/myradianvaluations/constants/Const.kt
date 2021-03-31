@@ -13,6 +13,7 @@ object Const {
     val scrCovidTag = 108
     val scrOrgInfo = 109
     val scrSignUp = 110
+    val scrViewPdf = 111
     val scrSearchFilterTag = "SearchFilter"
     val idTag = "id"
     val itemIdTag = "ItemId"

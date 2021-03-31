@@ -83,6 +83,7 @@ The app streamlines every step of the process, including accepting orders, sched
     <string name="revisionTitle">Revisions</string>
     <string name="appointmentTitle">Appointment</string>
     <string name="photoUploadTitle">Photos</string>
+    <string name="showPdfTitle">Document Info</string>
     <!--Out of office-->
     <string name="aboutUs">About us</string>
     <string name="confirm">Confirm</string>

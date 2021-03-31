@@ -73,7 +73,7 @@ class HomeAdapter(
         holder: ViewHolder,
         position: Int
     ) {
-        holder.nwordrDteTime.makeVisible()
+
         holder.cardTitle.text = context.getString(R.string.lbl_dash_nwordr)
         holder.txtAdd.text = dashboardList.get(position).displayAddressInfo
         dashboardList[position].fee?.let {
@@ -117,6 +117,9 @@ class HomeAdapter(
         holder.revision.makeGone()
         holder.nwordrDteTime.makeGone()
         holder.product.makeGone()
+        holder.nwOrdrMileValue.makeGone()
+        holder.nwOrdrMilesLabl.makeGone()
+        holder.nwOrdrFee.makeGone()
         holder.inspectnTime.makeGone()
         holder.inspectnTime.makeGone()
         holder.btnView.text = context.getString(R.string.lbl_btn_view)
@@ -137,6 +140,9 @@ class HomeAdapter(
         holder.nwordrDteTime.makeGone()
         holder.product.makeGone()
         holder.document.makeGone()
+        holder.nwOrdrMileValue.makeGone()
+        holder.nwOrdrMilesLabl.makeGone()
+        holder.nwOrdrFee.makeGone()
         holder.btnView.text = context.getString(R.string.lbl_btn_complete)
         holder.btnRead.text = context.getString(R.string.lbl_btn_update)
     }
@@ -154,6 +160,9 @@ class HomeAdapter(
         holder.nwordrDteTime.makeGone()
         holder.product.makeGone()
         holder.inspectnTime.makeGone()
+        holder.nwOrdrMileValue.makeGone()
+        holder.nwOrdrMilesLabl.makeGone()
+        holder.nwOrdrFee.makeGone()
         holder.document.makeGone()
         holder.btnView.text = context.getString(R.string.lbl_btn_view)
         holder.btnRead.text = context.getString(R.string.lbl_btn_read)
