@@ -245,7 +245,7 @@ interface APIList {
     @POST("Mobile/Notification/ReadNotification")
     suspend fun updateReadFlag(
         @Header("Authorization") authToken: String,
-        @Field("PhoneNumber") phoneNumber: String,
+    @Field("PhoneNumber") phoneNumber: String,
         @Field("DeviceID") deviceId: String,
         @Field("MobileUserId") mobileUserId: Int,
         @Field("MobileNotificationId") notificationId: Int,

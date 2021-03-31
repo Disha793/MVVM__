@@ -49,5 +49,6 @@ enum class ReturnType(val endPoint: String) {
     POST_SaveEoDocData("mobile/vendorprofile/UpdateVendorEO"),
     POST_GetNotiStatus("mobile/Dashboard/GetNotificationStatus"),
     POST_SaveNotiStatus("mobile/Dashboard/SaveDeviceSetting"),
-
+    //Mark as read for  Push Notification
+    POST_UPDATE_FLAG("Mobile/Notification/ReadNotification")
 }

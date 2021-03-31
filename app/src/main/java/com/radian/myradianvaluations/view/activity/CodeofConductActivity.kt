@@ -35,7 +35,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class CodeofConductActivity : AppCompatActivity(), View.OnClickListener {
-    private var response = MutableLiveData<StatusResponse>()
+
     private lateinit var codeofConductViewModel: CodeofConductViewModel
     private lateinit var factory: CodeofConductModelFactory
     override fun onCreate(savedInstanceState: Bundle?) {

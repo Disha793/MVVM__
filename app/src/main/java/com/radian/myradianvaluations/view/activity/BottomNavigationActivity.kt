@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -20,6 +21,7 @@ import com.radian.myradianvaluations.Response.NotiStatusResponse
 import com.radian.myradianvaluations.constants.APIStatus
 import com.radian.myradianvaluations.constants.Const
 import com.radian.myradianvaluations.constants.NotificationConstants
+import com.radian.myradianvaluations.extensions.observeOnce
 import com.radian.myradianvaluations.extensions.toastShort
 import com.radian.myradianvaluations.network.APIList
 import com.radian.myradianvaluations.network.RetrofitBase
@@ -28,6 +30,10 @@ import com.radian.myradianvaluations.utils.LoadingDialog
 import com.radian.myradianvaluations.utils.LogUtils
 import com.radian.myradianvaluations.utils.Pref
 import com.radian.myradianvaluations.view.fragment.*
+import com.radian.myradianvaluations.viewmodel.BottomViewModel
+import com.radian.myradianvaluations.viewmodel.BottomViewModelFactory
+import com.radian.myradianvaluations.viewmodel.CodeofConductModelFactory
+import com.radian.myradianvaluations.viewmodel.CodeofConductViewModel
 import kotlinx.android.synthetic.main.activity_bottom_navigation.*
 import kotlinx.android.synthetic.main.layout_toolbar.*
 import kotlinx.coroutines.CoroutineScope
@@ -40,6 +46,8 @@ class BottomNavigationActivity : AppCompatActivity(), View.OnClickListener {
     private val requestCodeLoe = 1001
     val fm = supportFragmentManager
     var bottomview: BottomNavigationView? = null
+    private lateinit var bottomViewModel: BottomViewModel
+    private lateinit var factory: BottomViewModelFactory
 
     //For firebase analytics
     private val firebaseParams = Bundle()
@@ -50,6 +58,8 @@ class BottomNavigationActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(R.layout.activity_bottom_navigation)
         bottomview = bottomNavigationView
         bottomNavigationView.itemIconTintList = null
+        initViewModel()
+        observerData()
         bottomNavigationView.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.action_home -> {
@@ -80,6 +90,29 @@ class BottomNavigationActivity : AppCompatActivity(), View.OnClickListener {
         imgBack.setOnClickListener(this)
     }
 
+    private fun initViewModel() {
+        factory = BottomViewModelFactory(this)
+        bottomViewModel =
+            ViewModelProvider(this, factory).get(BottomViewModel::class.java)
+    }
+
+    private fun observerData() {
+        bottomViewModel.statusresponse.observeOnce(this, Observer {
+            if (it.status.equals(APIStatus.ok, true)) {
+                //Notification read badge updated successfully
+            } else if (it.status.equals(APIStatus.unauth, true)) {
+                toastShort(it.errorInfo.get(0).errorMessage)
+
+                var intent =
+                    Intent(this@BottomNavigationActivity, PasscodeActivity::class.java)
+                intent.flags =
+                    Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+            }
+
+        })
+    }
+
     fun pushFragment(fragment: Fragment, isBackStack: Boolean) {
         val fragmentTransaction = fm.beginTransaction()
         fragmentTransaction.replace(mainLayout.id, fragment, fragment.javaClass.getSimpleName())
@@ -107,19 +140,19 @@ class BottomNavigationActivity : AppCompatActivity(), View.OnClickListener {
             }
             NotificationConstants.notiScrOpenOrder -> {
                 pushFragment(
-                        ManageOrderFragment.newInstance(
-                                (it.getInt(Const.idTag))
-                        ), false
+                    ManageOrderFragment.newInstance(
+                        (it.getInt(Const.idTag))
+                    ), false
                 )
             }
             NotificationConstants.notiScrRevisionOrdrDetil -> {
                 pushFragment(
-                        OrderRevisionRequestFragment.newInstance(it.getInt(Const.idTag)), false
+                    OrderRevisionRequestFragment.newInstance(it.getInt(Const.idTag)), false
                 )
             }
             NotificationConstants.notiScrDocument -> {
                 pushFragment(
-                        OrderDocumentListFragment.newInstance(it.getInt(Const.idTag)), false
+                    OrderDocumentListFragment.newInstance(it.getInt(Const.idTag)), false
                 )
             }
             NotificationConstants.notiScrLoe -> {
@@ -143,9 +176,9 @@ class BottomNavigationActivity : AppCompatActivity(), View.OnClickListener {
                 when (it.getInt(NotificationConstants.notiTagOrderCount)) {
                     1 -> {
                         pushFragment(
-                                ManageOrderFragment.newInstance(
-                                        it.getInt(Const.idTag)
-                                ), false
+                            ManageOrderFragment.newInstance(
+                                it.getInt(Const.idTag)
+                            ), false
                         )
                     }
                     else -> {
@@ -159,9 +192,9 @@ class BottomNavigationActivity : AppCompatActivity(), View.OnClickListener {
                 when (it.getInt(NotificationConstants.notiTagOrderCount)) {
                     1 -> {
                         pushFragment(
-                                ManageOrderFragment.newInstance(
-                                        it.getInt(Const.idTag)
-                                ), false
+                            ManageOrderFragment.newInstance(
+                                it.getInt(Const.idTag)
+                            ), false
                         )
                     }
                     else -> {
@@ -173,9 +206,9 @@ class BottomNavigationActivity : AppCompatActivity(), View.OnClickListener {
             }
             NotificationConstants.notiScrOrderDetail -> {
                 pushFragment(
-                        ManageOrderFragment.newInstance(
-                                it.getInt(Const.idTag)
-                        ), false
+                    ManageOrderFragment.newInstance(
+                        it.getInt(Const.idTag)
+                    ), false
                 )
             }
         }
@@ -242,38 +275,19 @@ class BottomNavigationActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun updateReadFlag(notificationId: Int) {
-        val responseData = MutableLiveData<NotiStatusResponse>()
-        LoadingDialog.show(this)
-        CoroutineScope(Dispatchers.IO).launch {
-            val call = RetrofitBase.getClient().create(APIList::class.java)
-                .updateReadFlag(
-                    Pref.getValue(this@BottomNavigationActivity, Pref.AUTH_TOKEN, "")!!,
-                    Pref.getValue(this@BottomNavigationActivity, Pref.PHONE_NUMBER, "")!!,
-                    CommonUtils.getDeviceUUID(this@BottomNavigationActivity),
-                    Pref.getValue(this@BottomNavigationActivity, Pref.MOBILE_USER_ID, 0)!!,
-                    notificationId,
-                    "Y"
-                )
-            responseData.postValue(call.body())
-        }
-        responseData.let {
-            it?.observe(this, Observer {
-                LoadingDialog.dismissDialog()
-                if (it.status.equals(APIStatus.ok, true)) {
-                    //Notification read badge updated successfully
-                } else if (it.status.equals(APIStatus.unauth, true)) {
-                   toastShort( it.errorInfo.get(0).errorMessage)
-
-                    var intent =
-                        Intent(this@BottomNavigationActivity, PasscodeActivity::class.java)
-                    intent.flags =
-                        Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    startActivity(intent)
-                }
-
-            })
-        }
-
+        val postParam = HashMap<String, Any?>()
+        postParam.put(
+            "PhoneNumber",
+            Pref.getValue(this@BottomNavigationActivity, Pref.PHONE_NUMBER, "")!!
+        )
+        postParam.put("DeviceID", CommonUtils.getDeviceUUID(this@BottomNavigationActivity))
+        postParam.put(
+            "MobileUserId",
+            Pref.getValue(this@BottomNavigationActivity, Pref.MOBILE_USER_ID, 0)!!
+        )
+        postParam.put("MobileNotificationId", notificationId)
+        postParam.put("NotificationReadFlag", "Y")
+        bottomViewModel.updateReadFlag(postParam)
 
     }
 
