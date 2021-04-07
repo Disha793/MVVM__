@@ -91,12 +91,10 @@ class DashboardFragment : Fragment(), View.OnClickListener {
                     if (actionType == Const.actionView) {
                         when (abbr) {
                             DashboardAbbr.newOrder -> {
-
                                 (context as BottomNavigationActivity).pushFragment(
-                                    OrderLoeFragment.newInstance(dashboardList.get(position).itemId!!),
+                                    NewOrderDetailFragment.newInstance(dashboardList.get(position).itemId!!),
                                     true
                                 )
-
                             }
                             DashboardAbbr.revision -> {
                                 (context as BottomNavigationActivity).pushFragment(

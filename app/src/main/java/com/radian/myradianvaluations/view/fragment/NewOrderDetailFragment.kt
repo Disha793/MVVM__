@@ -13,8 +13,6 @@ import android.provider.CalendarContract
 import android.provider.Settings
 import android.util.Log
 import android.view.*
-import android.webkit.*
-import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -37,6 +35,10 @@ import com.radian.myradianvaluations.view.activity.BottomNavigationActivity
 import com.radian.myradianvaluations.view.activity.PasscodeActivity
 import com.radian.myradianvaluations.viewmodel.NewOrdrDetailViewModel
 import com.radian.myradianvaluations.viewmodel.NewOrdrDetailViewModelFactory
+import es.voghdev.pdfviewpager.library.RemotePDFViewPager
+import es.voghdev.pdfviewpager.library.adapter.PDFPagerAdapter
+import es.voghdev.pdfviewpager.library.remote.DownloadFile
+import es.voghdev.pdfviewpager.library.util.FileUtil
 import kotlinx.android.synthetic.main.activity_bottom_navigation.*
 import kotlinx.android.synthetic.main.dialog_add_event.view.*
 import kotlinx.android.synthetic.main.fragment_new_order_detail.view.*
@@ -48,7 +50,9 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
-class NewOrderDetailFragment : Fragment(), View.OnClickListener {
+class NewOrderDetailFragment : Fragment(), View.OnClickListener, DownloadFile.Listener {
+    private lateinit var remotePDFViewPager: RemotePDFViewPager
+    private lateinit var adapter: PDFPagerAdapter
     internal lateinit var view: View
     private var itemId = 0
     private var orderDetail = NewOrderDetailResponse.Data.OrderDetail()
@@ -78,6 +82,7 @@ class NewOrderDetailFragment : Fragment(), View.OnClickListener {
         view.linearProduct.setOnClickListener(this)
         view.btnAccept.setOnClickListener(this)
         view.btnDecline.setOnClickListener(this)
+        view.viewLoe.makeVisible()
         setToolbar()
         initViewModel()
         observeOrderData()
@@ -85,7 +90,6 @@ class NewOrderDetailFragment : Fragment(), View.OnClickListener {
     }
 
     private fun manageUI(orderDetail: NewOrderDetailResponse.Data.OrderDetail) {
-        view.viewLoe.makeVisible()
         val url =
             BuildConfig.HOST + "mobile/Dashboard/GetDownloadOLEDocument?OrderGenID=" + orderDetail.orderGenId + "&ItemSrNo=" + orderDetail.itemSrNo + "&UserId=" + orderDetail.userId + "&ServiceRequestType=" +
                     orderDetail.serviceRequestType
@@ -101,46 +105,50 @@ class NewOrderDetailFragment : Fragment(), View.OnClickListener {
     private fun loadLoe(url: String) {
         LogUtils.logD(classTag + ": Loe url", url)
         LoadingDialog.show(activity!!)
-        view.webView.getSettings().setLoadWithOverviewMode(true)
-        view.webView.getSettings().setUseWideViewPort(true)
-        view.webView.getSettings().setJavaScriptEnabled(true)
-        view.webView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT)
-//        if (!CommonUtils.isNetworkAvailable(activity!!)) { // loading offline
-//            view.webView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK)
+        remotePDFViewPager = RemotePDFViewPager(context, url, this)
+        remotePDFViewPager.setId(R.id.pdfViewPager)
+
+////        LoadingDialog.show(activity!!)
+//        view.webView.getSettings().setLoadWithOverviewMode(true)
+//        view.webView.getSettings().setUseWideViewPort(true)
+//        view.webView.getSettings().setJavaScriptEnabled(true)
+//        view.webView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT)
+////        if (!CommonUtils.isNetworkAvailable(activity!!)) { // loading offline
+////            view.webView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK)
+////        }
+//        view.webView.loadUrl(url)
+//        view.webView.webViewClient = object : WebViewClient() {
+//            override fun onPageFinished(view: WebView?, url: String?) {
+//                super.onPageFinished(view, url)
+//                LoadingDialog.dismissDialog()
+//            }
+//
+//            @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+//            override fun shouldOverrideUrlLoading(
+//                view: WebView?,
+//                request: WebResourceRequest?
+//            ): Boolean {
+//                view?.let {
+//                    if (request != null && request.url != null)
+//                        it.loadUrl(request.url.toString())
+//                }
+//
+//                return true
+//            }
+//
+//            override fun shouldOverrideUrlLoading(webView: WebView, url: String): Boolean {
+//                view.webView.loadUrl(url)
+//                return true
+//            }
+//
+//            override fun onReceivedError(
+//                view: WebView,
+//                request: WebResourceRequest,
+//                error: WebResourceError
+//            ) {
+//                context!!.toastShort("Got Error! $error")
+//            }
 //        }
-        view.webView.loadUrl(url)
-        view.webView.webViewClient = object : WebViewClient() {
-            override fun onPageFinished(view: WebView?, url: String?) {
-                super.onPageFinished(view, url)
-                LoadingDialog.dismissDialog()
-            }
-
-            @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-            override fun shouldOverrideUrlLoading(
-                view: WebView?,
-                request: WebResourceRequest?
-            ): Boolean {
-                view?.let {
-                    if (request != null && request.url != null)
-                        it.loadUrl(request.url.toString())
-                }
-
-                return true
-            }
-
-            override fun shouldOverrideUrlLoading(webView: WebView, url: String): Boolean {
-                view.webView.loadUrl(url)
-                return true
-            }
-
-            override fun onReceivedError(
-                view: WebView,
-                request: WebResourceRequest,
-                error: WebResourceError
-            ) {
-                context!!.toastShort("Got Error! $error")
-            }
-        }
     }
 
     private fun initViewModel() {
@@ -626,5 +634,19 @@ class NewOrderDetailFragment : Fragment(), View.OnClickListener {
 //            return false
 //        }
         return true
+    }
+
+    override fun onSuccess(url: String?, destinationPath: String?) {
+        adapter = PDFPagerAdapter(context, FileUtil.extractFileNameFromURL(url))
+        view.pdfViewPager.setAdapter(adapter)
+        LoadingDialog.dismissDialog()
+    }
+
+    override fun onFailure(e: java.lang.Exception?) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onProgressUpdate(progress: Int, total: Int) {
+        TODO("Not yet implemented")
     }
 }

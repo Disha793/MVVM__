@@ -119,6 +119,7 @@ dependencies {
     implementation "androidx.camera:camera-camera2:$camerax_version"
     implementation "androidx.camera:camera-lifecycle:$camerax_version"
     implementation "androidx.camera:camera-view:1.0.0-alpha14"
+    implementation 'es.voghdev.pdfviewpager:library:1.1.2'
 
     //For material calender and timepicker
     implementation 'com.wdullaer:materialdatetimepicker:4.2.3'
