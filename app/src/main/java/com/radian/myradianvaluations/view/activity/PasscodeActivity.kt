@@ -208,7 +208,6 @@ class PasscodeActivity : AppCompatActivity(), View.OnClickListener {
                     )
                     intent.putExtra(Const.basicLoginDetail, it)
                     startActivity(intent)
-
                 }
 
             } else {
@@ -318,7 +317,6 @@ class PasscodeActivity : AppCompatActivity(), View.OnClickListener {
                 incrementCountr()
                 checkRadiobutton()
             }
-
             R.id.btn0 -> {
                 accessCode = accessCode + "0"
                 incrementCountr()
@@ -336,8 +334,6 @@ class PasscodeActivity : AppCompatActivity(), View.OnClickListener {
                     txtForgot.makeVisible()
                     txtEnter.text = getString(R.string.enter_new_access_code)
                     imgBack.makeGone()
-
-
                 } else {
                     finish()
                     overridePendingTransition(R.anim.no_change, R.anim.slide_down)
@@ -356,7 +352,6 @@ class PasscodeActivity : AppCompatActivity(), View.OnClickListener {
                 generateOtp()
             }
         }
-
     }
 
     private fun setForgotLayout() {
@@ -502,7 +497,6 @@ class PasscodeActivity : AppCompatActivity(), View.OnClickListener {
         }
 
     }
-
 
     private fun checkcurrentCode() {
         if (accessCode.equals(Pref.getValue(this, Pref.ACCESS_CODE, ""))) {

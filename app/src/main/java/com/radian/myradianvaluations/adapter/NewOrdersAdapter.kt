@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.radian.myradianvaluations.R
 import com.radian.myradianvaluations.Response.NewOrderResponse
 import com.radian.myradianvaluations.extensions.makeGone
+import com.radian.myradianvaluations.extensions.makeVisible
 import com.radian.myradianvaluations.view.activity.BottomNavigationActivity
 import com.radian.myradianvaluations.view.fragment.NewOrderDetailFragment
 
@@ -40,6 +41,10 @@ class NewOrdersAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.lblnworderAdd.text = newOrderList.get(position).displayAddressInfor
         holder.lblnworderProduct.text = newOrderList.get(position).productName
+        newOrderList.get(position).dueDate?.let {
+            holder.lblnworderTime.makeVisible()
+            holder.lblnworderTime.text = context.resources.getString(R.string.due_Date)+newOrderList.get(position).dueDate
+        }
         //For Appointment scheduled time display
 //        if (newOrderList.get(position).isAssigned == 1) {
 //            holder.lblnworderTime.text = newOrderList.get(position).message

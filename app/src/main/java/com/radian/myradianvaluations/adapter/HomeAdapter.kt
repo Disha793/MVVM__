@@ -85,8 +85,13 @@ class HomeAdapter(
             holder.nwOrdrMileValue.makeVisible()
             holder.nwOrdrMileValue.text = dashboardList[position].proximity
         }
+
+        dashboardList[position].dueDate?.let {
+            holder.nwordrDteTime.makeVisible()
+            holder.nwordrDteTime.setText(context.resources.getString(R.string.due_Date) + dashboardList[position].dueDate)
+        }
         //This is to show appoiontment date and time
-        holder.nwordrDteTime.makeGone()
+//        holder.nwordrDteTime.makeGone()
 
 
 //        if (!dashboardList[position].appointmentDate.isNullOrBlank() && !dashboardList[position].startTimeSlot.isNullOrEmpty()) {

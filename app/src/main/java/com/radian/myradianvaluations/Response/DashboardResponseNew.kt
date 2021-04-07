@@ -85,7 +85,11 @@ class DashboardResponseNew {
             @Expose
             val displayAddressInfo: String? = null
 
-            @SerializedName("Fee")
+            @SerializedName("ProductDueDate")
+            @Expose
+            val dueDate: String? = null
+
+            @SerializedName("VendorFee")
             @Expose
             val fee: String? = null
 

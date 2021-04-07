@@ -50,7 +50,6 @@ class CodeofConductActivity : AppCompatActivity(), View.OnClickListener {
         btnnRemind.setOnClickListener(this)
     }
 
-
     private fun initViewModel() {
         factory = CodeofConductModelFactory(this!!)
         codeofConductViewModel =

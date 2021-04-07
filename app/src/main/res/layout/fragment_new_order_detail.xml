@@ -9,7 +9,7 @@
 
     <include
         android:id="@+id/viewLoe"
-        layout="@layout/layout_accept_loe"
+        layout="@layout/fragment_order_loe"
         android:visibility="gone" />
 
     <ScrollView

@@ -1,49 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardNewOrdr"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="@dimen/_7sdp"
-    app:cardUseCompatPadding="true"
-    android:id="@+id/cardNewOrdr"
-    >
+    app:cardUseCompatPadding="true">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/_8sdp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="@dimen/_8sdp">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/lblnworderAdd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/messinasans_semibold"
+            android:text="NA"
             android:textColor="@android:color/black"
-            android:textSize="@dimen/_14sdp"
-            android:text="NA"/>
+            android:textSize="@dimen/_14sdp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/lblnworderTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblnworderProduct"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:fontFamily="@font/messinasans_regular"
+            android:text="NA"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/_12sdp"
+            android:visibility="gone" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/lblnworderProduct"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/lblnworderAdd"
-            android:fontFamily="@font/messinasans_regular"
-            android:textColor="@android:color/black"
-            android:textSize="@dimen/_12sdp"
             android:layout_marginTop="@dimen/_8sdp"
-            android:text=""/>
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/lblnworderTime"
-            android:layout_width="wrap_content"
-            android:visibility="gone"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/lblnworderProduct"
             android:fontFamily="@font/messinasans_regular"
+            android:text=""
             android:textColor="@android:color/black"
-            android:textSize="@dimen/_12sdp"
-            android:text="NA"/>
+            android:textSize="@dimen/_12sdp" />
 
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -51,7 +51,6 @@
             android:layout_height="@dimen/_15sdp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            app:srcCompat="@drawable/ic_navigate_forward"
-            />
+            app:srcCompat="@drawable/ic_navigate_forward" />
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

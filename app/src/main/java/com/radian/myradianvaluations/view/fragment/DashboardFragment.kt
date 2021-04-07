@@ -91,10 +91,12 @@ class DashboardFragment : Fragment(), View.OnClickListener {
                     if (actionType == Const.actionView) {
                         when (abbr) {
                             DashboardAbbr.newOrder -> {
+
                                 (context as BottomNavigationActivity).pushFragment(
-                                    NewOrderDetailFragment.newInstance(dashboardList.get(position).itemId!!),
+                                    OrderLoeFragment.newInstance(dashboardList.get(position).itemId!!),
                                     true
                                 )
+
                             }
                             DashboardAbbr.revision -> {
                                 (context as BottomNavigationActivity).pushFragment(
@@ -463,7 +465,6 @@ class DashboardFragment : Fragment(), View.OnClickListener {
         postParam.put("OrganizationIds", Pref.getValue(context!!, Pref.ORGANIZATN_ID, 0)!!)
         postParam.put("Itemid", itemId)
         dashboardViewModel.getOrderDetail(postParam)
-
     }
 
     private fun markAsReadRevisionReq(position: Int) {
@@ -475,7 +476,5 @@ class DashboardFragment : Fragment(), View.OnClickListener {
         postParam.put("ActionType", "R")
         postParam.put("Itemid", dashboardList[position].itemId)
         dashboardViewModel.markAsReadRevision(postParam)
-
-
     }
 }

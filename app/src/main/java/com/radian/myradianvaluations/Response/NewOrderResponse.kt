@@ -52,6 +52,10 @@ class NewOrderResponse {
             @Expose
             var message = ""
 
+            @SerializedName("ProductDueDate")
+            @Expose
+            var dueDate = ""
+
             @SerializedName("IsAssigned")
             @Expose
             var isAssigned = 0

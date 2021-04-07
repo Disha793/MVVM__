@@ -51,6 +51,7 @@
     <string name="lbl_photo_info">If multiple appraisers use this account, please do not add a photo.</string>
     <!--Document List labeles-->
     <string name="loe">LOE</string>
+    <string name="due_Date">Due Date:</string>
     <!--About us-->
 
     <string name="aboutus">The myradian appraisals App mobile app allows members of Radian\'s vendor network to easily manage their Radian valuation orders.

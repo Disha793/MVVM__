@@ -13,6 +13,8 @@ import android.provider.CalendarContract
 import android.provider.Settings
 import android.util.Log
 import android.view.*
+import android.webkit.*
+import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -28,6 +30,7 @@ import com.radian.myradianvaluations.constants.Const
 import com.radian.myradianvaluations.extensions.*
 import com.radian.myradianvaluations.utils.CommonUtils
 import com.radian.myradianvaluations.utils.CommonUtils.allPermissionsGranted
+import com.radian.myradianvaluations.utils.LoadingDialog
 import com.radian.myradianvaluations.utils.LogUtils
 import com.radian.myradianvaluations.utils.Pref
 import com.radian.myradianvaluations.view.activity.BottomNavigationActivity
@@ -37,6 +40,7 @@ import com.radian.myradianvaluations.viewmodel.NewOrdrDetailViewModelFactory
 import kotlinx.android.synthetic.main.activity_bottom_navigation.*
 import kotlinx.android.synthetic.main.dialog_add_event.view.*
 import kotlinx.android.synthetic.main.fragment_new_order_detail.view.*
+import kotlinx.android.synthetic.main.fragment_order_loe.view.*
 import kotlinx.android.synthetic.main.layout_toolbar.*
 import kotlinx.android.synthetic.main.row_choose_time.view.*
 import java.text.SimpleDateFormat
@@ -74,10 +78,69 @@ class NewOrderDetailFragment : Fragment(), View.OnClickListener {
         view.linearProduct.setOnClickListener(this)
         view.btnAccept.setOnClickListener(this)
         view.btnDecline.setOnClickListener(this)
-        initViewModel()
         setToolbar()
+        initViewModel()
         observeOrderData()
         return view
+    }
+
+    private fun manageUI(orderDetail: NewOrderDetailResponse.Data.OrderDetail) {
+        view.viewLoe.makeVisible()
+        val url =
+            BuildConfig.HOST + "mobile/Dashboard/GetDownloadOLEDocument?OrderGenID=" + orderDetail.orderGenId + "&ItemSrNo=" + orderDetail.itemSrNo + "&UserId=" + orderDetail.userId + "&ServiceRequestType=" +
+                    orderDetail.serviceRequestType
+        loadLoe(url)
+        view.btnLOeAccept.setOnClickListener {
+            view.viewLoe.makeGone()
+        }
+        view.btnReject.setOnClickListener {
+            declineOrder()
+        }
+    }
+
+    private fun loadLoe(url: String) {
+        LogUtils.logD(classTag + ": Loe url", url)
+        LoadingDialog.show(activity!!)
+        view.webView.getSettings().setLoadWithOverviewMode(true)
+        view.webView.getSettings().setUseWideViewPort(true)
+        view.webView.getSettings().setJavaScriptEnabled(true)
+        view.webView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT)
+//        if (!CommonUtils.isNetworkAvailable(activity!!)) { // loading offline
+//            view.webView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK)
+//        }
+        view.webView.loadUrl(url)
+        view.webView.webViewClient = object : WebViewClient() {
+            override fun onPageFinished(view: WebView?, url: String?) {
+                super.onPageFinished(view, url)
+                LoadingDialog.dismissDialog()
+            }
+
+            @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+            override fun shouldOverrideUrlLoading(
+                view: WebView?,
+                request: WebResourceRequest?
+            ): Boolean {
+                view?.let {
+                    if (request != null && request.url != null)
+                        it.loadUrl(request.url.toString())
+                }
+
+                return true
+            }
+
+            override fun shouldOverrideUrlLoading(webView: WebView, url: String): Boolean {
+                view.webView.loadUrl(url)
+                return true
+            }
+
+            override fun onReceivedError(
+                view: WebView,
+                request: WebResourceRequest,
+                error: WebResourceError
+            ) {
+                context!!.toastShort("Got Error! $error")
+            }
+        }
     }
 
     private fun initViewModel() {
@@ -95,6 +158,7 @@ class NewOrderDetailFragment : Fragment(), View.OnClickListener {
                     it.data?.orderDetail?.let {
                         orderDetail = it
                     }
+                    manageUI(orderDetail)
                     setOrderDetail(orderDetail)
                 } else if (it.status.equals(APIStatus.unauth, true)) {
                     context?.toastShort(it.errorInfo.get(0).errorMessage)
@@ -522,25 +586,30 @@ class NewOrderDetailFragment : Fragment(), View.OnClickListener {
                 }
             }
             R.id.btnDecline -> {
-                if (orderDetail.isAssigned == 1) {
-                    itemIdList.add(itemId)
-                    selectedOrderList.add(orderDetail)
-                    orgIds.add(orderDetail.orgId)
-                    /*  (context as BottomNavigationActivity).pushFragment(
-                              ConditnlAcceptOrderFragment.newInstance(
-                                      getString(R.string.rejectOrders),
-                                      selectedOrderList,
-                                      itemIdList,
-                                      orgIds
-                              ), true
-                      )*/
-                    (context as BottomNavigationActivity).pushFragment(
-                        NewOrderRejectFragment.newInstance(selectedOrderList.get(0)), true
-                    )
-                } else {
-                    view.snack(getString(R.string.decline_restrictn_msg)) {}
-                }
+                declineOrder()
+
             }
+        }
+    }
+
+    private fun declineOrder() {
+        if (orderDetail.isAssigned == 1) {
+            itemIdList.add(itemId)
+            selectedOrderList.add(orderDetail)
+            orgIds.add(orderDetail.orgId)
+            /*  (context as BottomNavigationActivity).pushFragment(
+                      ConditnlAcceptOrderFragment.newInstance(
+                              getString(R.string.rejectOrders),
+                              selectedOrderList,
+                              itemIdList,
+                              orgIds
+                      ), true
+              )*/
+            (context as BottomNavigationActivity).pushFragment(
+                NewOrderRejectFragment.newInstance(selectedOrderList.get(0)), true
+            )
+        } else {
+            view.snack(getString(R.string.decline_restrictn_msg)) {}
         }
     }
 
