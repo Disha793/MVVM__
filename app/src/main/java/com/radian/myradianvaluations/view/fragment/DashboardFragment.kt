@@ -37,7 +37,6 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
-
 class DashboardFragment : Fragment(), View.OnClickListener {
     internal lateinit var view: View
     lateinit internal var updatedialogView: View
@@ -51,8 +50,8 @@ class DashboardFragment : Fragment(), View.OnClickListener {
     private var upcomingItemId = 0
     private lateinit var dashboardViewModel: DashboardViewModel
     private lateinit var factory: DashboardViewModelFactory
-
     internal lateinit var context: Context
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
