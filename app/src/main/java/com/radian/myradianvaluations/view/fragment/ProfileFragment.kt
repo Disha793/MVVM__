@@ -34,7 +34,6 @@ import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetectorOptions
 import com.radian.myradianvaluations.BuildConfig
 import com.radian.myradianvaluations.R
 import com.radian.myradianvaluations.Response.ProfileResponse
-import com.radian.myradianvaluations.Response.StatusResponse
 import com.radian.myradianvaluations.constants.APIStatus
 import com.radian.myradianvaluations.constants.Const
 import com.radian.myradianvaluations.extensions.*
@@ -46,7 +45,6 @@ import com.radian.myradianvaluations.view.activity.FaceDetectionActivity
 import com.radian.myradianvaluations.view.activity.PasscodeActivity
 import com.radian.myradianvaluations.viewmodel.ProfileViewModel
 import com.radian.myradianvaluations.viewmodel.ProfileViewModelFactory
-
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.dialog_add_event.view.*
 import kotlinx.android.synthetic.main.dialog_profile_pic.view.*
@@ -215,6 +213,11 @@ class ProfileFragment() : Fragment(), DialogInterface.OnClickListener, View.OnCl
             }
             if (!TextUtils.isEmpty(Pref.getValue(context, Pref.PROFILE_URI, ""))) {
 
+
+//                Picasso.get()
+//                    .load(BuildConfig.HOST + Pref.getValue(context, Pref.PROFILE_URI, ""))
+//                    .placeholder(R.drawable.profile_placeholder)
+//                    .into(view.imgProfile)
                 Picasso.with(context)
                     .load(BuildConfig.HOST + Pref.getValue(context, Pref.PROFILE_URI, ""))
                     .placeholder(R.drawable.profile_placeholder)

@@ -11,6 +11,7 @@ import android.text.Spanned
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.radian.myradianvaluations.BuildConfig
 import com.radian.myradianvaluations.DashboardResponseNew
 import com.radian.myradianvaluations.R
@@ -187,9 +188,11 @@ class DashboardFragment : Fragment(), View.OnClickListener {
                             }
                             it.data.profilePicStatus?.let { it1 ->
                                 if (it1.equals("Y", true)) {
-                                    Picasso.with(view.imgUser.context)
-                                        .load(it.data.profileImageUrl?.let { it })
+                                    LogUtils.logD(classTag+" profile url",BuildConfig.HOST +it.data.profileImageUrl)
+                                    Picasso.with(activity)
+                                        .load(BuildConfig.HOST +it.data.profileImageUrl).placeholder(R.drawable.profile_placeholder)
                                         .into(view.imgUser)
+//
                                 }
                             }
 //                                t.data.upcomingAppointment?.let {

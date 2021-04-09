@@ -155,11 +155,15 @@ class ManageOrderFragment : Fragment(), View.OnClickListener {
         } else {
             view.txtLockBox.makeGone()
         }
-        view.txtValContact.text = setValue(orderDetail.borrowerName)
-        view.txtValCall.text = setValue(orderDetail.borrowerPhone?.let {
+        orderDetail.pointOfContactName.let {
+            view.txtValContact.text = setValue(orderDetail.pointOfContactName)
+        }
+        view.txtValCall.text = setValue(orderDetail.pointOfContanctPhone?.let {
             CommonUtils.formatNumber(it)
         })
-        view.txtValEmail.text = setValue(orderDetail.borrowerEmail)
+        orderDetail.pointOfContactEmail.let {
+            view.txtValEmail.text = setValue(orderDetail.pointOfContactEmail)
+        }
         view.txtValAppt.text = setValue(orderDetail.appointmentStatus)
         if (orderDetail.newDocumentFlag) {
             view.imgDotDoc.makeVisible()

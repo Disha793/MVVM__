@@ -65,8 +65,11 @@ class HomeFragment : Fragment(), View.OnClickListener {
     private fun loadProfileImage() {
         Handler(Looper.getMainLooper()).post {
             if (!TextUtils.isEmpty(Pref.getValue(context!!, Pref.PROFILE_URI, ""))) {
-
-                Picasso.with(context)
+//                Picasso.get()
+//                    .load(BuildConfig.HOST + Pref.getValue(context!!, Pref.PROFILE_URI, ""))
+//                    .placeholder(R.drawable.profile_placeholder)
+//                    .into(view.imgUser)
+                Picasso.with(activity)
                     .load(BuildConfig.HOST + Pref.getValue(context!!, Pref.PROFILE_URI, ""))
                     .placeholder(
                         ContextCompat.getDrawable(

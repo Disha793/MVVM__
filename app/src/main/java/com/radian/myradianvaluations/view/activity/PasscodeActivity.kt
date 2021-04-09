@@ -33,7 +33,9 @@ import com.radian.myradianvaluations.viewmodel.PasscodeViewModelFactory
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.access_code_keyboard.*
 import kotlinx.android.synthetic.main.activity_passcode.*
+import kotlinx.android.synthetic.main.fragment_profile.view.*
 import kotlinx.android.synthetic.main.layout_toolbar.*
+import kotlinx.android.synthetic.main.toolbar_dashboard.view.*
 import java.io.IOException
 
 
@@ -401,15 +403,15 @@ class PasscodeActivity : AppCompatActivity(), View.OnClickListener {
     private fun loadProfileImage() {
         Handler(Looper.getMainLooper()).post(Runnable {
             if (!TextUtils.isEmpty(Pref.getValue(this, Pref.PROFILE_URI, ""))) {
+//                Picasso.get()
+//                    .load(BuildConfig.HOST + Pref.getValue(context, Pref.PROFILE_URI, ""))
+//                    .placeholder(R.drawable.profile_placeholder)
+//                    .into(imgProfile)
 
                 Picasso.with(context)
                     .load(BuildConfig.HOST + Pref.getValue(context, Pref.PROFILE_URI, ""))
-                    .placeholder(
-                        ContextCompat.getDrawable(
-                            context,
-                            R.drawable.profile_placeholder
-                        )
-                    ).into(imgProfile)
+                    .placeholder(R.drawable.profile_placeholder)
+                    .into(imgProfile)
             }
         })
     }

@@ -111,6 +111,18 @@ class ManageOrderResponse {
             @Expose
             var clientName: String? = null
 
+            @SerializedName("PointOfContactPhone")
+            @Expose
+            var pointOfContanctPhone: String? = null
+
+            @SerializedName("PointOfContactName")
+            @Expose
+            var pointOfContactName: String? = null
+
+            @SerializedName("PointOfContactEmail")
+            @Expose
+            var pointOfContactEmail: String? = null
+
             @SerializedName("DisplayLoanInfo")
             @Expose
             var displayLoanInfo: String? = null
