@@ -218,6 +218,7 @@ class ManageOrderFragment : Fragment(), View.OnClickListener {
             return fragment
         }
     }
+    
 
     private fun completeInspection() {
         //Api name:  "mobile/Dashboard/AddEditInspection"   Response Type: StatusResponse
