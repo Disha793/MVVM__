@@ -16,17 +16,18 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.PagerAdapter
 import com.google.android.material.tabs.TabLayout
-import com.radian.myradianvaluations.R
+import com.radian.myradianvaluations.constants.Const
 import com.radian.myradianvaluations.extensions.makeGone
 import com.radian.myradianvaluations.extensions.makeVisible
 import com.radian.myradianvaluations.view.activity.BottomNavigationActivity
-import com.radian.myradianvaluations.view.fragment.AllAndSubPhotosFragment
+import com.radian.myradianvaluations.view.fragment.CompPhotosFrament
+import com.radian.myradianvaluations.view.fragment.SubPhotosFragment
 import kotlinx.android.synthetic.main.activity_bottom_navigation.*
 import kotlinx.android.synthetic.main.fragment_document.view.*
 import kotlinx.android.synthetic.main.layout_toolbar.*
-import kotlinx.android.synthetic.main.layout_toolbar.view.*
 
 class PhotoUploadFragment : Fragment(), TabLayout.OnTabSelectedListener {
+    private var itemId: Int = 0
     internal lateinit var view: View
     internal lateinit var pagerAdapter: Pager
 
@@ -37,12 +38,25 @@ class PhotoUploadFragment : Fragment(), TabLayout.OnTabSelectedListener {
         savedInstanceState: Bundle?
     ): View? {
         view = inflater.inflate(R.layout.fragment_document, container, false)
+        arguments?.let {
+            itemId = it.getInt(Const.itemIdTag)
+        }
         pagerAdapter =
             Pager(this.childFragmentManager, context!!)
         setToolbar()
         setUpViewPager()
         setupTabs()
         return view
+    }
+
+    companion object {
+        fun newInstance(itemId: Int): PhotoUploadFragment {
+            val args = Bundle()
+            args.putInt(Const.itemIdTag, itemId)
+            val fragment = PhotoUploadFragment()
+            fragment.arguments = args
+            return fragment
+        }
     }
 
     private fun setToolbar() {
@@ -67,7 +81,6 @@ class PhotoUploadFragment : Fragment(), TabLayout.OnTabSelectedListener {
         view.tabLayout.getTabAt(view.tabLayout.selectedTabPosition)
             ?.customView?.findViewById<ImageView>(R.id.tabIcon)
             ?.setColorFilter(ContextCompat.getColor(context!!, R.color.colorPrimary))
-
     }
 
     private fun setUpViewPager() {
@@ -82,17 +95,14 @@ class PhotoUploadFragment : Fragment(), TabLayout.OnTabSelectedListener {
         override fun getItem(p0: Int): Fragment {
             when (p0) {
                 0 -> {
-                    return AllAndSubPhotosFragment()
+                    return SubPhotosFragment.newInstance(itemId!!)
                 }
                 1 -> {
-                    return AllAndSubPhotosFragment()
+                    return CompPhotosFrament.newInstance(itemId!!)
                 }
-
-
             }
-            return AllAndSubPhotosFragment()
+            return CompPhotosFrament()
         }
-
 
         override fun getCount(): Int {
             return 2
@@ -113,23 +123,14 @@ class PhotoUploadFragment : Fragment(), TabLayout.OnTabSelectedListener {
             tabIcon.makeGone()
             when (position) {
                 0 -> {
-                    tabText.setText(context.resources.getString(R.string.all_photos))
-
-
+                    tabText.setText(context.resources.getString(R.string.sub_photos))
                 }
                 1 -> {
-                    tabText.setText(context.resources.getString(R.string.sub_photos))
-
+                    tabText.setText(context.resources.getString(R.string.comp_photos))
                 }
-
-
             }
-
-
             return tabView
         }
-
-
     }
 
     override fun onTabSelected(tab: TabLayout.Tab?) {
@@ -137,19 +138,15 @@ class PhotoUploadFragment : Fragment(), TabLayout.OnTabSelectedListener {
             ?.setTextColor(ContextCompat.getColor(context!!, R.color.colorPrimary))
         tab?.customView?.findViewById<ImageView>(R.id.tabIcon)
             ?.setColorFilter(ContextCompat.getColor(context!!, R.color.colorPrimary))
-
     }
 
     override fun onTabUnselected(tab: TabLayout.Tab?) {
         //change color and indicator
         tab?.customView?.findViewById<TextView>(R.id.tabText)?.setTextColor(Color.BLACK)
         tab?.customView?.findViewById<ImageView>(R.id.tabIcon)?.setColorFilter(Color.BLACK)
-
     }
 
     override fun onTabReselected(tab: TabLayout.Tab?) {
 
     }
-
-
 }

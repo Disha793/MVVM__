@@ -95,9 +95,10 @@ class NewOrderDetailFragment : Fragment(), View.OnClickListener, DownloadFile.Li
                     orderDetail.serviceRequestType
         loadLoe(url)
         view.btnLOeAccept.setOnClickListener {
-            view.viewLoe.makeGone()
+//            view.viewLoe.makeGone()
+            acceptOrder()
         }
-        view.btnReject.setOnClickListener {
+        view.btnLoeDecline.setOnClickListener {
             declineOrder()
         }
     }
@@ -107,48 +108,6 @@ class NewOrderDetailFragment : Fragment(), View.OnClickListener, DownloadFile.Li
         LoadingDialog.show(activity!!)
         remotePDFViewPager = RemotePDFViewPager(context, url, this)
         remotePDFViewPager.setId(R.id.pdfViewPager)
-
-////        LoadingDialog.show(activity!!)
-//        view.webView.getSettings().setLoadWithOverviewMode(true)
-//        view.webView.getSettings().setUseWideViewPort(true)
-//        view.webView.getSettings().setJavaScriptEnabled(true)
-//        view.webView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT)
-////        if (!CommonUtils.isNetworkAvailable(activity!!)) { // loading offline
-////            view.webView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK)
-////        }
-//        view.webView.loadUrl(url)
-//        view.webView.webViewClient = object : WebViewClient() {
-//            override fun onPageFinished(view: WebView?, url: String?) {
-//                super.onPageFinished(view, url)
-//                LoadingDialog.dismissDialog()
-//            }
-//
-//            @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-//            override fun shouldOverrideUrlLoading(
-//                view: WebView?,
-//                request: WebResourceRequest?
-//            ): Boolean {
-//                view?.let {
-//                    if (request != null && request.url != null)
-//                        it.loadUrl(request.url.toString())
-//                }
-//
-//                return true
-//            }
-//
-//            override fun shouldOverrideUrlLoading(webView: WebView, url: String): Boolean {
-//                view.webView.loadUrl(url)
-//                return true
-//            }
-//
-//            override fun onReceivedError(
-//                view: WebView,
-//                request: WebResourceRequest,
-//                error: WebResourceError
-//            ) {
-//                context!!.toastShort("Got Error! $error")
-//            }
-//        }
     }
 
     private fun initViewModel() {
@@ -584,19 +543,22 @@ class NewOrderDetailFragment : Fragment(), View.OnClickListener, DownloadFile.Li
 
             }
             R.id.btnAccept -> {
-                if (orderDetail.isAssigned == 1) {
-
-                    itemIdList.add(itemId)
-                    confirmOrder()
-                } else if (orderDetail.isAssigned == 0 && isValid()) {
-                    unassignedItemId.add(itemId)
-                    confirmOrder()
-                }
+                acceptOrder()
             }
             R.id.btnDecline -> {
                 declineOrder()
 
             }
+        }
+    }
+
+    private fun acceptOrder() {
+        if (orderDetail.isAssigned == 1) {
+            itemIdList.add(itemId)
+            confirmOrder()
+        } else if (orderDetail.isAssigned == 0 && isValid()) {
+            unassignedItemId.add(itemId)
+            confirmOrder()
         }
     }
 

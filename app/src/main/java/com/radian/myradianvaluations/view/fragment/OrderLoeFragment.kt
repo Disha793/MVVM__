@@ -30,7 +30,7 @@ class OrderLoeFragment : Fragment(), View.OnClickListener {
             itemId = it.getInt(Const.itemIdTag)
         }
         view.btnLOeAccept.setOnClickListener(this)
-        view.btnReject.setOnClickListener(this)
+        view.btnLoeDecline.setOnClickListener(this)
         return view
     }
 

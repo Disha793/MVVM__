@@ -36,18 +36,14 @@ object CommonUtils {
     }
 
     fun hideKeybord(view: View, context: Context) {
-
         val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view.windowToken, 0)
-
     }
 
     internal fun getRealPathFromURI(context: Context, contentUri: Uri): String? {
         var cursor: Cursor? = null
         var path: String?
         try {
-
-
             var proj: Array<out String?> = arrayOf<String>(MediaStore.Images.Media.DATA)
             cursor = context.getContentResolver().query(contentUri, proj, null, null, null)
             if (cursor == null) { // Source is Dropbox or other similar local file path

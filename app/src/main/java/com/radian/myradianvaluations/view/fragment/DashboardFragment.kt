@@ -171,7 +171,6 @@ class DashboardFragment : Fragment(), View.OnClickListener {
                 if (it.status.equals(APIStatus.ok, true)) {
                     if (it.data != null && it.data.isUpdateAndroid) {
                         callWhatsNewAPI()
-
                     } else {
                         dashboardList.clear()
                         if (it.data != null) {
@@ -192,7 +191,6 @@ class DashboardFragment : Fragment(), View.OnClickListener {
                                     Picasso.with(activity)
                                         .load(BuildConfig.HOST +it.data.profileImageUrl).placeholder(R.drawable.profile_placeholder)
                                         .into(view.imgUser)
-//
                                 }
                             }
 //                                t.data.upcomingAppointment?.let {
@@ -313,7 +311,6 @@ class DashboardFragment : Fragment(), View.OnClickListener {
             }
         }
     }
-
 
     private fun getDashboardData() {
         val postParam = HashMap<String, Any?>()

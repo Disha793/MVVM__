@@ -27,7 +27,7 @@
     <!--Organiztion Info text-->
     <string name="lbl_info_title">Make sure you have the right login information</string>
     <string name="lbl_info_text1">No need to create a new account!</string>
-    <string name="lbl_info_text2">myradian appraisals uses the login information for your Radian Valuation Services account.</string>
+    <string name="lbl_info_text2">myradian valuations uses the login information for your Radian Valuation Services account.</string>
     <string name="lbl_info_text3">You can check to make sure you have the right information by logging into the RVS vendor portal.</string>
     <string name="lbl_info_text4">Our vendor support team is available to help.</string>
     <string name="lbl_info_text5">Not a Radian vendor?</string>
@@ -42,7 +42,7 @@
     <string name="licence">License Update</string>
     <string name="delete">Delete</string>
     <!--Photo Upload tab-->
-    <string name="all_photos">All Photos</string>
+    <string name="comp_photos">Comp Photos</string>
     <string name="sub_photos">Sub Photos</string>
     <!--Profile dialog labels-->
     <string name="lbl_next_step">Next Step</string>
@@ -220,6 +220,8 @@ The app streamlines every step of the process, including accepting orders, sched
     <string name="order">Order</string>
     <string name="miles">Miles:</string>
     <string name="notification_updated">Notification Updated</string>
-
     <string name="success">Success</string>
+    <string name="sure_delete_text">Are you sure you want to delete</string>
+    <string name="image_text">image?</string>
+    <string name="yes_text">Yes</string>
 </resources>

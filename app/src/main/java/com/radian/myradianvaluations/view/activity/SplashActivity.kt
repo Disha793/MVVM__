@@ -10,6 +10,7 @@ import com.radian.myradianvaluations.BuildConfig
 import com.radian.myradianvaluations.R
 import com.radian.myradianvaluations.constants.Const
 import com.radian.myradianvaluations.constants.NotificationConstants
+import com.radian.myradianvaluations.utils.LogUtils
 import com.radian.myradianvaluations.utils.Pref
 import org.json.JSONObject
 
@@ -18,11 +19,10 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-
         Handler(Looper.getMainLooper()).postDelayed({
             if (intent.getStringExtra("data") != null) {
                 val jsonObject = JSONObject(intent.getStringExtra("data"))
-                Log.e("JsonObject at Splash", jsonObject.toString())
+                LogUtils.logD("JsonObject at Splash", jsonObject.toString())
                 val resultIntent = Intent(this, BottomNavigationActivity::class.java)
                 resultIntent.putExtra(Const.idTag, jsonObject.getInt(Const.idTag))
                 resultIntent.putExtra(
@@ -104,7 +104,6 @@ class SplashActivity : AppCompatActivity() {
                             jsonObject.getInt(NotificationConstants.notiTagOrderCount)
                         )
                         startActivity(resultIntent)
-
                     }
                     NotificationConstants.notiAbbrScheduled -> {
                         redirectOrderDetail(resultIntent)
@@ -119,22 +118,14 @@ class SplashActivity : AppCompatActivity() {
                         )
                         startActivity(resultIntent)
                     }
-
-
                 }
-
             } else if (!Pref.getValue(this, Pref.IS_FIRST_TIME, false)) {
                 startActivity(Intent(this, LoginActivity::class.java))
             } else {
-
                 startActivity(Intent(this, PasscodeActivity::class.java))
-
                // overridePendingTransition(R.anim.slide_up, R.anim.no_change)
             }
-
         }, 3000)
-
-
     }
     private fun redirectOrderDetail(resultIntent: Intent) {
         resultIntent.putExtra(

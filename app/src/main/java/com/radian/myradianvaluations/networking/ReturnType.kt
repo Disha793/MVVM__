@@ -42,7 +42,7 @@ enum class ReturnType(val endPoint: String) {
     //For code of conduct
     POST_SAVECOC("mobile/Dashboard/SaveVendorCompliance"),
 
-    POST_VendorProfileDetail("mobile/vendorprofile/GetVendorProfileDetails"),
+    POST_VendorProfileDetail("mobile/dashboard/GetVendorProfileDetails"),
     POST_LicenceMaster("mobile/Dashboard/GetLicenseDropdownList"),
     POST_SaveLicence("mobile/vendorprofile/UpdateVendorLI"),
     POST_SaveW9Data("Mobile/VendorProfile/UpdateVendorW9"),
@@ -50,5 +50,6 @@ enum class ReturnType(val endPoint: String) {
     POST_GetNotiStatus("mobile/Dashboard/GetNotificationStatus"),
     POST_SaveNotiStatus("mobile/Dashboard/SaveDeviceSetting"),
     //Mark as read for  Push Notification
-    POST_UPDATE_FLAG("Mobile/Notification/ReadNotification")
+    POST_UPDATE_FLAG("Mobile/Notification/ReadNotification"),
+    POST_CATEGORY_LIST("mobile/Dashboard/GetCategoryList")
 }

@@ -11,21 +11,24 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.radian.myradianvaluations.BuildConfig
 import com.radian.myradianvaluations.R
-import com.radian.myradianvaluations.Response.Categories
+import com.radian.myradianvaluations.Response.PhotoUploadCategoryResponse
 import com.radian.myradianvaluations.extensions.makeGone
 import com.radian.myradianvaluations.extensions.makeVisible
+import com.radian.myradianvaluations.utils.LogUtils
+import java.io.File
 
-class CategoriesAdapter(
+class CompCategoriesAdapter(
     var context: Context,
-    var listCategories: ArrayList<Categories>,
+    var listCategories: ArrayList<PhotoUploadCategoryResponse.Data>,
     var onGalleryClick: (Any) -> Unit,
     var onCameraClick: (Any) -> Unit,
     var onDeleteClick: (Any) -> Unit
 ) :
-    RecyclerView.Adapter<CategoriesAdapter.CategoriesViewHolder>(), Filterable {
+    RecyclerView.Adapter<CompCategoriesAdapter.CategoriesViewHolder>(), Filterable {
 
-    private var filterList: ArrayList<Categories> = listCategories
+    private var filterList: ArrayList<PhotoUploadCategoryResponse.Data> = listCategories
 
     init {
         filterList = listCategories
@@ -38,22 +41,37 @@ class CategoriesAdapter(
         return CategoriesViewHolder(view)
     }
 
+    override fun getItemViewType(position: Int): Int {
+        return position
+    }
+
     override fun onBindViewHolder(holder: CategoriesViewHolder, position: Int) {
 
-        holder.tvCategoryName.text = filterList[position].name
-        if (filterList[position].imageUri != null) {
-            Glide
-                .with(context)
-                .load(Uri.parse(filterList[position].imageUri))
-                .centerCrop()
-                .placeholder(R.drawable.add)
-                .into(holder.ivImage)
-        }
-        if (filterList[position].imageUri.isNullOrEmpty()) {
-            holder.ivDelete.makeGone()
-        } else {
+        holder.tvCategoryName.text = filterList[position].text
+        if (!filterList[position].photoUrl.isNullOrEmpty()) {
+            if (filterList[position].isFromDevice) {
+                Glide
+                    .with(context)
+                    .load(File(filterList[position].photoUrl)).skipMemoryCache(true)
+                    .centerCrop()
+                    .placeholder(R.drawable.add)
+                    .into(holder.ivImage)
+            } else {
+                Glide
+                    .with(context)
+                    .load(BuildConfig.HOST + Uri.parse(filterList[position].photoUrl))
+                    .skipMemoryCache(true)
+                    .centerCrop()
+                    .placeholder(R.drawable.add)
+                    .into(holder.ivImage)
+            }
+
             holder.ivDelete.makeVisible()
+
+        } else {
+            holder.ivDelete.makeGone()
         }
+
         holder.ivGallery.setOnClickListener {
             onGalleryClick(position)
         }
@@ -70,35 +88,6 @@ class CategoriesAdapter(
         return filterList.size
     }
 
-    /*override fun getFilter(): Filter? {
-        return exampleFilter
-    }
-
-    private val exampleFilter: Filter = object : Filter() {
-        override fun performFiltering(constraint: CharSequence): FilterResults {
-            val filteredList: MutableList<Categories> = ArrayList()
-            if (constraint == null || constraint.length == 0) {
-                filteredList.addAll(listCategories)
-            } else {
-                val filterPattern = constraint.toString().toLowerCase().trim { it <= ' ' }
-                for (item in listCategories) {
-                    if (item.name.toLowerCase().contains(filterPattern)) {
-                        filteredList.add(item)
-                    }
-                }
-            }
-            val results = FilterResults()
-            results.values = filteredList
-            return results
-        }
-
-        override fun publishResults(constraint: CharSequence, results: FilterResults) {
-            filterList.clear()
-            filterList.addAll(results.values as ArrayList<Categories>)
-            notifyDataSetChanged()
-        }
-    }*/
-
     override fun getFilter(): Filter {
         return object : Filter() {
             override fun performFiltering(constraint: CharSequence?): FilterResults {
@@ -106,9 +95,9 @@ class CategoriesAdapter(
                 filterList = if (charSearch.isEmpty()) {
                     listCategories
                 } else {
-                    val resultList = ArrayList<Categories>()
+                    val resultList = ArrayList<PhotoUploadCategoryResponse.Data>()
                     for (row in listCategories) {
-                        if (row.name.toLowerCase().contains(constraint.toString().toLowerCase())) {
+                        if (row.text.toLowerCase().contains(constraint.toString().toLowerCase())) {
                             resultList.add(row)
                         }
                     }
@@ -120,7 +109,7 @@ class CategoriesAdapter(
             }
 
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                filterList = results?.values as ArrayList<Categories>
+                filterList = results?.values as ArrayList<PhotoUploadCategoryResponse.Data>
                 notifyDataSetChanged()
             }
         }

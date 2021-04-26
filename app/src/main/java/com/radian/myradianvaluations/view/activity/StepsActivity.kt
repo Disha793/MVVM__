@@ -18,10 +18,10 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.radian.myradianvaluations.R
 import com.radian.myradianvaluations.Response.Assets
-import com.radian.myradianvaluations.Response.Categories
+import com.radian.myradianvaluations.Response.PhotoUploadCategoryResponse
 import com.radian.myradianvaluations.Response.UploadedPhotos
 import com.radian.myradianvaluations.adapter.AssetsAdapter
-import com.radian.myradianvaluations.adapter.CategoriesAdapter
+import com.radian.myradianvaluations.adapter.CompCategoriesAdapter
 import com.radian.myradianvaluations.constants.Const
 import com.radian.myradianvaluations.databinding.ActivityStepsBinding
 import com.radian.myradianvaluations.extensions.makeGone
@@ -37,10 +37,10 @@ class StepsActivity : AppCompatActivity(), View.OnClickListener, SearchView.OnQu
     private lateinit var mContext: Context
 
     private var listAssets: ArrayList<Assets> = ArrayList()
-    private var listCategories: ArrayList<Categories> = ArrayList()
+    private var listCategories: ArrayList<PhotoUploadCategoryResponse.Data> = ArrayList()
     private var listUploadedPhotos: ArrayList<UploadedPhotos> = ArrayList()
 
-    private lateinit var adapterCategories: CategoriesAdapter
+    private lateinit var adapterCompCategories: CompCategoriesAdapter
     private lateinit var adapterAssets: AssetsAdapter
 
     private var currentCategoryPosition: Int = -1
@@ -141,7 +141,7 @@ class StepsActivity : AppCompatActivity(), View.OnClickListener, SearchView.OnQu
         binding.rvAssets.adapter = adapterAssets
 
 
-        adapterCategories = CategoriesAdapter(this, listCategories, {
+        adapterCompCategories = CompCategoriesAdapter(this, listCategories, {
             currentCategoryPosition = it as Int
             val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
             startActivityForResult(gallery, pickImage)
@@ -152,19 +152,20 @@ class StepsActivity : AppCompatActivity(), View.OnClickListener, SearchView.OnQu
             startActivity(intent)
         }, {
             currentCategoryPosition = it as Int
-            var category = listCategories[currentCategoryPosition].name
+            var category = listCategories[currentCategoryPosition].text
             val builder = AlertDialog.Builder(this)
             builder.setTitle(getString(R.string.app_name))
             builder.setMessage("Are you sure you want to delete $category Image?")
 
             builder.setPositiveButton("Yes") { _, _ ->
-                listCategories[currentCategoryPosition].imageUri = ""
+                //photo upload disha
+                //listCategories[currentCategoryPosition].imageUri = ""
                 Pref.setCategoriesArrayList(
                     this,
                     Const.CATEGORIES_SHARED_PREF_KEY,
                     listCategories
                 )
-                adapterCategories.notifyItemChanged(currentCategoryPosition)
+                adapterCompCategories.notifyItemChanged(currentCategoryPosition)
             }
 
             builder.setNegativeButton(android.R.string.no) { dialog, _ ->
@@ -174,18 +175,19 @@ class StepsActivity : AppCompatActivity(), View.OnClickListener, SearchView.OnQu
         })
 
         binding.rvCategories.layoutManager = GridLayoutManager(this, 2)
-        binding.rvCategories.adapter = adapterCategories
+        binding.rvCategories.adapter = adapterCompCategories
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK && requestCode == pickImage) {
             imageUri = data?.data!!
-            listCategories[currentCategoryPosition].imageUri = imageUri.toString()
+            //PhotoUpload Disha
+            listCategories[currentCategoryPosition].photoUrl = imageUri.toString()
             Pref.setCategoriesArrayList(this, Const.CATEGORIES_SHARED_PREF_KEY, listCategories)
             listCategories =
                 Pref.getCategoriesArrayList(this, Const.CATEGORIES_SHARED_PREF_KEY, "")
-            adapterCategories.notifyItemChanged(currentCategoryPosition)
+            adapterCompCategories.notifyItemChanged(currentCategoryPosition)
         }
     }
 
@@ -210,14 +212,14 @@ class StepsActivity : AppCompatActivity(), View.OnClickListener, SearchView.OnQu
         listAssets.add(Assets("Asset 3", false))
         listAssets.add(Assets("Asset 4", false))
 
-        listCategories.add(Categories("Living Room", null, "", 0.0, 0.0))
-        listCategories.add(Categories("Bed Room", null, "", 0.0, 0.0))
-        listCategories.add(Categories("Bath Room", null, "", 0.0, 0.0))
-        listCategories.add(Categories("Terrace Room", null, "", 0.0, 0.0))
-        listCategories.add(Categories("Living Room", null, "", 0.0, 0.0))
-        listCategories.add(Categories("Bed Room", null, "", 0.0, 0.0))
-        listCategories.add(Categories("Bath Room", null, "", 0.0, 0.0))
-        listCategories.add(Categories("Terrace Room", null, "", 0.0, 0.0))
+//        listCategories.add(Categories("Living Room", null, "", 0.0, 0.0))
+//        listCategories.add(Categories("Bed Room", null, "", 0.0, 0.0))
+//        listCategories.add(Categories("Bath Room", null, "", 0.0, 0.0))
+//        listCategories.add(Categories("Terrace Room", null, "", 0.0, 0.0))
+//        listCategories.add(Categories("Living Room", null, "", 0.0, 0.0))
+//        listCategories.add(Categories("Bed Room", null, "", 0.0, 0.0))
+//        listCategories.add(Categories("Bath Room", null, "", 0.0, 0.0))
+//        listCategories.add(Categories("Terrace Room", null, "", 0.0, 0.0))
 
         Pref.setCategoriesArrayList(this, Const.CATEGORIES_SHARED_PREF_KEY, listCategories)
         Pref.setAssetsArrayList(this, Const.ASSET_SHARED_PREF_KEY, listAssets)
@@ -270,7 +272,7 @@ class StepsActivity : AppCompatActivity(), View.OnClickListener, SearchView.OnQu
     }
 
     override fun onQueryTextChange(newText: String?): Boolean {
-        adapterCategories.filter.filter(newText)
+        adapterCompCategories.filter.filter(newText)
         return false
     }
 }

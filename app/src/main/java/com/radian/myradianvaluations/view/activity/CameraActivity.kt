@@ -27,6 +27,7 @@ import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.radian.myradianvaluations.R
 import com.radian.myradianvaluations.Response.Categories
+import com.radian.myradianvaluations.Response.PhotoUploadCategoryResponse
 import com.radian.myradianvaluations.Response.UploadedPhotos
 import com.radian.myradianvaluations.constants.Const
 import com.radian.myradianvaluations.databinding.ActivityCameraBinding
@@ -47,7 +48,7 @@ class CameraActivity : AppCompatActivity(), View.OnClickListener {
     private var imageCapture: ImageCapture? = null
     private lateinit var outputDirectory: File
     private lateinit var cameraExecutor: ExecutorService
-    private lateinit var listCategories: ArrayList<Categories>
+    private lateinit var listCategories: ArrayList<PhotoUploadCategoryResponse.Data>
     private lateinit var listUploadedPhotos: ArrayList<UploadedPhotos>
     private var currentListPosition = 0
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
@@ -68,7 +69,7 @@ class CameraActivity : AppCompatActivity(), View.OnClickListener {
 
         listCategories = Pref.getCategoriesArrayList(this, Const.CATEGORIES_SHARED_PREF_KEY, "")
 
-        binding.tvTitle.text = listCategories[currentListPosition].name
+        binding.tvTitle.text = listCategories[currentListPosition].text
 
         binding.ivCapture.setOnClickListener(this)
         binding.ivClose.setOnClickListener(this)
@@ -131,8 +132,8 @@ class CameraActivity : AppCompatActivity(), View.OnClickListener {
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) {
                     val savedUri = Uri.fromFile(photoFile)
                     val msg = "Photo capture succeeded: $savedUri"
-
-                    listCategories[currentListPosition].imageUri = savedUri.toString()
+//PhotoUpload Disha
+                    listCategories[currentListPosition].photoUrl = savedUri.toString()
                     listCategories[currentListPosition].timeStamp =
                         CommonUtils.convertDatetoString(
                             Date(),
@@ -192,7 +193,7 @@ class CameraActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v!!.id) {
             R.id.ivCapture -> {
-                takePhoto(listCategories[currentListPosition].name)
+                takePhoto(listCategories[currentListPosition].text)
             }
             R.id.ivClose -> {
                 var intent = Intent(this@CameraActivity, StepsActivity::class.java)

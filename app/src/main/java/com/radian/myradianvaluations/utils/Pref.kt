@@ -7,6 +7,7 @@ import com.google.gson.reflect.TypeToken
 import com.radian.myradianvaluations.BuildConfig
 import com.radian.myradianvaluations.Response.Assets
 import com.radian.myradianvaluations.Response.Categories
+import com.radian.myradianvaluations.Response.PhotoUploadCategoryResponse
 import java.lang.reflect.Type
 
 object Pref {
@@ -78,7 +79,7 @@ object Pref {
     fun setCategoriesArrayList(
         context: Context,
         key: String,
-        listCategories: ArrayList<Categories>
+        listCategories: ArrayList<PhotoUploadCategoryResponse.Data>
     ) {
 
         try {
@@ -97,13 +98,13 @@ object Pref {
         context: Context,
         key: String,
         defaultValue: Any
-    ): ArrayList<Categories> {
+    ): ArrayList<PhotoUploadCategoryResponse.Data> {
 
         openPref(context)
         val gson = Gson()
         val json: String? = sharedPreferences?.getString(key, "")
         val type: Type = object : TypeToken<List<Categories?>?>() {}.type
-        val listCategories: ArrayList<Categories> = gson.fromJson(json, type)
+        val listCategories: ArrayList<PhotoUploadCategoryResponse.Data> = gson.fromJson(json, type)
         Pref.sharedPreferences = null
         return listCategories
     }

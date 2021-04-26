@@ -27,19 +27,16 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         super.onNewToken(p0)
         Pref.setValue(applicationContext, Pref.FCM_TOKEN, p0)
         Log.d("FCM Token", p0)
-
     }
+
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         super.onMessageReceived(remoteMessage)
-
         if (remoteMessage.data != null) {
             Log.e("remotemessage.data", remoteMessage.data.toString())
-
             showNotificationData(remoteMessage.data)
         }
-
-
     }
+
     private fun showNotificationData(
         data: Map<String, String>
     ) {
@@ -49,10 +46,10 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             setupNotificationChannels()
         }
+
         val notificationId = Random().nextInt(60000)
         val resultIntent = Intent(this, SplashActivity::class.java)
         resultIntent.putExtra("data", jsonObject.toString())
-
 
         val resultPendingIntent: PendingIntent? = TaskStackBuilder.create(this).run {
             // Add the intent, which inflates the back stack
@@ -72,7 +69,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             .setContentIntent(resultPendingIntent)
             .setColor(resources.getColor(R.color.colorPrimary))
 //            .setNumber(data!!.get("badge")!!.toInt())
-
 
         val notificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager

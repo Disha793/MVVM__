@@ -143,6 +143,7 @@ class ManageOrderFragment : Fragment(), View.OnClickListener {
         postParam.put("MobileUserId", Pref.getValue(context!!, Pref.MOBILE_USER_ID, 0)!!)
         postParam.put("OrganizationIds", Pref.getValue(context!!, Pref.ORGANIZATN_ID, 0)!!)
         postParam.put("Itemid", itemId)
+        postParam.put("UserId", Pref.getValue(context!!, Pref.USER_ID, 0))
 
         manageOrderViewModel.getOrderDetail(postParam)
     }
@@ -218,7 +219,7 @@ class ManageOrderFragment : Fragment(), View.OnClickListener {
             return fragment
         }
     }
-    
+
 
     private fun completeInspection() {
         //Api name:  "mobile/Dashboard/AddEditInspection"   Response Type: StatusResponse
@@ -333,7 +334,6 @@ class ManageOrderFragment : Fragment(), View.OnClickListener {
                         requestPermission()
                     }
                 }
-
             }
             R.id.linearEmail -> {
                 if (!orderDetail.borrowerEmail.isNullOrEmpty()) {
@@ -384,7 +384,11 @@ class ManageOrderFragment : Fragment(), View.OnClickListener {
 //                    notifyBorrower()
 //                }
                 //Currently btnMArk renamed to photo upload below is photo upload activity
-                (context as BottomNavigationActivity).pushFragment(PhotoUploadFragment(), true)
+                (context as BottomNavigationActivity).pushFragment(
+                    PhotoUploadFragment.newInstance(
+                        itemId!!
+                    ), true
+                )
             }
         }
     }
@@ -417,7 +421,6 @@ class ManageOrderFragment : Fragment(), View.OnClickListener {
         postParam.put("Orderid", orderDetail.orderGenId)
         manageOrderViewModel.markAsReadRevision(postParam)
     }
-
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -467,7 +470,6 @@ class ManageOrderFragment : Fragment(), View.OnClickListener {
                         snackBar.show()
 
                     }
-
                 }
                 (context as BottomNavigationActivity).pushFragment(
                     MessageChatFragment.newInstance(
@@ -477,6 +479,5 @@ class ManageOrderFragment : Fragment(), View.OnClickListener {
                 )
             }
         }
-
     }
 }
