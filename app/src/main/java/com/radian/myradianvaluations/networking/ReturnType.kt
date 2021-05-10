@@ -51,5 +51,7 @@ enum class ReturnType(val endPoint: String) {
     POST_SaveNotiStatus("mobile/Dashboard/SaveDeviceSetting"),
     //Mark as read for  Push Notification
     POST_UPDATE_FLAG("Mobile/Notification/ReadNotification"),
-    POST_CATEGORY_LIST("mobile/Dashboard/GetCategoryList")
+    POST_CATEGORY_LIST("mobile/Dashboard/GetCategoryList"),
+    POST_PHOTO_DELETE("Mobile/Dashboard/DeleteMultiplephotos"),
+    POST_UPLOAD_PHOTO("mobile/Dashboard/Uploadfile")
 }

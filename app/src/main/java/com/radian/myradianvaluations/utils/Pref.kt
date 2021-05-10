@@ -103,7 +103,7 @@ object Pref {
         openPref(context)
         val gson = Gson()
         val json: String? = sharedPreferences?.getString(key, "")
-        val type: Type = object : TypeToken<List<Categories?>?>() {}.type
+        val type: Type = object : TypeToken<List<PhotoUploadCategoryResponse.Data?>?>() {}.type
         val listCategories: ArrayList<PhotoUploadCategoryResponse.Data> = gson.fromJson(json, type)
         Pref.sharedPreferences = null
         return listCategories

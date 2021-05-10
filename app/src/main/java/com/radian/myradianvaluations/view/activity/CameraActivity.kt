@@ -3,12 +3,14 @@ package com.radian.myradianvaluations.view.activity
 import android.Manifest
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.location.Location
+import android.location.LocationListener
+import android.location.LocationManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.CameraSelector
@@ -17,6 +19,7 @@ import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -26,12 +29,10 @@ import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.radian.myradianvaluations.R
-import com.radian.myradianvaluations.Response.Categories
 import com.radian.myradianvaluations.Response.PhotoUploadCategoryResponse
 import com.radian.myradianvaluations.Response.UploadedPhotos
 import com.radian.myradianvaluations.constants.Const
 import com.radian.myradianvaluations.databinding.ActivityCameraBinding
-import com.radian.myradianvaluations.utils.CommonUtils
 import com.radian.myradianvaluations.extensions.toastShort
 import com.radian.myradianvaluations.utils.LogUtils
 import com.radian.myradianvaluations.utils.Pref
@@ -41,8 +42,10 @@ import java.util.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
-class CameraActivity : AppCompatActivity(), View.OnClickListener {
+class CameraActivity : AppCompatActivity(), View.OnClickListener, LocationListener {
 
+    private var itemId: Int = 0
+    private lateinit var locationManager: LocationManager
     private lateinit var binding: ActivityCameraBinding
     private lateinit var mContext: Context
     private var imageCapture: ImageCapture? = null
@@ -52,11 +55,15 @@ class CameraActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var listUploadedPhotos: ArrayList<UploadedPhotos>
     private var currentListPosition = 0
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
+    private val locationPermissionCode = 2
+    private var currentLongitude: Double = 0.0
+    private var currentLatitude: Double = 0.0
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_camera)
+        getLocation()
         mContext = this
 
         init()
@@ -66,6 +73,7 @@ class CameraActivity : AppCompatActivity(), View.OnClickListener {
     private fun init() {
 
         currentListPosition = intent.getIntExtra(Const.INTENT_POSITION_KEY, 0)
+        itemId = intent.getIntExtra(Const.itemIdTag, 0)
 
         listCategories = Pref.getCategoriesArrayList(this, Const.CATEGORIES_SHARED_PREF_KEY, "")
 
@@ -125,7 +133,7 @@ class CameraActivity : AppCompatActivity(), View.OnClickListener {
             ContextCompat.getMainExecutor(this),
             object : ImageCapture.OnImageSavedCallback {
                 override fun onError(exc: ImageCaptureException) {
-                   LogUtils.logE("TAG", "Photo capture failed: ${exc.message}", exc)
+                    LogUtils.logE("TAG", "Photo capture failed: ${exc.message}", exc)
                     toastShort(resources.getString(R.string.capture_failed))
                 }
 
@@ -133,14 +141,24 @@ class CameraActivity : AppCompatActivity(), View.OnClickListener {
                     val savedUri = Uri.fromFile(photoFile)
                     val msg = "Photo capture succeeded: $savedUri"
 //PhotoUpload Disha
-                    listCategories[currentListPosition].photoUrl = savedUri.toString()
-                    listCategories[currentListPosition].timeStamp =
-                        CommonUtils.convertDatetoString(
-                            Date(),
-                            SimpleDateFormat(Const.formatAppoinmnt)
-                        )
-                    listCategories[currentListPosition].lat = 0.0
-                    listCategories[currentListPosition].long = 0.0
+                    val calendar: Calendar = Calendar.getInstance()
+                    val timeInMillis: Long = calendar.getTimeInMillis()
+                    val photoListItm = PhotoUploadCategoryResponse.PhotoList()
+                    photoListItm.photoUrl = savedUri.toString()
+                    photoListItm.timeStamp = timeInMillis
+                    photoListItm.lat = currentLatitude
+                    photoListItm.long = currentLongitude
+                    photoListItm.isFromDevice = true
+
+                    val extsitngList = listCategories[currentListPosition].photoList
+                    extsitngList.add(photoListItm)
+                    listCategories[currentListPosition].photoList = extsitngList
+//
+//                    listCategories[currentListPosition].photoList[listCategories[currentListPosition].photoList.size].photoUrl = savedUri.toString()
+//                    listCategories[currentListPosition].photoList[listCategories[currentListPosition].photoList.size].timeStamp = System.currentTimeMillis()
+//
+//                    listCategories[currentListPosition].photoList[listCategories[currentListPosition].photoList.size].lat = currentLatitude
+//                    listCategories[currentListPosition].photoList[listCategories[currentListPosition].photoList.size].long = currentLongitude
                     Pref.setCategoriesArrayList(
                         this@CameraActivity,
                         Const.CATEGORIES_SHARED_PREF_KEY,
@@ -148,6 +166,7 @@ class CameraActivity : AppCompatActivity(), View.OnClickListener {
                     )
                     var intent = Intent(this@CameraActivity, StepsActivity::class.java)
                     intent.putExtra(Const.INTENT_CAMERA_KEY, true)
+                    intent.putExtra(Const.itemIdTag, itemId)
                     startActivity(intent)
                     LogUtils.logD("TAG", msg)
                 }
@@ -198,8 +217,30 @@ class CameraActivity : AppCompatActivity(), View.OnClickListener {
             R.id.ivClose -> {
                 var intent = Intent(this@CameraActivity, StepsActivity::class.java)
                 intent.putExtra(Const.INTENT_CAMERA_KEY, true)
+                intent.putExtra(Const.itemIdTag, itemId)
                 startActivity(intent)
             }
         }
+    }
+
+    private fun getLocation() {
+        locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        if ((ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED)
+        ) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                locationPermissionCode
+            )
+        }
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 5f, this)
+    }
+
+    override fun onLocationChanged(loc: Location) {
+        currentLatitude = loc.latitude
+        currentLongitude = loc.longitude
     }
 }

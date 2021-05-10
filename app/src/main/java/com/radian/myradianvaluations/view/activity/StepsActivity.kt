@@ -1,6 +1,7 @@
 package com.radian.myradianvaluations.view.activity
 
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
@@ -13,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -29,10 +31,14 @@ import com.radian.myradianvaluations.extensions.makeVisible
 import com.radian.myradianvaluations.extensions.snack
 import com.radian.myradianvaluations.utils.CommonUtils
 import com.radian.myradianvaluations.utils.Pref
+import com.radian.myradianvaluations.view.fragment.ImageViewerFragment
+import kotlinx.android.synthetic.main.activity_bottom_navigation.*
 import kotlinx.android.synthetic.main.layout_toolbar.view.*
 
-class StepsActivity : AppCompatActivity(), View.OnClickListener, SearchView.OnQueryTextListener {
+class StepsActivity : AppCompatActivity(), View.OnClickListener, SearchView.OnQueryTextListener,
+    DialogInterface.OnClickListener {
 
+    private var itemId: Int = 0
     private lateinit var binding: ActivityStepsBinding
     private lateinit var mContext: Context
 
@@ -48,6 +54,7 @@ class StepsActivity : AppCompatActivity(), View.OnClickListener, SearchView.OnQu
     private lateinit var imageUri: Uri
 
     private var pickImage = 100
+    val fm = supportFragmentManager
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,6 +69,8 @@ class StepsActivity : AppCompatActivity(), View.OnClickListener, SearchView.OnQu
     @RequiresApi(Build.VERSION_CODES.M)
     private fun init() {
         val v: View = binding.svCategory.findViewById(androidx.appcompat.R.id.search_plate)
+        itemId = intent.getIntExtra(Const.itemIdTag, 0)
+
         v.isFocusable = false
         v.clearFocus()
 
@@ -140,42 +149,62 @@ class StepsActivity : AppCompatActivity(), View.OnClickListener, SearchView.OnQu
         binding.rvAssets.layoutManager = LinearLayoutManager(this)
         binding.rvAssets.adapter = adapterAssets
 
+        adapterCompCategories = CompCategoriesAdapter(this, listCategories, { list: Any, pos: Any ->
+            currentCategoryPosition = pos as Int
+            listCategories = list as ArrayList<PhotoUploadCategoryResponse.Data>
+            openDialog()
+        },
+//            { list: Any, pos: Any ->
+//            currentCategoryPosition = pos as Int
+//            listCategories = list as ArrayList<PhotoUploadCategoryResponse.Data>
+//            val intent = Intent(this, CameraActivity::class.java)
+//            intent.putExtra(Const.INTENT_POSITION_KEY, currentCategoryPosition)
+//            startActivity(intent)
+//        },
 
-        adapterCompCategories = CompCategoriesAdapter(this, listCategories, {
-            currentCategoryPosition = it as Int
-            val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
-            startActivityForResult(gallery, pickImage)
-        }, {
-            currentCategoryPosition = it as Int
-            val intent = Intent(this, CameraActivity::class.java)
-            intent.putExtra(Const.INTENT_POSITION_KEY, currentCategoryPosition)
-            startActivity(intent)
-        }, {
-            currentCategoryPosition = it as Int
-            var category = listCategories[currentCategoryPosition].text
-            val builder = AlertDialog.Builder(this)
-            builder.setTitle(getString(R.string.app_name))
-            builder.setMessage("Are you sure you want to delete $category Image?")
 
-            builder.setPositiveButton("Yes") { _, _ ->
-                //photo upload disha
-                //listCategories[currentCategoryPosition].imageUri = ""
-                Pref.setCategoriesArrayList(
-                    this,
-                    Const.CATEGORIES_SHARED_PREF_KEY,
-                    listCategories
+            { list: Any, pos: Any ->
+                currentCategoryPosition = pos as Int
+                listCategories = list as ArrayList<PhotoUploadCategoryResponse.Data>
+
+                pushFragment(
+                    ImageViewerFragment(
+                        listCategories, currentCategoryPosition, itemId
+                    ), true
                 )
-                adapterCompCategories.notifyItemChanged(currentCategoryPosition)
-            }
 
-            builder.setNegativeButton(android.R.string.no) { dialog, _ ->
-                dialog.dismiss()
-            }
-            builder.show()
-        })
+            })
 
         binding.rvCategories.layoutManager = GridLayoutManager(this, 2)
         binding.rvCategories.adapter = adapterCompCategories
+    }
+
+    private fun openDialog() {
+        CommonUtils.openDialog(this@StepsActivity, this)
+    }
+
+    override fun onClick(p0: DialogInterface?, position: Int) {
+        when (position) {
+            0 -> openCamera()
+            1 -> openGallery()
+            2 -> p0!!.dismiss()
+        }
+    }
+
+    private fun openGallery() {
+        val gallery =
+            Intent(
+                Intent.ACTION_PICK,
+                MediaStore.Images.Media.INTERNAL_CONTENT_URI
+            )
+        startActivityForResult(gallery, pickImage)
+    }
+
+    private fun openCamera() {
+        val intent = Intent(this, CameraActivity::class.java)
+        intent.putExtra(Const.INTENT_POSITION_KEY, currentCategoryPosition)
+        intent.putExtra(Const.itemIdTag, itemId)
+        startActivity(intent)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -183,7 +212,7 @@ class StepsActivity : AppCompatActivity(), View.OnClickListener, SearchView.OnQu
         if (resultCode == RESULT_OK && requestCode == pickImage) {
             imageUri = data?.data!!
             //PhotoUpload Disha
-            listCategories[currentCategoryPosition].photoUrl = imageUri.toString()
+            listCategories[currentCategoryPosition].photoList[0].photoUrl = imageUri.toString()
             Pref.setCategoriesArrayList(this, Const.CATEGORIES_SHARED_PREF_KEY, listCategories)
             listCategories =
                 Pref.getCategoriesArrayList(this, Const.CATEGORIES_SHARED_PREF_KEY, "")
@@ -275,4 +304,14 @@ class StepsActivity : AppCompatActivity(), View.OnClickListener, SearchView.OnQu
         adapterCompCategories.filter.filter(newText)
         return false
     }
+
+    fun pushFragment(fragment: Fragment, isBackStack: Boolean) {
+        val fragmentTransaction = fm.beginTransaction()
+        fragmentTransaction.replace(mainLayout.id, fragment, fragment.javaClass.getSimpleName())
+        if (isBackStack) {
+            fragmentTransaction.addToBackStack(fragment.javaClass.simpleName)
+        }
+        fragmentTransaction.commit()
+    }
+
 }

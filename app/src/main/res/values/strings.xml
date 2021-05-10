@@ -17,7 +17,7 @@
     <string name="error_enter_note">Please enter Note.</string>
     <string name="error_enter_strt_dte">Please Enter Start Date.</string>
     <string name="error_enter_end_dte">Please Enter End Date.</string>
-    <string name="error_enter_appoinmnt">Please Enter Appointment Date and Time.</string>
+    <string name="error_enter_appoinmnt">Please Enter Appointment Date and Tme.</string>
     <string name="confirm_passcode_text">Please Confirm Passcode</string>
     <!--EO Error Messages-->
     <string name="enter_coverage_amount">Please enter your coverage amount.</string>
@@ -224,4 +224,9 @@ The app streamlines every step of the process, including accepting orders, sched
     <string name="sure_delete_text">Are you sure you want to delete</string>
     <string name="image_text">image?</string>
     <string name="yes_text">Yes</string>
+    <string name="no_text">No</string>
+    <string name="select_photo_text">Please select atleast one image to proceed further</string>
+    <string name="replace_image">Proceeding further will replace existing image with new one. Would you like to proceed?</string>
+    <string name="add_image">Add Image</string>
+    <string name="add_more">Add More</string>
 </resources>

@@ -25,6 +25,12 @@ class PhotoUploadCategoryResponse {
         @SerializedName("IsSubject")
         var isSubject = 0
 
+        @SerializedName("MobilePhotoList")
+        var photoList = ArrayList<PhotoList>()
+
+        var newPhotosId = ArrayList<String>()
+    }
+    class PhotoList {
         @SerializedName("DeleteUrl")
         var deleteUrl = ""
 
@@ -34,16 +40,9 @@ class PhotoUploadCategoryResponse {
         @SerializedName("DocId")
         var docId = 0
 
-        @SerializedName("timeStamp")
-        var timeStamp = ""
-
-
-        @SerializedName("lat")
+        var timeStamp = 0L
         var lat = 0.0
-
-        @SerializedName("long")
         var long = 0.0
-        @SerializedName("isFromDevice")
         var isFromDevice = false
 
     }

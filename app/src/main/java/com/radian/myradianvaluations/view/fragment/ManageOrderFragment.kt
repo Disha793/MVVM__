@@ -384,6 +384,8 @@ class ManageOrderFragment : Fragment(), View.OnClickListener {
 //                    notifyBorrower()
 //                }
                 //Currently btnMArk renamed to photo upload below is photo upload activity
+                Const.IS_REFRESH_SUB =true
+                Const.IS_REFRESH_COMP =true
                 (context as BottomNavigationActivity).pushFragment(
                     PhotoUploadFragment.newInstance(
                         itemId!!

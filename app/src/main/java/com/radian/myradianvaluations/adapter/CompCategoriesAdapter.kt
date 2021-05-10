@@ -16,15 +16,14 @@ import com.radian.myradianvaluations.R
 import com.radian.myradianvaluations.Response.PhotoUploadCategoryResponse
 import com.radian.myradianvaluations.extensions.makeGone
 import com.radian.myradianvaluations.extensions.makeVisible
-import com.radian.myradianvaluations.utils.LogUtils
 import java.io.File
 
 class CompCategoriesAdapter(
     var context: Context,
     var listCategories: ArrayList<PhotoUploadCategoryResponse.Data>,
-    var onGalleryClick: (Any) -> Unit,
-    var onCameraClick: (Any) -> Unit,
-    var onDeleteClick: (Any) -> Unit
+    var onAddImageClick: (filterList: Any, position: Any) -> Unit,
+//    var onCameraClick: (filterList: Any, position: Any) -> Unit,
+    var onImageClick: (filterList: Any, position: Any) -> Unit
 ) :
     RecyclerView.Adapter<CompCategoriesAdapter.CategoriesViewHolder>(), Filterable {
 
@@ -45,42 +44,50 @@ class CompCategoriesAdapter(
         return position
     }
 
-    override fun onBindViewHolder(holder: CategoriesViewHolder, position: Int) {
+    fun updateFilterList(catData: java.util.ArrayList<PhotoUploadCategoryResponse.Data>) {
+        this.filterList = catData
+    }
 
+    override fun onBindViewHolder(holder: CategoriesViewHolder, position: Int) {
         holder.tvCategoryName.text = filterList[position].text
-        if (!filterList[position].photoUrl.isNullOrEmpty()) {
-            if (filterList[position].isFromDevice) {
+        holder.tvCount.text = filterList[position].photoList.size.toString()
+        if (filterList[position].photoList.size ==0) {
+            holder.tvAddImage.setText(context.resources.getString(R.string.add_image))
+        } else {
+            holder.tvAddImage.setText(context.resources.getString(R.string.add_more))
+        }
+        if (!filterList[position].photoList.isNullOrEmpty()) {
+            if (filterList[position].photoList[0].isFromDevice) {
                 Glide
                     .with(context)
-                    .load(File(filterList[position].photoUrl)).skipMemoryCache(true)
+                    .load(File(filterList[position].photoList[0].photoUrl)).skipMemoryCache(true)
                     .centerCrop()
                     .placeholder(R.drawable.add)
                     .into(holder.ivImage)
             } else {
                 Glide
                     .with(context)
-                    .load(BuildConfig.HOST + Uri.parse(filterList[position].photoUrl))
+                    .load(BuildConfig.HOST + Uri.parse(filterList[position].photoList[0].photoUrl))
                     .skipMemoryCache(true)
                     .centerCrop()
                     .placeholder(R.drawable.add)
                     .into(holder.ivImage)
             }
-
-            holder.ivDelete.makeVisible()
-
+            holder.tvCount.makeVisible()
         } else {
-            holder.ivDelete.makeGone()
+            holder.tvCount.makeGone()
         }
-
-        holder.ivGallery.setOnClickListener {
-            onGalleryClick(position)
+        holder.tvAddImage.setOnClickListener {
+            onAddImageClick(filterList, position)
         }
-
-        holder.ivCamera.setOnClickListener {
-            onCameraClick(position)
-        }
-        holder.ivDelete.setOnClickListener {
-            onDeleteClick(position)
+//        holder.ivGallery.setOnClickListener {
+//            onGalleryClick(filterList, position)
+//        }
+//        holder.ivCamera.setOnClickListener {
+//            onCameraClick(filterList, position)
+//        }
+        holder.ivImage.setOnClickListener {
+            onImageClick(filterList, position)
         }
     }
 
@@ -116,12 +123,13 @@ class CompCategoriesAdapter(
     }
 
     class CategoriesViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-
         var tvCategoryName: AppCompatTextView = view.findViewById(R.id.tvCategoryName)
         var ivImage: AppCompatImageView = view.findViewById(R.id.ivImage)
         var ivGallery: AppCompatImageView = view.findViewById(R.id.ivGallery)
         var ivCamera: AppCompatImageView = view.findViewById(R.id.ivCamera)
         var ivDelete: AppCompatImageView = view.findViewById(R.id.ivDelete)
+        var tvCount: AppCompatTextView = view.findViewById(R.id.tv_count)
+        var tvAddImage: AppCompatTextView = view.findViewById(R.id.tv_addimage)
     }
 
 }

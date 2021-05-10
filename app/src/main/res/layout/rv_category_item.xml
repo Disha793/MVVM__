@@ -9,8 +9,8 @@
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -27,15 +27,30 @@
                 android:layout_weight="1"
                 android:src="@drawable/add" />
 
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/ll_name"
+                android:layout_alignParentRight="true"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:background="@color/colorAccent"
+                android:padding="@dimen/_8sdp"
+                android:text="12"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/_10sdp" />
+
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ivDelete"
                 android:layout_width="@dimen/_22sdp"
                 android:layout_height="@dimen/_22sdp"
                 android:layout_alignParentRight="true"
                 android:layout_margin="@dimen/_7sdp"
-                android:src="@drawable/delete" />
+                android:src="@drawable/delete"
+                android:visibility="gone" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/ll_name"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@id/ivImage"
@@ -50,16 +65,14 @@
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/_2sdp"
                     android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_2sdp"
                     android:layout_marginRight="@dimen/_5sdp"
                     android:layout_marginBottom="@dimen/_5sdp"
                     android:layout_toLeftOf="@id/llButtons"
                     android:text="Category"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/_15sdp" />
-
-
             </androidx.appcompat.widget.LinearLayoutCompat>
 
         </RelativeLayout>
@@ -76,16 +89,30 @@
             android:padding="@dimen/_5sdp"
             android:weightSum="2">
 
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_addimage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@color/colorAccent"
+                android:gravity="center"
+                android:padding="@dimen/_5sdp"
+                android:text="@string/add_image"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/_14sdp" />
+
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ivGallery"
                 android:layout_width="@dimen/_22sdp"
                 android:layout_height="@dimen/_22sdp"
+                android:visibility="gone"
                 android:layout_weight="1"
                 android:src="@drawable/gallery"
                 android:tint="@android:color/white" />
 
             <View
                 android:layout_width="0.5dp"
+                android:visibility="gone"
                 android:layout_height="@dimen/_17sdp"
                 android:background="@android:color/white" />
 
@@ -95,9 +122,9 @@
                 android:layout_height="@dimen/_22sdp"
                 android:layout_marginLeft="@dimen/_2sdp"
                 android:layout_weight="1"
+                android:visibility="gone"
                 android:src="@drawable/camera"
                 android:tint="@android:color/white" />
-
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 

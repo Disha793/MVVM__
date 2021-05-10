@@ -14,7 +14,6 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.*
-import java.io.File
 
 
 class ApiServiceProviderGeneric() : APIClient() {
@@ -163,6 +162,55 @@ class ApiServiceProviderGeneric() : APIClient() {
         }
     }
 
+    fun multipartPostPhotoCall(
+        context: Context,
+        urlEndPoint: String,
+        image: ArrayList<MultipartBody.Part>,
+        returnType: ReturnType,
+        map: HashMap<String, RequestBody>
+
+    ) {
+        coroutineScope.launch {
+            try {
+                launch(Dispatchers.Main) {
+                    apiResponseCallBack.onPreExecute(returnType)
+                }
+                val call = getClientWithHeader(context).create(GetCallReference::class.java)
+                    .postCallMultipartPhotos(image,
+                        map,
+                        BuildConfig.HOST + urlEndPoint
+                    )
+                launch(Dispatchers.Main) {
+                    if (call.body() != null && call.isSuccessful) {
+                        // LogUtils.logE(classTag, "response : ${call.body() as JsonElement}")
+                        val headerList: Headers = call.headers()
+                        LogUtils.logD(
+                            classTag,
+                            "Header===>" + headerList.get("Authorization").toString()
+                        )
+                        //  LogUtils.logD(classTag, "response : ${call.body() as JsonElement}")
+                        apiResponseCallBack.onSuccess(
+                            returnType, call.body().toString()
+                        )
+                    } else {
+                        apiResponseCallBack.onError(
+                            returnType,
+                            context.getString(R.string.please_try_again)
+                        )
+                    }
+                }
+            } catch (e: Exception) {
+                launch(Dispatchers.Main) {
+                    apiResponseCallBack.onError(
+                        returnType,
+                        context.getString(R.string.please_try_again)
+                    )
+                }
+                LogUtils.logE(classTag, e)
+            }
+        }
+    }
+
     fun getCall(
             context: Context,
             urlEndPoint: String,
@@ -218,6 +266,15 @@ class ApiServiceProviderGeneric() : APIClient() {
                 @PartMap values: HashMap<String, RequestBody>,
                 @Url url: String
         ): Response<JsonElement>
+
+        @POST
+        @Multipart
+        suspend fun postCallMultipartPhotos(
+            @Part file: ArrayList<MultipartBody.Part>,
+            @PartMap values: HashMap<String, RequestBody>,
+            @Url url: String
+        ): Response<JsonElement>
+
 
         @GET
         suspend fun getCall(

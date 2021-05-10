@@ -17,6 +17,7 @@ object Const {
     val scrSearchFilterTag = "SearchFilter"
     val idTag = "id"
     val itemIdTag = "ItemId"
+    val currentCatPos = "CurrentCategoryPos"
     val detailData = "NewOrderDetailData"
     val notificationidTag = "mobileNotificationId"
     val loeUrlTag = "loeurl"
@@ -55,5 +56,6 @@ object Const {
             ".{8,}" +               //at least 8 characters
             "$"
 const val imgnName="MyRVal_Img"
-
+var IS_REFRESH_SUB:Boolean=true
+var IS_REFRESH_COMP:Boolean=true
 }

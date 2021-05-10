@@ -8,7 +8,6 @@ import android.content.Intent
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.database.Cursor
-import android.graphics.Color
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.net.Uri
@@ -17,10 +16,7 @@ import android.provider.MediaStore
 import android.provider.Settings
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.TextView
-import android.widget.Toast
 import androidx.core.content.ContextCompat
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.radian.myradianvaluations.R
 import okhttp3.MediaType
@@ -32,7 +28,6 @@ object CommonUtils {
 
     fun getDeviceUUID(mContext: Context): String {
         return Settings.Secure.getString(mContext.getContentResolver(), Settings.Secure.ANDROID_ID)
-
     }
 
     fun hideKeybord(view: View, context: Context) {
