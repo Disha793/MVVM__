@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txtNoData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:fontFamily="@font/messinasans_regular"
+        android:text=""
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/_16sdp" />
+
+    <ScrollView
+        android:id="@+id/scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_40sdp"
+        android:scrollbars="none"
+       >
+
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/linearData"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/_8sdp">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/messinasans_regular"
+                android:text="Is your W9 Address different than your Primary Address?"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/_12sdp"
+                android:visibility="gone" />
+
+            <RadioGroup
+                android:id="@+id/radioGrp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/radioYes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Yes"/>
+
+                <androidx.appcompat.widget.AppCompatRadioButton
+                    android:id="@+id/radioNo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="No"/>
+
+
+            </RadioGroup>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/linearAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:fontFamily="@font/messinasans_regular"
+                    android:text="Address Line 1"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/_11sdp" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/edtAddLine1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:background="@drawable/back_product_detail"
+                    android:fontFamily="@font/messinasans_regular"
+                    android:inputType=""
+                    android:minLines="2"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:paddingLeft="@dimen/_5sdp"
+                    android:textSize="@dimen/_12sdp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:fontFamily="@font/messinasans_regular"
+                    android:text="Address Line 2"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/_11sdp" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/edtAddLine2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:background="@drawable/back_product_detail"
+                    android:fontFamily="@font/messinasans_regular"
+                    android:inputType=""
+                    android:minLines="2"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:paddingLeft="@dimen/_5sdp"
+                    android:textSize="@dimen/_12sdp" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:fontFamily="@font/messinasans_regular"
+                android:text="Zip"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/_11sdp" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edtZip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@drawable/back_product_detail"
+                android:fontFamily="@font/messinasans_regular"
+                android:inputType="number"
+                android:minLines="2"
+                android:paddingStart="@dimen/_5sdp"
+                android:paddingLeft="@dimen/_5sdp"
+                android:paddingTop="@dimen/_8sdp"
+                android:paddingBottom="@dimen/_8sdp"
+                android:textSize="@dimen/_12sdp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:fontFamily="@font/messinasans_regular"
+                android:text="City"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/_11sdp" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edtCity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@drawable/back_product_detail"
+                android:fontFamily="@font/messinasans_regular"
+                android:inputType=""
+                android:minLines="2"
+                android:paddingStart="@dimen/_5sdp"
+                android:paddingLeft="@dimen/_5sdp"
+                android:textSize="@dimen/_12sdp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:fontFamily="@font/messinasans_regular"
+                android:text="State"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/_11sdp" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edtstate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@drawable/back_product_detail"
+                android:fontFamily="@font/messinasans_regular"
+                android:inputType=""
+                android:minLines="2"
+                android:paddingStart="@dimen/_5sdp"
+                android:paddingLeft="@dimen/_5sdp"
+                android:textSize="@dimen/_12sdp"
+
+                />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:fontFamily="@font/messinasans_regular"
+                    android:text="Documents"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/_11sdp" />
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txtAddDoc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:fontFamily="@font/messinasans_regular"
+                android:gravity="center"
+                android:text="+Add"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/_13sdp"
+                android:textStyle="bold"
+                android:visibility="visible" />
+
+            <FrameLayout
+                android:id="@+id/frameDoc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_weight="1"
+                android:visibility="gone">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="@dimen/_40sdp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    app:srcCompat="@drawable/img_doc_thumbnail"
+                    android:visibility="visible"></androidx.appcompat.widget.AppCompatImageView>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/imgDocDelete"
+                    android:layout_width="@dimen/_15sdp"
+                    android:layout_height="@dimen/_15sdp"
+                    app:srcCompat="@drawable/img_delete_doc"
+                    android:visibility="visible"></androidx.appcompat.widget.AppCompatImageView>
+            </FrameLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </ScrollView>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnSubmitW9"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:background="@color/colorPrimary"
+        android:fontFamily="@font/messinasans_semibold"
+        android:paddingLeft="@dimen/_8sdp"
+        android:paddingRight="@dimen/_8sdp"
+        android:text="Submit"
+        android:textColor="@android:color/white"
+        android:visibility="visible" />
+</RelativeLayout>

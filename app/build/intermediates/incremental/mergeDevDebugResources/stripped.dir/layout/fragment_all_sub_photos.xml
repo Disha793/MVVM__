@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+  >
+<androidx.appcompat.widget.LinearLayoutCompat
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/svCategory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusable="false"
+        android:focusableInTouchMode="true"
+        app:iconifiedByDefault="false"
+        app:queryHint="Search categories" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvCategories"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/llButton"
+        android:paddingHorizontal="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginBottom="@dimen/_50sdp"
+
+        />
+
+</androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/back_card_btn"
+        android:gravity="center|bottom"
+        android:layout_gravity="bottom"
+        android:padding="@dimen/_10sdp"
+        android:layout_alignParentBottom="true">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnSubmit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/back_button_new"
+            android:fontFamily="@font/messinasans_semibold"
+            android:gravity="center"
+            android:paddingStart="@dimen/_25sdp"
+            android:paddingLeft="@dimen/_25sdp"
+            android:paddingEnd="@dimen/_25sdp"
+            android:paddingRight="@dimen/_25sdp"
+            android:text="Submit"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:visibility="visible" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</RelativeLayout>

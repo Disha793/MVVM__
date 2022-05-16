@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.daimajia.swipe.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:cardview="http://schemas.android.com/apk/res-auto"
+    xmlns:swipe="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    swipe:leftEdgeSwipeOffset="0dp"
+    swipe:rightEdgeSwipeOffset="0dp">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/linearClear"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="match_parent"
+
+        >
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            cardview:cardElevation="@dimen/_3sdp"
+            cardview:cardUseCompatPadding="true">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/holo_red_dark"
+                android:gravity="center"
+                android:text="Clear"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/_12sdp" />
+        </androidx.cardview.widget.CardView>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:cardview="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/cardView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white"
+            cardview:cardCornerRadius="@dimen/_2sdp"
+            cardview:cardElevation="@dimen/_3sdp"
+            cardview:cardUseCompatPadding="true">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:baselineAligned="false"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/view"
+                    android:layout_toRightOf="@+id/view"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_8sdp">
+
+                    <RelativeLayout
+                        android:id="@+id/relativeOrder"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/imgCheckbox"
+                            android:layout_width="@dimen/_20sdp"
+                            android:layout_height="@dimen/_20sdp"
+                            android:layout_marginEnd="@dimen/_10sdp"
+                            android:layout_marginRight="@dimen/_10sdp"
+                            android:src="@drawable/img_unselect"
+                            android:tag="0"
+                            android:tint="@color/colorPrimary"
+                            android:visibility="visible"
+
+                            />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/lblOrderId"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_toEndOf="@+id/imgCheckbox"
+                            android:layout_toRightOf="@+id/imgCheckbox"
+                            android:fontFamily="@font/messinasans_semibold"
+                            android:text="@string/orderId"
+                            android:textColor="@color/txtColorGrey"
+                            android:textSize="@dimen/_11sdp"
+
+                            />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/orderId"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="@dimen/_5sdp"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:layout_toEndOf="@+id/lblOrderId"
+                            android:layout_toRightOf="@+id/lblOrderId"
+                            android:fontFamily="@font/messinasans_semibold"
+                            android:text="2233444"
+                            android:textColor="@android:color/black"
+                            android:textSize="@dimen/_11sdp" />
+
+                    </RelativeLayout>
+
+                    <View
+                        android:id="@+id/view"
+                        android:layout_below="@+id/relativeOrder"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:background="@color/light_grey"></View>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_below="@+id/view"
+                        android:id="@+id/txtMsgTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/messinasans_regular"
+                        android:text="Occupancy Inspection"
+                        android:textColor="@color/txtColorGrey"
+                        android:textSize="@dimen/_11sdp"
+                        android:layout_marginTop="@dimen/_5sdp"/>
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/imgMsgDetail"
+                        android:layout_width="@dimen/_15sdp"
+                        android:layout_height="@dimen/_15sdp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_gravity="end"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_5sdp"
+                        android:layout_marginRight="@dimen/_5sdp"
+                        android:src="@drawable/img_navigation_right"
+                        android:tint="@color/colorPrimary"
+                        android:layout_centerVertical="true"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/txtName"
+                        android:layout_below="@+id/txtMsgTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/messinasans_regular"
+                        android:text="Gaurav Gupta"
+                        android:textColor="@color/txtColorGrey"
+                        android:textSize="@dimen/_11sdp"
+                        android:layout_marginTop="@dimen/_5sdp"/>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/txtName">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/txtAdd"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/messinasans_regular"
+                            android:maxLines="2"
+                            android:text="233 Main St"
+                            android:textColor="@color/txtColorGrey"
+                            android:textSize="@dimen/_11sdp" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/imgMsgReply"
+                            android:layout_width="@dimen/_20sdp"
+                            android:layout_height="@dimen/_20sdp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            cardview:srcCompat="@drawable/img_msgreply"
+                            android:layout_marginEnd="@dimen/_5sdp"
+                            android:layout_marginRight="@dimen/_5sdp"
+                            android:tint="@color/colorPrimary"
+
+                            />
+                    </RelativeLayout>
+
+
+                </RelativeLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.cardview.widget.CardView>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</com.daimajia.swipe.SwipeLayout>

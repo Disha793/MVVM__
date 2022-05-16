@@ -7,8 +7,10 @@ import com.radian.myradianvaluations.utils.Pref
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.conscrypt.Conscrypt
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.security.Security
 import java.util.concurrent.TimeUnit
 
 
@@ -26,12 +28,14 @@ open class APIClient {
 
     fun getClient(): Retrofit {
         val httpClient = OkHttpClient.Builder()
+        Security.insertProviderAt(Conscrypt.newProvider(), 1);
         httpClient.addInterceptor(interceptor)
         httpClient.readTimeout(CONNECTION_TIMEOUT, TimeUnit.MINUTES)
         httpClient.writeTimeout(CONNECTION_TIMEOUT, TimeUnit.MINUTES)
         httpClient.connectTimeout(CONNECTION_TIMEOUT, TimeUnit.MINUTES)
         retrofit = Retrofit.Builder().addConverterFactory(GsonConverterFactory.create())
             .baseUrl(BuildConfig.HOST).client(httpClient.build()).build()
+        Security.removeProvider("Conscrypt")
         return retrofit
     }
 
@@ -49,6 +53,7 @@ open class APIClient {
 
     fun getClientWithHeader(mContext: Context): Retrofit {
         val client = OkHttpClient.Builder()
+        Security.insertProviderAt(Conscrypt.newProvider(), 1);
         client.addInterceptor(interceptor)
         client.readTimeout(CONNECTION_TIMEOUT, TimeUnit.MINUTES)
         client.writeTimeout(CONNECTION_TIMEOUT, TimeUnit.MINUTES)
@@ -58,6 +63,8 @@ open class APIClient {
 
         retrofit = Retrofit.Builder().addConverterFactory(GsonConverterFactory.create())
             .baseUrl(BuildConfig.HOST).client(client.build()).build()
+        Security.removeProvider("Conscrypt")
+
         return retrofit
     }
 

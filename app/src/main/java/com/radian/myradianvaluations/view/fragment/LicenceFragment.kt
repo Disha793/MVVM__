@@ -41,6 +41,7 @@ import com.radian.myradianvaluations.viewmodel.EODocViewModelFactory
 import kotlinx.android.synthetic.main.fragment_licence_update.*
 import kotlinx.android.synthetic.main.fragment_licence_update.view.*
 import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
@@ -321,7 +322,7 @@ class LicenceFragment : Fragment(), View.OnClickListener, DialogInterface.OnClic
 
     private fun uploadDoc(fileUri: String) {
         val file = File(fileUri)
-        val requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file)
+        val requestBody = RequestBody.create("multipart/form-data".toMediaTypeOrNull(), file)
 
         val image =
             MultipartBody.Part.createFormData("file", file.name, requestBody)

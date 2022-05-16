@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_web_client_id" translatable="false">86022761410-htq3k55mkepo7rv38fvkv3fmv6gdgrjh.apps.googleusercontent.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">86022761410</string>
+    <string name="google_api_key" translatable="false">AIzaSyAZvObn9LgymDc0qk09deawsNQD5peec0g</string>
+    <string name="google_app_id" translatable="false">1:86022761410:android:c883aaddedf1313a84845b</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyAZvObn9LgymDc0qk09deawsNQD5peec0g</string>
+    <string name="google_storage_bucket" translatable="false">myradian-valuations.appspot.com</string>
+    <string name="project_id" translatable="false">myradian-valuations</string>
+</resources>

@@ -39,6 +39,7 @@ import com.radian.myradianvaluations.viewmodel.PhotoUploadViewModel
 import com.radian.myradianvaluations.viewmodel.PhotoUploadViewModelFactory
 import kotlinx.android.synthetic.main.fragment_all_sub_photos.view.*
 import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
@@ -253,7 +254,7 @@ class CompPhotosFrament() : Fragment(), LocationListener, DialogInterface.OnClic
 
                             val fileUri = File(catData[i].photoList[j].photoUrl)
                             val requestBody =
-                                RequestBody.create(MediaType.parse("multipart/form-data"), fileUri)
+                                RequestBody.create("multipart/form-data".toMediaTypeOrNull(), fileUri)
                             file =
                                 MultipartBody.Part.createFormData(
                                     "file" + count,

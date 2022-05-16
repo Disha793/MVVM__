@@ -1,0 +1,18 @@
+{
+  "version": 2,
+  "artifactType": {
+    "type": "MERGED_MANIFESTS",
+    "kind": "Directory"
+  },
+  "applicationId": "com.radian.myradianvaluations",
+  "variantName": "DevDebug",
+  "elements": [
+    {
+      "type": "SINGLE",
+      "filters": [],
+      "versionCode": 2,
+      "versionName": "1.0.7",
+      "outputFile": "AndroidManifest.xml"
+    }
+  ]
+}

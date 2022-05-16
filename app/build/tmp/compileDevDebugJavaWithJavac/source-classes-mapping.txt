@@ -1,0 +1,24 @@
+com/radian/myradianvaluations/databinding/ActivityStepsBinding.java
+ com.radian.myradianvaluations.databinding.ActivityStepsBinding
+com/radian/myradianvaluations/DataBinderMapperImpl.java
+ com.radian.myradianvaluations.DataBinderMapperImpl
+ com.radian.myradianvaluations.DataBinderMapperImpl$InnerBrLookup
+ com.radian.myradianvaluations.DataBinderMapperImpl$InnerLayoutIdLookup
+com/radian/myradianvaluations/BuildConfig.java
+ com.radian.myradianvaluations.BuildConfig
+com/radian/myradianvaluations/DataBindingTriggerClass.java
+ com.radian.myradianvaluations.DataBindingTriggerClass
+com/radian/myradianvaluations/databinding/ActivityCameraBinding.java
+ com.radian.myradianvaluations.databinding.ActivityCameraBinding
+androidx/databinding/DataBinderMapperImpl.java
+ androidx.databinding.DataBinderMapperImpl
+com/radian/myradianvaluations/databinding/ActivityStepsBindingImpl.java
+ com.radian.myradianvaluations.databinding.ActivityStepsBindingImpl
+androidx/databinding/library/baseAdapters/BR.java
+ androidx.databinding.library.baseAdapters.BR
+androidx/databinding/DataBindingComponent.java
+ androidx.databinding.DataBindingComponent
+com/radian/myradianvaluations/databinding/ActivityCameraBindingImpl.java
+ com.radian.myradianvaluations.databinding.ActivityCameraBindingImpl
+com/radian/myradianvaluations/BR.java
+ com.radian.myradianvaluations.BR

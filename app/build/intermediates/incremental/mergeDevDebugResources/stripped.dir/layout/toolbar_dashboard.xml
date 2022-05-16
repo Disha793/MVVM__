@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/toolbarDashboard"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:background="@color/colorPrimary"
+    app:popupTheme="@style/AppTheme.PopupOverlay">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="@dimen/_7sdp">
+
+        <ImageView
+            android:id="@+id/imgUser"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="@dimen/_5sdp"
+            app:srcCompat="@drawable/profile_placeholder" />
+
+
+        <FrameLayout
+            android:id="@+id/frameMessage"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_toStartOf="@+id/imgDrawer"
+            android:layout_toLeftOf="@+id/imgDrawer">
+
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imgMessage"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_gravity="center"
+                android:layout_toStartOf="@+id/imgDrawer"
+                android:layout_toLeftOf="@+id/imgDrawer"
+                android:src="@drawable/img_message"
+                android:tint="@android:color/white"
+                android:visibility="visible" />
+
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imgNotiDot"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginLeft="@dimen/_6sdp"
+                android:layout_marginTop="@dimen/_1sdp"
+                android:layout_marginEnd="@dimen/_3sdp"
+                android:layout_marginRight="@dimen/_3sdp"
+                android:gravity="center"
+                android:visibility="visible"
+                app:srcCompat="@drawable/ic_notfication_circle_enabled"
+
+                />
+        </FrameLayout>
+
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgDrawer"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_32sdp"
+            android:layout_centerVertical="false"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:layout_marginRight="@dimen/_8sdp"
+            android:src="@drawable/ic_drawer"
+            android:visibility="visible"
+
+            />
+
+
+    </RelativeLayout>
+</androidx.appcompat.widget.Toolbar>

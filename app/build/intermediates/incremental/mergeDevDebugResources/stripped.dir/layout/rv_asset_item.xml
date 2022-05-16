@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:id="@+id/rlAsset"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/_10sdp">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvAssetName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@id/ivSelected"
+        android:text="Asset"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/_15sdp" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivSelected"
+        android:layout_width="@dimen/_24sdp"
+        android:layout_height="@dimen/_24sdp"
+        android:layout_alignParentRight="true"
+        app:srcCompat="@drawable/ic_done"
+        android:tint="@color/colorPrimary" />
+
+</RelativeLayout>

@@ -20,7 +20,9 @@ import androidx.core.content.ContextCompat
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.radian.myradianvaluations.R
 import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -140,7 +142,7 @@ object CommonUtils {
     }
 
     fun requestBody(name: String): RequestBody {
-        return RequestBody.create(MediaType.parse("text/plain"), name)
+        return name.toRequestBody("text/plain".toMediaTypeOrNull())
     }
 
     internal fun formatNumber(phone: String): String {

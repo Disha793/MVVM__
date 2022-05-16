@@ -11,7 +11,7 @@ class AuthInterceptor(val context: Context) : Interceptor {
         val requestBuilder = chain.request().newBuilder().addHeader(
             "Authorization", Pref.getValue(
                 context = context, key = Pref.AUTH_TOKEN, defaultValue = ""
-            )
+            )!!
         ).build()
         LogUtils.logD("AuthKey", Pref.getValue(context!!, Pref.AUTH_TOKEN, "")!!)
         return chain.proceed(requestBuilder)

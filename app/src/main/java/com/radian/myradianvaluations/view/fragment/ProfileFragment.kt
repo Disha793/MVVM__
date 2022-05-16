@@ -51,6 +51,7 @@ import kotlinx.android.synthetic.main.dialog_profile_pic.view.*
 import kotlinx.android.synthetic.main.fragment_profile.view.*
 import kotlinx.android.synthetic.main.layout_toolbar.view.*
 import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.ByteArrayOutputStream
@@ -692,7 +693,7 @@ class ProfileFragment() : Fragment(), DialogInterface.OnClickListener, View.OnCl
 
     private fun uploadProfileImage(fileUri: String) {
         val file = File(fileUri)
-        val requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file)
+        val requestBody = RequestBody.create("multipart/form-data".toMediaTypeOrNull(), file)
 
         val profileImgBody =
             MultipartBody.Part.createFormData("file", file.name, requestBody)

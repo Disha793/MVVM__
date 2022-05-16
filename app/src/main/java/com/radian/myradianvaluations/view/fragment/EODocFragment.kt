@@ -39,6 +39,7 @@ import com.radian.myradianvaluations.viewmodel.EODocViewModelFactory
 import kotlinx.android.synthetic.main.fragment_eo_doc.*
 import kotlinx.android.synthetic.main.fragment_eo_doc.view.*
 import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
@@ -369,7 +370,7 @@ class EODocFragment : Fragment(), View.OnClickListener, DialogInterface.OnClickL
 
     private fun uploadDoc(fileUri: String) {
         val file = File(fileUri)
-        val requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file)
+        val requestBody = RequestBody.create("multipart/form-data".toMediaTypeOrNull(), file)
 
         val profileImgBody =
             MultipartBody.Part.createFormData("file", file.name, requestBody)

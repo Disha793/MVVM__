@@ -1,0 +1,814 @@
+[
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\mipmap-xxxhdpi_ic_launcher_round.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\mipmap-xxxhdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\layout_activity_login.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\layout\\activity_login.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable_bottom_new_selector.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable\\bottom_new_selector.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable-hdpi_img_menu_out.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable-hdpi\\img_menu_out.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\layout_activity_orginfo.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\layout\\activity_orginfo.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable_back_unchecked_radio.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable\\back_unchecked_radio.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable_oval.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable\\oval.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\layout_row_open_orders.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\layout\\row_open_orders.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable-mdpi_img_documents.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable-mdpi\\img_documents.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable_img_close.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable\\img_close.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\layout_activity_face_detection.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\layout\\activity_face_detection.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable_right.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable\\right.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\layout_activity_bottom_navigation.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\layout\\activity_bottom_navigation.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable_ic_dots.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable\\ic_dots.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable-mdpi_img_back_arrrow.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable-mdpi\\img_back_arrrow.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\layout_fragment_document_list.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\layout\\fragment_document_list.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\mipmap-mdpi_ic_stat_ic_launcher.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\mipmap-mdpi\\ic_stat_ic_launcher.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable_ic_notfication_circle_enabled.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable\\ic_notfication_circle_enabled.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\mipmap-xhdpi_ic_launcher_foreground.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\mipmap-xhdpi\\ic_launcher_foreground.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable_ic_bottom_new_disabled.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable\\ic_bottom_new_disabled.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable_back_product_detail.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable\\back_product_detail.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\layout_rv_category_item.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\layout\\rv_category_item.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\mipmap-xxxhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\anim_slide_up.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\anim\\slide_up.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable_category.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable\\category.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\layout_fragment_new_orders.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\layout\\fragment_new_orders.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable_camera.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable\\camera.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable_ic_bottom_new_enabled.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable\\ic_bottom_new_enabled.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable_close.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable\\close.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable_ic_login_toolbar_white.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable\\ic_login_toolbar_white.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable_ic_bottom_home_disabled.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable\\ic_bottom_home_disabled.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable_buttonshape.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable\\buttonshape.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable-mdpi_img_message.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable-mdpi\\img_message.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable_back_btn_home.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable\\back_btn_home.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\mipmap-mdpi_ic_launcher_round.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\mipmap-mdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable_ic_bottom_rewards_disabled.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable\\ic_bottom_rewards_disabled.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable_asset.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable\\asset.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\layout_fragment_more_details.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\layout\\fragment_more_details.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable_back_card_btn.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable\\back_card_btn.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable-mdpi_img_backspace.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable-mdpi\\img_backspace.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable_img_splash.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable\\img_splash.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable_ic_arrow_prev.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable\\ic_arrow_prev.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable_bottom_home_selector.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable\\bottom_home_selector.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable_selector_steps.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable\\selector_steps.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable_ic_launcher_background.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable\\ic_launcher_background.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable-hdpi_img_send.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable-hdpi\\img_send.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\layout_activity_code_conduct.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\layout\\activity_code_conduct.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\layout_fragment_manage_order.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\layout\\fragment_manage_order.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable_img_pdf.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable\\img_pdf.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable_ic_img_covid.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable\\ic_img_covid.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable_divider.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable\\divider.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable_bottom_orders_selector.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable\\bottom_orders_selector.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\layout_fragment_about.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\layout\\fragment_about.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable_send_chat_bubble.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable\\send_chat_bubble.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\mipmap-xxhdpi_ic_stat_ic_launcher.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_stat_ic_launcher.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\color_selector_tab_text.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\color\\selector_tab_text.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable-hdpi_img_backspace.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable-hdpi\\img_backspace.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\layout_fragment_document.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\layout\\fragment_document.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\layout_fragment_orders.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\layout\\fragment_orders.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\layout_fragment_home.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\layout\\fragment_home.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable-xxxhdpi_img_documents.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable-xxxhdpi\\img_documents.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable-xhdpi_img_backspace.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable-xhdpi\\img_backspace.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\layout_activity_steps.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\layout\\activity_steps.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\font_messinasans_semibold.otf.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\font\\messinasans_semibold.otf"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\color_selector_upload_text.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\color\\selector_upload_text.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\layout_row_message_list.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\layout\\row_message_list.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable-hdpi_img_condition_help.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable-hdpi\\img_condition_help.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\layout_fragment_settings.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\layout\\fragment_settings.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable-xhdpi_img_select.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable-xhdpi\\img_select.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\anim_no_change.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\anim\\no_change.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\layout_spinner_item.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\layout\\spinner_item.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable-xxhdpi_img_send.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable-xxhdpi\\img_send.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable_img_menu_about.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable\\img_menu_about.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable_add.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable\\add.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\mipmap-hdpi_ic_launcher_round.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\mipmap-hdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\layout_activity_splash.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\layout\\activity_splash.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable_back_send_message.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable\\back_send_message.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable_category_item_back.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable\\category_item_back.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable-hdpi_img_documents.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable-hdpi\\img_documents.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable_img_bulk_approve.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable\\img_bulk_approve.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable_ic_bottom_orders_disabled.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable\\ic_bottom_orders_disabled.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable-hdpi_img_menu_settings.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable-hdpi\\img_menu_settings.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable_ic_bottom_rewards_enabled.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable\\ic_bottom_rewards_enabled.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable-hdpi_img_unselect.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable-hdpi\\img_unselect.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\anim_slide_down.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\anim\\slide_down.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable_delete.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable\\delete.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable-xxxhdpi_img_navigation_right.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable-xxxhdpi\\img_navigation_right.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\layout_fragment_dashboard_new.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\layout\\fragment_dashboard_new.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\layout_fragment_order_appointment.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\layout\\fragment_order_appointment.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\color_selector_step_text.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\color\\selector_step_text.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable-xhdpi_img_send.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable-xhdpi\\img_send.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable_ic_bottom_home_enabled.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable\\ic_bottom_home_enabled.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\layout_content_face_detection.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\layout\\content_face_detection.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable_ic_done.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable\\ic_done.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable-xxhdpi_img_message.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable-xxhdpi\\img_message.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\layout_row_dashboard_new.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\layout\\row_dashboard_new.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\layout_fragment_order_revision_request.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\layout\\fragment_order_revision_request.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\mipmap-hdpi_ic_launcher.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\mipmap-hdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable-xxhdpi_img_documents.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable-xxhdpi\\img_documents.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable_back_circle.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable\\back_circle.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable_ic_header_myradian_logo.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable\\ic_header_myradian_logo.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\layout_activity_camera.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\layout\\activity_camera.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\layout_fragment_profile.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\layout\\fragment_profile.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable_back_square_btn.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable\\back_square_btn.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable_back_message_chat.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable\\back_message_chat.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\mipmap-xhdpi_ic_launcher_round.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\mipmap-xhdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable-xhdpi_img_navigation_right.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable-xhdpi\\img_navigation_right.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\mipmap-mdpi_ic_launcher.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\mipmap-mdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable-xxxhdpi_img_send.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable-xxxhdpi\\img_send.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\font_messinasans_bold.otf.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\font\\messinasans_bold.otf"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable_recieved_chat_bubble.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable\\recieved_chat_bubble.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\layout_fragment_open_order.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\layout\\fragment_open_order.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable_ic_login_toolbar.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable\\ic_login_toolbar.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable-xhdpi_img_unselect.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable-xhdpi\\img_unselect.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\layout_layout_news_badge.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\layout\\layout_news_badge.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable-mdpi_img_navigation_right.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable-mdpi\\img_navigation_right.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\layout_progressbar_layout.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\layout\\progressbar_layout.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable_img_gps.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable\\img_gps.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable_profile_placeholder.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable\\profile_placeholder.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\layout_layout_toolbar.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\layout\\layout_toolbar.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable_ic_bottom_orders_enabled.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable\\ic_bottom_orders_enabled.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable-hdpi_img_menu_signout.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable-hdpi\\img_menu_signout.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\menu_bottom_nav_menu.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\menu\\bottom_nav_menu.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable-xxhdpi_img_backspace.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable-xxhdpi\\img_backspace.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\layout_toolbar_dashboard.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\layout\\toolbar_dashboard.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\layout_fragment_walkthroughmain.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\layout\\fragment_walkthroughmain.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\layout_fragment_message_chat.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\layout\\fragment_message_chat.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable_back_button_new.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable\\back_button_new.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\layout_fragment_new_order_detail.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\layout\\fragment_new_order_detail.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable_gallery.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable\\gallery.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable_buttononclickshape.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable\\buttononclickshape.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\layout_fragment_all_sub_photos.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\layout\\fragment_all_sub_photos.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable-xhdpi_img_message.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable-xhdpi\\img_message.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable-mdpi_img_send.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable-mdpi\\img_send.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\mipmap-xxxhdpi_ic_launcher_foreground.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\mipmap-xxxhdpi\\ic_launcher_foreground.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\layout_row_message.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\layout\\row_message.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable-xxhdpi_img_navigation_right.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable-xxhdpi\\img_navigation_right.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\layout_row_order_detail.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\layout\\row_order_detail.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\layout_fragment_new_order_reject.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\layout\\fragment_new_order_reject.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\layout_dialog_app_update.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\layout\\dialog_app_update.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\layout_dashbard_sidemenu.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\layout\\dashbard_sidemenu.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\layout_activity_passcode.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\layout\\activity_passcode.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\font_messinasans_regular.otf.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\font\\messinasans_regular.otf"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable-xxxhdpi_img_message.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable-xxxhdpi\\img_message.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\layout_row_revision_list.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\layout\\row_revision_list.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable-xhdpi_img_back_arrrow.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable-xhdpi\\img_back_arrrow.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable-xxhdpi_ic_drawer.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable-xxhdpi\\ic_drawer.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\mipmap-xxhdpi_ic_launcher_foreground.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher_foreground.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\layout_row_document_list.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\layout\\row_document_list.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\layout_dialog_add_event.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\layout\\dialog_add_event.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable-xhdpi_img_documents.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable-xhdpi\\img_documents.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\layout_row_choose_time.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\layout\\row_choose_time.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable-xxxhdpi_img_backspace.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable-xxxhdpi\\img_backspace.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable-hdpi_img_message.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable-hdpi\\img_message.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable-xxxhdpi_ic_drawer.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable-xxxhdpi\\ic_drawer.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable-hdpi_img_select.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable-hdpi\\img_select.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\layout_fragment_licence_update.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\layout\\fragment_licence_update.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\mipmap-mdpi_ic_launcher_foreground.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\mipmap-mdpi\\ic_launcher_foreground.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\layout_access_code_keyboard.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\layout\\access_code_keyboard.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\layout_row_new_orders.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\layout\\row_new_orders.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\mipmap-xxhdpi_ic_launcher_round.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable_bottom_rewards_selector.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable\\bottom_rewards_selector.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\layout_tab_layout.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\layout\\tab_layout.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable-hdpi_img_navigation_right.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable-hdpi\\img_navigation_right.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\layout_fragment_eo_doc.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\layout\\fragment_eo_doc.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\layout_item_imageviewer.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\layout\\item_imageviewer.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable-hdpi_img_back_arrrow.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable-hdpi\\img_back_arrrow.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable_spinner_background.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable\\spinner_background.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable_img_camera.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable\\img_camera.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable_ic_arrow_next.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable\\ic_arrow_next.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\xml_fileprovider.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\xml\\fileprovider.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable_img_doc_thumbnail.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable\\img_doc_thumbnail.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\layout_dialog_profile_pic.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\layout\\dialog_profile_pic.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable-xhdpi_img_menu_out.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable-xhdpi\\img_menu_out.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable_ic_navigate_forward.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable\\ic_navigate_forward.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable-xhdpi_img_menu_signout.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable-xhdpi\\img_menu_signout.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable-hdpi_img_menu_dashboard.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable-hdpi\\img_menu_dashboard.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\layout_row_conditional_accept_order.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\layout\\row_conditional_accept_order.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable_back_appt_text_box.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable\\back_appt_text_box.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable-hdpi_ic_drawer.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable-hdpi\\ic_drawer.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable-xhdpi_img_menu_settings.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable-xhdpi\\img_menu_settings.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable_back_checked_radio.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable\\back_checked_radio.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\mipmap-xhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable-mdpi_img_condition_help.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable-mdpi\\img_condition_help.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\mipmap-hdpi_ic_launcher_foreground.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\mipmap-hdpi\\ic_launcher_foreground.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\layout_fragment_message_list.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\layout\\fragment_message_list.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable_switch_camera.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable\\switch_camera.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable_img_msgreply.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable\\img_msgreply.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable-xhdpi_img_condition_help.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable-xhdpi\\img_condition_help.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable-mdpi_ic_drawer.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable-mdpi\\ic_drawer.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable-xhdpi_ic_drawer.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable-xhdpi\\ic_drawer.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable_ic_myradian_logo.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable\\ic_myradian_logo.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\layout_rv_asset_item.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\layout\\rv_asset_item.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable_ic_update.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable\\ic_update.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\layout_fragment_order_loe.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\layout\\fragment_order_loe.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\layout_fragment_w9_doc.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\layout\\fragment_w9_doc.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\layout_fragment_out_of_office.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\layout\\fragment_out_of_office.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\mipmap-hdpi_ic_stat_ic_launcher.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\mipmap-hdpi\\ic_stat_ic_launcher.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable_back_radio_btn.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable\\back_radio_btn.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\layout_frg_imageviewer.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\layout\\frg_imageviewer.xml"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\mipmap-xhdpi_ic_stat_ic_launcher.png.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\mipmap-xhdpi\\ic_stat_ic_launcher.png"
+    },
+    {
+        "merged": "D:\\Disha\\Radian\\Code\\Valuations\\app\\build\\intermediates\\res\\merged\\Dev\\debug\\drawable_img_delete_doc.xml.flat",
+        "source": "D:\\Disha\\Radian\\Code\\Valuations\\app\\src\\main\\res\\drawable\\img_delete_doc.xml"
+    }
+]
